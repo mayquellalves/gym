@@ -1,0 +1,29 @@
+<schema elementFormDefault="qualified" targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/resource/specification/PhysicalConnector" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/resource/specification/PhysicalConnector" xmlns:tps="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types">
+
+	<import schemaLocation="../../netarchitecture/common/Types.xsd" namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types"/>
+
+	
+
+	<complexType name="PhysicalConnectorType">
+		<sequence>
+			<element name="CableType" type="int" minOccurs="0" maxOccurs="1"/>
+			<element name="Gender" type="int" minOccurs="0" maxOccurs="1"/>
+			<element name="PinDescription" type="tps:string100" minOccurs="0" maxOccurs="1"/>
+			<element name="InUse" type="boolean" minOccurs="0" maxOccurs="1"/>
+			<element name="TypeOfConnector" type="int" minOccurs="0" maxOccurs="1"/>
+		
+			<element name="PhysicalConnectorHas" type="tns:PhysicalConnectorTypes" minOccurs="0" maxOccurs="1"/>
+		</sequence>
+	</complexType>
+
+	<element name="PhysicalConnector" type="tns:PhysicalConnectorType"/>
+
+	<element name="PhysicalConnectors" type="tns:PhysicalConnectorTypes"/>
+
+	<complexType name="PhysicalConnectorTypes">
+		<sequence>
+			<element ref="tns:PhysicalConnector" minOccurs="1" maxOccurs="unbounded"/>
+		</sequence>
+	</complexType>
+
+</schema>

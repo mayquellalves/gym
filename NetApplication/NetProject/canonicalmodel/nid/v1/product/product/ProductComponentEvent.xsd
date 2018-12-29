@@ -1,0 +1,620 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified"
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/product/ProductComponentEvent"
+	xmlns="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/product/ProductComponentEvent"
+	xmlns:tps="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types"
+	xmlns:csr="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/party/CSR"	
+	xmlns:cus="http://www.netservicos.com.br/canonicalmodel/nid/v1/customer/customer/Customer"
+	xmlns:cua="http://www.netservicos.com.br/canonicalmodel/nid/v1/customer/customer/CustomerAccount"
+	xmlns:capi="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/product/CustomerAccountProductInvolvement"
+	xmlns:cuc="http://www.netservicos.com.br/canonicalmodel/nid/v1/customer/customer/CustomerClassification"
+	xmlns:cuo="http://www.netservicos.com.br/canonicalmodel/nid/v1/customer/order/CustomerOrder"
+	xmlns:evt="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/event/Event"
+	xmlns:inn="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/party/IndividualName"	
+	xmlns:pir="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/businessinteraction/PartyInteractionRole"
+	xmlns:par="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/party/PartyRole"
+	xmlns:prse="http://www.netservicos.com.br/canonicalmodel/nid/v1/enterprise/enterpriserisk/PartyRoleSecurityEntity"	
+	xmlns:pro="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/product/Product"
+	xmlns:pcv="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/product/ProductCharacteristicValue"
+	xmlns:prc="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/product/ProductComponent"
+	xmlns:prir="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/product/ProductInvolvementRole"
+	xmlns:prs="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/specification/ProductSpecification"
+	xmlns:pds="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/product/ProductStatus"	
+	xmlns:upsa="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/location/UrbanPropertySubAddress"
+	xmlns:unp="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/userandroles/UserNameAndPassword">
+
+	<import 
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types"
+		schemaLocation="../../netarchitecture/common/Types.xsd" />
+
+   	<import
+   		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/party/CSR"
+   		schemaLocation="../../common/party/CSR.xsd" />
+   		
+   	<import
+   		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/customer/customer/Customer"
+   		schemaLocation="../../customer/customer/Customer.xsd" />
+
+   	<import
+   		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/customer/customer/CustomerAccount"
+   		schemaLocation="../../customer/customer/CustomerAccount.xsd" />
+
+   	<import
+   		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/product/CustomerAccountProductInvolvement"
+   		schemaLocation="../../product/product/CustomerAccountProductInvolvement.xsd" />
+
+   	<import
+   		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/customer/customer/CustomerClassification"
+   		schemaLocation="../../customer/customer/CustomerClassification.xsd" />
+   		
+   	<import
+   		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/customer/order/CustomerOrder"
+   		schemaLocation="../../customer/order/CustomerOrder.xsd" />
+   			    		
+	<import
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/event/Event"
+		schemaLocation="../../netarchitecture/event/Event.xsd" />
+		
+   	<import
+   		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/party/IndividualName"
+   		schemaLocation="../../common/party/IndividualName.xsd" />
+   			    			    		
+   	<import
+   		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/businessinteraction/PartyInteractionRole"
+   		schemaLocation="../../common/businessinteraction/PartyInteractionRole.xsd" />
+
+   	<import
+   		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/party/PartyRole"
+   		schemaLocation="../../common/party/PartyRole.xsd" />
+   		
+   	<import
+   		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/enterprise/enterpriserisk/PartyRoleSecurityEntity"
+   		schemaLocation="../../enterprise/enterpriserisk/PartyRoleSecurityEntity.xsd" />	    	
+   	
+   	<import
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/product/Product"
+		schemaLocation="../../product/product/Product.xsd" />	
+		
+	<import
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/product/ProductCharacteristicValue"
+		schemaLocation="../../product/product/ProductCharacteristicValue.xsd" />
+		
+    <import
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/product/ProductComponent"
+		schemaLocation="../../product/product/ProductComponent.xsd" />	
+
+   	<import
+   		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/product/ProductInvolvementRole"
+   		schemaLocation="../../product/product/ProductInvolvementRole.xsd" />
+
+    <import
+   		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/specification/ProductSpecification"
+   		schemaLocation="../../product/specification/ProductSpecification.xsd" />	
+
+	<import
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/product/ProductStatus"
+		schemaLocation="../../product/product/ProductStatus.xsd" />	
+
+	 <import
+   		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/location/UrbanPropertySubAddress"
+   		schemaLocation="../../common/location/UrbanPropertySubAddress.xsd" />	 	
+
+   	<import
+   		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/userandroles/UserNameAndPassword"
+   		schemaLocation="../../common/userandroles/UserNameAndPassword.xsd" />    		
+
+     <simpleType name="actionType">
+		<restriction base="string">
+			<enumeration value="Provide"/>
+			<enumeration value="Change"/>
+			<enumeration value="Cease"/>
+			<enumeration value="Suspend"/>
+			<enumeration value="Resume"/>
+		</restriction>
+	</simpleType>	
+
+    <simpleType name="itemTypeType">
+		<restriction base="string">
+			<enumeration value="PR"/>
+			<enumeration value="CO"/>
+			<enumeration value="PP"/>
+			<enumeration value="CC"/>
+		</restriction>
+	</simpleType>
+
+	<complexType name="productComponentForCustomerProductChangedEventType">
+		<complexContent>
+			<extension base="tns:productForCustomerProductChangedEventType">
+				<sequence>
+					<element ref="prc:ProductComponent" minOccurs="1"
+						maxOccurs="1">
+						<annotation>
+							<documentation>
+								From Canonical Entity "ProductComponent".
+							</documentation>
+						</annotation>
+					</element>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="productComponentType">
+		<complexContent>
+			<extension base="tns:productType">
+				<sequence>
+					<element ref="prc:ProductComponent" minOccurs="1"
+						maxOccurs="1">
+						<annotation>
+							<documentation>
+								From Canonical Entity "ProductComponent".
+							</documentation>
+						</annotation>
+					</element>
+					<element ref="tns:productComponentHas" minOccurs="0" maxOccurs="1"/>
+					<element ref="tns:productInvolvementRole" minOccurs="0" maxOccurs="1"/>
+					<element ref="tns:customerOrder" minOccurs="0" maxOccurs="1"/>
+					<element ref="tns:productSpecification" minOccurs="0" maxOccurs="1"/>										
+					<element name="action" type="tns:actionType" minOccurs="0" maxOccurs="1">
+	    				<annotation>
+	    					<documentation>
+	    						Ação executada sobre o produto, que pode ser
+	    						um dos status abaixo: 
+	    						Provide – CustomerProductCreatedEvent 
+	    						Change – CustomerProductUpdatedEvent 
+	    						Cease – CustomerProductCeasedEvent 
+	    						Suspend – CustomerProductSuspendedEvent 
+	    						Resume – CustomerProductResumedEvent
+	    					</documentation>
+	    				</annotation>
+	    			</element>					
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="ProductComponentEventForCustomerProductChangedEventType">
+		<complexContent>
+			<extension base="evt:EventType">
+				<sequence>
+					<element name="activityID" type="tps:string010"
+						minOccurs="1" maxOccurs="1">
+						<annotation>
+							<documentation>
+								Identificador da Atividade. Toda notificação terá um ID associado à atividade
+								Exemplo: Notificação de Product, terá um Activity ID.
+							</documentation>
+						</annotation>
+					</element>
+					<element ref="tns:productComponentForCustomerProductChangedEvent" />
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="ProductComponentEventType">
+		<complexContent>
+			<extension base="evt:EventType">
+				<sequence>
+					<element ref="tns:productComponent" minOccurs="1" maxOccurs="unbounded"/>
+					<element ref="tns:oldProductComponent" minOccurs="1" maxOccurs="unbounded"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="productForCustomerProductChangedEventType">
+		<sequence>
+			<element ref="pro:Product" minOccurs="1" maxOccurs="1">
+				<annotation>
+					<documentation>
+						From Canonical Entity "Product".
+					</documentation>
+				</annotation>
+			</element>
+		    <element ref="tns:productStatus" minOccurs="0"
+				maxOccurs="1" />		
+		</sequence>
+	</complexType>
+
+	<complexType name="productComponentHasType">
+		<sequence>
+			<element ref="tns:productComponentChild" minOccurs="0" maxOccurs="1"/>
+		</sequence>
+	</complexType>
+
+	<complexType name="productComponentChildType">
+		<sequence>
+			<element ref="tns:productComponent" minOccurs="0" maxOccurs="unbounded">
+				<annotation>
+					<documentation>
+						From Canonical Entity "ProductComponent".
+					</documentation>
+				</annotation>
+			</element>					
+			<element ref="tns:productComponentHas" minOccurs="0" maxOccurs="1" />
+		</sequence>
+	</complexType>	
+
+	<complexType name="productType">
+		<sequence>
+			<element ref="pro:Product" minOccurs="1" maxOccurs="1">
+				<annotation>
+					<documentation>
+						From Canonical Entity "Product".
+					</documentation>
+				</annotation>
+			</element>
+			<element ref="tns:productCharacteristicValues" minOccurs="0" maxOccurs="1"/>
+			<element ref="tns:urbanPropertySubAddress" minOccurs="0" maxOccurs="1"/>		
+		</sequence>
+	</complexType>
+
+
+	<complexType name="productCharacteristicValuesType">
+		<sequence>
+			<element ref="tns:productCharacteristicValue" minOccurs="0" maxOccurs="unbounded"/>
+		</sequence>			
+	</complexType>	
+
+	<complexType name="productCharacteristicValueType">
+		<sequence>
+			<element ref="pcv:ProductCharacteristicValue" minOccurs="1"
+				maxOccurs="1">
+				<annotation>
+					<documentation>
+						From Canonical Entity "ProductCharacteristicValue".
+					</documentation>
+				</annotation>
+			</element>
+			<element name="changed" type="string" minOccurs="0" maxOccurs="1">
+   				<annotation>
+   					<documentation>
+   						Indica se o atributo foi alterado
+   					</documentation>
+   				</annotation>
+   			</element>			
+		</sequence>
+	</complexType>
+	
+	<complexType name="urbanPropertySubAddressType">
+		<sequence>
+			<element ref="upsa:UrbanPropertySubAddress" minOccurs="1" maxOccurs="1">
+				<annotation>
+					<documentation>
+						From Canonical Entity "UrbanPropertySubAddress".
+					</documentation>
+				</annotation>					
+			</element>
+		</sequence>			
+	</complexType>	
+	
+	<complexType name="productStatusType">
+		<sequence>
+			<element ref="pds:ProductStatus" minOccurs="1"
+				maxOccurs="1">
+				<annotation>
+					<documentation>
+						From Canonical Entity "ProductStatus".
+					</documentation>
+				</annotation>
+			</element>
+		</sequence>
+	</complexType>	
+	
+   		
+	<complexType name="productInvolvementRoleType">
+		<sequence>
+			<element ref="prir:ProductInvolvementRole" minOccurs="1" maxOccurs="1">
+				<annotation>
+					<documentation>
+						From Canonical Entity "ProductInvolvementRole".
+					</documentation>
+				</annotation>					
+			</element>
+			<element ref="tns:customerAccountProductInvolvement" minOccurs="0" maxOccurs="1"/>
+		</sequence>			
+	</complexType>
+  	
+  	<complexType name="customerAccountProductInvolvementType">
+		<sequence>
+			<element ref="capi:CustomerAccountProductInvolvement" minOccurs="1" maxOccurs="1">
+				<annotation>
+					<documentation>
+						From Canonical Entity "CustomerAccountProductInvolvement".
+					</documentation>
+				</annotation>					
+			</element>
+			<element ref="tns:customerAccount" minOccurs="0" maxOccurs="1"/>
+		</sequence>			
+	</complexType>
+
+  	<complexType name="customerAccountType">
+		<sequence>
+			<element ref="cua:CustomerAccount" minOccurs="1" maxOccurs="1">
+				<annotation>
+					<documentation>
+						From Canonical Entity "CustomerAccount".
+					</documentation>
+				</annotation>					
+			</element>
+			<element ref="tns:customer" minOccurs="0" maxOccurs="1"/>
+		</sequence>			
+	</complexType>
+
+  	<complexType name="customerType">
+		<complexContent>
+			<extension base="tns:partyRoleType">
+				<sequence>
+					<element ref="cus:Customer" minOccurs="1" maxOccurs="1">
+						<annotation>
+							<documentation>
+								From Canonical Entity "Customer".
+							</documentation>
+						</annotation>					
+					</element>
+					<element name="billingCycleCode" type="string" minOccurs="0" maxOccurs="1">
+	    				<annotation>
+	    					<documentation>
+	    						Código do BillingCycle do Customer
+	    					</documentation>
+	    				</annotation>
+	    			</element>	
+					<element ref="tns:individualName" minOccurs="0" maxOccurs="1"/>
+					<element ref="tns:customerClassifications" minOccurs="0" maxOccurs="1"/>
+				</sequence>				
+			</extension>
+		</complexContent>
+	</complexType>
+
+  	<complexType name="individualNameType">
+		<sequence>
+			<element ref="inn:IndividualName" minOccurs="1" maxOccurs="1">
+				<annotation>
+					<documentation>
+						From Canonical Entity "IndividualName".
+					</documentation>
+				</annotation>					
+			</element>
+		</sequence>			
+	</complexType>
+
+	<complexType name="customerClassificationsType">
+		<sequence>
+			<element ref="tns:customerClassification" minOccurs="0" maxOccurs="unbounded" />
+		</sequence>
+	</complexType>
+
+  	<complexType name="customerClassificationType">
+		<sequence>
+			<element ref="cuc:CustomerClassification" minOccurs="1" maxOccurs="1">
+				<annotation>
+					<documentation>
+						From Canonical Entity "CustomerClassification".
+					</documentation>
+				</annotation>					
+			</element>
+			<element ref="tns:customerClassificationHas" minOccurs="0" maxOccurs="1" />
+		</sequence>			
+	</complexType>
+	
+	<complexType name="customerClassificationHasType">
+		<sequence>
+			<element ref="tns:customerClassificationChild" minOccurs="0" maxOccurs="1"/>
+		</sequence>
+	</complexType>
+
+	<complexType name="customerClassificationChildType">
+		<sequence>
+			<element ref="cuc:CustomerClassification" minOccurs="1" maxOccurs="1">
+				<annotation>
+					<documentation>
+						From Canonical Entity "CustomerClassification".
+					</documentation>
+				</annotation>
+			</element>
+			<element ref="tns:customerClassificationHas" minOccurs="0" maxOccurs="1" />
+		</sequence>
+	</complexType>			
+
+  	<complexType name="customerOrderType">
+		<sequence>
+			<element ref="cuo:CustomerOrder" minOccurs="1" maxOccurs="1">
+				<annotation>
+					<documentation>
+						From Canonical Entity "CustomerOrder".
+					</documentation>
+				</annotation>					
+			</element>
+			<element ref="tns:partyInteractionRole" minOccurs="0" maxOccurs="1"/>
+			<element name="orderRef" type="string" minOccurs="0" maxOccurs="1">
+   				<annotation>
+   					<documentation>
+   						Id de referencia de uma orderAction da AMDOCS
+   					</documentation>
+   				</annotation>
+   			</element>					
+		</sequence>			
+	</complexType>
+
+  	<complexType name="partyInteractionRoleType">
+		<sequence>
+			<element ref="pir:PartyInteractionRole" minOccurs="1" maxOccurs="1">
+				<annotation>
+					<documentation>
+						From Canonical Entity "PartyInteractionRole".
+					</documentation>
+				</annotation>					
+			</element>
+			<element ref="tns:CSR" minOccurs="0" maxOccurs="1"/>
+		</sequence>			
+	</complexType>
+
+  	<complexType name="CSRType">
+		<sequence>
+			<element ref="csr:CSR" minOccurs="1" maxOccurs="1">
+				<annotation>
+					<documentation>
+						From Canonical Entity "CSR".
+					</documentation>
+				</annotation>					
+			</element>
+			<element ref="tns:partyRoleSecurityEntity" minOccurs="0" maxOccurs="1"/>
+		</sequence>			
+	</complexType>
+
+  	<complexType name="partyRoleType">
+		<sequence>
+			<element ref="par:PartyRole" minOccurs="1" maxOccurs="1">
+				<annotation>
+					<documentation>
+						From Canonical Entity "PartyRole".
+					</documentation>
+				</annotation>					
+			</element>
+		</sequence>			
+	</complexType>
+
+  	<complexType name="partyRoleSecurityEntityType">
+		<sequence>
+			<element ref="prse:PartyRoleSecurityEntity" minOccurs="1" maxOccurs="1">
+				<annotation>
+					<documentation>
+						From Canonical Entity "PartyRoleSecurityEntity".
+					</documentation>
+				</annotation>					
+			</element>
+			<element ref="tns:userNameAndPassword" minOccurs="0" maxOccurs="1"/>
+		</sequence>			
+	</complexType>
+	
+	<complexType name="userNameAndPasswordType">
+		<sequence>
+			<element ref="unp:UserNameAndPassword" minOccurs="1" maxOccurs="1">
+				<annotation>
+					<documentation>
+						From Canonical Entity "UserNameAndPassword".
+					</documentation>
+				</annotation>					
+			</element>
+		</sequence>			
+	</complexType>			
+
+	<complexType name="productSpecificationType">
+		<sequence>
+			<element ref="prs:ProductSpecification" minOccurs="1" maxOccurs="1">
+				<annotation>
+					<documentation>
+						From Canonical Entity "ProductSpecification".
+					</documentation>
+				</annotation>					
+			</element>
+			<element name="code" type="string" minOccurs="0" maxOccurs="1">
+   				<annotation>
+   					<documentation>
+   						Codigo do componente no Catalogo
+   					</documentation>
+   				</annotation>
+   			</element>
+			<element name="itemType" type="tns:itemTypeType" minOccurs="0" maxOccurs="1">
+   				<annotation>
+   					<documentation>
+   						Tipo do componente PR product, CO Component, PP Price Plan, CC Charge Code.
+   					</documentation>
+   				</annotation>
+   			</element>	 
+			<element name="versionID" type="string" minOccurs="0" maxOccurs="1">
+   				<annotation>
+   					<documentation>
+   						Numero da versao do catalogo
+   					</documentation>
+   				</annotation>
+   			</element>
+			<element name="productTypeCode" type="string" minOccurs="0" maxOccurs="1">
+   				<annotation>
+   					<documentation>
+   						Tipo do componente
+   					</documentation>
+   				</annotation>
+   			</element>
+			<element name="productTypeName" type="string" minOccurs="0" maxOccurs="1">
+   				<annotation>
+   					<documentation>
+   						Descrição do tipo do componente
+   					</documentation>
+   				</annotation>
+   			</element>
+		</sequence>			
+	</complexType>
+
+	<element name="CSR" type="tns:CSRType"/>
+	<element name="customer" type="tns:customerType"/>
+	<element name="customerAccount" type="tns:customerAccountType"/>
+	<element name="customerAccountProductInvolvement" type="tns:customerAccountProductInvolvementType"/>
+	<element name="customerClassification" type="tns:customerClassificationType" />
+	<element name="customerClassificationChild" type="tns:customerClassificationChildType" />
+	<element name="customerClassifications" type="tns:customerClassificationsType" />
+	<element name="customerClassificationHas" type="tns:customerClassificationHasType" />
+	<element name="customerOrder" type="tns:customerOrderType"/>
+	<element name="individualName" type="tns:individualNameType"/>
+	<element name="partyInteractionRole" type="tns:partyInteractionRoleType"/>
+	<element name="partyRoleSecurityEntity" type="tns:partyRoleSecurityEntityType"/>
+	<element name="productCharacteristicValue" type="tns:productCharacteristicValueType" />
+	<element name="productCharacteristicValues" type="tns:productCharacteristicValuesType"/>
+	<element name="productComponent" type="tns:productComponentType" />
+	<element name="oldProductComponent" type="tns:productComponentType" />
+	<element name="productComponentHas" type="tns:productComponentHasType"/>
+	<element name="productComponentChild" type="tns:productComponentChildType"/>			
+	<element name="productComponentForCustomerProductChangedEvent" type="tns:productComponentForCustomerProductChangedEventType" />
+	<element name="productInvolvementRole" type="tns:productInvolvementRoleType"/>
+	<element name="productSpecification" type="tns:productSpecificationType"/>
+	<element name="productStatus" type="tns:productStatusType" />
+	<element name="urbanPropertySubAddress" type="tns:urbanPropertySubAddressType"/>
+	<element name="userNameAndPassword" type="tns:userNameAndPasswordType"/>
+
+
+	<element name="CustomerProductCreatedEvent" type="tns:ProductComponentEventType">
+		<annotation>
+			<documentation>
+				Provide
+			</documentation>
+		</annotation>
+	</element>
+	<element name="CustomerProductUpdatedEvent" type="tns:ProductComponentEventType">
+		<annotation>
+			<documentation>
+				Change
+			</documentation>
+		</annotation>
+	</element>
+	<element name="CustomerProductCeasedEvent" type="tns:ProductComponentEventType">
+		<annotation>
+			<documentation>
+				Cease
+			</documentation>
+		</annotation>
+	</element>
+	<element name="CustomerProductSuspendedEvent" type="tns:ProductComponentEventType">
+		<annotation>
+			<documentation>
+				Suspend
+			</documentation>
+		</annotation>
+	</element>
+	<element name="CustomerProductResumedEvent" type="tns:ProductComponentEventType">
+		<annotation>
+			<documentation>
+				Resume
+			</documentation>
+		</annotation>
+	</element>
+	<element name="CustomerProductChangedEvent" type="tns:ProductComponentEventForCustomerProductChangedEventType">
+		<annotation>
+			<documentation>
+				Changed
+			</documentation>
+		</annotation>
+	</element>
+
+</schema>

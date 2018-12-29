@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/specification/EventContent"
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/specification/EventContent"
+	xmlns:tps="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types">
+
+	
+	<import schemaLocation="../../netarchitecture/common/Types.xsd"
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types" />
+
+	
+	<import schemaLocation="../../common/basetypes/Language.xsd" 
+	namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/basetypes/Language" />
+
+	<complexType name="EventContentType">
+		
+				<sequence>
+					<element name="AudioMixType" type="tps:string020" minOccurs="0" maxOccurs="1" />
+					<element name="FirstAvailability" type="dateTime" minOccurs="0" maxOccurs="1" />
+					<element name="HorizontalSize" type="int" minOccurs="0" maxOccurs="1" />
+					<element name="LastAvailability" type="dateTime" minOccurs="0" maxOccurs="1" />
+					<element name="MaxBitrateInBps" type="int" minOccurs="0" maxOccurs="1" />
+					<element name="Scan" type="tps:string020" minOccurs="0" maxOccurs="1" />
+					<element name="TypeColor" type="tps:string050" minOccurs="0" maxOccurs="1" />
+					<element name="TypeDefinition" type="tps:string020" minOccurs="0" maxOccurs="1" />
+					<element name="VerticalSize" type="int" minOccurs="0" maxOccurs="1" />
+					
+				</sequence>
+			
+	</complexType>
+
+	<element name="EventContent" type="tns:EventContentType" />
+	
+	<element name="EventContents" type="tns:EventContentsType" />
+	
+	<complexType name="EventContentsType">
+			<sequence>
+				<element ref="tns:EventContent" minOccurs="1" maxOccurs="unbounded" />
+			</sequence>
+		</complexType>
+
+</schema>

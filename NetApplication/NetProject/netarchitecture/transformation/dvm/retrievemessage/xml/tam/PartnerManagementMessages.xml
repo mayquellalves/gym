@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dvm name="netarchitecture.messages.partnermanagement.dvm" xmlns="http://xmlns.oracle.com/dvm">
+  <description>
+  	Only messages belonging to partner management domain can be defined here.
+  </description>
+  <columns>
+    <column name="ID_MSG"/>
+    <column name="ERROR_NAME"/>
+    <column name="USER_MESSAGE"/>
+    <column name="DETAIL_MESSAGE"/>
+    <column name="CATEGORY_MESSAGE"/>
+    <column name="SYSTEM_CODE"/>
+    <column name="NID_DOMAIN"/>
+    <column name="ABE_LEVEL"/>
+  </columns>
+  <rows>
+    <row>
+      <cell>OSB-PARTNERMANAGEMENT-00001</cell>
+      <cell>RUNTIME_EXCEPTION</cell>
+      <cell>Erro durante a execução do recurso: {0}.</cell>
+      <cell>Erro durante a execução do recurso: {0}.</cell>
+      <cell>ERROR</cell>
+      <cell/>
+      <cell>partnermanagement</cell>
+      <cell>partner</cell>
+    </row>    
+    <row>
+      <cell>OSB-PARTNERMANAGEMENT-00002</cell>
+      <cell>RUNTIME_EXCEPTION</cell>
+      <cell>Não foi possível retornar os dados.</cell>
+      <cell>Não foi possível retornar os dados.</cell>
+      <cell>ERROR</cell>
+      <cell/>
+      <cell>partnermanagement</cell>
+      <cell>partner</cell>
+    </row>  
+    <row>
+      <cell>OSB-PARTNERMANAGEMENT-00003</cell>
+      <cell>RUNTIME_EXCEPTION</cell>
+      <cell>Request Inválido para operação: {0}</cell>
+      <cell>Request Inválido para operação: {0}</cell>
+      <cell>ERROR</cell>
+      <cell/>
+      <cell>partnermanagement</cell>
+      <cell>partner</cell>
+    </row>      
+  </rows>
+</dvm>

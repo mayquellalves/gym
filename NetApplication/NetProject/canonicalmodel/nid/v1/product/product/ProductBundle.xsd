@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified"
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/product/ProductBundle"
+	xmlns="http://www.w3.org/2001/XMLSchema" 
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/product/ProductBundle">
+
+
+
+	<complexType name="ProductBundleType">
+	
+				<sequence>
+					<element name="ProductBundleId" type="int" minOccurs="0" maxOccurs="1" />
+				
+				</sequence>
+			
+	</complexType>
+
+	<element name="ProductBundle" type="tns:ProductBundleType" />
+
+	<element name="ProductBundles">
+		<complexType>
+			<sequence>
+				<element ref="tns:ProductBundle" minOccurs="1" maxOccurs="unbounded" />
+			</sequence>
+		</complexType>
+	</element>
+
+</schema>

@@ -1,0 +1,26 @@
+<schema elementFormDefault="qualified" targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/service/service/ServiceDefinition" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/service/service/ServiceDefinition" xmlns:tps="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types">
+
+	<import schemaLocation="../../netarchitecture/common/Types.xsd" namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types"/>
+
+	
+	<complexType name="ServiceDefinitionType">
+		<sequence>
+			<element name="ActivationMode" type="tps:string050" minOccurs="0" maxOccurs="1"/>
+			<element name="SdStatus" type="tps:string050" minOccurs="0" maxOccurs="1"/>
+			<element name="Type" type="tps:string050" minOccurs="0" maxOccurs="1"/>
+			<element name="Value" type="tps:string050" minOccurs="0" maxOccurs="1"/>
+		
+		</sequence>
+	</complexType>
+
+	<element name="ServiceDefinition" type="tns:ServiceDefinitionType"/>
+
+	<element name="ServiceDefinitions" type="tns:ServiceDefinitionsType"/>
+
+	<complexType name="ServiceDefinitionsType">
+		<sequence>
+			<element ref="tns:ServiceDefinition" minOccurs="1" maxOccurs="unbounded"/>
+		</sequence>
+	</complexType>
+
+</schema>

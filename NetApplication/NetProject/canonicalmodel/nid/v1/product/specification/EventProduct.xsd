@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/specification/EventProduct"
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/specification/EventProduct"
+	xmlns:tps="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types">
+
+	
+	
+	<import schemaLocation="../../netarchitecture/common/Types.xsd"
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types" />
+
+
+	<complexType name="EventProductType">
+		
+				<sequence>
+					<element name="DurationInSeconds" type="int" minOccurs="0" maxOccurs="1" />
+					<element name="IsAdultContent" type="boolean" minOccurs="0" maxOccurs="1" />
+					<element name="LongSynopsis" type="tps:string400" minOccurs="0" maxOccurs="1" />
+					<element name="MinimumAge" type="int" minOccurs="0" maxOccurs="1" />
+					<element name="Ordinal" type="int" minOccurs="0" maxOccurs="1" />
+					<element name="Pictures" type="tps:string100" minOccurs="0" maxOccurs="1" />
+					<element name="ShortSynopsis" type="tps:string100" minOccurs="0" maxOccurs="1" />
+				
+				</sequence>
+			
+	</complexType>
+
+	<element name="EventProduct" type="tns:EventProductType" />
+	
+	<element name="EventProducts">
+		<complexType >
+			<sequence>
+				<element ref="tns:EventProduct" minOccurs="1" maxOccurs="unbounded" />
+			</sequence>
+		</complexType>
+	</element>
+
+</schema>

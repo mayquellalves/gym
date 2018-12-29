@@ -1,0 +1,23 @@
+<schema elementFormDefault="qualified" targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/resource/specification/Manufacturer" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/resource/specification/Manufacturer" xmlns:tps="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types">
+
+	<import schemaLocation="../../netarchitecture/common/Types.xsd" namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types"/>
+
+	
+
+	<complexType name="ManufacturerType">
+		
+				
+			
+	</complexType>
+
+	<element name="Manufacturer" type="tns:ManufacturerType"/>
+	
+	<complexType name="ManufacturersType">
+		<sequence>
+			<element ref="tns:Manufacturer" minOccurs="1" maxOccurs="unbounded"/>
+		</sequence>
+	</complexType>
+
+	<element name="Manufacturers" type="tns:ManufacturersType"/>
+
+</schema>

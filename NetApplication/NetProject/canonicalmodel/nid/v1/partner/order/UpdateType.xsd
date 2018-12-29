@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/partner/order/UpdateType"
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/partner/order/UpdateType">
+
+	<complexType name="UpdateTypeType">
+		<sequence>
+		</sequence>
+	</complexType>
+
+	<element name="UpdateType" type="tns:UpdateTypeType" />
+
+	<element name="UpdateTypes">
+		<complexType>
+			<sequence>
+				<element ref="tns:UpdateType" minOccurs="1" maxOccurs="unbounded" />
+			</sequence>
+		</complexType>
+	</element>
+
+</schema>

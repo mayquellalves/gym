@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified" 
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/offering/ProductOfferingPrice" 
+	xmlns="http://www.w3.org/2001/XMLSchema" 
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/offering/ProductOfferingPrice" 
+	xmlns:tps="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types" 
+	xmlns:tim="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/basetypes/TimePeriod">
+	
+	<import schemaLocation="../../netarchitecture/common/Types.xsd" 
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types"/>
+		
+	
+		
+	<import schemaLocation="../../common/basetypes/TimePeriod.xsd" 
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/basetypes/TimePeriod"/>
+
+	<complexType name="ProductOfferingPriceType">
+		<sequence>
+			<element name="Description" type="tps:string100" minOccurs="0" maxOccurs="1"/>
+			<element name="GeographicArea" type="tps:string050" minOccurs="0" maxOccurs="1"/>
+			<element name="ProductOfferingPriceId" type="tps:string020" minOccurs="0" maxOccurs="1"/>
+			<element name="Name" type="tps:string050" minOccurs="0" maxOccurs="1"/>
+			<element name="ValidFor" type="tim:TimePeriodType" minOccurs="0" maxOccurs="1"/>
+		
+		</sequence>
+
+	</complexType>
+
+	<element name="ProductOfferingPrice" type="tns:ProductOfferingPriceType"/>
+
+	<element name="ProductOfferingPrices" type="tns:ProductOfferingPricesType"/>
+
+	<complexType name="ProductOfferingPricesType">
+		<sequence>
+			<element ref="tns:ProductOfferingPrice" minOccurs="1" maxOccurs="unbounded"/>
+		</sequence>
+	</complexType>
+
+</schema>

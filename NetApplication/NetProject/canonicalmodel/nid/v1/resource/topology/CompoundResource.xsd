@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified"
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/resource/topology/CompoundResource"
+	xmlns="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/resource/topology/CompoundResource">
+
+
+
+	<complexType name="CompoundResourceType">
+		
+	</complexType>
+
+	<element name="CompoundResource" type="tns:CompoundResourceType" />
+
+	<element name="CompoundResources">
+		<complexType>
+			<sequence>
+				<element ref="tns:CompoundResource" minOccurs="1" maxOccurs="unbounded" />
+			</sequence>
+		</complexType>
+	</element>
+
+</schema>

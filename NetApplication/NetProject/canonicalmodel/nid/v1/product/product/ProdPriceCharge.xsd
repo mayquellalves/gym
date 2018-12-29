@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified"
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/product/ProdPriceCharge"
+	xmlns="http://www.w3.org/2001/XMLSchema" 
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/product/ProdPriceCharge">
+		
+	
+	
+	<complexType name="ProdPriceChargeType">
+		
+			
+			
+	</complexType>
+
+	<element name="ProdPriceCharge" type="tns:ProdPriceChargeType" />
+
+	<complexType name="ProdPriceChargesType">
+		<sequence>
+			<element ref="tns:ProdPriceCharge" minOccurs="1" maxOccurs="unbounded" />
+		</sequence>
+	</complexType>
+	
+	<element name="ProdPriceCharges" type="tns:ProdPriceChargesType" />
+
+</schema>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified" 
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/resource/resource/EquipmentType" 
+	xmlns="http://www.w3.org/2001/XMLSchema" 
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/resource/resource/EquipmentType" 
+	xmlns:tps="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types">
+	
+	<import schemaLocation="../../netarchitecture/common/Types.xsd" 
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types"/>
+		
+	
+		
+
+		
+	<complexType name="EquipmentTypeType">
+		<sequence>
+			<element name="Description" type="tps:string050" minOccurs="0" maxOccurs="1"/>
+			<element name="TypeId" type="tps:string020" minOccurs="0" maxOccurs="1"/>
+		</sequence>
+	</complexType>
+
+	<element name="EquipmentType" type="tns:EquipmentTypeType"/>
+
+	<element name="EquipmentTypeTypes">
+		<complexType>
+			<sequence>
+				<element ref="tns:EquipmentType" minOccurs="1" maxOccurs="unbounded"/>
+			</sequence>
+		</complexType>
+	</element>
+
+</schema>

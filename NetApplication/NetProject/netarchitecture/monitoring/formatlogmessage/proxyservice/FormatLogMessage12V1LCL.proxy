@@ -1,0 +1,600 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:con="http://www.bea.com/wli/sb/typesystem/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con3="http://www.bea.com/wli/sb/stages/logging/config" xmlns:con4="http://www.bea.com/wli/sb/pipeline/config">
+  <ser:coreEntry isProxy="true" isEnabled="true" isAutoPublish="false" isTracingEnabled="false">
+    <ser:binding type="SOAP" isSoap12="true" xsi:type="con5:SoapBindingType" xmlns:con5="http://www.bea.com/wli/sb/services/bindings/config">
+      <con5:wsdl ref="netarchitecture/monitoring/formatlogmessage/wsdl/proxy/FormatLogMessage12V1"/>
+      <con5:binding>
+        <con5:name>FormatLogMessageBinding12</con5:name>
+        <con5:namespace>http://www.netservicos.com.br/FormatLogMessageV1</con5:namespace>
+      </con5:binding>
+      <con5:selector type="SOAP body"/>
+    </ser:binding>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Pipeline</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+    <ser:ws-policy>
+      <ser:binding-mode>owsm-policy-bindings</ser:binding-mode>
+    </ser:ws-policy>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>local</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:inbound-properties/>
+    <tran:all-headers>true</tran:all-headers>
+  </ser:endpointConfig>
+  <ser:router errorHandler="_onErrorHandler-9007186471813492172-7af8269.134b3e8fc16.-7db4">
+    <con:pipeline type="request" name="PipelinePairNode_request" xmlns:con="http://www.bea.com/wli/sb/pipeline/config">
+      <con:stage name="TransformMetadataDefaults">
+        <con:context>
+          <con1:userNsDecl namespace="http://www.netservicos.com.br/v2/NetHeader" prefix="netheader" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+          <con1:varNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Metadata" prefix="met" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+        </con:context>
+        <con:actions>
+          <con1:replace varName="header" contents-only="true">
+            <con2:id>_ActionId-7767715627125093276-34f28e4c.1350ab08abf.-7f5c</con2:id>
+            <con1:location>
+              <con2:xpathText>.</con2:xpathText>
+            </con1:location>
+            <con1:expr>
+              <con2:xqueryTransform>
+                <con2:resource ref="netarchitecture/transformation/xquery/TransformMetadataDefaultsXQuery"/>
+                <con2:param name="tokenDefault">
+                  <con2:path>fn-bea:uuid()</con2:path>
+                </con2:param>
+                <con2:param name="currentDateTime">
+                  <con2:path>fn:current-dateTime()</con2:path>
+                </con2:param>
+                <con2:param name="vendorDefault">
+                  <con2:path>'OTHER'</con2:path>
+                </con2:param>
+                <con2:param name="metadataIN">
+                  <con2:path>$header/met:Metadata</con2:path>
+                </con2:param>
+                <con2:param name="featureDefault">
+                  <con2:path>'OTHER'</con2:path>
+                </con2:param>
+                <con2:param name="serviceVersionDefault">
+                  <con2:path>'1.0'</con2:path>
+                </con2:param>
+              </con2:xqueryTransform>
+            </con1:expr>
+          </con1:replace>
+        </con:actions>
+      </con:stage>
+      <con:stage name="LogRequest">
+        <con:context/>
+        <con:actions>
+          <con3:log>
+            <con2:id>_ActionId-1108678829795421514-47e2cb16.134c91e8bec.-73a3</con2:id>
+            <con3:logLevel>info</con3:logLevel>
+            <con3:expr>
+              <con2:xqueryText>$header</con2:xqueryText>
+            </con3:expr>
+            <con3:message>header</con3:message>
+          </con3:log>
+          <con3:log>
+            <con2:id>_ActionId-1108678829795421514-47e2cb16.134c91e8bec.-73a2</con2:id>
+            <con3:logLevel>info</con3:logLevel>
+            <con3:expr>
+              <con2:xqueryText>$body</con2:xqueryText>
+            </con3:expr>
+            <con3:message>body</con3:message>
+          </con3:log>
+        </con:actions>
+      </con:stage>
+      <con:stage name="ValidateRequestContent">
+        <con:context>
+          <con1:varNsDecl namespace="http://www.netservicos.com.br/FormatLogMessage" prefix="log" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+          <con1:varNsDecl namespace="http://www.netservicos.com.br/modelocanonico/v2/logging" prefix="log1" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+          <con2:varNsDecl namespace="http://www.netservicos.com.br/FormatLogMessageV1" prefix="for"/>
+          <con2:varNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/monitoring/Logging" prefix="log2"/>
+          <con2:varNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Metadata" prefix="met"/>
+          <con2:varNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/NidDomain" prefix="nid"/>
+          <con2:varNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/NidAbeLevel" prefix="nid1"/>
+          <con2:varNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/fault/ErrorInfo" prefix="err"/>
+          <con3:variable name="domainAndAbe" path="$domainAndAbe" xmlns:con3="http://www.bea.com/wli/sb/typesystem/config">
+            <con3:xml-schema type="string"/>
+          </con3:variable>
+        </con:context>
+        <con:actions>
+          <con1:ifThenElse>
+            <con2:id>_ActionId-1868099853632243644--32df0601.12087e6bdcf.-8000</con2:id>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText>not(fn:exists($body/for:formatLogMessageRequest/log2:LogMessage/log2:LogType))
+or not($body/for:formatLogMessageRequest/log2:LogMessage/log2:LogType/node())
+or ($body/for:formatLogMessageRequest/log2:LogMessage/log2:LogType eq "")
+or not(fn:matches(fn:concat('-',fn:upper-case($body/for:formatLogMessageRequest/log2:LogMessage/log2:LogType),'-'),"-INFO-|-WARN-|-ERROR-"))</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con1:Error>
+                  <con2:id>_ActionId-1641218461896904558--4be4d097.1203e8e8900.-7fbd</con2:id>
+                  <con1:errCode>OSB-NETARCHITECTURE-00012</con1:errCode>
+                  <con1:message/>
+                </con1:Error>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText>not(fn:exists($body/for:formatLogMessageRequest/log2:LogMessage/log2:MessageCode))
+or not($body/for:formatLogMessageRequest/log2:LogMessage/log2:MessageCode/node())
+or ($body/for:formatLogMessageRequest/log2:LogMessage/log2:MessageCode eq "")</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con1:Error>
+                  <con2:id>_ActionId-7920109603575515300--2fc40965.120497fbb54.-7ff8</con2:id>
+                  <con1:errCode>OSB-NETARCHITECTURE-00007</con1:errCode>
+                  <con1:message/>
+                </con1:Error>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText>not(fn:exists($header/met:Metadata/met:Tracking/met:Username))
+or not($header/met:Metadata/met:Tracking/met:Username/node())
+or ($header/met:Metadata/met:Tracking/met:Username eq "")</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con1:Error>
+                  <con2:id>_ActionId-7694039109687971621-21ca3a19.120a5786f00.-7ef8</con2:id>
+                  <con1:errCode>OSB-NETARCHITECTURE-00013</con1:errCode>
+                  <con1:message/>
+                </con1:Error>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText>not(fn:exists($body/for:formatLogMessageRequest/log2:LogMessage/log2:Timestamp))
+or not($body/for:formatLogMessageRequest/log2:LogMessage/log2:Timestamp/node())
+or ($body/for:formatLogMessageRequest/log2:LogMessage/log2:Timestamp eq "")</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con1:Error>
+                  <con2:id>_ActionId-7694039109687971621-21ca3a19.120a5786f00.-7ef7</con2:id>
+                  <con1:errCode>OSB-NETARCHITECTURE-00014</con1:errCode>
+                  <con1:message/>
+                </con1:Error>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText>"ERROR" eq fn:upper-case($body/for:formatLogMessageRequest/log2:LogMessage/log2:LogType)</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con1:ifThenElse>
+                  <con2:id>_ActionId-7694039109687971621-21ca3a19.120a5786f00.-7efe</con2:id>
+                  <con1:case>
+                    <con1:condition>
+                      <con2:xqueryText>(not(fn:exists($body/for:formatLogMessageRequest/log2:LogMessage/err:ErrorInfo))
+or
+not($body/for:formatLogMessageRequest/log2:LogMessage/err:ErrorInfo/node())
+or
+$body/for:formatLogMessageRequest/log2:LogMessage/err:ErrorInfo eq ""
+)</con2:xqueryText>
+                    </con1:condition>
+                    <con1:actions>
+                      <con1:Error>
+                        <con2:id>_ActionId-7340818090149302433--4265c0bc.1345722938e.-6acc</con2:id>
+                        <con1:errCode>OSB-NETARCHITECTURE-00015</con1:errCode>
+                        <con1:message/>
+                      </con1:Error>
+                    </con1:actions>
+                  </con1:case>
+                  <con1:case>
+                    <con1:condition>
+                      <con2:xqueryText>(not(fn:exists($body/for:formatLogMessageRequest/log2:LogMessage/err:ErrorInfo/err:Code))
+or
+not($body/for:formatLogMessageRequest/log2:LogMessage/err:ErrorInfo/err:Code/node())
+or
+$body/for:formatLogMessageRequest/log2:LogMessage/err:ErrorInfo/err:Code eq "")
+or
+(not(fn:exists($body/for:formatLogMessageRequest/log2:LogMessage/err:ErrorInfo/err:Message))
+or
+not($body/for:formatLogMessageRequest/log2:LogMessage/err:ErrorInfo/err:Message/node()))
+or
+(not(fn:exists($body/for:formatLogMessageRequest/log2:LogMessage/err:ErrorInfo/err:ExceptionDate))
+or
+not($body/for:formatLogMessageRequest/log2:LogMessage/err:ErrorInfo/err:ExceptionDate/node())
+or
+$body/for:formatLogMessageRequest/log2:LogMessage/err:ErrorInfo/err:ExceptionDate eq "")
+or
+(not(fn:exists($body/for:formatLogMessageRequest/log2:LogMessage/err:ErrorInfo/err:ExceptionClassification))
+or
+not($body/for:formatLogMessageRequest/log2:LogMessage/err:ErrorInfo/err:ExceptionClassification/node())
+or
+$body/for:formatLogMessageRequest/log2:LogMessage/err:ErrorInfo/err:ExceptionClassification eq "")</con2:xqueryText>
+                    </con1:condition>
+                    <con1:actions>
+                      <con1:Error>
+                        <con2:id>_ActionId-7694039109687971621-21ca3a19.120a5786f00.-7efc</con2:id>
+                        <con1:errCode>OSB-NETARCHITECTURE-00016</con1:errCode>
+                        <con1:message/>
+                      </con1:Error>
+                    </con1:actions>
+                  </con1:case>
+                  <con1:default/>
+                </con1:ifThenElse>
+              </con1:actions>
+            </con1:case>
+            <con1:default/>
+          </con1:ifThenElse>
+        </con:actions>
+      </con:stage>
+      <con:stage name="RetrieveMessageDVM">
+        <con:context>
+          <con1:userNsDecl namespace="http://www.netservicos.com.br/FormatLogMessage" prefix="log" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+          <con1:userNsDecl namespace="http://netservicos.com.br/core/schema" prefix="msg" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+          <con2:varNsDecl namespace="http://www.netservicos.com.br/FormatLogMessageV1" prefix="for"/>
+          <con2:varNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/monitoring/Logging" prefix="log2"/>
+          <con2:varNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/NidDomain" prefix="nid"/>
+          <con2:varNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/NidAbeLevel" prefix="nid1"/>
+          <con2:varNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Message" prefix="msg1"/>
+          <con4:variable name="messageFromBundle" path="$messageFromBundle" asChild="false" xmlns:con4="http://www.bea.com/wli/sb/typesystem/config">
+            <con4:schema ref="canonicalmodel/nid/v1/netarchitecture/common/Message" element="Message"/>
+          </con4:variable>
+        </con:context>
+        <con:actions>
+          <con1:assign varName="messageFromBundle">
+            <con2:id>_ActionId-8565640027666656858-6b0a0d10.1347c0436e9.-704d</con2:id>
+            <con1:expr>
+              <con2:xqueryTransform>
+                <con2:resource ref="netarchitecture/transformation/dvm/retrievemessage/xquery/RetrieveMessageDVM"/>
+                <con2:param name="MessageCode">
+                  <con2:path>data($body/for:formatLogMessageRequest/log2:LogMessage/log2:MessageCode)</con2:path>
+                </con2:param>
+              </con2:xqueryTransform>
+            </con1:expr>
+          </con1:assign>
+          <con1:assign varName="domainAndAbeLevel">
+            <con2:id>_ActionId-8565640027666656858-6b0a0d10.1347c0436e9.-6fc7</con2:id>
+            <con1:expr>
+              <con2:xqueryTransform>
+                <con2:resource ref="netarchitecture/transformation/dvm/validatedomainsubdomain/xquery/ValidateDomainSubDomainDVM"/>
+                <con2:param name="subDomain">
+                  <con2:path>data($messageFromBundle/msg1:ABE_LEVEL)</con2:path>
+                </con2:param>
+                <con2:param name="domain">
+                  <con2:path>data($messageFromBundle/msg1:NID_DOMAIN)</con2:path>
+                </con2:param>
+              </con2:xqueryTransform>
+            </con1:expr>
+          </con1:assign>
+          <con1:ifThenElse>
+            <con2:id>_ActionId-8565640027666656858-6b0a0d10.1347c0436e9.-6fc4</con2:id>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText>$domainAndAbeLevel = 'true'</con2:xqueryText>
+              </con1:condition>
+              <con1:actions/>
+            </con1:case>
+            <con1:default>
+              <con1:Error>
+                <con2:id>_ActionId-8565640027666656858-6b0a0d10.1347c0436e9.-6fc3</con2:id>
+                <con1:errCode>OSB-NETARCHITECTURE-00008</con1:errCode>
+              </con1:Error>
+            </con1:default>
+          </con1:ifThenElse>
+        </con:actions>
+      </con:stage>
+      <con:stage name="MapParameters">
+        <con:context>
+          <con1:userNsDecl namespace="http://www.netservicos.com.br/modelocanonico/v2/errorinfo" prefix="errInfo" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+          <con1:varNsDecl namespace="http://www.netservicos.com.br/FormatLogMessage" prefix="for" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+          <con1:varNsDecl namespace="http://www.netservicos.com.br/modelocanonico/v2/logging" prefix="log" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+          <con2:varNsDecl namespace="http://www.netservicos.com.br/FormatLogMessageV1" prefix="for1"/>
+          <con2:varNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/monitoring/Logging" prefix="log1"/>
+          <con2:varNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/fault/ErrorInfo" prefix="err"/>
+        </con:context>
+        <con:actions>
+          <con1:foreach>
+            <con2:comment>Loop nos parâmetros de mensagem para gerar Array para Java Callout</con2:comment>
+            <con2:id>_ActionId-1229018694010655203-745c49ed.13a1d3c9ee2.-7b8a</con2:id>
+            <con1:variable>body</con1:variable>
+            <con1:expression>
+              <con2:xpathText>./for1:formatLogMessageRequest/log1:LogMessage/log1:MessageParameters/log1:Value</con2:xpathText>
+            </con1:expression>
+            <con1:value-variable>valor</con1:value-variable>
+            <con1:actions>
+              <con1:javaCallout varName="paramContatenados">
+                <con2:id>_ActionId-1229018694010655203-745c49ed.13a1d3c9ee2.-7b8b</con2:id>
+                <con1:archive ref="netarchitecture/transformation/jar/NETServiceBusUtilClient"/>
+                <con1:className>br.com.netservicos.sb.logging.format.NETMessageFormater</con1:className>
+                <con1:method>public static [Ljava.lang.Object; elementConcat(java.lang.String, [Ljava.lang.Object;)</con1:method>
+                <con1:expr>
+                  <con2:xqueryText>fn:data($valor)</con2:xqueryText>
+                </con1:expr>
+                <con1:expr>
+                  <con2:xqueryText>$paramContatenados</con2:xqueryText>
+                </con1:expr>
+              </con1:javaCallout>
+            </con1:actions>
+          </con1:foreach>
+          <con1:foreach>
+            <con2:comment>Loop nos Códigos de Mensagem para gerar Arrays Para passagem de parâmetro</con2:comment>
+            <con2:id>_ActionId-144155806058085468--27e11f30.1209fd8353f.-7ff0</con2:id>
+            <con1:variable>body</con1:variable>
+            <con1:expression>
+              <con2:xpathText>./for1:formatLogMessageRequest/log1:LogMessage/err:ErrorInfo/err:ValidationMessages/err:ValidationMessage</con2:xpathText>
+            </con1:expression>
+            <con1:value-variable>valor</con1:value-variable>
+            <con1:actions>
+              <con1:javaCallout varName="valMsgCodeConcat">
+                <con2:id>_ActionId-7340818090149302433--4265c0bc.1345722938e.-6acb</con2:id>
+                <con1:archive ref="netarchitecture/transformation/jar/NETServiceBusUtilClient"/>
+                <con1:className>br.com.netservicos.sb.logging.format.NETMessageFormater</con1:className>
+                <con1:method>public static [Ljava.lang.Object; elementConcat(java.lang.String, [Ljava.lang.Object;)</con1:method>
+                <con1:expr>
+                  <con2:xqueryText>fn:data($valor/err:Code)</con2:xqueryText>
+                </con1:expr>
+                <con1:expr>
+                  <con2:xqueryText>$valMsgCodeConcat</con2:xqueryText>
+                </con1:expr>
+              </con1:javaCallout>
+              <con1:javaCallout varName="valMsgMessageConcat">
+                <con2:id>_ActionId-7340818090149302433--4265c0bc.1345722938e.-6aca</con2:id>
+                <con1:archive ref="netarchitecture/transformation/jar/NETServiceBusUtilClient"/>
+                <con1:className>br.com.netservicos.sb.logging.format.NETMessageFormater</con1:className>
+                <con1:method>public static [Ljava.lang.Object; elementConcat(java.lang.String, [Ljava.lang.Object;)</con1:method>
+                <con1:expr>
+                  <con2:xqueryText>fn:data($valor/err:Message)</con2:xqueryText>
+                </con1:expr>
+                <con1:expr>
+                  <con2:xqueryText>$valMsgMessageConcat</con2:xqueryText>
+                </con1:expr>
+              </con1:javaCallout>
+            </con1:actions>
+          </con1:foreach>
+        </con:actions>
+      </con:stage>
+      <con:stage name="FormatMessage">
+        <con:context>
+          <con1:userNsDecl namespace="http://netservicos.com.br/core/schema" prefix="msg" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+          <con2:userNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Message" prefix="msg1"/>
+          <con1:varNsDecl namespace="http://www.netservicos.com.br/FormatLogMessage" prefix="log" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+          <con1:varNsDecl namespace="http://www.netservicos.com.br/modelocanonico/v2/logging" prefix="log1" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+          <con2:varNsDecl namespace="http://www.netservicos.com.br/FormatLogMessageV1" prefix="for"/>
+          <con2:varNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/monitoring/Logging" prefix="log2"/>
+          <con2:varNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/NidDomain" prefix="nid"/>
+          <con2:varNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/NidAbeLevel" prefix="nid1"/>
+          <con2:varNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Metadata" prefix="met"/>
+          <con2:varNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/fault/ErrorInfo" prefix="err"/>
+        </con:context>
+        <con:actions>
+          <con1:javaCallout varName="mensagemFormatada">
+            <con2:id>_ActionId-1868099853632243644--32df0601.12087e6bdcf.-7ff2</con2:id>
+            <con1:archive ref="netarchitecture/transformation/jar/NETServiceBusUtilClient"/>
+            <con1:className>br.com.netservicos.sb.logging.format.NETMessageFormater</con1:className>
+            <con1:method>public static java.lang.String formatLogMessage(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, [Ljava.lang.Object;, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, [Ljava.lang.Object;, [Ljava.lang.Object;, java.lang.String)</con1:method>
+            <con1:expr>
+              <con2:xqueryText>fn:data($body/for:formatLogMessageRequest/log2:LogMessage/log2:LogType)</con2:xqueryText>
+            </con1:expr>
+            <con1:expr>
+              <con2:xqueryText>xs:dateTime($body/for:formatLogMessageRequest/log2:LogMessage/log2:Timestamp)</con2:xqueryText>
+            </con1:expr>
+            <con1:expr>
+              <con2:xqueryText>fn:data(fn:data($messageFromBundle//msg1:NID_DOMAIN))</con2:xqueryText>
+            </con1:expr>
+            <con1:expr>
+              <con2:xqueryText>fn:data(fn:data($messageFromBundle//msg1:ABE_LEVEL))</con2:xqueryText>
+            </con1:expr>
+            <con1:expr>
+              <con2:xqueryText>fn:data($header/met:Metadata/met:Tracking/met:TransactionId)</con2:xqueryText>
+            </con1:expr>
+            <con1:expr>
+              <con2:xqueryText>fn:data($header/met:Metadata/met:Tracking/met:Username)</con2:xqueryText>
+            </con1:expr>
+            <con1:expr>
+              <con2:xqueryText>fn:data($header/met:Metadata/met:Consumer/met:Application)</con2:xqueryText>
+            </con1:expr>
+            <con1:expr>
+              <con2:xqueryText>fn:data($header/met:Metadata/met:Consumer/met:Feature)</con2:xqueryText>
+            </con1:expr>
+            <con1:expr>
+              <con2:xqueryText>fn:data($body/for:formatLogMessageRequest/log2:LogMessage/log2:MessageCode)</con2:xqueryText>
+            </con1:expr>
+            <con1:expr>
+              <con2:xqueryText>fn:data($messageFromBundle//msg1:DETAIL_MESSAGE)</con2:xqueryText>
+            </con1:expr>
+            <con1:expr>
+              <con2:xqueryText>$paramContatenados</con2:xqueryText>
+            </con1:expr>
+            <con1:expr>
+              <con2:xqueryText>fn:data($body/for:formatLogMessageRequest/log2:LogMessage/err:ErrorInfo/err:Code)</con2:xqueryText>
+            </con1:expr>
+            <con1:expr>
+              <con2:xqueryText>fn:data($body/for:formatLogMessageRequest/log2:LogMessage/err:ErrorInfo/err:Message)</con2:xqueryText>
+            </con1:expr>
+            <con1:expr>
+              <con2:xqueryText>fn:data($body/for:formatLogMessageRequest/log2:LogMessage/err:ErrorInfo/err:ExceptionDate)</con2:xqueryText>
+            </con1:expr>
+            <con1:expr>
+              <con2:xqueryText>fn:data($body/for:formatLogMessageRequest/log2:LogMessage/err:ErrorInfo/err:ExceptionClassification)</con2:xqueryText>
+            </con1:expr>
+            <con1:expr>
+              <con2:xqueryText>fn:data($body/for:formatLogMessageRequest/log2:LogMessage/err:ErrorInfo/err:AccessResourceName)</con2:xqueryText>
+            </con1:expr>
+            <con1:expr>
+              <con2:xqueryText>$valMsgCodeConcat</con2:xqueryText>
+            </con1:expr>
+            <con1:expr>
+              <con2:xqueryText>$valMsgMessageConcat</con2:xqueryText>
+            </con1:expr>
+            <con1:expr>
+              <con2:xqueryText>fn:data($body/for:formatLogMessageRequest/log2:LogMessage/err:ErrorInfo/err:ExceptionStackTrace)</con2:xqueryText>
+            </con1:expr>
+          </con1:javaCallout>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="response" name="PipelinePairNode_response" xmlns:con="http://www.bea.com/wli/sb/pipeline/config">
+      <con:stage name="PrepareResponse">
+        <con:context>
+          <con1:varNsDecl namespace="http://www.netservicos.com.br/FormatLogMessage" prefix="log" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+          <con1:varNsDecl namespace="http://www.netservicos.com.br/modelocanonico/v2/logging" prefix="log1" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+          <con2:varNsDecl namespace="http://www.netservicos.com.br/FormatLogMessageV1" prefix="for"/>
+          <con2:varNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/monitoring/Logging" prefix="log2"/>
+          <con2:varNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Metadata" prefix="met"/>
+        </con:context>
+        <con:actions>
+          <con1:replace varName="body" contents-only="true">
+            <con2:id>_ActionId-1868099853632243644--32df0601.12087e6bdcf.-7ff8</con2:id>
+            <con1:location>
+              <con2:xpathText>.</con2:xpathText>
+            </con1:location>
+            <con1:expr>
+              <con2:xqueryText><![CDATA[<for:formatLogMessageResponse>
+	<log2:FormattedLogMessage>
+		<log2:TransactionId>{data($header/met:Metadata/met:Tracking/met:TransactionId)}</log2:TransactionId>
+		<log2:Message>{$mensagemFormatada}</log2:Message>
+	</log2:FormattedLogMessage>
+</for:formatLogMessageResponse>]]></con2:xqueryText>
+            </con1:expr>
+          </con1:replace>
+          <con1:delete varName="header">
+            <con2:id>_ActionId-967156512052211097-511c787b.1350f727680.-7f04</con2:id>
+          </con1:delete>
+        </con:actions>
+      </con:stage>
+      <con:stage name="LogResponse">
+        <con:context/>
+        <con:actions>
+          <con3:log>
+            <con2:id>_ActionId-1108678829795421514-47e2cb16.134c91e8bec.-7415</con2:id>
+            <con3:logLevel>info</con3:logLevel>
+            <con3:expr>
+              <con2:xqueryText>$header</con2:xqueryText>
+            </con3:expr>
+            <con3:message>header</con3:message>
+          </con3:log>
+          <con3:log>
+            <con2:id>_ActionId-1108678829795421514-47e2cb16.134c91e8bec.-7414</con2:id>
+            <con3:logLevel>info</con3:logLevel>
+            <con3:expr>
+              <con2:xqueryText>$body</con2:xqueryText>
+            </con3:expr>
+            <con3:message>body</con3:message>
+          </con3:log>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con4:pipeline type="error" name="_onErrorHandler-9007186471813492172-7af8269.134b3e8fc16.-7db4">
+      <con4:stage name="ErrorHandlerPipelinePairNode">
+        <con4:comment>Estágio de tratamento de erro geral.</con4:comment>
+        <con4:context>
+          <con2:userNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/fault/ErrorInfo" prefix="errorInfo"/>
+          <con2:userNsDecl namespace="http://www.netservicos.com.br/FaultHandlerV1" prefix="excephdlr"/>
+          <con2:userNsDecl namespace="http://www.netservicos.com.br/modelocanonico/v2/logging" prefix="logging"/>
+          <con2:varNsDecl namespace="http://www.netservicos.com.br/FormatLogMessageV1" prefix="for"/>
+        </con4:context>
+        <con4:actions>
+          <con1:ifThenElse>
+            <con2:comment>IF que verifica se a variavel contento o erro, ErrorHandlerRequest, esta presente</con2:comment>
+            <con2:id>_ActionId-9007186471813492172-7af8269.134b3e8fc16.-7d6e</con2:id>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText>empty($errorHandlerRequest)</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con1:assign varName="errorHandlerRequest">
+                  <con2:id>_ActionId-9007186471813492172-7af8269.134b3e8fc16.-7d6d</con2:id>
+                  <con1:expr>
+                    <con2:xqueryTransform>
+                      <con2:resource ref="netarchitecture/fault/faulthandler/transformation/xquery/MapFaultHandlerReqXQuery"/>
+                      <con2:param name="validationMessages">
+                        <con2:path>$null</con2:path>
+                      </con2:param>
+                      <con2:param name="messageParameters">
+                        <con2:path>$null</con2:path>
+                      </con2:param>
+                      <con2:param name="currentFault">
+                        <con2:path>$null</con2:path>
+                      </con2:param>
+                      <con2:param name="currentBody">
+                        <con2:path>$null</con2:path>
+                      </con2:param>
+                      <con2:param name="accessResourceName">
+                        <con2:path>'netarchitecture/monitoring/formatlogmessage/proxyservice/FormatLogMessage12V1LCL/PipelinePairNode'</con2:path>
+                      </con2:param>
+                      <con2:param name="exceptionStackTrace">
+                        <con2:path>$null</con2:path>
+                      </con2:param>
+                      <con2:param name="messageCode">
+                        <con2:path>fn:data($fault/ctx:errorCode)</con2:path>
+                      </con2:param>
+                      <con2:param name="callResponse">
+                        <con2:path>$null</con2:path>
+                      </con2:param>
+                      <con2:param name="exceptionClassification">
+                        <con2:path>'CLASSIFICATION_UNEXPECTED'</con2:path>
+                      </con2:param>
+                      <con2:param name="additionalInformation">
+                        <con2:path>$body/for:formatLogMessageRequest</con2:path>
+                      </con2:param>
+                    </con2:xqueryTransform>
+                  </con1:expr>
+                </con1:assign>
+              </con1:actions>
+            </con1:case>
+            <con1:default/>
+          </con1:ifThenElse>
+          <con1:wsCallout>
+            <con2:id>_ActionId-9007186471813492172-7af8269.134b3e8fc16.-7d6a</con2:id>
+            <con1:service xsi:type="ref:ProxyRef" ref="netarchitecture/fault/faulthandler/proxyservice/FaultHandler12V1LCL" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+            <con1:operation>faultHandler</con1:operation>
+            <con1:request>
+              <con1:body>$errorHandlerRequest</con1:body>
+            </con1:request>
+            <con1:response>
+              <con1:body>errorHandlerResponse</con1:body>
+            </con1:response>
+            <con1:requestTransform/>
+            <con1:responseTransform/>
+          </con1:wsCallout>
+          <con1:assign varName="customFault" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con2="http://www.bea.com/wli/sb/stages/logging/config">
+            <con5:id xmlns:con5="http://www.bea.com/wli/sb/stages/config">_ActionId-5301043438263413021--2d300142.138ee357328.-63d6</con5:id>
+            <con1:expr>
+              <con3:xqueryTransform xmlns:con3="http://www.bea.com/wli/sb/stages/config">
+                <con3:resource ref="netarchitecture/fault/faulthandler/transformation/xquery/TransformOSBFaultToRuntimeFaultXQuery"/>
+                <con3:param name="fault">
+                  <con3:path>$errorHandlerResponse/ctx:fault</con3:path>
+                </con3:param>
+              </con3:xqueryTransform>
+            </con1:expr>
+          </con1:assign>
+          <con1:replace varName="body" contents-only="true" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con2="http://www.bea.com/wli/sb/stages/logging/config">
+            <con5:id xmlns:con5="http://www.bea.com/wli/sb/stages/config">_ActionId-5301043438263413021--2d300142.138ee357328.-63b4</con5:id>
+            <con1:location>
+              <con2:xpathText xmlns:con2="http://www.bea.com/wli/sb/stages/config">.</con2:xpathText>
+            </con1:location>
+            <con1:expr>
+              <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$customFault</con3:xqueryText>
+            </con1:expr>
+          </con1:replace>
+          <con1:delete varName="header" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con2="http://www.bea.com/wli/sb/stages/logging/config">
+            <con5:id xmlns:con5="http://www.bea.com/wli/sb/stages/config">_ActionId-5301043438263413021--2d300142.138ee357328.-63b3</con5:id>
+          </con1:delete>
+          <con5:reply isError="true" xmlns:con3="http://www.bea.com/wli/sb/stages/config" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con2="http://www.bea.com/wli/sb/stages/logging/config" xmlns:con5="http://www.bea.com/wli/sb/stages/config">
+            <con5:id>_ActionId-5301043438263413021--2d300142.138ee357328.-63b2</con5:id>
+          </con5:reply>
+        </con4:actions>
+      </con4:stage>
+    </con4:pipeline>
+    <con:flow xmlns:con="http://www.bea.com/wli/sb/pipeline/config">
+      <con:pipeline-node name="PipelinePairNode">
+        <con:request>PipelinePairNode_request</con:request>
+        <con:response>PipelinePairNode_response</con:response>
+      </con:pipeline-node>
+    </con:flow>
+  </ser:router>
+</xml-fragment>

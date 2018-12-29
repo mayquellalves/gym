@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/loyalty/LoyaltyBalance" 
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/loyalty/LoyaltyBalance" 
+    xmlns:tip="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/basetypes/TimePeriod" 
+	xmlns:tps="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types">
+
+	<import schemaLocation="../../netarchitecture/common/Types.xsd"
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types" />
+
+    <import schemaLocation="../../common/basetypes/TimePeriod.xsd"
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/basetypes/TimePeriod" />
+	
+
+	<complexType name="LoyaltyBalanceType">
+		<sequence>
+			<element name="Balance" type="int" minOccurs="0" maxOccurs="1" />
+			<element name="Classification" type="tps:string030" minOccurs="0" maxOccurs="1" />
+            <element name="Unit" type="tps:string020" minOccurs="0" maxOccurs="1" />
+            <element name="UpdateDate" type="date" minOccurs="0" maxOccurs="1" />
+            <element name="ValidFor" type="tip:TimePeriodType" minOccurs="0" maxOccurs="1" />
+		</sequence>
+	</complexType>
+
+	<element name="LoyaltyBalance" type="tns:LoyaltyBalanceType" />
+
+	<element name="LoyaltyBalances">
+		<complexType>
+			<sequence>
+				<element ref="tns:LoyaltyBalance" minOccurs="1" maxOccurs="unbounded" />
+			</sequence>
+		</complexType>
+	</element>
+
+</schema>

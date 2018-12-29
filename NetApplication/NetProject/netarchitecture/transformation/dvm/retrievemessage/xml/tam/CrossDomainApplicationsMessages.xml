@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dvm name="netarchitecture.messages.crossdomainapplications.dvm" xmlns="http://xmlns.oracle.com/dvm">
+  <description>
+  	Only messages belonging to cross domain applications domain can be defined here.
+  </description>
+  <columns>
+    <column name="ID_MSG"/>
+    <column name="ERROR_NAME"/>
+    <column name="USER_MESSAGE"/>
+    <column name="DETAIL_MESSAGE"/>
+    <column name="CATEGORY_MESSAGE"/>
+    <column name="SYSTEM_CODE"/>
+    <column name="NID_DOMAIN"/>
+    <column name="ABE_LEVEL"/>
+  </columns>
+  <rows>
+    <row>
+      <cell>OSB-CROSSDOMAINAPPLICATIONS-00001</cell>
+      <cell>REQUEST_INVALID</cell>
+      <cell>Request Inválido para operação: {0}.</cell>
+      <cell>Request Inválido para operação: {0}.</cell>
+      <cell>ERROR</cell>
+      <cell/>
+      <cell>crossdomainapplications</cell>
+      <cell>catalog</cell>
+    </row>
+    <row>
+      <cell>OSB-CROSSDOMAINAPPLICATIONS-00002</cell>
+      <cell>DATA_NOT_FOUND</cell>
+      <cell>Dados não encontrados.</cell>
+      <cell>Dados não encontrados.</cell>
+      <cell>ERROR</cell>
+      <cell/>
+      <cell>crossdomainapplications</cell>
+      <cell>catalog</cell>
+    </row>
+    <row>
+      <cell>OSB-CROSSDOMAINAPPLICATIONS-00003</cell>
+      <cell>RUNTIME_EXCEPTION</cell>
+      <cell>Erro durante a execução do recurso: {0}.</cell>
+      <cell>Erro durante a execução do recurso: {0}.</cell>
+      <cell>ERROR</cell>
+      <cell/>
+      <cell>crossdomainapplications</cell>
+      <cell>catalog</cell>
+    </row>
+    <row>
+      <cell>OSB-CROSSDOMAINAPPLICATIONS-00004</cell>
+      <cell>FIELDS_NOT_INFORMED</cell>
+      <cell>O(s) campo(s) {0} deve(m) ser informado(s).</cell>
+      <cell>O(s) campo(s) {0} deve(m) ser informado(s).</cell>
+      <cell>ERROR</cell>
+      <cell/>
+      <cell>crossdomainapplications</cell>
+      <cell>catalog</cell>
+    </row>
+  </rows>
+</dvm>

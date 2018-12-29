@@ -1,0 +1,2975 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con3="http://www.bea.com/wli/sb/stages/alert/config">
+  <ser:coreEntry isProxy="true" isEnabled="true" isAutoPublish="false" isTracingEnabled="false">
+    <ser:binding type="SOAP" isSoap12="true" xsi:type="con:SoapBindingType" xmlns:con="http://www.bea.com/wli/sb/services/bindings/config">
+      <con:wsdl ref="netarchitecture/monitoring/alert/wsdl/proxy/Alert12V1"/>
+      <con:binding>
+        <con:name>AlertBinding12</con:name>
+        <con:namespace>http://www.netservicos.com.br/AlertV1</con:namespace>
+      </con:binding>
+      <con:selector type="SOAP body"/>
+    </ser:binding>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Pipeline</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+    <ser:ws-policy>
+      <ser:binding-mode>owsm-policy-bindings</ser:binding-mode>
+    </ser:ws-policy>
+    <ser:throttling enabled="false">
+      <ser:capacity>0</ser:capacity>
+      <ser:maxQueueLength>0</ser:maxQueueLength>
+      <ser:timeToLive>0</ser:timeToLive>
+    </ser:throttling>
+    <ser:messageTracing enabled="false">
+      <ser:detailsLevel>Terse</ser:detailsLevel>
+      <ser:maxSize>8192</ser:maxSize>
+    </ser:messageTracing>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>local</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:inbound-properties/>
+    <tran:all-headers>true</tran:all-headers>
+  </ser:endpointConfig>
+  <ser:router>
+    <con:pipeline type="request" name="PipelinePairNode_request">
+      <con:stage name="GetClassificationSeverity">
+        <con:context>
+          <con1:varNsDecl namespace="http://www.netservicos.com.br/AlertV1" prefix="aler"/>
+          <con1:varNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/monitoring/Alert" prefix="aler1"/>
+          <con1:varNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/NidDomain" prefix="nid"/>
+          <con1:varNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/NidAbeLevel" prefix="nid1"/>
+        </con:context>
+        <con:actions>
+          <con2:ifThenElse>
+            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-360b</con1:id>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>not(fn:exists($body/aler:alertRequest/aler1:ExceptionClassification))
+or not($body/aler:alertRequest/aler1:ExceptionClassification/node())
+or ($body/aler:alertRequest/aler1:ExceptionClassification eq "")</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:assign varName="severidadeAlerta">
+                  <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-35ea</con1:id>
+                  <con2:expr>
+                    <con1:xqueryText>"NORMAL"</con1:xqueryText>
+                  </con2:expr>
+                </con2:assign>
+              </con2:actions>
+            </con2:case>
+            <con2:default>
+              <con1:javaCallout varName="severidadeAlerta" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-1445721328115578041--38b75155.14619ddf914.-3608</con3:id>
+                <con1:archive ref="netarchitecture/transformation/jar/NETServiceBusUtilClient"/>
+                <con1:className>br.com.netservicos.sb.config.alert.NETAlertConfig</con1:className>
+                <con1:method>public static java.lang.String getClassificationSeverty(java.lang.String)</con1:method>
+                <con1:expr>
+                  <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">fn:data($body/aler:alertRequest/aler1:ExceptionClassification)</con2:xqueryText>
+                </con1:expr>
+              </con1:javaCallout>
+            </con2:default>
+          </con2:ifThenElse>
+        </con:actions>
+      </con:stage>
+      <con:stage name="CreateAlertAccordingToNidAbeLevelAndSeverity">
+        <con:context>
+          <con1:varNsDecl namespace="http://www.netservicos.com.br/AlertV1" prefix="aler"/>
+          <con1:varNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/monitoring/Alert" prefix="aler1"/>
+          <con1:varNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/NidDomain" prefix="nid"/>
+          <con1:varNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/NidAbeLevel" prefix="nid1"/>
+        </con:context>
+        <con:actions>
+          <con2:ifThenElse>
+            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-35cc</con1:id>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>fn:upper-case("Account") eq fn:upper-case($body/aler:alertRequest/nid1:NidAbeLevel)</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:ifThenElse>
+                  <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-35ab</con1:id>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>"LEVEL1" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-3598</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"FATAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2d9e</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/account/alert/SalesManagementAccountLevel1"/>
+                              <con3:description>Alert LEVEL1 FATAL em SalesManagement.Account</con3:description>
+                              <con3:severity>fatal</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"CRITICAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2d83</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/account/alert/SalesManagementAccountLevel1"/>
+                              <con3:description>Alert LEVEL1 CRITICAL em SalesManagement.Account</con3:description>
+                              <con3:severity>critical</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"WARNING" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2d5e</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/account/alert/SalesManagementAccountLevel1"/>
+                              <con3:description>Alert LEVEL1 WARNING em SalesManagement.Account</con3:description>
+                              <con3:severity>warning</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                          <con3:alert>
+                            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2d46</con1:id>
+                            <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/account/alert/SalesManagementAccountLevel1"/>
+                            <con3:description>Alert LEVEL1 NORMAL em SalesManagement.Account</con3:description>
+                            <con3:severity>normal</con3:severity>
+                            <con3:payload>
+                              <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                            </con3:payload>
+                          </con3:alert>
+                        </con2:default>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>"LEVEL2" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-31da</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"FATAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2d1b</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/account/alert/SalesManagementAccountLevel2"/>
+                              <con3:description>Alert LEVEL2 FATAL em SalesManagement.Account</con3:description>
+                              <con3:severity>fatal</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"CRITICAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2d0e</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/account/alert/SalesManagementAccountLevel2"/>
+                              <con3:description>Alert LEVEL2 CRITICAL em SalesManagement.Account</con3:description>
+                              <con3:severity>critical</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"WARNING" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2cff</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/account/alert/SalesManagementAccountLevel2"/>
+                              <con3:description>Alert LEVEL2 WARNING em SalesManagement.Account</con3:description>
+                              <con3:severity>warning</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                          <con3:alert>
+                            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2cec</con1:id>
+                            <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/account/alert/SalesManagementAccountLevel2"/>
+                            <con3:description>Alert LEVEL2 NORMAL em SalesManagement.Account</con3:description>
+                            <con3:severity>normal</con3:severity>
+                            <con3:payload>
+                              <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                            </con3:payload>
+                          </con3:alert>
+                        </con2:default>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>"LEVEL3" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-31bb</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"FATAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2cdd</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/account/alert/SalesManagementAccountLevel3"/>
+                              <con3:description>Alert LEVEL3 FATAL em SalesManagement.Account</con3:description>
+                              <con3:severity>fatal</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"CRITICAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2ccc</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/account/alert/SalesManagementAccountLevel3"/>
+                              <con3:description>Alert LEVEL3 CRITICAL em SalesManagement.Account</con3:description>
+                              <con3:severity>critical</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"WARNING" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2ca4</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/account/alert/SalesManagementAccountLevel3"/>
+                              <con3:description>Alert LEVEL3 WARNING em SalesManagement.Account</con3:description>
+                              <con3:severity>warning</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                          <con3:alert>
+                            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2c8d</con1:id>
+                            <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/account/alert/SalesManagementAccountLevel3"/>
+                            <con3:description>Alert LEVEL3 NORMAL em SalesManagement.Account</con3:description>
+                            <con3:severity>normal</con3:severity>
+                            <con3:payload>
+                              <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                            </con3:payload>
+                          </con3:alert>
+                        </con2:default>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>"LEVEL4" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-319c</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"FATAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2c7c</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/account/alert/SalesManagementAccountLevel4"/>
+                              <con3:description>Alert LEVEL4 FATAL em SalesManagement.Account</con3:description>
+                              <con3:severity>fatal</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"CRITICAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2c5f</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/account/alert/SalesManagementAccountLevel4"/>
+                              <con3:description>Alert LEVEL4 CRITICAL em SalesManagement.Account</con3:description>
+                              <con3:severity>critical</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"WARNING" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2c39</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/account/alert/SalesManagementAccountLevel4"/>
+                              <con3:description>Alert WARNING FATAL em SalesManagement.Account</con3:description>
+                              <con3:severity>warning</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                          <con3:alert>
+                            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2c20</con1:id>
+                            <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/account/alert/SalesManagementAccountLevel4"/>
+                            <con3:description>Alert LEVEL4 NORMAL em SalesManagement.Account</con3:description>
+                            <con3:severity>normal</con3:severity>
+                            <con3:payload>
+                              <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                            </con3:payload>
+                          </con3:alert>
+                        </con2:default>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>"LEVEL5" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-3183</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"FATAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2bff</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/account/alert/SalesManagementAccountLevel5"/>
+                              <con3:description>Alert LEVEL5 FATAL em SalesManagement.Account</con3:description>
+                              <con3:severity>fatal</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"CRITICAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2bee</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/account/alert/SalesManagementAccountLevel5"/>
+                              <con3:description>Alert LEVEL5 CRITICAL em SalesManagement.Account</con3:description>
+                              <con3:severity>critical</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"WARNING" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2bd1</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/account/alert/SalesManagementAccountLevel5"/>
+                              <con3:description>Alert LEVEL5 WARNING em SalesManagement.Account</con3:description>
+                              <con3:severity>critical</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                          <con3:alert>
+                            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2bc6</con1:id>
+                            <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/account/alert/SalesManagementAccountLevel5"/>
+                            <con3:description>Alert LEVEL5 NORMAL em SalesManagement.Account</con3:description>
+                            <con3:severity>normal</con3:severity>
+                            <con3:payload>
+                              <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                            </con3:payload>
+                          </con3:alert>
+                        </con2:default>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:default/>
+                </con2:ifThenElse>
+              </con2:actions>
+            </con2:case>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>fn:upper-case("Aids") eq fn:upper-case($body/aler:alertRequest/nid1:NidAbeLevel)</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:ifThenElse>
+                  <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-3580</con1:id>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>"LEVEL1" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-3167</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"FATAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2b95</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/aids/alert/SalesManagementAidsLevel1"/>
+                              <con3:description>Alert LEVEL1 FATAL em SalesManagement.Aids</con3:description>
+                              <con3:severity>fatal</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"CRITICAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2b62</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/aids/alert/SalesManagementAidsLevel1"/>
+                              <con3:description>Alert LEVEL1 CRITICAL em SalesManagement.Aids</con3:description>
+                              <con3:severity>critical</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"WARNING" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2b2f</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/aids/alert/SalesManagementAidsLevel1"/>
+                              <con3:description>Alert LEVEL1 WARNING em SalesManagement.Aids</con3:description>
+                              <con3:severity>warning</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                          <con3:alert>
+                            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2b16</con1:id>
+                            <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/aids/alert/SalesManagementAidsLevel1"/>
+                            <con3:description>Alert LEVEL1 NORMAL em SalesManagement.Aids</con3:description>
+                            <con3:severity>normal</con3:severity>
+                            <con3:payload>
+                              <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                            </con3:payload>
+                          </con3:alert>
+                        </con2:default>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>"LEVEL2" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-314f</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"FATAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2af6</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/aids/alert/SalesManagementAidsLevel2"/>
+                              <con3:description>Alert LEVEL2 FATAL em SalesManagement.Aids</con3:description>
+                              <con3:severity>fatal</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"CRITICAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2ae6</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/aids/alert/SalesManagementAidsLevel2"/>
+                              <con3:description>Alert LEVEL2 CRITICAL em SalesManagement.Aids</con3:description>
+                              <con3:severity>critical</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"WARNING" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2ac7</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/aids/alert/SalesManagementAidsLevel2"/>
+                              <con3:description>Alert LEVEL2 WARNING em SalesManagement.Aids</con3:description>
+                              <con3:severity>warning</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                          <con3:alert>
+                            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2aa9</con1:id>
+                            <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/aids/alert/SalesManagementAidsLevel2"/>
+                            <con3:description>Alert LEVEL2 NORMAL em SalesManagement.Aids</con3:description>
+                            <con3:severity>normal</con3:severity>
+                            <con3:payload>
+                              <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                            </con3:payload>
+                          </con3:alert>
+                        </con2:default>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>"LEVEL3" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-313d</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"FATAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2a7a</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/aids/alert/SalesManagementAidsLevel3"/>
+                              <con3:description>Alert LEVEL3 FATAL em SalesManagement.Aids</con3:description>
+                              <con3:severity>fatal</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"CRITICAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2a88</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/aids/alert/SalesManagementAidsLevel3"/>
+                              <con3:description>Alert LEVEL3 CRITICAL em SalesManagement.Aids</con3:description>
+                              <con3:severity>critical</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"WARNING" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2a6b</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/aids/alert/SalesManagementAidsLevel3"/>
+                              <con3:description>Alert LEVEL3 WARNING em SalesManagement.Aids</con3:description>
+                              <con3:severity>warning</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                          <con3:alert>
+                            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2a54</con1:id>
+                            <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/aids/alert/SalesManagementAidsLevel3"/>
+                            <con3:description>Alert LEVEL3 NORMAL em SalesManagement.Aids</con3:description>
+                            <con3:severity>normal</con3:severity>
+                            <con3:payload>
+                              <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                            </con3:payload>
+                          </con3:alert>
+                        </con2:default>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>"LEVEL4" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-3117</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"FATAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2a25</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/aids/alert/SalesManagementAidsLevel4"/>
+                              <con3:description>Alert LEVEL4 FATAL em SalesManagement.Aids</con3:description>
+                              <con3:severity>fatal</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"CRITICAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2a16</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/aids/alert/SalesManagementAidsLevel4"/>
+                              <con3:description>Alert LEVEL4 CRITICAL em SalesManagement.Aids</con3:description>
+                              <con3:severity>critical</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"WARNING" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2a00</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/aids/alert/SalesManagementAidsLevel4"/>
+                              <con3:description>Alert LEVEL4 WARNING em SalesManagement.Aids</con3:description>
+                              <con3:severity>warning</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                          <con3:alert>
+                            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-29ef</con1:id>
+                            <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/aids/alert/SalesManagementAidsLevel4"/>
+                            <con3:description>Alert LEVEL4 NORMAL em SalesManagement.Aids</con3:description>
+                            <con3:severity>normal</con3:severity>
+                            <con3:payload>
+                              <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                            </con3:payload>
+                          </con3:alert>
+                        </con2:default>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>"LEVEL5" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-30fd</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"FATAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-29cb</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/aids/alert/SalesManagementAidsLevel5"/>
+                              <con3:description>Alert LEVEL5 FATAL em SalesManagement.Aids</con3:description>
+                              <con3:severity>fatal</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"CRITICAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-29b6</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/aids/alert/SalesManagementAidsLevel5"/>
+                              <con3:description>Alert LEVEL5 CRITICAL em SalesManagement.Aids</con3:description>
+                              <con3:severity>critical</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"WARNING" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-299b</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/aids/alert/SalesManagementAidsLevel5"/>
+                              <con3:description>Alert LEVEL5 WARNING em SalesManagement.Aids</con3:description>
+                              <con3:severity>warning</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                          <con3:alert>
+                            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2982</con1:id>
+                            <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/aids/alert/SalesManagementAidsLevel5"/>
+                            <con3:description>Alert LEVEL5 NORMAL em SalesManagement.Aids</con3:description>
+                            <con3:severity>normal</con3:severity>
+                            <con3:payload>
+                              <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                            </con3:payload>
+                          </con3:alert>
+                        </con2:default>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:default/>
+                </con2:ifThenElse>
+              </con2:actions>
+            </con2:case>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>fn:upper-case("Channel") eq fn:upper-case($body/aler:alertRequest/nid1:NidAbeLevel)</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:ifThenElse>
+                  <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-3552</con1:id>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>"LEVEL1" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-30e9</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"FATAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-296f</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/channel/alert/SalesManagementChannelLevel1"/>
+                              <con3:description>Alert LEVEL1 FATAL em SalesManagement.Channel</con3:description>
+                              <con3:severity>fatal</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"CRITICAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-294a</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/channel/alert/SalesManagementChannelLevel1"/>
+                              <con3:description>Alert LEVEL1 CRITICAL em SalesManagement.Channel</con3:description>
+                              <con3:severity>critical</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"WARNING" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-292a</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/channel/alert/SalesManagementChannelLevel1"/>
+                              <con3:description>Alert LEVEL1 WARNING em SalesManagement.Channel</con3:description>
+                              <con3:severity>warning</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                          <con3:alert>
+                            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2913</con1:id>
+                            <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/channel/alert/SalesManagementChannelLevel1"/>
+                            <con3:description>Alert LEVEL1 NORMAL em SalesManagement.Channel</con3:description>
+                            <con3:severity>normal</con3:severity>
+                            <con3:payload>
+                              <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                            </con3:payload>
+                          </con3:alert>
+                        </con2:default>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>"LEVEL2" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-30c2</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"FATAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-28f3</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/channel/alert/SalesManagementChannelLevel2"/>
+                              <con3:description>Alert LEVEL2 FATAL em SalesManagement.Channel</con3:description>
+                              <con3:severity>fatal</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"CRITICAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-28d6</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/channel/alert/SalesManagementChannelLevel2"/>
+                              <con3:description>Alert LEVEL2 CRITICAL em SalesManagement.Channel</con3:description>
+                              <con3:severity>critical</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"WARNING" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-28b2</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/channel/alert/SalesManagementChannelLevel2"/>
+                              <con3:description>Alert LEVEL2 WARNING em SalesManagement.Channel</con3:description>
+                              <con3:severity>warning</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                          <con3:alert>
+                            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2896</con1:id>
+                            <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/channel/alert/SalesManagementChannelLevel2"/>
+                            <con3:description>Alert LEVEL2 NORMAL em SalesManagement.Channel</con3:description>
+                            <con3:severity>normal</con3:severity>
+                            <con3:payload>
+                              <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                            </con3:payload>
+                          </con3:alert>
+                        </con2:default>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>"LEVEL3" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-30ab</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"FATAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-286d</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/channel/alert/SalesManagementChannelLevel3"/>
+                              <con3:description>Alert LEVEL3 FATAL em SalesManagement.Channel</con3:description>
+                              <con3:severity>fatal</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"CRITICAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-285e</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/channel/alert/SalesManagementChannelLevel3"/>
+                              <con3:description>Alert LEVEL3 CRITICAL em SalesManagement.Channel</con3:description>
+                              <con3:severity>critical</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"WARNING" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-284c</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/channel/alert/SalesManagementChannelLevel3"/>
+                              <con3:description>Alert LEVEL3 WARNING em SalesManagement.Channel</con3:description>
+                              <con3:severity>warning</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                          <con3:alert>
+                            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2827</con1:id>
+                            <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/channel/alert/SalesManagementChannelLevel3"/>
+                            <con3:description>Alert LEVEL3 NORMAL em SalesManagement.Channel</con3:description>
+                            <con3:severity>normal</con3:severity>
+                            <con3:payload>
+                              <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                            </con3:payload>
+                          </con3:alert>
+                        </con2:default>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>"LEVEL4" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-3096</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"FATAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-280f</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/channel/alert/SalesManagementChannelLevel4"/>
+                              <con3:description>Alert LEVEL4 FATAL em SalesManagement.Channel</con3:description>
+                              <con3:severity>fatal</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"CRITICAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-27ff</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/channel/alert/SalesManagementChannelLevel4"/>
+                              <con3:description>Alert LEVEL4 CRITICAL em SalesManagement.Channel</con3:description>
+                              <con3:severity>critical</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"WARNING" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-27ec</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/channel/alert/SalesManagementChannelLevel4"/>
+                              <con3:description>Alert LEVEL4 WARNING em SalesManagement.Channel</con3:description>
+                              <con3:severity>warning</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                          <con3:alert>
+                            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-27db</con1:id>
+                            <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/channel/alert/SalesManagementChannelLevel4"/>
+                            <con3:description>Alert LEVEL4 NORMAL em SalesManagement.Channel</con3:description>
+                            <con3:severity>normal</con3:severity>
+                            <con3:payload>
+                              <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                            </con3:payload>
+                          </con3:alert>
+                        </con2:default>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>"LEVEL5" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-3071</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"FATAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-27c7</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/channel/alert/SalesManagementChannelLevel5"/>
+                              <con3:description>Alert LEVEL5 FATAL em SalesManagement.Channel</con3:description>
+                              <con3:severity>fatal</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"CRITICAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-27b3</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/channel/alert/SalesManagementChannelLevel5"/>
+                              <con3:description>Alert LEVEL5 CRITICAL em SalesManagement.Channel</con3:description>
+                              <con3:severity>critical</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"WARNING" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-279a</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/channel/alert/SalesManagementChannelLevel5"/>
+                              <con3:description>Alert LEVEL5 WARNING em SalesManagement.Channel</con3:description>
+                              <con3:severity>warning</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                          <con3:alert>
+                            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-278b</con1:id>
+                            <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/channel/alert/SalesManagementChannelLevel5"/>
+                            <con3:description>Alert LEVEL5 NORMAL em SalesManagement.Channel</con3:description>
+                            <con3:severity>normal</con3:severity>
+                            <con3:payload>
+                              <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                            </con3:payload>
+                          </con3:alert>
+                        </con2:default>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:default/>
+                </con2:ifThenElse>
+              </con2:actions>
+            </con2:case>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>fn:upper-case("CompensationAndResults") eq fn:upper-case($body/aler:alertRequest/nid1:NidAbeLevel)</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:ifThenElse>
+                  <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-353d</con1:id>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>"LEVEL1" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-3052</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"FATAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-276f</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/compensationandresults/alert/SalesManagementCompensationAndResultsLevel1"/>
+                              <con3:description>Alert LEVEL1 FATAL em SalesManagement.CompensationAndResults</con3:description>
+                              <con3:severity>fatal</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"CRITICAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-275d</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/compensationandresults/alert/SalesManagementCompensationAndResultsLevel1"/>
+                              <con3:description>Alert LEVEL1 CRITICAL em SalesManagement.CompensationAndResults</con3:description>
+                              <con3:severity>critical</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"WARNING" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2739</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/compensationandresults/alert/SalesManagementCompensationAndResultsLevel1"/>
+                              <con3:description>Alert LEVEL1 WARNING em SalesManagement.CompensationAndResults</con3:description>
+                              <con3:severity>warning</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                          <con3:alert>
+                            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-270f</con1:id>
+                            <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/compensationandresults/alert/SalesManagementCompensationAndResultsLevel1"/>
+                            <con3:description>Alert LEVEL1 NORMAL em SalesManagement.CompensationAndResults</con3:description>
+                            <con3:severity>normal</con3:severity>
+                            <con3:payload>
+                              <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                            </con3:payload>
+                          </con3:alert>
+                        </con2:default>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>"LEVEL2" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-3036</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"FATAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-26ee</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/compensationandresults/alert/SalesManagementCompensationAndResultsLevel2"/>
+                              <con3:description>Alert LEVEL2 FATAL em SalesManagement.CompensationAndResults</con3:description>
+                              <con3:severity>fatal</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"CRITICAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-26de</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/compensationandresults/alert/SalesManagementCompensationAndResultsLevel2"/>
+                              <con3:description>Alert LEVEL2 CRITICAL em SalesManagement.CompensationAndResults</con3:description>
+                              <con3:severity>critical</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"WARNING" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-26c4</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/compensationandresults/alert/SalesManagementCompensationAndResultsLevel2"/>
+                              <con3:description>Alert LEVEL2 WARNING em SalesManagement.CompensationAndResults</con3:description>
+                              <con3:severity>warning</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                          <con3:alert>
+                            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-26ab</con1:id>
+                            <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/compensationandresults/alert/SalesManagementCompensationAndResultsLevel2"/>
+                            <con3:description>Alert LEVEL2 NORMAL em SalesManagement.CompensationAndResults</con3:description>
+                            <con3:severity>normal</con3:severity>
+                            <con3:payload>
+                              <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                            </con3:payload>
+                          </con3:alert>
+                        </con2:default>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>"LEVEL3" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-3020</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"FATAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-269e</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/compensationandresults/alert/SalesManagementCompensationAndResultsLevel3"/>
+                              <con3:description>Alert LEVEL3 FATAL em SalesManagement.CompensationAndResults</con3:description>
+                              <con3:severity>fatal</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"CRITICAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-268b</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/compensationandresults/alert/SalesManagementCompensationAndResultsLevel3"/>
+                              <con3:description>Alert LEVEL3 CRITICAL em SalesManagement.CompensationAndResults</con3:description>
+                              <con3:severity>critical</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"WARNING" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-266e</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/compensationandresults/alert/SalesManagementCompensationAndResultsLevel3"/>
+                              <con3:description>Alert LEVEL3 WARNING em SalesManagement.CompensationAndResults</con3:description>
+                              <con3:severity>warning</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                          <con3:alert>
+                            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2650</con1:id>
+                            <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/compensationandresults/alert/SalesManagementCompensationAndResultsLevel3"/>
+                            <con3:description>Alert LEVEL3 NORMAL em SalesManagement.CompensationAndResults</con3:description>
+                            <con3:severity>normal</con3:severity>
+                            <con3:payload>
+                              <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                            </con3:payload>
+                          </con3:alert>
+                        </con2:default>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>"LEVEL4" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-3007</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"FATAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-263e</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/compensationandresults/alert/SalesManagementCompensationAndResultsLevel4"/>
+                              <con3:description>Alert LEVEL4 FATAL em SalesManagement.CompensationAndResults</con3:description>
+                              <con3:severity>fatal</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"CRITICAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-262a</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/compensationandresults/alert/SalesManagementCompensationAndResultsLevel4"/>
+                              <con3:description>Alert LEVEL4 CRITICAL em SalesManagement.CompensationAndResults</con3:description>
+                              <con3:severity>critical</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"WARNING" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2604</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/compensationandresults/alert/SalesManagementCompensationAndResultsLevel4"/>
+                              <con3:description>Alert LEVEL4 WARNING em SalesManagement.CompensationAndResults</con3:description>
+                              <con3:severity>warning</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                          <con3:alert>
+                            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-25e9</con1:id>
+                            <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/compensationandresults/alert/SalesManagementCompensationAndResultsLevel4"/>
+                            <con3:description>Alert LEVEL4 NORMAL em SalesManagement.CompensationAndResults</con3:description>
+                            <con3:severity>normal</con3:severity>
+                            <con3:payload>
+                              <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                            </con3:payload>
+                          </con3:alert>
+                        </con2:default>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>"LEVEL5" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2fec</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"FATAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-25ba</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/compensationandresults/alert/SalesManagementCompensationAndResultsLevel5"/>
+                              <con3:description>Alert LEVEL5 FATAL em SalesManagement.CompensationAndResults</con3:description>
+                              <con3:severity>fatal</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"CRITICAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-25a3</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/compensationandresults/alert/SalesManagementCompensationAndResultsLevel5"/>
+                              <con3:description>Alert LEVEL5 CRITICAL em SalesManagement.CompensationAndResults</con3:description>
+                              <con3:severity>critical</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"WARNING" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-258e</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/compensationandresults/alert/SalesManagementCompensationAndResultsLevel5"/>
+                              <con3:description>Alert LEVEL5 WARNING em SalesManagement.CompensationAndResults</con3:description>
+                              <con3:severity>warning</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                          <con3:alert>
+                            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-257c</con1:id>
+                            <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/compensationandresults/alert/SalesManagementCompensationAndResultsLevel5"/>
+                            <con3:description>Alert LEVEL5 NORMAL em SalesManagement.CompensationAndResults</con3:description>
+                            <con3:severity>normal</con3:severity>
+                            <con3:payload>
+                              <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                            </con3:payload>
+                          </con3:alert>
+                        </con2:default>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:default/>
+                </con2:ifThenElse>
+              </con2:actions>
+            </con2:case>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>fn:upper-case("Contract") eq fn:upper-case($body/aler:alertRequest/nid1:NidAbeLevel)</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:ifThenElse>
+                  <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-3524</con1:id>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>"LEVEL1" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2fd7</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"FATAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2558</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/contract/alert/SalesManagementContractLevel1"/>
+                              <con3:description>Alert LEVEL1 FATAL em SalesManagement.Contract</con3:description>
+                              <con3:severity>fatal</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"CRITICAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2526</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/contract/alert/SalesManagementContractLevel1"/>
+                              <con3:description>Alert LEVEL1 CRITICAL em SalesManagement.Contract</con3:description>
+                              <con3:severity>critical</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"WARNING" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-24ff</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/contract/alert/SalesManagementContractLevel1"/>
+                              <con3:description>Alert LEVEL1 WARNING em SalesManagement.Contract</con3:description>
+                              <con3:severity>warning</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                          <con3:alert>
+                            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-24db</con1:id>
+                            <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/contract/alert/SalesManagementContractLevel1"/>
+                            <con3:description>Alert LEVEL1 NORMAL em SalesManagement.Contract</con3:description>
+                            <con3:severity>normal</con3:severity>
+                            <con3:payload>
+                              <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                            </con3:payload>
+                          </con3:alert>
+                        </con2:default>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>"LEVEL2" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2fc7</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"FATAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-24a7</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/contract/alert/SalesManagementContractLevel2"/>
+                              <con3:description>Alert LEVEL2 FATAL em SalesManagement.Contract</con3:description>
+                              <con3:severity>fatal</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"CRITICAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2497</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/contract/alert/SalesManagementContractLevel2"/>
+                              <con3:description>Alert LEVEL2 CRITICAL em SalesManagement.Contract</con3:description>
+                              <con3:severity>critical</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"WARNING" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2471</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/contract/alert/SalesManagementContractLevel2"/>
+                              <con3:description>Alert LEVEL2 WARNING em SalesManagement.Contract</con3:description>
+                              <con3:severity>warning</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                              >
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                          <con3:alert>
+                            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-245b</con1:id>
+                            <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/contract/alert/SalesManagementContractLevel2"/>
+                            <con3:description>Alert LEVEL2 NORMAL em SalesManagement.Contract</con3:description>
+                            <con3:severity>normal</con3:severity>
+                            <con3:payload>
+                              <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                            </con3:payload>
+                          </con3:alert>
+                        </con2:default>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>"LEVEL3" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2fa7</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"FATAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-243a</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/contract/alert/SalesManagementContractLevel3"/>
+                              <con3:description>Alert LEVEL3 FATAL em SalesManagement.Contract</con3:description>
+                              <con3:severity>fatal</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"CRITICAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-241d</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/contract/alert/SalesManagementContractLevel3"/>
+                              <con3:description>Alert LEVEL3 CRITICAL em SalesManagement.Contract</con3:description>
+                              <con3:severity>critical</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"WARNING" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2401</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/contract/alert/SalesManagementContractLevel3"/>
+                              <con3:description>Alert LEVEL3 WARNING em SalesManagement.Contract</con3:description>
+                              <con3:severity>warning</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                          <con3:alert>
+                            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-23e9</con1:id>
+                            <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/contract/alert/SalesManagementContractLevel3"/>
+                            <con3:description>Alert LEVEL3 NORMAL em SalesManagement.Contract</con3:description>
+                            <con3:severity>normal</con3:severity>
+                            <con3:payload>
+                              <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                            </con3:payload>
+                          </con3:alert>
+                        </con2:default>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>"LEVEL4" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2f91</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"FATAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-23d3</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/contract/alert/SalesManagementContractLevel4"/>
+                              <con3:description>Alert LEVEL4 FATAL em SalesManagement.Contract</con3:description>
+                              <con3:severity>fatal</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"CRITICAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-23c8</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/contract/alert/SalesManagementContractLevel4"/>
+                              <con3:description>Alert LEVEL4 CRITICAL em SalesManagement.Contract</con3:description>
+                              <con3:severity>critical</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"WARNING" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-23ab</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/contract/alert/SalesManagementContractLevel4"/>
+                              <con3:description>Alert LEVEL4 WARNING em SalesManagement.Contract</con3:description>
+                              <con3:severity>warning</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                          <con3:alert>
+                            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-238d</con1:id>
+                            <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/contract/alert/SalesManagementContractLevel4"/>
+                            <con3:description>Alert LEVEL4 NORMAL em SalesManagement.Contract</con3:description>
+                            <con3:severity>normal</con3:severity>
+                            <con3:payload>
+                              <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                            </con3:payload>
+                          </con3:alert>
+                        </con2:default>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>"LEVEL5" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2f7d</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"FATAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2370</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/contract/alert/SalesManagementContractLevel5"/>
+                              <con3:description>Alert LEVEL5 FATAL em SalesManagement.Contract</con3:description>
+                              <con3:severity>fatal</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"CRITICAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2364</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/contract/alert/SalesManagementContractLevel5"/>
+                              <con3:description>Alert LEVEL5 CRITICAL em SalesManagement.Contract</con3:description>
+                              <con3:severity>critical</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"WARNING" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2354</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/contract/alert/SalesManagementContractLevel5"/>
+                              <con3:description>Alert LEVEL5 WARNING em SalesManagement.Contract</con3:description>
+                              <con3:severity>warning</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                          <con3:alert>
+                            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2339</con1:id>
+                            <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/contract/alert/SalesManagementContractLevel5"/>
+                            <con3:description>Alert LEVEL5 NORMAL em SalesManagement.Contract</con3:description>
+                            <con3:severity>normal</con3:severity>
+                            <con3:payload>
+                              <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                            </con3:payload>
+                          </con3:alert>
+                        </con2:default>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:default/>
+                </con2:ifThenElse>
+              </con2:actions>
+            </con2:case>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>fn:upper-case("Portals") eq fn:upper-case($body/aler:alertRequest/nid1:NidAbeLevel)</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:ifThenElse>
+                  <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-350d</con1:id>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>"LEVEL1" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2f56</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"FATAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2303</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/portals/alert/SalesManagementPortalsLevel1"/>
+                              <con3:description>Alert LEVEL1 FATAL em SalesManagement.Portals</con3:description>
+                              <con3:severity>fatal</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"CRITICAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-22d8</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/portals/alert/SalesManagementPortalsLevel1"/>
+                              <con3:description>Alert LEVEL1 CRITICAL em SalesManagement.Portals</con3:description>
+                              <con3:severity>critical</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"WARNING" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-22a5</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/portals/alert/SalesManagementPortalsLevel1"/>
+                              <con3:description>Alert LEVEL1 WARNING em SalesManagement.Portals</con3:description>
+                              <con3:severity>warning</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                          <con3:alert>
+                            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-228f</con1:id>
+                            <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/portals/alert/SalesManagementPortalsLevel1"/>
+                            <con3:description>Alert LEVEL1 NORMAL em SalesManagement.Portals</con3:description>
+                            <con3:severity>normal</con3:severity>
+                            <con3:payload>
+                              <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                            </con3:payload>
+                          </con3:alert>
+                        </con2:default>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>"LEVEL2" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2f2f</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"FATAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2262</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/portals/alert/SalesManagementPortalsLevel2"/>
+                              <con3:description>Alert LEVEL2 FATAL em SalesManagement.Portals</con3:description>
+                              <con3:severity>fatal</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"CRITICAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-223a</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/portals/alert/SalesManagementPortalsLevel2"/>
+                              <con3:description>Alert LEVEL2 CRITICAL em SalesManagement.Portals</con3:description>
+                              <con3:severity>critical</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"WARNING" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2221</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/portals/alert/SalesManagementPortalsLevel2"/>
+                              <con3:description>Alert LEVEL2 WARNING em SalesManagement.Portals</con3:description>
+                              <con3:severity>warning</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                          <con3:alert>
+                            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2202</con1:id>
+                            <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/portals/alert/SalesManagementPortalsLevel2"/>
+                            <con3:description>Alert LEVEL2 NORMAL em SalesManagement.Portals</con3:description>
+                            <con3:severity>normal</con3:severity>
+                            <con3:payload>
+                              <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                            </con3:payload>
+                          </con3:alert>
+                        </con2:default>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>"LEVEL3" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2f16</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"FATAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-21e1</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/portals/alert/SalesManagementPortalsLevel3"/>
+                              <con3:description>Alert LEVEL3 FATAL em SalesManagement.Portals</con3:description>
+                              <con3:severity>fatal</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"CRITICAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-21c8</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/portals/alert/SalesManagementPortalsLevel3"/>
+                              <con3:description>Alert LEVEL3 CRITICAL em SalesManagement.Portals</con3:description>
+                              <con3:severity>critical</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"WARNING" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-219f</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/portals/alert/SalesManagementPortalsLevel3"/>
+                              <con3:description>Alert LEVEL3 WARNING em SalesManagement.Portals</con3:description>
+                              <con3:severity>warning</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                          <con3:alert>
+                            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2186</con1:id>
+                            <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/portals/alert/SalesManagementPortalsLevel3"/>
+                            <con3:description>Alert LEVEL3 NORMAL em SalesManagement.Portals</con3:description>
+                            <con3:severity>normal</con3:severity>
+                            <con3:payload>
+                              <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                            </con3:payload>
+                          </con3:alert>
+                        </con2:default>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>"LEVEL4" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2f04</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"FATAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2158</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/portals/alert/SalesManagementPortalsLevel4"/>
+                              <con3:description>Alert LEVEL4 FATAL em SalesManagement.Portals</con3:description>
+                              <con3:severity>fatal</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"CRITICAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2134</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/portals/alert/SalesManagementPortalsLevel4"/>
+                              <con3:description>Alert LEVEL4 CRITICAL em SalesManagement.Portals</con3:description>
+                              <con3:severity>critical</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"WARNING" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-211f</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/portals/alert/SalesManagementPortalsLevel4"/>
+                              <con3:description>Alert LEVEL4 WARNING em SalesManagement.Portals</con3:description>
+                              <con3:severity>warning</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                          <con3:alert>
+                            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-210f</con1:id>
+                            <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/portals/alert/SalesManagementPortalsLevel4"/>
+                            <con3:description>Alert LEVEL4 NORMAL em SalesManagement.Portals</con3:description>
+                            <con3:severity>normal</con3:severity>
+                            <con3:payload>
+                              <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                            </con3:payload>
+                          </con3:alert>
+                        </con2:default>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>"LEVEL5" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2ee1</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"FATAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-20f0</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/portals/alert/SalesManagementPortalsLevel5"/>
+                              <con3:description>Alert LEVEL5 FATAL em SalesManagement.Portals</con3:description>
+                              <con3:severity>fatal</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"CRITICAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-20d8</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/portals/alert/SalesManagementPortalsLevel5"/>
+                              <con3:description>Alert LEVEL5 CRITICAL em SalesManagement.Portals</con3:description>
+                              <con3:severity>critical</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"WARNING" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-20b8</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/portals/alert/SalesManagementPortalsLevel5"/>
+                              <con3:description>Alert LEVEL5 WARNING em SalesManagement.Portals</con3:description>
+                              <con3:severity>warning</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                          <con3:alert>
+                            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-20ad</con1:id>
+                            <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/portals/alert/SalesManagementPortalsLevel5"/>
+                            <con3:description>Alert LEVEL5 NORMAL em SalesManagement.Portals</con3:description>
+                            <con3:severity>normal</con3:severity>
+                            <con3:payload>
+                              <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                            </con3:payload>
+                          </con3:alert>
+                        </con2:default>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:default/>
+                </con2:ifThenElse>
+              </con2:actions>
+            </con2:case>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>fn:upper-case("Reporting") eq fn:upper-case($body/aler:alertRequest/nid1:NidAbeLevel)</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:ifThenElse>
+                  <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-34f2</con1:id>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>"LEVEL1" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2ec8</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"FATAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-209b</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/reporting/alert/SalesManagementReportingLevel1"/>
+                              <con3:description>Alert LEVEL1 FATAL em SalesManagement.Reporting</con3:description>
+                              <con3:severity>fatal</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"CRITICAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-208a</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/reporting/alert/SalesManagementReportingLevel1"/>
+                              <con3:description>Alert LEVEL1 CRITICAL em SalesManagement.Reporting</con3:description>
+                              <con3:severity>critical</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"WARNING" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-206f</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/reporting/alert/SalesManagementReportingLevel1"/>
+                              <con3:description>Alert LEVEL1 WARNING em SalesManagement.Reporting</con3:description>
+                              <con3:severity>warning</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                          <con3:alert>
+                            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-205a</con1:id>
+                            <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/reporting/alert/SalesManagementReportingLevel1"/>
+                            <con3:description>Alert LEVEL1 NORMAL em SalesManagement.Reporting</con3:description>
+                            <con3:severity>normal</con3:severity>
+                            <con3:payload>
+                              <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                            </con3:payload>
+                          </con3:alert>
+                        </con2:default>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>"LEVEL2" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2ea6</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"FATAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-204a</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/reporting/alert/SalesManagementReportingLevel2"/>
+                              <con3:description>Alert LEVEL2 FATAL em SalesManagement.Reporting</con3:description>
+                              <con3:severity>fatal</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"CRITICAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-202f</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/reporting/alert/SalesManagementReportingLevel2"/>
+                              <con3:description>Alert LEVEL2 CRITICAL em SalesManagement.Reporting</con3:description>
+                              <con3:severity>critical</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"WARNING" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-200c</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/reporting/alert/SalesManagementReportingLevel2"/>
+                              <con3:description>Alert LEVEL2 WARNING em SalesManagement.Reporting</con3:description>
+                              <con3:severity>warning</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                          <con3:alert>
+                            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-1ffb</con1:id>
+                            <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/reporting/alert/SalesManagementReportingLevel2"/>
+                            <con3:description>Alert LEVEL2 NORMAL em SalesManagement.Reporting</con3:description>
+                            <con3:severity>normal</con3:severity>
+                            <con3:payload>
+                              <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                            </con3:payload>
+                          </con3:alert>
+                        </con2:default>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>"LEVEL3" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2e94</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"FATAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-1fe6</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/reporting/alert/SalesManagementReportingLevel3"/>
+                              <con3:description>Alert LEVEL3 FATAL em SalesManagement.Reporting</con3:description>
+                              <con3:severity>fatal</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"CRITICAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-1fd8</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/reporting/alert/SalesManagementReportingLevel3"/>
+                              <con3:description>Alert LEVEL3 CRITICAL em SalesManagement.Reporting</con3:description>
+                              <con3:severity>critical</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"WARNING" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-1fcf</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/reporting/alert/SalesManagementReportingLevel3"/>
+                              <con3:description>Alert LEVEL3 WARNING em SalesManagement.Reporting</con3:description>
+                              <con3:severity>warning</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                          <con3:alert>
+                            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-1fbb</con1:id>
+                            <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/reporting/alert/SalesManagementReportingLevel3"/>
+                            <con3:description>Alert LEVEL3 NORMAL em SalesManagement.Reporting</con3:description>
+                            <con3:severity>normal</con3:severity>
+                            <con3:payload>
+                              <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                            </con3:payload>
+                          </con3:alert>
+                        </con2:default>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>"LEVEL4" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2e6e</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"FATAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-1fa3</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/reporting/alert/SalesManagementReportingLevel4"/>
+                              <con3:description>Alert LEVEL4 FATAL em SalesManagement.Reporting</con3:description>
+                              <con3:severity>fatal</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"CRITICAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-1f93</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/reporting/alert/SalesManagementReportingLevel4"/>
+                              <con3:description>Alert LEVEL4 CRITICAL em SalesManagement.Reporting</con3:description>
+                              <con3:severity>critical</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"WARNING" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-1f78</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/reporting/alert/SalesManagementReportingLevel4"/>
+                              <con3:description>Alert LEVEL4 WARNING em SalesManagement.Reporting</con3:description>
+                              <con3:severity>warning</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                          <con3:alert>
+                            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-1f65</con1:id>
+                            <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/reporting/alert/SalesManagementReportingLevel4"/>
+                            <con3:description>Alert LEVEL4 NORMAL em SalesManagement.Reporting</con3:description>
+                            <con3:severity>normal</con3:severity>
+                            <con3:payload>
+                              <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                            </con3:payload>
+                          </con3:alert>
+                        </con2:default>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>"LEVEL5" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2e4f</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"FATAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-1f52</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/reporting/alert/SalesManagementReportingLevel5"/>
+                              <con3:description>Alert LEVEL5 FATAL em SalesManagement.Reporting</con3:description>
+                              <con3:severity>fatal</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"CRITICAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-1f40</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/reporting/alert/SalesManagementReportingLevel5"/>
+                              <con3:description>Alert LEVEL5 CRITICAL em SalesManagement.Reporting</con3:description>
+                              <con3:severity>critical</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"WARNING" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-1f2e</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/reporting/alert/SalesManagementReportingLevel5"/>
+                              <con3:description>Alert LEVEL5 WARNING em SalesManagement.Reporting</con3:description>
+                              <con3:severity>warning</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                          <con3:alert>
+                            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-1f12</con1:id>
+                            <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/reporting/alert/SalesManagementReportingLevel5"/>
+                            <con3:description>Alert LEVEL5 NORMAL em SalesManagement.Reporting</con3:description>
+                            <con3:severity>normal</con3:severity>
+                            <con3:payload>
+                              <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                            </con3:payload>
+                          </con3:alert>
+                        </con2:default>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:default/>
+                </con2:ifThenElse>
+              </con2:actions>
+            </con2:case>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>fn:upper-case("Solution") eq fn:upper-case($body/aler:alertRequest/nid1:NidAbeLevel)</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:ifThenElse>
+                  <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-34d8</con1:id>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>"LEVEL1" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2e37</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"FATAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-1eea</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/solution/alert/SalesManagementSolutionLevel1"/>
+                              <con3:description>Alert LEVEL1 FATAL em SalesManagement.Solution</con3:description>
+                              <con3:severity>fatal</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"CRITICAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-1ece</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/solution/alert/SalesManagementSolutionLevel1"/>
+                              <con3:description>Alert LEVEL1 CRITICAL em SalesManagement.Solution</con3:description>
+                              <con3:severity>critical</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"WARNING" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-1eba</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/solution/alert/SalesManagementSolutionLevel1"/>
+                              <con3:description>Alert LEVEL1 WARNING em SalesManagement.Solution</con3:description>
+                              <con3:severity>warning</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                          <con3:alert>
+                            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-1ea1</con1:id>
+                            <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/solution/alert/SalesManagementSolutionLevel1"/>
+                            <con3:description>Alert LEVEL1 NORMAL em SalesManagement.Solution</con3:description>
+                            <con3:severity>normal</con3:severity>
+                            <con3:payload>
+                              <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                            </con3:payload>
+                          </con3:alert>
+                        </con2:default>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>"LEVEL2" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2e22</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"FATAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-1e87</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/solution/alert/SalesManagementSolutionLevel2"/>
+                              <con3:description>Alert LEVEL2 FATAL em SalesManagement.Solution</con3:description>
+                              <con3:severity>fatal</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"CRITICAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-1e71</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/solution/alert/SalesManagementSolutionLevel2"/>
+                              <con3:description>Alert LEVEL2 CRITICAL em SalesManagement.Solution</con3:description>
+                              <con3:severity>critical</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"WARNING" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-1e56</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/solution/alert/SalesManagementSolutionLevel2"/>
+                              <con3:description>Alert LEVEL2 WARNING em SalesManagement.Solution</con3:description>
+                              <con3:severity>warning</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                          <con3:alert>
+                            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-1e40</con1:id>
+                            <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/solution/alert/SalesManagementSolutionLevel2"/>
+                            <con3:description>Alert LEVEL2 NORMAL em SalesManagement.Solution</con3:description>
+                            <con3:severity>normal</con3:severity>
+                            <con3:payload>
+                              <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                            </con3:payload>
+                          </con3:alert>
+                        </con2:default>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>"LEVEL3" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2e15</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"FATAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-1e16</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/solution/alert/SalesManagementSolutionLevel3"/>
+                              <con3:description>Alert LEVEL3 FATAL em SalesManagement.Solution</con3:description>
+                              <con3:severity>fatal</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"CRITICAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-1df9</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/solution/alert/SalesManagementSolutionLevel3"/>
+                              <con3:description>Alert LEVEL3 CRITICAL em SalesManagement.Solution</con3:description>
+                              <con3:severity>critical</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"WARNING" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-1dec</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/solution/alert/SalesManagementSolutionLevel3"/>
+                              <con3:description>Alert LEVEL3 WARNING em SalesManagement.Solution</con3:description>
+                              <con3:severity>warning</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                          <con3:alert>
+                            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-1de2</con1:id>
+                            <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/solution/alert/SalesManagementSolutionLevel3"/>
+                            <con3:description>Alert LEVEL3 NORMAL em SalesManagement.Solution</con3:description>
+                            <con3:severity>normal</con3:severity>
+                            <con3:payload>
+                              <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                            </con3:payload>
+                          </con3:alert>
+                        </con2:default>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>"LEVEL4" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2e02</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"FATAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-1d9e</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/solution/alert/SalesManagementSolutionLevel4"/>
+                              <con3:description>Alert LEVEL4 FATAL em SalesManagement.Solution</con3:description>
+                              <con3:severity>fatal</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"CRITICAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-1d80</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/solution/alert/SalesManagementSolutionLevel4"/>
+                              <con3:description>Alert LEVEL4 CRITICAL em SalesManagement.Solution</con3:description>
+                              <con3:severity>critical</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"WARNING" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-1d61</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/solution/alert/SalesManagementSolutionLevel4"/>
+                              <con3:description>Alert LEVEL4 WARNING em SalesManagement.Solution</con3:description>
+                              <con3:severity>warning</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                          <con3:alert>
+                            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-1d53</con1:id>
+                            <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/solution/alert/SalesManagementSolutionLevel4"/>
+                            <con3:description>Alert LEVEL4 NORMAL em SalesManagement.Solution</con3:description>
+                            <con3:severity>normal</con3:severity>
+                            <con3:payload>
+                              <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                            </con3:payload>
+                          </con3:alert>
+                        </con2:default>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>"LEVEL5" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-2ded</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"FATAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-1d36</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/solution/alert/SalesManagementSolutionLevel5"/>
+                              <con3:description>Alert LEVEL5 FATAL em SalesManagement.Solution</con3:description>
+                              <con3:severity>fatal</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"CRITICAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-1d2c</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/solution/alert/SalesManagementSolutionLevel5"/>
+                              <con3:description>Alert LEVEL5 CRITICAL em SalesManagement.Solution</con3:description>
+                              <con3:severity>critical</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"WARNING" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-1d1c</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/solution/alert/SalesManagementSolutionLevel5"/>
+                              <con3:description>Alert LEVEL5 WARNING em SalesManagement.Solution</con3:description>
+                              <con3:severity>warning</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                          <con3:alert>
+                            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-1d01</con1:id>
+                            <con3:destination ref="netarchitecture/monitoring/alert/alerts/salesmanagement/solution/alert/SalesManagementSolutionLevel5"/>
+                            <con3:description>Alert LEVEL5 NORMAL em SalesManagement.Solution</con3:description>
+                            <con3:severity>normal</con3:severity>
+                            <con3:payload>
+                              <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                            </con3:payload>
+                          </con3:alert>
+                        </con2:default>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:default/>
+                </con2:ifThenElse>
+              </con2:actions>
+            </con2:case>
+            <con2:default/>
+          </con2:ifThenElse>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="response" name="PipelinePairNode_response">
+      <con:stage name="PrepareResponse">
+        <con:context xmlns:con1="http://www.bea.com/wli/sb/stages/alert/config">
+          <con1:varNsDecl namespace="http://www.netservicos.com.br/AlertV1" prefix="aler" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+        </con:context>
+        <con:actions xmlns:con1="http://www.bea.com/wli/sb/stages/alert/config">
+          <con1:replace varName="body" contents-only="true" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+            <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-1445721328115578041--38b75155.14619ddf914.-35e7</con3:id>
+            <con1:location>
+              <con2:xpathText xmlns:con2="http://www.bea.com/wli/sb/stages/config">.</con2:xpathText>
+            </con1:location>
+            <con1:expr>
+              <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">&lt;aler:alertResponse/></con2:xqueryText>
+            </con1:expr>
+          </con1:replace>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:flow>
+      <con:pipeline-node name="PipelinePairNode">
+        <con:request>PipelinePairNode_request</con:request>
+        <con:response>PipelinePairNode_response</con:response>
+      </con:pipeline-node>
+    </con:flow>
+  </ser:router>
+</xml-fragment>

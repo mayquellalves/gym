@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified"
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/specification/ProductSpecCharacteristic"
+	xmlns="http://www.w3.org/2001/XMLSchema" 
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/specification/ProductSpecCharacteristic"
+	xmlns:tps="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types"
+	xmlns:tmp="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/basetypes/TimePeriod">
+
+	<import schemaLocation="../../netarchitecture/common/Types.xsd"
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types" />
+	
+	
+	<import schemaLocation="../../common/basetypes/TimePeriod.xsd"
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/basetypes/TimePeriod" />
+	
+	
+	<complexType name="ProductSpecCharacteristicType">
+		<sequence>
+			<element name="ProductSpecCharId" type="tps:string020" minOccurs="0" maxOccurs="1" />
+			<element name="Name" type="tps:string030" minOccurs="0" maxOccurs="1" />
+			<element name="Description" type="tps:string010" minOccurs="0" maxOccurs="1" />
+			<element name="DerivationFormula" type="tps:string100" minOccurs="0" maxOccurs="1" />
+			<element name="Extensible" type="boolean" minOccurs="0" maxOccurs="1" />
+			<element name="MaxCardinality" type="int" minOccurs="0" maxOccurs="1" />
+			<element name="MinCardinality" type="int" minOccurs="0" maxOccurs="1" />
+			<element name="Unique" type="tps:string100" minOccurs="0" maxOccurs="1" />
+			<element name="ValidFor" type="tmp:TimePeriodType" minOccurs="0" maxOccurs="1" />
+			<element name="ValueType" type="tps:string020" minOccurs="0" maxOccurs="1" />
+			
+		</sequence>
+	</complexType>
+
+	<element name="ProductSpecCharacteristic" type="tns:ProductSpecCharacteristicType" />
+
+	<complexType name="ProductSpecCharacteristicsType">
+		<sequence>
+			<element ref="tns:ProductSpecCharacteristic" minOccurs="1" maxOccurs="unbounded" />
+		</sequence>
+	</complexType>
+
+	<element name="ProductSpecCharacteristics" type="tns:ProductSpecCharacteristicsType"/>
+
+</schema>

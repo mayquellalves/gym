@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified" 
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/pagination/Pagination" 
+	xmlns="http://www.w3.org/2001/XMLSchema" 
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/pagination/Pagination" 
+	xmlns:ext="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/pagination/extension/PaginationExtension"
+	xmlns:soap12-env="http://www.w3.org/2003/05/soap-envelope">
+
+	<import schemaLocation="extension/PaginationExtension.xsd" 
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/pagination/extension/PaginationExtension"/>
+
+    <import namespace="http://www.w3.org/2003/05/soap-envelope" schemaLocation="../common/EnvelopeSoap12.xsd"/>
+    
+	<complexType name="PaginationType">
+		<sequence>
+			<element name="MaxListSize" type="int" minOccurs="1" maxOccurs="1" default="0">
+				<annotation>
+					<documentation>
+						Max list size to be retrieved. If all values are to
+						be retrieved, then the
+						value 0 must be set.
+					</documentation>
+				</annotation>
+			</element>
+
+			<element name="TotalListCount" type="int" minOccurs="0" maxOccurs="1">
+				<annotation>
+					<documentation>
+						Returns the total number of records (from 1 to N).
+					</documentation>
+				</annotation>
+			</element>
+			
+			<element name="PageCount" type="int" minOccurs="0" maxOccurs="1">
+				<annotation>
+					<documentation>
+						Returns the total number of pages (from 1 to N).
+					</documentation>
+				</annotation>
+			</element>
+
+			<element name="Page">
+				<complexType>
+					<sequence>
+						<element name="Size" minOccurs="1" maxOccurs="1" type="int" default="20">
+							<annotation>
+								<documentation>
+									Page size. Defaulted to 20 if not provided.
+								</documentation>
+							</annotation>
+						</element>
+
+						<element name="Number" minOccurs="1" maxOccurs="1" type="int">
+							<annotation>
+								<documentation>
+									Page number to be retrieved or used as reference.
+									Example 1: Number=1, Action=Next (page 2 is returned).
+									Example	2: Number=3, Action=Retrieve (page 3 is returned).
+								</documentation>
+							</annotation>
+						</element>
+
+						<element name="Action" minOccurs="1" maxOccurs="1" default="Retrieve">
+							<annotation>
+								<documentation>
+									Page Action. Defaulted to "Retrieve" if not
+									provided.
+								</documentation>
+							</annotation>
+							<simpleType>
+								<restriction base="string">
+									<enumeration value="First"/>
+									<enumeration value="Last"/>
+									<enumeration value="Previous"/>
+									<enumeration value="Next"/>
+									<enumeration value="Retrieve"/>
+								</restriction>
+							</simpleType>
+						</element>
+					</sequence>
+				</complexType>
+			</element>
+			
+			<element ref="ext:PaginationExtension" minOccurs="0" maxOccurs="1"/>
+		</sequence>
+		
+		 <!--  SOAP ENV 1.2 Optional Attributes - Axis2 e W3C Compliance -->
+	    <attribute ref="soap12-env:encodingStyle" use="optional"/>
+	    <attribute ref="soap12-env:role" use="optional"/>
+	    <attribute ref="soap12-env:mustUnderstand" use="optional"/>
+	    <attribute ref="soap12-env:relay" use="optional"/>
+		
+	</complexType>
+
+	<element name="Pagination" type="tns:PaginationType">
+		<annotation>
+			<documentation>
+				Optional SOAP header that controls the pagination of
+				return of a service.
+			</documentation>
+		</annotation>
+	</element>
+
+</schema>

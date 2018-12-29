@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified" 
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/resource/resource/EquipmentEvent" 
+	xmlns="http://www.w3.org/2001/XMLSchema" 
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/resource/resource/EquipmentEvent"
+	xmlns:evt="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/event/Event"
+	xmlns:tps="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types"
+	xmlns:cua="http://www.netservicos.com.br/canonicalmodel/nid/v1/customer/customer/CustomerAccount"
+	xmlns:cus="http://www.netservicos.com.br/canonicalmodel/nid/v1/customer/customer/Customer"
+	xmlns:capi="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/product/CustomerAccountProductInvolvement"
+	xmlns:equ="http://www.netservicos.com.br/canonicalmodel/nid/v1/resource/resource/Equipment"
+	xmlns:ges="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/location/GeographicSite"
+	xmlns:gsr="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/location/GeographicSiteRole"
+	xmlns:ore="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/party/OrganizationEnterprise"
+	xmlns:par="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/party/PartyRole"
+	xmlns:phc="http://www.netservicos.com.br/canonicalmodel/nid/v1/resource/specification/PhysicalConnector"
+	xmlns:php="http://www.netservicos.com.br/canonicalmodel/nid/v1/resource/specification/PhysicalPort"
+	xmlns:res="http://www.netservicos.com.br/canonicalmodel/nid/v1/resource/resource/Resource"
+	xmlns:cuo="http://www.netservicos.com.br/canonicalmodel/nid/v1/customer/order/CustomerOrder">
+
+	<import 
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types" 
+		schemaLocation="../../netarchitecture/common/Types.xsd" />
+	<import
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/event/Event"
+		schemaLocation="../../netarchitecture/event/Event.xsd" />
+	<import
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/customer/customer/CustomerAccount"
+		schemaLocation="../../customer/customer/CustomerAccount.xsd" />
+	<import
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/customer/customer/Customer"
+		schemaLocation="../../customer/customer/Customer.xsd" />
+	<import
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/product/CustomerAccountProductInvolvement"
+		schemaLocation="../../product/product/CustomerAccountProductInvolvement.xsd" />
+	<import
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/resource/resource/Equipment"
+		schemaLocation="../../resource/resource/Equipment.xsd" />
+	<import
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/location/GeographicSite"
+		schemaLocation="../../common/location/GeographicSite.xsd" />
+	<import
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/location/GeographicSiteRole"
+		schemaLocation="../../common/location/GeographicSiteRole.xsd" />
+	<import
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/party/OrganizationEnterprise"
+		schemaLocation="../../common/party/OrganizationEnterprise.xsd" />
+	<import
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/party/PartyRole"
+		schemaLocation="../../common/party/PartyRole.xsd" />	
+	<import
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/resource/specification/PhysicalConnector"
+		schemaLocation="../../resource/specification/PhysicalConnector.xsd" />		
+	<import
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/resource/specification/PhysicalPort"
+		schemaLocation="../../resource/specification/PhysicalPort.xsd" />	
+	<import
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/resource/resource/Resource"
+		schemaLocation="../../resource/resource/Resource.xsd" />					
+	<import
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/customer/order/CustomerOrder"
+		schemaLocation="../../customer/order/CustomerOrder.xsd" />
+
+
+	<complexType name="EquipmentEventType">
+		<complexContent>
+			<extension base="evt:EventType">
+				<sequence>
+					<element name="equipmentsIn" type="tns:equipmentsType" minOccurs="0" maxOccurs="1" />
+					<element name="equipmentsOut" type="tns:equipmentsType" minOccurs="0" maxOccurs="1" />
+					<element ref="tns:customerOrder" minOccurs="0" maxOccurs="1" />
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	
+	<complexType name="EquipmentOwnershipChangedEventType">
+		<complexContent>
+			<extension base="evt:EventType">
+				<sequence>
+					<element ref="tns:equipmentsForChangeOwnership" minOccurs="0" maxOccurs="1"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="equipmentsType">
+		<sequence>
+			<element ref="tns:equipment" minOccurs="0" maxOccurs="unbounded" />
+		</sequence>
+	</complexType>
+
+	<complexType name="equipmentsForChangeOwnershipType">
+		<sequence>
+			<element ref="tns:equipmentForChangeOwnership" minOccurs="0" maxOccurs="unbounded" />
+		</sequence>
+	</complexType>
+
+	<complexType name="equipmentType">
+		<complexContent>
+			<extension base="res:ResourceType">
+				<sequence>
+					<element ref="equ:Equipment" minOccurs="1" maxOccurs="1">
+						<annotation>
+							<documentation>
+								From Canonical Entity "Equipment".
+							</documentation>
+						</annotation>
+					</element>
+					<element ref="tns:customerAccountProductInvolvement" minOccurs="0" maxOccurs="1" />
+					<element name="geographicSiteTecnichian" type="tns:geographicSiteType" minOccurs="0" maxOccurs="1" />	
+					<element name="geographicSitePartner" type="tns:geographicSiteType" minOccurs="0" maxOccurs="1" />
+					<element ref="tns:physicalConnectors" minOccurs="0" maxOccurs="1"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="equipmentForChangeOwnershipType">
+		<complexContent>
+			<extension base="res:ResourceType">
+				<sequence>
+					<element ref="equ:Equipment" minOccurs="1" maxOccurs="1">
+						<annotation>
+							<documentation>
+								From Canonical Entity "Equipment".
+							</documentation>
+						</annotation>
+					</element>
+					<element ref="tns:customerAccountProductInvolvementForChangeOwnership" minOccurs="0" maxOccurs="1" />
+					<element ref="tns:geographicSiteForChangeOwnership" minOccurs="0" maxOccurs="1" />
+					<element ref="tns:physicalConnectors" minOccurs="0" maxOccurs="1"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	
+	<complexType name="customerAccountProductInvolvementType">
+		<sequence>
+			<element ref="capi:CustomerAccountProductInvolvement" minOccurs="0" maxOccurs="1">
+				<annotation>
+					<documentation>
+						From Canonical Entity "CustomerAccountProductInvolvement".
+					</documentation>
+				</annotation>
+			</element>
+			<element ref="tns:customerAccount" minOccurs="0" maxOccurs="1" />
+		</sequence>
+	</complexType>
+
+	<complexType name="customerAccountProductInvolvementForChangeOwnershipType">
+		<sequence>
+			<element ref="capi:CustomerAccountProductInvolvement" minOccurs="0" maxOccurs="1">
+				<annotation>
+					<documentation>
+						From Canonical Entity "CustomerAccountProductInvolvement".
+					</documentation>
+				</annotation>
+			</element>
+			<element ref="tns:customerAccountForChangeOwnership" minOccurs="0" maxOccurs="1" />
+		</sequence>
+	</complexType>
+
+	<complexType name="geographicSiteType">
+		<sequence>
+			<element ref="ges:GeographicSite" minOccurs="1" maxOccurs="1">
+				<annotation>
+					<documentation>
+						From Canonical Entity "GeographicSite".
+					</documentation>
+				</annotation>
+			</element>
+			<element ref="tns:organizationEnterprise" minOccurs="0" maxOccurs="1" />
+		</sequence>
+	</complexType>
+	
+	<complexType name="geographicSiteForChangeOwnershipType">
+		<sequence>
+			<element ref="ges:GeographicSite" minOccurs="1" maxOccurs="1">
+				<annotation>
+					<documentation>
+						From Canonical Entity "GeographicSite".
+					</documentation>
+				</annotation>
+			</element>
+			<element name="organizationEnterpriseOld" type="tns:organizationEnterpriseType" minOccurs="0" maxOccurs="1" />
+			<element name="organizationEnterpriseNew" type="tns:organizationEnterpriseType" minOccurs="0" maxOccurs="1" />
+		</sequence>
+	</complexType>		
+
+	<complexType name="organizationEnterpriseType">
+		<sequence>
+			<element ref="ore:OrganizationEnterprise" minOccurs="0" maxOccurs="1">
+				<annotation>
+					<documentation>
+						From Canonical Entity "OrganizationEnterprise".
+					</documentation>
+				</annotation>
+			</element>
+		</sequence>
+	</complexType>
+
+	<complexType name="customerAccountType">
+		<sequence>
+			<element ref="cua:CustomerAccount" minOccurs="0" maxOccurs="1">
+				<annotation>
+					<documentation>
+						From Canonical Entity "CustomerAccount".
+					</documentation>
+				</annotation>
+			</element>
+			<element ref="tns:customer" minOccurs="0" maxOccurs="1" />
+		</sequence>
+	</complexType>
+
+	<complexType name="customerAccountForChangeOwnershipType">
+		<sequence>
+			<element ref="cua:CustomerAccount" minOccurs="0" maxOccurs="1">
+				<annotation>
+					<documentation>
+						From Canonical Entity "CustomerAccount".
+					</documentation>
+				</annotation>
+			</element>
+			<element name="customerOld" type="tns:customerType" minOccurs="0" maxOccurs="1" />
+			<element name="customerNew" type="tns:customerType" minOccurs="0" maxOccurs="1" />
+		</sequence>
+	</complexType>
+
+	<complexType name="customerType">
+		<complexContent>
+			<extension base="tns:partyRoleType">
+				<sequence>
+					<element ref="cus:Customer" minOccurs="0" maxOccurs="1">
+						<annotation>
+							<documentation>
+								From Canonical Entity "Customer".
+							</documentation>
+						</annotation>
+					</element>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="partyRoleType">
+		<sequence>
+			<element ref="par:PartyRole" minOccurs="1" maxOccurs="1">
+				<annotation>
+					<documentation>
+						From Canonical Entity "PartyRole".
+					</documentation>
+				</annotation>
+			</element>
+		</sequence>
+	</complexType>
+
+	<complexType name="physicalConnectorsType">
+		<sequence>
+			<element ref="tns:physicalConnector" minOccurs="1" maxOccurs="unbounded"/>
+		</sequence>
+	</complexType>
+	
+	<complexType name="physicalConnectorType">
+		<sequence>
+			<element ref="phc:PhysicalConnector" minOccurs="1" maxOccurs="1">
+				<annotation>
+					<documentation>
+						From Canonical Entity "PhysicalConnector".
+					</documentation>
+				</annotation>
+			</element>
+			<element ref="php:PhysicalPorts" minOccurs="0" maxOccurs="1" />
+		</sequence>
+	</complexType>		
+	
+	<complexType name="customerOrderType">
+		<sequence>
+			<element ref="cuo:CustomerOrder" minOccurs="1" maxOccurs="1">
+				<annotation>
+					<documentation>
+						From Canonical Entity "CustomerOrder".
+					</documentation>
+				</annotation>
+			</element>
+		</sequence>
+	</complexType>
+
+	<element name="customer" type="tns:customerType" />
+	<element name="customerAccount" type="tns:customerAccountType" />
+	<element name="customerAccountForChangeOwnership" type="tns:customerAccountForChangeOwnershipType" />
+	<element name="customerAccountProductInvolvement" type="tns:customerAccountProductInvolvementType" />
+	<element name="customerAccountProductInvolvementForChangeOwnership" type="tns:customerAccountProductInvolvementForChangeOwnershipType" />
+	<element name="equipment" type="tns:equipmentType" />
+	<element name="equipmentForChangeOwnership" type="tns:equipmentForChangeOwnershipType" />
+	<element name="equipments" type="tns:equipmentsType" />
+	<element name="equipmentsForChangeOwnership" type="tns:equipmentsForChangeOwnershipType" />
+	<element name="geographicSite" type="tns:geographicSiteType" />
+	<element name="geographicSiteForChangeOwnership" type="tns:geographicSiteForChangeOwnershipType" />
+	<element name="organizationEnterprise" type="tns:organizationEnterpriseType" />
+	<element name="physicalConnector" type="tns:physicalConnectorType" />
+	<element name="physicalConnectors" type="tns:physicalConnectorsType" />
+	<element name="customerOrder" type="tns:customerOrderType" />
+				    
+	<element name="EquipmentOwnershipChangedEvent" type="tns:EquipmentOwnershipChangedEventType">
+		<annotation>
+			<documentation>
+				Changed
+			</documentation>
+		</annotation>
+	</element>
+	
+	<element name="EquipmentMovedEvent" type="tns:EquipmentEventType">
+		<annotation>
+			<documentation>
+				Moved
+			</documentation>
+		</annotation>
+	</element>
+
+</schema>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/partner/order/ReturnType"
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/partner/order/ReturnType"
+	xmlns:tps="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types">
+
+	<import schemaLocation="../../netarchitecture/common/Types.xsd"
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types" />
+
+	<element name="ReturnType">
+		<simpleType>
+			<restriction base="string">
+				<enumeration value="Sucess" />
+				<enumeration value="EA Failed" />
+				<enumeration value="SOA unauthorized" />
+				<enumeration value="Register not found" />
+				<enumeration value="Invalid data" />
+				<enumeration value="EBT Failed" />
+				<enumeration value="Scheduled" />
+				<enumeration value="To be scheduled" />
+				<enumeration value="Pendent" />
+				<enumeration value="Activated" />
+				<enumeration value="Concluded" />
+				<enumeration value="Rejected" />
+				<enumeration value="Rejected in wait" />
+				<enumeration value="Point of no return" />
+			</restriction>
+		</simpleType>
+	</element>
+
+</schema>

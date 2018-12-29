@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/partner/order/PortingDisconnection"
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/partner/order/PortingDisconnection"
+	xmlns:tps="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types">
+
+	<import schemaLocation="../../netarchitecture/common/Types.xsd"
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types" />
+
+	<complexType name="PortingDisconnectionType">
+		<sequence>
+			<element name="QuarentineEndDate" type="dateTime" minOccurs="0"
+				maxOccurs="1" />
+			<element name="DisconnectionDate" type="dateTime" minOccurs="0"
+				maxOccurs="1" />
+		</sequence>
+	</complexType>
+
+	<element name="PortingDisconnection" type="tns:PortingDisconnectionType" />
+
+	<element name="PortingDisconnections">
+		<complexType>
+			<sequence>
+				<element ref="tns:PortingDisconnection" minOccurs="1"
+					maxOccurs="unbounded" />
+			</sequence>
+		</complexType>
+	</element>
+
+</schema>

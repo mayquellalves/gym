@@ -1,0 +1,668 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dvm name="netarchitecture.messages.common.dvm" xmlns="http://xmlns.oracle.com/dvm">
+  <description>
+  	Only messages belonging to common domain can be defined here.
+  </description>
+  <columns>
+    <column name="ID_MSG"/>
+    <column name="ERROR_NAME"/>
+    <column name="USER_MESSAGE"/>
+    <column name="DETAIL_MESSAGE"/>
+    <column name="CATEGORY_MESSAGE"/>
+    <column name="SYSTEM_CODE"/>
+    <column name="NID_DOMAIN"/>
+    <column name="ABE_LEVEL"/>
+  </columns>
+  <rows>
+	<row>
+	  <cell>OSB-COMMON-00001</cell>
+	  <cell>BUSINESS_FAULT</cell>
+	  <cell>Request inválido para operação: {0}.</cell>
+	  <cell>Request inválido para operação: {0}.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+	  <cell>common</cell>
+      <cell>root</cell>
+	</row>  
+	<row>
+	  <cell>OSB-COMMON-00002</cell>
+	  <cell>RUNTIME_FAULT</cell>
+	  <cell>Erro durante a execução do recurso: {0}.</cell>
+	  <cell>Erro durante a execução do recurso: {0}.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+	  <cell>common</cell>
+      <cell>root</cell>
+    </row>
+	<row>
+	  <cell>OSB-COMMON-00003</cell>
+	  <cell>PARAMETERS_NOT_INFORMED_FAULT</cell>
+	  <cell>O(s) campo(s) {0} ou {1} deve(m) ser informado(s).</cell>
+	  <cell>O(s) campo(s) {0} ou {1} deve(m) ser informado(s).</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+	  <cell>common</cell>
+      <cell>root</cell>
+	</row>
+	<row>
+	  <cell>OSB-COMMON-00004</cell>
+	  <cell>BUSINESS_FAULT</cell>
+	  <cell>Não existem cidades encontradas para essa pesquisa.</cell>
+	  <cell>Não existem cidades encontradas para essa pesquisa.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+	  <cell>common</cell>
+      <cell>root</cell>
+	</row>
+	<row>
+	  <cell>OSB-COMMON-00005</cell>
+	  <cell>RUNTIME_FAULT</cell>
+	  <cell>Somente um dos campos de entrada deverá ser preenchido.</cell>
+	  <cell>Somente um dos campos de entrada deverá ser preenchido.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+	  <cell>common</cell>
+      <cell>root</cell>
+	</row>
+	<row>
+	  <cell>OSB-COMMON-00006</cell>
+	  <cell>ORGANIZATION_NOT_FOUND_FAULT</cell>
+	  <cell>A Operadora não foi encontrada.</cell>
+	  <cell>A Operadora não foi encontrada.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+	  <cell>common</cell>
+      <cell>party</cell>
+	</row>
+	<row>
+	  <cell>OSB-COMMON-00007</cell>
+	  <cell>ORGANIZATION_INFORMATION_NOT_FOUND_FAULT</cell>
+	  <cell>As informações da Operadora não foram encontradas.</cell>
+	  <cell>As informações da Operadora não foram encontradas.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+	  <cell>common</cell>
+      <cell>party</cell>
+	</row>
+	<row>
+	  <cell>OSB-COMMON-00008</cell>
+	  <cell>RUNTIME_FAULT</cell>
+	  <cell>Ao menos um dos campos de entrada deve ser informado.</cell>
+	  <cell>Ao menos um dos campos de entrada deve ser informado.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+	  <cell>common</cell>
+      <cell>root</cell>
+	</row>
+	<row>
+	  <cell>OSB-COMMON-00009</cell>
+	  <cell>ROLLOUT_BASE_NOT_FOUND_FAULT</cell>
+	  <cell>Não existe situação de rollout para a base informada.</cell>
+	  <cell>Não existe situação de rollout para a base informada.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+	  <cell>common</cell>
+      <cell>root</cell>
+	</row>
+	<row>
+	  <cell>OSB-COMMON-00010</cell>
+	  <cell>ROLLOUT_BASE_NOT_FOUND_FAULT</cell>
+	  <cell>Não existem situações de rollout para nenhuma base.</cell>
+	  <cell>Não existem situações de rollout para nenhuma base.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+	  <cell>common</cell>
+      <cell>root</cell>
+	</row>		
+    <row>
+      <cell>OSB-COMMON-00011</cell>
+      <cell>DATA_NOT_FOUND</cell>
+      <cell>Dados não encontrados.</cell>
+      <cell>Dados não encontrados.</cell>
+      <cell>ERROR</cell>
+      <cell/>
+      <cell>common</cell>
+      <cell>root</cell>
+    </row>
+    <row>
+      <cell>OSB-COMMON-00012</cell>
+      <cell>PARAMETERS_NOT_INFORMED_FAULT</cell>
+      <cell>O(s) campo(s) {0} deve(m) ser informado(s).</cell>
+      <cell>O(s) campo(s) {0} deve(m) ser informado(s).</cell>
+      <cell>ERROR</cell>
+      <cell/>
+      <cell>common</cell>
+      <cell>root</cell>
+    </row>
+    <row>
+	  <cell>OSB-COMMON-00013</cell>
+	  <cell>PARAMETERS_NOT_INFORMED_FAULT</cell>
+	  <cell>O(s) campo(s) {0} ou {1} ou {2} deve(m) ser informado(s).</cell>
+	  <cell>O(s) campo(s) {0} ou {1} ou {2} deve(m) ser informado(s).</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+	  <cell>common</cell>
+      <cell>root</cell>
+	</row>
+	<row>
+	  <cell>OSB-COMMON-00014</cell>
+	  <cell>DATA_NOT_FOUND</cell>
+	  <cell>Não existem bandeiras das operações de crédito informadas.</cell>
+	  <cell>Não existem bandeiras das operações de crédito informadas.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+	  <cell>common</cell>
+      <cell>root</cell>
+	</row>
+	<row>
+	  <cell>OSB-COMMON-00015</cell>
+	  <cell>DATA_NOT_FOUND</cell>
+	  <cell>Não existem bandeiras dos bancos conveniados para serem informadas.</cell>
+	  <cell>Não existem bandeiras dos bancos conveniados para serem informadas.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+	  <cell>common</cell>
+      <cell>root</cell>
+	</row>
+	<row>
+	  <cell>OSB-COMMON-00016</cell>
+	  <cell>USER_OR_PASSWORD_INVALID_FAULT</cell>
+	  <cell>Usuário/Senha inválido.</cell>
+	  <cell>Usuário/Senha inválido.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+	  <cell>common</cell>
+      <cell>usersandroles</cell>
+	</row>
+	<row>
+	  <cell>OSB-COMMON-00017</cell>
+	  <cell>DISABLED_ACCOUNT_FAULT</cell>
+	  <cell>Conta desabilitada.</cell>
+	  <cell>Conta desabilitada.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+	  <cell>common</cell>
+      <cell>usersandroles</cell>
+	</row>	
+	<row>
+	  <cell>OSB-COMMON-00018</cell>
+	  <cell>LOGIN_CURRENTLY_NOT_ALLOWED_FAULT</cell>
+	  <cell>Login não permitido no momento.</cell>
+	  <cell>Login não permitido no momento.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+	  <cell>common</cell>
+      <cell>usersandroles</cell>
+	</row>	
+	<row>
+	  <cell>OSB-COMMON-00019</cell>
+	  <cell>EXPIRED_ACCOUNT_FAULT</cell>
+	  <cell>Conta expirada.</cell>
+	  <cell>Conta expirada.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+	  <cell>common</cell>
+      <cell>usersandroles</cell>
+	</row>	
+	<row>
+	  <cell>OSB-COMMON-00020</cell>
+	  <cell>EXPIRED_PASSWORD_FAULT</cell>
+	  <cell>Senha expirada.</cell>
+	  <cell>Senha expirada.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+	  <cell>common</cell>
+      <cell>usersandroles</cell>
+	</row>
+	<row>
+	  <cell>OSB-COMMON-00021</cell>
+	  <cell>BUSINESS_FAULT</cell>
+	  <cell>Usuário precisa alterar a sua senha.</cell>
+	  <cell>Usuário precisa alterar a sua senha.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+	  <cell>common</cell>
+      <cell>usersandroles</cell>
+	</row>	
+	<row>
+	  <cell>OSB-COMMON-00022</cell>
+	  <cell>ERROR_CHANGING_USER_PASSWORD_FAULT</cell>
+	  <cell>Erro ao alterar a senha do usuário.</cell>
+	  <cell>Erro ao alterar a senha do usuário.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+	  <cell>common</cell>
+      <cell>usersandroles</cell>
+	</row>		
+	<row>
+	  <cell>OSB-COMMON-00023</cell>
+	  <cell>PARAMETERS_NOT_INFORMED_FAULT</cell>
+	  <cell>O(s) campo(s) {0} ou {1} ou {2} ou {3} deve(m) ser informado(s).</cell>
+	  <cell>O(s) campo(s) {0} ou {1} ou {2} ou {3} deve(m) ser informado(s).</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+	  <cell>common</cell>
+      <cell>usersandroles</cell>
+	</row>
+    <row>
+	  <cell>OSB-COMMON-00024</cell>
+	  <cell>TOKEN_TYPE_NOT_IMPLEMENTED_FAULT</cell>
+	  <cell>O tipo de token solicitado não foi implementado.</cell>
+	  <cell>O tipo de token solicitado não foi implementado.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+	  <cell>common</cell>
+      <cell>usersandroles</cell>
+	</row>	
+    <row>
+	  <cell>OSB-COMMON-00025</cell>
+	  <cell>ORGANIZATION_ENTERPRISE_NOT_FOUND_FAULT</cell>
+	  <cell>Não foi localizado o código de operadora para o Financial Account informado.</cell>
+	  <cell>Não foi localizado o código de operadora para o Financial Account informado.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+	  <cell>common</cell>
+      <cell>party</cell>
+	</row>
+    <row>
+	  <cell>OSB-COMMON-00026</cell>
+	  <cell>INVALID_TOKEN_FAULT</cell>
+	  <cell>Token inválido.</cell>
+	  <cell>Token inválido.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+	  <cell>common</cell>
+      <cell>usersandroles</cell>
+	</row>	
+    <row>
+	  <cell>OSB-COMMON-00027</cell>
+	  <cell>USER_NOT_FOUND_FAULT</cell>
+	  <cell>Usuário não encontrado.</cell>
+	  <cell>Usuário não encontrado.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+	  <cell>common</cell>
+      <cell>usersandroles</cell>
+	</row>	
+	<row>
+	  <cell>OSB-COMMON-00028</cell>
+	  <cell>INVALID_POSTCODEORIT_DOES_NO_MATCH_INFORMED_FAULT</cell>
+	  <cell>CEP informado inválido ou não corresponde ao Logradouro/Bairro/Cidade informada.</cell>
+	  <cell>CEP informado inválido ou não corresponde ao Logradouro/Bairro/Cidade informada.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+	  <cell>common</cell>
+      <cell>location</cell>
+	</row>	
+	<row>
+	  <cell>OSB-COMMON-00029</cell>
+	  <cell>INVALID_STREETNAMEORIT_DOES_NO_MATCH_INFORMED_DFAULT</cell>
+	  <cell>Logradouro informado inválido ou não corresponde ao CEP/Bairro/cidade informada.</cell>
+	  <cell>Logradouro informado inválido ou não corresponde ao CEP/Bairro/cidade informada.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+	  <cell>common</cell>
+      <cell>location</cell>
+	</row>
+	<row>
+	  <cell>OSB-COMMON-00030</cell>
+	  <cell>INVALID_NEIGHBORHOODORIT_DOES_NO_MATCH_INFORMED_FAULT</cell>
+	  <cell>Bairro informado inválido ou não corresponde ao CEP/Logradouro/cidade informada.</cell>
+	  <cell>Bairro informado inválido ou não corresponde ao CEP/Logradouro/cidade informada.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+	  <cell>common</cell>
+      <cell>location</cell>
+	</row>
+	<row>
+	  <cell>OSB-COMMON-00031</cell>
+	  <cell>INVALID_CITYORIT_DOES_NO_MATCH_INFORMED_FAULT</cell>
+	  <cell>Cidade informada inválida ou não corresponde ao CEP/Logradouro/Bairro informado.</cell>
+	  <cell>Cidade informada inválida ou não corresponde ao CEP/Logradouro/Bairro informado.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+	  <cell>common</cell>
+      <cell>location</cell>
+	</row>
+	<row>
+	  <cell>OSB-COMMON-00032</cell>
+	  <cell>COMPLEMENT_TYPE_NOT_FOUND_FAULT</cell>
+	  <cell>Tipo de complemento informado não encontrado.</cell>
+	  <cell>Tipo de complemento informado não encontrado.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+	  <cell>common</cell>
+      <cell>location</cell>
+	</row>
+	<row>
+	  <cell>OSB-COMMON-00033</cell>
+	  <cell>COMPLEMENT_TYPE_REPORTED_MORE_THAN_ONCE_FAULT</cell>
+	  <cell>Tipo de complemento informado mais de uma vez.</cell>
+	  <cell>Tipo de complemento informado mais de uma vez.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+	  <cell>common</cell>
+      <cell>location</cell>
+	</row>
+	<row>
+	  <cell>OSB-COMMON-00034</cell>
+	  <cell>DUPLICATE_NEIGHBORHOOD_FAULT</cell>
+	  <cell>Bairro Duplicado.</cell>
+	  <cell>Bairro Duplicado.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+	  <cell>common</cell>
+      <cell>location</cell>
+	</row>
+	<row>
+	  <cell>OSB-COMMON-00035</cell>
+	  <cell>DUPLICATE_STREETNAME_FAULT</cell>
+	  <cell>Logradouro Duplicado.</cell>
+	  <cell>Logradouro Duplicado.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+	  <cell>common</cell>
+      <cell>location</cell>
+	</row>
+	<row>
+	  <cell>OSB-COMMON-00036</cell>
+	  <cell>ADDRESS_NOT_FOUND_FAULT</cell>
+	  <cell>Endereço não encontrado.</cell>
+	  <cell>Endereço não encontrado.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+	  <cell>common</cell>
+      <cell>location</cell>
+	</row>
+	<row>
+	  <cell>OSB-COMMON-00037</cell>
+	  <cell>NECESSARY_TO_INFORM_THE_COMPLEMENTID_WHEN_COMPLEMENT_INFORMED_FAULT</cell>
+	  <cell>É necessário informar o complemento quando o campo texto do complemento esta preenchido.</cell>
+	  <cell>É necessário informar o complemento quando o campo texto do complemento esta preenchido.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+	  <cell>common</cell>
+      <cell>location</cell>
+	</row>
+	<row>
+	  <cell>OSB-COMMON-00038</cell>
+	  <cell>DATA_NOT_FOUND_FAULT</cell>
+	  <cell>{0} não cadastrado(s) no SPR. </cell>
+	  <cell>{0} não cadastrado(s) no SPR. </cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+	  <cell>common</cell>
+      <cell>root</cell>
+	</row> 
+	<row>
+	  <cell>OSB-COMMON-00039</cell>
+	  <cell>DATA_NOT_FOUND_FAULT</cell>
+	  <cell>{0} já cadastrado(s) no SPR. </cell>
+	  <cell>{0} já cadastrado(s) no SPR. </cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+	  <cell>common</cell>
+      <cell>root</cell>
+	</row>
+	<row>
+	  <cell>OSB-COMMON-00040</cell>
+	  <cell>INVALID_SECRET_ANSWER</cell>
+	  <cell>Resposta secreta inválida para a pergunta secreta informada.</cell>
+	  <cell>Resposta secreta inválida para a pergunta secreta informada.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+	  <cell>common</cell>
+      <cell>root</cell>
+	</row>
+	<row>
+	  <cell>OSB-COMMON-00041</cell>
+	  <cell>INVALID_PASSWORD</cell>
+	  <cell>Nova senha deve ser diferente da senha atual.</cell>
+	  <cell>Nova senha deve ser diferente da senha atual.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+	  <cell>common</cell>
+      <cell>usersandroles</cell>
+	</row>
+	<row>
+	  <cell>OSB-COMMON-00042</cell>
+	  <cell>OSB_OPERACAO_INVALIDA</cell>
+	  <cell>A operação solicitada para o serviço não é válida.</cell>
+	  <cell>A operação solicitada para o serviço não é válida.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+	  <cell>common</cell>
+      <cell>root</cell>
+	</row>	
+	<row>
+	  <cell>OSB-COMMON-00043</cell>
+	  <cell>BUSINESS_FAULT</cell>
+	  <cell>Request Inválido. Informar somente uma ocorrência de cada um dos campos {0}.</cell>
+	  <cell>Request Inválido. Informar somente uma ocorrência de cada um dos campos {0}.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+	  <cell>common</cell>
+      <cell>root</cell>
+	</row>	
+	<row>
+	  <cell>OSB-COMMON-00044</cell>
+	  <cell>BUSINESS_FAULT</cell>
+	  <cell>Ao menos um dos campos {0} de entrada devem ser informados.</cell>
+	  <cell>Ao menos um dos campos {0} de entrada devem ser informados.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+	  <cell>common</cell>
+      <cell>root</cell>
+	</row>	
+	<row>
+	  <cell>OSB-COMMON-00045</cell>
+	  <cell>BUSINESS_FAULT</cell>
+	  <cell>Status inválido para Work Order.</cell>
+	  <cell>Status inválido para Work Order.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+	  <cell>common</cell>
+      <cell>root</cell>
+	</row>
+	<row>
+	  <cell>OSB-COMMON-00046</cell>
+	  <cell>BUSINESS_FAULT</cell>
+	  <cell>Data de agendamento inválida para Work Order.</cell>
+	  <cell>Data de agendamento inválida para Work Order.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+	  <cell>common</cell>
+      <cell>root</cell>
+	</row>
+	<row>
+	  <cell>OSB-COMMON-00048</cell>
+	  <cell>BUSINESS_FAULT</cell>
+	  <cell>Work Order alcançou ponto de não retorno.</cell>
+	  <cell>Work Order alcançou ponto de não retorno.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+	  <cell>common</cell>
+      <cell>root</cell>
+	</row>	
+	<row>
+	  <cell>OSB-COMMON-00049</cell>
+	  <cell>BUSINESS_FAULT</cell>
+	  <cell>Falha na Validação de Equipamento ou Porta.</cell>
+	  <cell>Falha na Validação de Equipamento ou Porta.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+	  <cell>common</cell>
+      <cell>root</cell>
+	</row>	
+	<row>
+	  <cell>OSB-COMMON-00050</cell>
+	  <cell>BUSINESS_FAULT</cell>
+	  <cell>Serviço inexistente na Work Order.</cell>
+	  <cell>Serviço inexistente na Work Order.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+	  <cell>common</cell>
+      <cell>root</cell>
+	</row>	
+	<row>
+	  <cell>OSB-COMMON-00051</cell>
+	  <cell>BUSINESS_FAULT</cell>
+	  <cell>Equipamento relacionado com outro cliente.</cell>
+	  <cell>Equipamento relacionado com outro cliente.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+	  <cell>common</cell>
+      <cell>root</cell>
+	</row>	
+	<row>
+	  <cell>OSB-COMMON-00052</cell>
+	  <cell>BUSINESS_FAULT</cell>
+	  <cell>Task code e tipo de equipamento inválidos para troca de equipamento.</cell>
+	  <cell>Task code e tipo de equipamento inválidos para troca de equipamento.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+	  <cell>common</cell>
+      <cell>root</cell>
+	</row>	
+	<row>
+	  <cell>OSB-COMMON-00053</cell>
+	  <cell>BUSINESS_FAULT</cell>
+	  <cell>Task não está em status final.</cell>
+	  <cell>Task não está em status final.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+	  <cell>common</cell>
+      <cell>root</cell>
+	</row>	
+	<row>
+	  <cell>OSB-COMMON-00054</cell>
+	  <cell>BUSINESS_FAULT</cell>
+	  <cell>Sem porta disponível.</cell>
+	  <cell>Sem porta disponível.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+	  <cell>common</cell>
+      <cell>root</cell>
+	</row>	
+	<row>
+	  <cell>OSB-COMMON-00055</cell>
+	  <cell>BUSINESS_FAULT</cell>
+	  <cell>Equipamento não encontrado.</cell>
+	  <cell>Equipamento não encontrado.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+	  <cell>common</cell>
+      <cell>root</cell>
+	</row>	
+	<row>
+	  <cell>OSB-COMMON-00056</cell>
+	  <cell>BUSINESS_FAULT</cell>
+	  <cell>Equipamento não encontrado no investário de recursos.</cell>
+	  <cell>Equipamento não encontrado no investário de recursos.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+	  <cell>common</cell>
+      <cell>root</cell>
+	</row>		
+	<row>
+	  <cell>OSB-COMMON-00057</cell>
+	  <cell>BUSINESS_FAULT</cell>
+	  <cell>Senha atual inválida</cell>
+	  <cell>Senha atual inválida</cell>
+	  <cell>ERROR</cell>
+	  <cell />
+	  <cell>common</cell>
+	  <cell>usersandroles</cell>
+	</row>	
+	<row>
+	  <cell>OSB-COMMON-00058</cell>
+	  <cell>BUSINESS_FAULT</cell>
+	  <cell>Não é possível prosseguir com a ordem pois a rede deste endereço está bloqueada ou sem serviços disponíveis. Por favor, entrar em contato com a equipe do Gestão de Endereços.</cell>
+	  <cell>Não é possível prosseguir com a ordem pois a rede deste endereço está bloqueada ou sem serviços disponíveis. Por favor, entrar em contato com a equipe do Gestão de Endereços.</cell>
+	  <cell>ERROR</cell>
+	  <cell />
+	  <cell>common</cell>
+	  <cell>party</cell>
+	</row>
+	<row>
+	  <cell>OSB-COMMON-00059</cell>
+	  <cell>BUSINESS_FAULT</cell>
+	  <cell>Não foi possível continuar o cadastro/atualização do usuário dependente, pois não foi possível incluir os dados do mesmo no usuário titular. Mensagem: {0}.</cell>
+	  <cell>Não foi possível continuar o cadastro/atualização do usuário dependente, pois não foi possível incluir os dados do mesmo no usuário titular. Mensagem: {0}.</cell>
+	  <cell>ERROR</cell>
+	  <cell />
+	  <cell>common</cell>
+	  <cell>usersandroles</cell>
+	</row>
+	<row>
+	  <cell>OSB-COMMON-00060</cell>
+	  <cell>BUSINESS_FAULT</cell>
+	  <cell>Ocorreu erro na sincronização dos dados do usuário dependente.</cell>
+	  <cell>Ocorreu erro na sincronização dos dados do usuário dependente.</cell>
+	  <cell>ERROR</cell>
+	  <cell />
+	  <cell>common</cell>
+	  <cell>usersandroles</cell>
+	</row>
+	<row>
+	  <cell>OSB-COMMON-00061</cell>
+	  <cell>BUSINESS_FAULT</cell>
+	  <cell>Não foi possível efetuar o roolbak da criação/atualização do usuário filho. Necessária atualização/remoção do usuário {0}.</cell>
+	  <cell>Não foi possível efetuar o roolbak da criação/atualização do usuário filho. Necessária atualização/remoção do usuário {0}.</cell>
+	  <cell>ERROR</cell>
+	  <cell />
+	  <cell>common</cell>
+	  <cell>usersandroles</cell>
+	</row>
+	<row>
+	  <cell>OSB-COMMON-00062</cell>
+	  <cell>BUSINESS_FAULT</cell>
+	  <cell>Não é possível incluir novo usuário filho. Quantidade máxima de usuários filhos atingida.</cell>
+	  <cell>Não é possível incluir novo usuário filho. Quantidade máxima de usuários filhos atingida.</cell>
+	  <cell>ERROR</cell>
+	  <cell />
+	  <cell>common</cell>
+	  <cell>usersandroles</cell>
+	</row>
+	<row>
+	  <cell>OSB-COMMON-00063</cell>
+	  <cell>BUSINESS_FAULT</cell>
+	  <cell>{0} não é dependente do titular informado.</cell>
+	  <cell>{0} não é dependente do titular informado.</cell>
+	  <cell>ERROR</cell>
+	  <cell />
+	  <cell>common</cell>
+	  <cell>usersandroles</cell>
+	</row>
+	<row>
+	  <cell>OSB-COMMON-00064</cell>
+	  <cell>BUSINESS_FAULT</cell>
+	  <cell>Não foi possível retirar o vínculo do usuário filho da conta do usuário pai.</cell>
+	  <cell>Não foi possível retirar o vínculo do usuário filho da conta do usuário pai.</cell>
+	  <cell>ERROR</cell>
+	  <cell />
+	  <cell>common</cell>
+	  <cell>usersandroles</cell>
+	</row>
+	<row>
+	  <cell>OSB-COMMON-00065</cell>
+	  <cell>BUSINESS_FAULT</cell>
+	  <cell>Não foi possível remover o usuário filho.</cell>
+	  <cell>Não foi possível remover o usuário filho.</cell>
+	  <cell>ERROR</cell>
+	  <cell />
+	  <cell>common</cell>
+	  <cell>usersandroles</cell>
+	</row>
+	<row>
+	  <cell>OSB-COMMON-00066</cell>
+	  <cell>BUSINESS_FAULT</cell>
+	  <cell>Usuário {0} não é titular.</cell>
+	  <cell>Usuário {0} não é titular.</cell>
+	  <cell>ERROR</cell>
+	  <cell />
+	  <cell>common</cell>
+	  <cell>usersandroles</cell>
+	</row>
+  </rows>
+</dvm>

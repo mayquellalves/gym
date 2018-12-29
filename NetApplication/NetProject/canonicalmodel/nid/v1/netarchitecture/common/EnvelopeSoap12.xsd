@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema 
+  xmlns="http://www.w3.org/2001/XMLSchema"
+  xmlns:env="http://www.w3.org/2003/05/soap-envelope"
+  targetNamespace="http://www.w3.org/2003/05/soap-envelope" 
+  xmlns:tns="http://www.w3.org/2003/05/soap-envelope" 
+  elementFormDefault="qualified"
+  attributeFormDefault="qualified">
+  
+	  <!--
+	 Global Attributes.  The following attributes are intended to be
+	  usable via qualified attribute names on any complex type referencing
+	  them.  
+	-->
+	<attribute name="mustUnderstand" type="boolean" default="0"/>
+	<attribute name="relay" type="boolean" default="0"/>
+	<attribute name="role" type="anyURI"/>
+	<!--
+	 'encodingStyle' indicates any canonicalization conventions
+	  followed in the contents of the containing element.  For example, the
+	  value 'http://www.w3.org/2003/05/soap-encoding' indicates the pattern
+	  described in the SOAP Version 1.2 Part 2: Adjuncts Recommendation 
+	-->
+	<attribute name="encodingStyle" type="anyURI"/>
+  
+  
+</schema>

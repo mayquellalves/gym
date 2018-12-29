@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema elementFormDefault="qualified"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:domain="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/NidDomain"
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/NidDomain">
+
+	<xsd:simpleType name="NidDomainType">
+		<xsd:annotation>
+			<xsd:documentation>
+				Net Shared Information / Data Model
+				NID Business
+				Domains.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<!-- ALERT SID -->
+			<xsd:enumeration value="COMMON" />
+			<xsd:enumeration value="CUSTOMER" />
+			<xsd:enumeration value="ENTERPRISE" />
+			<xsd:enumeration value="MARKET" />
+			<xsd:enumeration value="PARTNER" />
+			<xsd:enumeration value="PRODUCT" />
+			<xsd:enumeration value="RESOURCE" />
+			<xsd:enumeration value="SALES" />
+			<xsd:enumeration value="SERVICE" />
+			<xsd:enumeration value="SUPPLIER" />
+			<xsd:enumeration value="NETARCHITECTURE" />
+			<!-- ALERT TAM -->
+			<xsd:enumeration value="APPLICATIONINTEGRATION" />
+			<xsd:enumeration value="CROSSDOMAINAPPLICATIONS" />
+			<xsd:enumeration value="CUSTOMERMANAGEMENT" />
+			<xsd:enumeration value="ENTERPRISEMANAGEMENT" />
+			<xsd:enumeration value="MARKETMANAGEMENT" />
+			<xsd:enumeration value="PARTNERMANAGEMENT" />
+			<xsd:enumeration value="PRODUCTMANAGEMENT" />
+			<xsd:enumeration value="RESOURCEMANAGEMENT" />
+			<xsd:enumeration value="SALESMANAGEMENT" />
+			<xsd:enumeration value="SERVICEMANAGEMENT" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:element name="NidDomain" type="domain:NidDomainType" />
+
+</xsd:schema>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified" 
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/resource/usage/ResourceUsage" 
+	xmlns="http://www.w3.org/2001/XMLSchema" 
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/resource/usage/ResourceUsage" >
+		
+
+	
+	
+	<complexType name="ResourceUsageType">
+		
+	</complexType>
+
+	<element name="ResourceUsage" type="tns:ResourceUsageType"/>
+
+	<complexType name="ResourceUsagesType">
+		<sequence>
+			<element ref="tns:ResourceUsage" minOccurs="1" maxOccurs="unbounded"/>
+		</sequence>
+	</complexType>
+	
+	<element name="ResourceUsages" type="tns:ResourceUsagesType"/>
+
+</schema>

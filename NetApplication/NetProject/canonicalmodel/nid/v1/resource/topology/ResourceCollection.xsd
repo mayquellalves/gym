@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified"
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/resource/topology/ResourceCollection"
+	xmlns="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/resource/topology/ResourceCollection">
+
+	<import schemaLocation="CompoundResource.xsd"
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/resource/topology/CompoundResource" />
+			
+	<import schemaLocation="../../netarchitecture/common/Types.xsd"
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types" />
+
+	<complexType name="ResourceCollectionType">
+		<sequence>
+		</sequence>
+	</complexType>
+
+	<element name="ResourceCollection" type="tns:ResourceCollectionType" />
+
+	<element name="ResourceCollections" type="tns:ResourceCollectionsType" />
+	
+	<complexType name="ResourceCollectionsType">
+		<sequence>
+			<element ref="tns:ResourceCollection" minOccurs="1" maxOccurs="unbounded" />
+		</sequence>
+	</complexType>
+
+</schema>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified"
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/product/ComponentProdPrice"
+	xmlns="http://www.w3.org/2001/XMLSchema" 
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/product/ComponentProdPrice"
+	xmlns:tps="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types"
+	xmlns:mon="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/basetypes/Money"
+	xmlns:qtd="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/basetypes/Quantity">
+	
+	
+	<import schemaLocation="../../common/basetypes/Money.xsd"
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/basetypes/Money" />
+		
+	<import schemaLocation="../../common/basetypes/Quantity.xsd"
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/basetypes/Quantity" />
+		
+	<import schemaLocation="../../netarchitecture/common/Types.xsd"
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types" />
+		
+	
+	<import schemaLocation="../../common/basetypes/Money.xsd"
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/basetypes/Money" />
+		
+
+	
+	<complexType name="ComponentProdPriceType">
+		
+				<sequence>
+					<element name="Price" type="mon:MoneyType" minOccurs="0" maxOccurs="1" />
+					<element name="PriceType" type="tps:string020" minOccurs="0" maxOccurs="1" />
+					<element name="UnitOfMeasure" type="qtd:QuantityType" minOccurs="0" maxOccurs="1" />
+					
+				</sequence>
+			
+	</complexType>
+
+	<element name="ComponentProdPrice" type="tns:ComponentProdPriceType" />
+
+	<complexType name="ComponentProdPricesType">
+		<sequence>
+			<element ref="tns:ComponentProdPrice" minOccurs="1" maxOccurs="unbounded" />
+		</sequence>
+	</complexType>
+	
+	<element name="ComponentProdPrices" type="tns:ComponentProdPricesType" />
+
+</schema>

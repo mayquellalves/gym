@@ -1,0 +1,24 @@
+<schema elementFormDefault="qualified" targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/market/campain/MarketingCampaign" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/market/campain/MarketingCampaign" xmlns:tps="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types">
+	
+	<import schemaLocation="../../netarchitecture/common/Types.xsd" namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types"/>
+	
+	<complexType name="MarketingCampaignType">
+		<sequence>
+			<element name="Id" type="tps:string010" minOccurs="0" maxOccurs="1"/>
+			<element name="Name" type="tps:string050" minOccurs="0" maxOccurs="1"/>
+			<element name="Description" type="tps:string100" minOccurs="0" maxOccurs="1"/>
+			<element name="McType" type="tps:string020" minOccurs="0" maxOccurs="1"/>
+		</sequence>
+	</complexType>
+
+	<element name="MarketingCampaign" type="tns:MarketingCampaignType"/>
+
+	<complexType name="MarketingCampaignsType">
+		<sequence>
+			<element ref="tns:MarketingCampaign" minOccurs="1" maxOccurs="unbounded"/>
+		</sequence>
+	</complexType>
+	
+	<element name="MarketingCampaigns" type="tns:MarketingCampaignsType"/>
+
+</schema>

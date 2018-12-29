@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dvm name="netarchitecture.messages.productmanagement.dvm" xmlns="http://xmlns.oracle.com/dvm">
+  <description>
+  	Only messages belonging to product management domain can be defined here.
+  </description>
+  <columns>
+    <column name="ID_MSG"/>
+    <column name="ERROR_NAME"/>
+    <column name="USER_MESSAGE"/>
+    <column name="DETAIL_MESSAGE"/>
+    <column name="CATEGORY_MESSAGE"/>
+    <column name="SYSTEM_CODE"/>
+    <column name="NID_DOMAIN"/>
+    <column name="ABE_LEVEL"/>
+  </columns>
+  <rows>
+  	<row>
+		<cell>OSB-PRODUCTMANAGEMENT-00001</cell>
+		<cell>OSB_SUBSCRIPTION_NOT_FOUND</cell>
+		<cell>Não foram encontrados registros para pesquisa de conteúdo (eventos) da assinatura.</cell>
+		<cell>Não foram encontrados registros para pesquisa de conteúdo (eventos) da assinatura.</cell>
+		<cell>ERROR</cell>
+		<cell />
+		<cell>productmanagement</cell>
+		<cell>catalog</cell>
+	</row>
+    <row>
+		<cell>OSB-PRODUCTMANAGEMENT-00002</cell>
+		<cell>OSB_CATEGORY_NOT_FOUND</cell>
+		<cell>Não foram encontrados registros para pesquisa de categoria.</cell>
+		<cell>Não foram encontrados registros para pesquisa de categoria.</cell>
+		<cell>ERROR</cell>
+		<cell />
+		<cell>productmanagement</cell>
+		<cell>catalog</cell>
+	</row>
+	<row>
+		<cell>OSB-PRODUCTMANAGEMENT-00003</cell>
+		<cell>OSB_PRICE_CHANGED</cell>
+		<cell>O preço aceito pelo usuário final para a compra do produto foi alterado durante a compra.</cell>
+		<cell>O preço aceito pelo usuário final para a compra do produto foi alterado durante a compra.</cell>
+		<cell>ERROR</cell>
+		<cell />
+		<cell>productmanagement</cell>
+		<cell>catalog</cell>
+	</row>
+	<row>
+		<cell>OSB-PRODUCTMANAGEMENT-00004</cell>
+		<cell>OSB_PURCHASE_LIMIT_EXCEEDED</cell>
+		<cell>O limite de gastos foi ultrapassado na compra deste produto.</cell>
+		<cell>O limite de gastos foi ultrapassado na compra deste produto.</cell>
+		<cell>ERROR</cell>
+		<cell />
+		<cell>productmanagement</cell>
+		<cell>catalog</cell>
+	</row>
+	<row>
+		<cell>OSB-PRODUCTMANAGEMENT-00005</cell>
+		<cell>OSB_ERRO_INESPERADO</cell>
+		<cell>Erro durante a execução do recurso: {0}.</cell>
+		<cell>Erro durante a execução do recurso: {0}.</cell>
+		<cell>ERROR</cell>
+		<cell />
+		<cell>productmanagement</cell>
+		<cell>catalog</cell>
+	</row>
+	<row>
+		<cell>OSB-PRODUCTMANAGEMENT-00006</cell>
+		<cell>OSB_REQUEST_INVALIDO</cell>
+		<cell>Request Inválido para operação: {0}.</cell>
+		<cell>Request Inválido para operação: {0}.</cell>
+		<cell>ERROR</cell>
+		<cell />
+		<cell>productmanagement</cell>
+		<cell>catalog</cell>
+	</row>
+	<row>
+		<cell>OSB-PRODUCTMANAGEMENT-00007</cell>
+		<cell>OSB_FIELDS_NOT_INFORMED</cell>
+		<cell>O(s) campo(s) {0} deve(m) ser informado(s).</cell>
+		<cell>O(s) campo(s) {0} deve(m) ser informado(s).</cell>
+		<cell>ERROR</cell>
+		<cell />
+		<cell>productmanagement</cell>
+		<cell>catalog</cell>
+	</row>
+  </rows>
+</dvm>

@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dvm name="netarchitecture.messages.enterprisemanagement.dvm" xmlns="http://xmlns.oracle.com/dvm">
+	<description>
+		Only messages belonging to enterprise management domain
+		can be defined
+		here.
+	</description>
+	<columns>
+		<column name="ID_MSG" />
+		<column name="ERROR_NAME" />
+		<column name="USER_MESSAGE" />
+		<column name="DETAIL_MESSAGE" />
+		<column name="CATEGORY_MESSAGE" />
+		<column name="SYSTEM_CODE" />
+		<column name="NID_DOMAIN" />
+		<column name="ABE_LEVEL" />
+	</columns>
+	<rows>
+		<row>
+			<cell>OSB-ENTERPRISEMANAGEMENT-00001</cell>
+			<cell>OSB_REQUEST_INVALIDO</cell>
+			<cell>Request Inválido para operação: {0}.</cell>
+			<cell>Request Inválido para operação: {0}.</cell>
+			<cell>ERROR</cell>
+			<cell />
+			<cell>enterprisemanagement</cell>
+			<cell>security</cell>
+		</row>
+		<row>
+			<cell>OSB-ENTERPRISEMANAGEMENT-00002</cell>
+			<cell>OSB_OPERACAO_INVALIDA</cell>
+			<cell>A operação solicitada para o serviço não é válida.</cell>
+			<cell>A operação solicitada para o serviço não é válida.</cell>
+			<cell>ERROR</cell>
+			<cell />
+			<cell>enterprisemanagement</cell>
+			<cell>security</cell>
+		</row>
+		<row>
+			<cell>OSB-ENTERPRISEMANAGEMENT-00003</cell>
+			<cell>OSB_ERRO_INESPERADO</cell>
+			<cell>Erro durante a execução do recurso: {0}.</cell>
+			<cell>Erro durante a execução do recurso: {0}.</cell>
+			<cell>ERROR</cell>
+			<cell />
+			<cell>enterprisemanagement</cell>
+			<cell>security</cell>
+		</row>
+		<row>
+			<cell>OSB-ENTERPRISEMANAGEMENT-00004</cell>
+			<cell>FALHA_OPERACAO_SERVICO</cell>
+			<cell>Ocorreu uma falha ao executar a operação {0} do serviço {1}.
+			</cell>
+			<cell>Ocorreu uma falha ao executar a operação {0} do serviço {1}.
+			</cell>
+			<cell>ERROR</cell>
+			<cell />
+			<cell>enterprisemanagement</cell>
+			<cell>security</cell>
+		</row>
+		<row>
+			<cell>OSB-ENTERPRISEMANAGEMENT-00005</cell>
+			<cell>USER_OR_PASSWORD_INVALID_FAULT</cell>
+			<cell>Usuário/Senha inválido.</cell>
+			<cell>Usuário/Senha inválido.</cell>
+			<cell>ERROR</cell>
+			<cell />
+			<cell>enterprisemanagement</cell>
+			<cell>security</cell>
+		</row>
+		<row>
+			<cell>OSB-ENTERPRISEMANAGEMENT-00006</cell>
+			<cell>DISABLED_ACCOUNT_FAULT</cell>
+			<cell>Conta desabilitada.</cell>
+			<cell>Conta desabilitada.</cell>
+			<cell>ERROR</cell>
+			<cell />
+			<cell>enterprisemanagement</cell>
+			<cell>security</cell>
+		</row>
+		<row>
+			<cell>OSB-ENTERPRISEMANAGEMENT-00007</cell>
+			<cell>LOGIN_CURRENTLY_NOT_ALLOWED_FAULT</cell>
+			<cell>Login não permitido no momento.</cell>
+			<cell>Login não permitido no momento.</cell>
+			<cell>ERROR</cell>
+			<cell />
+			<cell>enterprisemanagement</cell>
+			<cell>security</cell>
+		</row>
+		<row>
+			<cell>OSB-ENTERPRISEMANAGEMENT-00008</cell>
+			<cell>EXPIRED_ACCOUNT_FAULT</cell>
+			<cell>Conta expirada.</cell>
+			<cell>Conta expirada.</cell>
+			<cell>ERROR</cell>
+			<cell />
+			<cell>enterprisemanagement</cell>
+			<cell>security</cell>
+		</row>
+		<row>
+			<cell>OSB-ENTERPRISEMANAGEMENT-00009</cell>
+			<cell>EXPIRED_PASSWORD_FAULT</cell>
+			<cell>Senha expirada.</cell>
+			<cell>Senha expirada.</cell>
+			<cell>ERROR</cell>
+			<cell />
+			<cell>enterprisemanagement</cell>
+			<cell>security</cell>
+		</row>
+		<row>
+			<cell>OSB-ENTERPRISEMANAGEMENT-00010</cell>
+			<cell>BUSINESS_FAULT</cell>
+			<cell>Usuário precisa alterar a sua senha.</cell>
+			<cell>Usuário precisa alterar a sua senha.</cell>
+			<cell>ERROR</cell>
+			<cell />
+			<cell>enterprisemanagement</cell>
+			<cell>security</cell>
+		</row>
+		<row>
+			<cell>OSB-ENTERPRISEMANAGEMENT-00011</cell>
+			<cell>ERROR_CHANGING_USER_PASSWORD_FAULT</cell>
+			<cell>Erro ao alterar a senha do usuário.</cell>
+			<cell>Erro ao alterar a senha do usuário.</cell>
+			<cell>ERROR</cell>
+			<cell />
+			<cell>enterprisemanagement</cell>
+			<cell>security</cell>
+		</row>
+		<row>
+			<cell>OSB-ENTERPRISEMANAGEMENT-00012</cell>
+			<cell>FIELDS_NOT_INFORMED</cell>
+			<cell>O(s) campo(s) {0} deve(m) ser informado(s).</cell>
+			<cell>O(s) campo(s) {0} deve(m) ser informado(s).</cell>
+			<cell>ERROR</cell>
+			<cell />
+			<cell>enterprisemanagement</cell>
+			<cell>security</cell>
+		</row>
+		<row>
+			<cell>OSB-ENTERPRISEMANAGEMENT-00013</cell>
+			<cell>PARAMETERS_NOT_INFORMED_FAULT</cell>
+			<cell>O(s) campo(s) {0} ou {1} ou {2} deve(m) ser informado(s).</cell>
+			<cell>O(s) campo(s) {0} ou {1} ou {2} deve(m) ser informado(s).</cell>
+			<cell>ERROR</cell>
+			<cell />
+			<cell>enterprisemanagement</cell>
+			<cell>financial</cell>
+		</row>
+		<row>
+			<cell>OSB-ENTERPRISEMANAGEMENT-00014</cell>
+			<cell>ORGANIZATION_INFORMATION_NOT_FOUND_FAULT</cell>
+			<cell>As informações da Operadora não foram encontradas.</cell>
+			<cell>As informações da Operadora não foram encontradas.</cell>
+			<cell>ERROR</cell>
+			<cell />
+			<cell>enterprisemanagement</cell>
+			<cell>financial</cell>
+		</row>
+		<row>
+			<cell>OSB-ENTERPRISEMANAGEMENT-00015</cell>
+			<cell>ORGANIZATION_NOT_FOUND_FAULT</cell>
+			<cell>A operadora não foi encontrada.</cell>
+			<cell>A operadora não foi encontrada.</cell>
+			<cell>ERROR</cell>
+			<cell />
+			<cell>enterprisemanagement</cell>
+			<cell>financial</cell>
+		</row>
+		<row>
+			<cell>OSB-ENTERPRISEMANAGEMENT-00016</cell>
+			<cell>TOKEN_TYPE_NOT_IMPLEMENTED_FAULT</cell>
+			<cell>O tipo de token solicitado não foi implementado.</cell>
+			<cell>O tipo de token solicitado não foi implementado.</cell>
+			<cell>ERROR</cell>
+			<cell />
+			<cell>enterprisemanagement</cell>
+			<cell>security</cell>
+		</row>
+		<row>
+			<cell>OSB-ENTERPRISEMANAGEMENT-00017</cell>
+			<cell>FIELDS_NOT_INFORMED</cell>
+			<cell>O(s) campo(s) {0} ou {1} deve(m) ser informado(s).</cell>
+			<cell>O(s) campo(s) {0} ou {1} deve(m) ser informado(s).</cell>
+			<cell>ERROR</cell>
+			<cell />
+			<cell>enterprisemanagement</cell>
+			<cell>security</cell>
+		</row>
+		<row>
+			<cell>OSB-ENTERPRISEMANAGEMENT-00018</cell>
+			<cell>TOKEN_TYPE_NOT_IMPLEMENTED_FAULT</cell>
+			<cell>O tipo de token solicitado não foi implementado.</cell>
+			<cell>O tipo de token solicitado não foi implementado.</cell>
+			<cell>ERROR</cell>
+			<cell />
+			<cell>enterprisemanagement</cell>
+			<cell>security</cell>
+		</row>	
+		<row>
+			<cell>OSB-ENTERPRISEMANAGEMENT-00019</cell>
+			<cell>INVALID_TOKEN_FAULT</cell>
+			<cell>Token inválido.</cell>
+			<cell>Token inválido.</cell>
+			<cell>ERROR</cell>
+			<cell/>
+			<cell>enterprisemanagement</cell>
+			<cell>security</cell>
+		</row>
+		<row>
+			<cell>OSB-ENTERPRISEMANAGEMENT-00020</cell>
+			<cell>USER_NOT_FOUND_FAULT</cell>
+			<cell>Usuário não encontrado.</cell>
+			<cell>Usuário não encontrado.</cell>
+			<cell>ERROR</cell>
+			<cell/>
+			<cell>enterprisemanagement</cell>
+			<cell>security</cell>
+		</row>	
+	</rows>
+</dvm>

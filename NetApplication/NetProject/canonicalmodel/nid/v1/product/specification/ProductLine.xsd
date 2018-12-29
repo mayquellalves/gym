@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified"
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/specification/ProductLine"
+	xmlns="http://www.w3.org/2001/XMLSchema" 
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/specification/ProductLine"
+	xmlns:tps="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types">
+
+	<import schemaLocation="../../netarchitecture/common/Types.xsd"
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types" />
+		
+
+	<complexType name="ProductLineType">
+		<sequence>
+			<element name="ProductLineId" type="int" minOccurs="0" maxOccurs="1" />
+		</sequence>		
+	</complexType>
+
+	<element name="ProductLine" type="tns:ProductLineType" />
+
+	<complexType name="ProductLinesType">
+		<sequence>
+			<element ref="tns:ProductLine" minOccurs="1" maxOccurs="unbounded" />
+		</sequence>
+	</complexType>
+
+	<element name="ProductLines" type="tns:ProductLinesType" />
+
+</schema>

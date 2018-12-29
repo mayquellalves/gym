@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/specification/EventScheduleRecording"
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/specification/EventScheduleRecording"
+	xmlns:tps="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types">
+
+	
+	
+	<import schemaLocation="../../netarchitecture/common/Types.xsd"
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types" />
+
+
+	<complexType name="EventScheduleRecordingType">
+		
+				<sequence>
+					<element name="EventScheduleRecordingId" type="int" minOccurs="0" maxOccurs="1" />
+					<element name="StartRecording" type="dateTime" minOccurs="0" maxOccurs="1" />
+					<element name="EndRecording" type="dateTime" minOccurs="0" maxOccurs="1" />
+					<element name="FinalEpisode" type="int" minOccurs="0" maxOccurs="1" />
+					<element name="FinalPadding" type="int" minOccurs="0" maxOccurs="1" />
+					<element name="InitialEpisode" type="int" minOccurs="0" maxOccurs="1" />
+					<element name="InitialPadding" type="int" minOccurs="0" maxOccurs="1" />
+					<element name="OnlyNewEpisode" type="boolean" minOccurs="0" maxOccurs="1" />									
+					<element name="RecordingAssurance" type="boolean" minOccurs="0" maxOccurs="1" />
+				</sequence>
+			
+	</complexType>
+
+	<element name="EventScheduleRecording" type="tns:EventScheduleRecordingType" />
+	
+	<element name="EventScheduleRecordings">
+		<complexType >
+			<sequence>
+				<element ref="tns:EventScheduleRecording" minOccurs="1" maxOccurs="unbounded" />
+			</sequence>
+		</complexType>
+	</element>
+
+</schema>

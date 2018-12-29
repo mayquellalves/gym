@@ -1,0 +1,18 @@
+<schema targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/fault/RuntimeFault" elementFormDefault="qualified" xmlns:errorinfo="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/fault/ErrorInfo" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/fault/RuntimeFault">
+
+	<import namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/fault/ErrorInfo" schemaLocation="ErrorInfo.xsd"/>
+	
+	<complexType name="RuntimeFaultType">
+        <annotation>
+        	<documentation>
+        		Business Fault utilizada para indicar uma falha de recurso (rede, arquivo, servico etc).
+        	</documentation>
+        </annotation>
+        <sequence>
+			<element ref="errorinfo:ErrorInfo"/>
+        </sequence>
+	</complexType>
+
+	<element name="RuntimeFault" type="tns:RuntimeFaultType"/>
+
+</schema>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/partner/order/PortabilityMessageType"
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/partner/order/PortabilityMessageType"
+	xmlns:tps="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types">
+
+	<import schemaLocation="../../netarchitecture/common/Types.xsd"
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types" />
+
+	<element name="PortabilityMessageType">
+		<simpleType>
+			<restriction base="string">
+				<enumeration value="Request for portability" />
+				<enumeration value="Request for change" />
+				<enumeration value="Request for cancelling" />
+				<enumeration value="Request for disconnection" />
+				<enumeration value="Inform activation Deactivation" />
+				<enumeration value="Inform authentication" />
+				<enumeration value="Inform acknowledge cancelling" />
+				<enumeration value="Return" />
+				<enumeration value="Change" />
+				<enumeration value="Authentication" />
+				<enumeration value="Donation" />
+				<enumeration value="Notifcation authentication" />
+				<enumeration value="Notification cancelling" />
+				<enumeration value="Window migration" />
+				<enumeration value="End quarentine" />
+				<enumeration value="Window block" />
+			</restriction>
+		</simpleType>
+	</element>
+
+	<element name="PortabilityMessagesType">
+		<complexType>
+			<sequence>
+				<element ref="tns:PortabilityMessageType" minOccurs="1"
+					maxOccurs="unbounded" />
+			</sequence>
+		</complexType>
+	</element>
+
+</schema>

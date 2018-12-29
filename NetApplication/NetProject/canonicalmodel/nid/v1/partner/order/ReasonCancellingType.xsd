@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/partner/order/ReasonCancellingType"
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/partner/order/ReasonCancellingType">
+
+	<element name="ReasonCancellingType">
+		<simpleType>
+			<restriction base="string">
+				<enumeration value="Pendent or in Conflict" />
+				<enumeration value="Existent request for disconnection" />
+			</restriction>
+		</simpleType>
+	</element>
+
+	<element name="ReasonCancellingTypes">
+		<complexType>
+			<sequence>
+				<element ref="tns:ReasonCancellingType" minOccurs="1"
+					maxOccurs="unbounded" />
+			</sequence>
+		</complexType>
+	</element>
+
+
+</schema>

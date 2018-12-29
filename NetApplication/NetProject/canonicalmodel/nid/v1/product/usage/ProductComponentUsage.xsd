@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified"
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/usage/ProductComponentUsage"
+	xmlns="http://www.w3.org/2001/XMLSchema" 
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/usage/ProductComponentUsage">
+		
+	
+	
+	<complexType name="ProductComponentUsageType">
+	
+	</complexType>
+
+	<element name="ProductComponentUsage" type="tns:ProductComponentUsageType" />
+
+	<complexType name="ProductComponentUsagesType">
+		<sequence>
+			<element ref="tns:ProductComponentUsage" minOccurs="1" maxOccurs="unbounded" />
+		</sequence>
+	</complexType>
+	
+	<element name="ProductComponentUsages" type="tns:ProductComponentUsagesType" />
+
+</schema>

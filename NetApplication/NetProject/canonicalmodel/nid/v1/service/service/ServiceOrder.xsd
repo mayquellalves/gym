@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified"
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/service/service/ServiceOrder"
+	xmlns="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/service/service/ServiceOrder"
+	xmlns:tps="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types">
+
+	<import schemaLocation="../../netarchitecture/common/Types.xsd"
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types" />
+
+
+	<complexType name="ServiceOrderType">
+
+	
+	</complexType>
+
+	<element name="ServiceOrder" type="tns:ServiceOrderType" />
+
+	<element name="ServiceOrders">
+		<complexType>
+			<sequence>
+				<element ref="tns:ServiceOrder" minOccurs="1"
+					maxOccurs="unbounded" />
+			</sequence>
+		</complexType>
+	</element>
+
+</schema>

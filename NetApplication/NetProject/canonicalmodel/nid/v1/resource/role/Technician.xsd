@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified" 
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/resource/role/Technician" 
+	xmlns="http://www.w3.org/2001/XMLSchema" 
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/resource/role/Technician" >
+
+
+	<complexType name="TechnicianType">
+	
+		
+	</complexType>
+
+	<element name="Technician" type="tns:TechnicianType"/>
+
+	<element name="Technicians">
+		<complexType>
+			<sequence>
+				<element ref="tns:Technician" minOccurs="1" maxOccurs="unbounded"/>
+			</sequence>
+		</complexType>
+	</element>
+
+</schema>

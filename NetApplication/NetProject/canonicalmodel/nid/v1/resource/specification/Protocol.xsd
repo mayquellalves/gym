@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/resource/specification/Protocol"
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/resource/specification/Protocol">
+
+	
+
+	<complexType name="ProtocolType">
+		<sequence>
+			<element name="CurrentPortNumber" type="int" minOccurs="0" maxOccurs="1"/>
+			<element name="IsEphemeral" type="boolean" minOccurs="0" maxOccurs="1"/>
+			<element name="PortRangeEnd" type="int" minOccurs="0" maxOccurs="1"/>
+			<element name="PortRangeStart" type="int" minOccurs="0" maxOccurs="1"/>
+			<element name="ProtocolDirection" type="int" minOccurs="0" maxOccurs="1"/>
+		
+		</sequence>
+	</complexType>
+
+	<element name="Protocol" type="tns:ProtocolType" />
+
+	<complexType name="ProtocolsType">
+		<sequence>
+			<element ref="tns:Protocol" minOccurs="1" maxOccurs="unbounded" />
+		</sequence>
+	</complexType>
+
+	<element name="Protocols" type="tns:ProtocolsType" />
+
+</schema>

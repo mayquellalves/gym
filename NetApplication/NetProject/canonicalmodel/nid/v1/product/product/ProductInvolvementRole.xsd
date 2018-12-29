@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified"
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/product/ProductInvolvementRole"
+	xmlns="http://www.w3.org/2001/XMLSchema" 
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/product/ProductInvolvementRole"
+	xmlns:tps="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types"
+	xmlns:tmp="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/basetypes/TimePeriod">
+
+	<import schemaLocation="../../netarchitecture/common/Types.xsd"
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types" />
+
+	
+		
+	<import schemaLocation="Product.xsd"
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/product/Product" />
+		
+	<import schemaLocation="../../common/basetypes/TimePeriod.xsd"
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/basetypes/TimePeriod" />
+
+	<complexType name="ProductInvolvementRoleType">
+		<sequence>
+			<element name="ProductInvolvementRole" type="tps:string030" minOccurs="0" maxOccurs="1" />
+			<element name="ValidFor" type="tmp:TimePeriodType" minOccurs="0" maxOccurs="1" />
+			
+		</sequence>
+	</complexType>
+
+	<element name="ProductInvolvementRole" type="tns:ProductInvolvementRoleType" />
+
+	<element name="ProductInvolvementRoles">
+		<complexType>
+			<sequence>
+				<element ref="tns:ProductInvolvementRole" minOccurs="1" maxOccurs="unbounded" />
+			</sequence>
+		</complexType>
+	</element>
+
+</schema>

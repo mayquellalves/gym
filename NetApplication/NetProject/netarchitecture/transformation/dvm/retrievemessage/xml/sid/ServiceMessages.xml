@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dvm name="netarchitecture.messages.service.dvm" xmlns="http://xmlns.oracle.com/dvm">
+  <description>
+  	Only messages belonging to service domain can be defined here.
+  </description>
+  <columns>
+    <column name="ID_MSG"/>
+    <column name="ERROR_NAME"/>
+    <column name="USER_MESSAGE"/>
+    <column name="DETAIL_MESSAGE"/>
+    <column name="CATEGORY_MESSAGE"/>
+    <column name="SYSTEM_CODE"/>
+    <column name="NID_DOMAIN"/>
+    <column name="ABE_LEVEL"/>
+  </columns>
+  <rows>
+	<row>
+		<cell>OSB-SERVICE-00001</cell>
+		<cell>OSB_INVALID_REQUEST_FAULT</cell>
+		<cell>Request Inválido para operação: {0}.</cell>
+		<cell>Request Inválido para operação: {0}.</cell>
+		<cell>ERROR</cell>
+		<cell />
+		<cell>service</cell>
+		<cell>configuration</cell>
+	</row>
+	<row>
+		<cell>OSB-SERVICE-00002</cell>
+		<cell>OSB_RUNTIME_FAULT</cell>
+		<cell>Erro durante a execução do recurso: {0}.</cell>
+		<cell>Erro durante a execução do recurso: {0}.</cell>
+		<cell>ERROR</cell>
+		<cell />
+		<cell>service</cell>
+		<cell>configuration</cell>
+	</row>
+	<row>
+		<cell>OSB-SERVICE-00003</cell>
+		<cell>OSB_DATA_NO_MATCH_ADDRESS_SERVICE_FAULT</cell>
+		<cell>O CNPJ do cliente corresponde a um Estado/Cidade diverso do endereço de Prestação do Serviço selecionado.</cell>
+		<cell>O CNPJ do cliente corresponde a um Estado/Cidade diverso do endereço de Prestação do Serviço selecionado.</cell>
+		<cell>ERROR</cell>
+		<cell />
+		<cell>service</cell>
+		<cell>configuration</cell>
+	</row>
+    <row>
+		<cell>OSB-SERVICE-00004</cell>
+		<cell>OSB_AVAILABILITY_WITHOUT_BACKBONE_FAULT</cell>
+		<cell>Sem Backbone-Edificação sem infraestrutura construída.</cell>
+		<cell>Sem Backbone-Edificação sem infraestrutura construída.</cell>
+		<cell>ERROR</cell>
+		<cell />
+		<cell>service</cell>
+		<cell>configuration</cell>
+	</row>
+	<row>
+		<cell>OSB-SERVICE-00005</cell>
+		<cell>OSB_AVAILABILITY_WITHOUT_ACTIVE_RETURN_FAULT</cell>
+		<cell>Sem retorno Ativo-Existem tecnologias não disponíveis.</cell>
+		<cell>Sem retorno Ativo-Existem tecnologias não disponíveis.</cell>
+		<cell>ERROR</cell>
+		<cell />
+		<cell>service</cell>
+		<cell>configuration</cell>
+	</row>
+	    <row>
+		<cell>OSB-SERVICE-00006</cell>
+		<cell>OSB_AVAILABILITY_DUCT_OBSTRUCTED_FAULT</cell>
+		<cell>Duto Obstruído-Necessária a adequação por parte do cliente.</cell>
+		<cell>Duto Obstruído-Necessária a adequação por parte do cliente.</cell>
+		<cell>ERROR</cell>
+		<cell />
+		<cell>service</cell>
+		<cell>configuration</cell>
+	</row>
+	<row>
+		<cell>OSB-SERVICE-00007</cell>
+		<cell>OSB_AVAILABILITY_WITHOUT_POST_FAULT</cell>
+		<cell>Sem Postinho-Necessária a adequação por parte do cliente.</cell>
+		<cell>Sem Postinho-Necessária a adequação por parte do cliente.</cell>
+		<cell>ERROR</cell>
+		<cell />
+		<cell>service</cell>
+		<cell>configuration</cell>
+	</row>    <row>
+		<cell>OSB-SERVICE-00008</cell>
+		<cell>OSB_AVAILABILITY_CIVIL_WORK_FAULT</cell>
+		<cell>Obra Civil-Necessária a adequação por parte do cliente.</cell>
+		<cell>Obra Civil-Necessária a adequação por parte do cliente.</cell>
+		<cell>ERROR</cell>
+		<cell />
+		<cell>service</cell>
+		<cell>configuration</cell>
+	</row>
+	<row>
+		<cell>OSB-SERVICE-00009</cell>
+		<cell>OSB_AVAILABILITY_AREA_RISK_FAULT</cell>
+		<cell>Área de Risco.</cell>
+		<cell>Área de Risco.</cell>
+		<cell>ERROR</cell>
+		<cell />
+		<cell>service</cell>
+		<cell>configuration</cell>
+	</row>    
+	<row>
+		<cell>OSB-SERVICE-00010</cell>
+		<cell>OSB_AVAILABILITY_OUT_AREA_WIRED_FAULT</cell>
+		<cell>Fora de área não cabeada.</cell>
+		<cell>Fora de área não cabeada.</cell>
+		<cell>ERROR</cell>
+		<cell />
+		<cell>service</cell>
+		<cell>configuration</cell>
+	</row>
+	<row>
+		<cell>OSB-SERVICE-00011</cell>
+		<cell>OSB_AVAILABILITY_AREA_SHADOW_FAULT</cell>
+		<cell>Área de Sombra-localização específica onde o serviço não poderá ser disponibilizado.</cell>
+		<cell>Área de Sombra-localização específica onde o serviço não poderá ser disponibilizado.</cell>
+		<cell>ERROR</cell>
+		<cell />
+		<cell>service</cell>
+		<cell>configuration</cell>
+	</row>    <row>
+		<cell>OSB-SERVICE-00012</cell>
+		<cell>OSB_AVAILABILITY_NO_NETWORK_FAULT</cell>
+		<cell>Áusência de Rede-Sem cabeamento numa localização específica. Node cabeado e residência não cabeada.</cell>
+		<cell>Áusência de Rede-Sem cabeamento numa localização específica. Node cabeado e residência não cabeada.</cell>
+		<cell>ERROR</cell>
+		<cell />
+		<cell>service</cell>
+		<cell>configuration</cell>
+	</row>
+	<row>
+		<cell>OSB-SERVICE-00013</cell>
+		<cell>OSB_AVAILABILITY_LOCK_FRAUD_FAULT</cell>
+		<cell>Segurança Técnica Operacional-Providenciar abertura de Caso.</cell>
+		<cell>Segurança Técnica Operacional-Providenciar abertura de Caso.</cell>
+		<cell>ERROR</cell>
+		<cell />
+		<cell>service</cell>
+		<cell>configuration</cell>
+	</row>    	
+	<row>
+		<cell>OSB-SERVICE-00014</cell>
+		<cell>OSB_MANDATORY_FIELDS_VALIDATION_FAULT</cell>
+		<cell>O(s) campo(s) {0} deve(m) ser informado(s).</cell>
+		<cell>O(s) campo(s) {0} deve(m) ser informado(s).</cell>
+		<cell>ERROR</cell>
+		<cell />
+		<cell>service</cell>
+		<cell>configuration</cell>
+	</row>
+	<row>
+		<cell>OSB-SERVICE-00015</cell>
+		<cell>OSB_FIELDS_VALIDATION_FAULT</cell>
+		<cell>O(s) campo(s) {0} ou {1} deve(m) ser informado(s).</cell>
+		<cell>O(s) campo(s) {0} ou {1} deve(m) ser informado(s).</cell>
+		<cell>ERROR</cell>
+		<cell />
+		<cell>service</cell>
+		<cell>configuration</cell>
+	</row>  
+	<row>
+		<cell>OSB-SERVICE-00016</cell>
+		<cell>OSB_NONEXISTENT_ADDRESS_FAULT</cell>
+		<cell>Endereço inexistente.</cell>
+		<cell>Endereço inexistente.</cell>
+		<cell>ERROR</cell>
+		<cell />
+		<cell>service</cell>
+		<cell>configuration</cell>
+	</row>  		
+	<row>
+		<cell>OSB-SERVICE-00017</cell>
+		<cell>OSB_NONEXISTENT_IDMPROFILE_FAULT</cell>
+		<cell>{0} não cadastrado(s) no SPR.</cell>
+		<cell>{0} não cadastrado(s) no SPR.</cell>
+		<cell>ERROR</cell>
+		<cell />
+		<cell>service</cell>
+		<cell>configuration</cell>
+	</row>
+
+	<row>
+		<cell>OSB-SERVICE-00019</cell>
+		<cell>OSB_MANDATORY_FIELDS_VALIDATION_FAULT</cell>
+		<cell>O(s) campo(s) {0} ou {1} ou {2} deve(m) ser informado(s).</cell>
+		<cell>O(s) campo(s) {0} ou {1} ou {2} deve(m) ser informado(s).</cell>
+		<cell>ERROR</cell>
+		<cell />
+		<cell>service</cell>
+		<cell>configuration</cell>
+	</row>  	
+	 	
+	<row>
+		<cell>OSB-SERVICE-00021</cell>
+		<cell>OSB_RUNTIME_FAULT</cell>
+		<cell>A operação solicitada para o serviço não é válida.</cell>
+		<cell>A operação solicitada para o serviço não é válida.</cell>
+		<cell>ERROR</cell>
+		<cell />
+		<cell>service</cell>
+		<cell>configuration</cell>
+	</row>        
+	<row>
+		<cell>OSB-SERVICE-00022</cell>
+		<cell>OSB_RUNTIME_FAULT</cell>
+		<cell>Serviço não localizado para o Número de Telefone ({0})-{1}.</cell>
+		<cell>Serviço não localizado para o Número de Telefone ({0})-{1}.</cell>
+		<cell>ERROR</cell>
+		<cell />
+		<cell>service</cell>
+		<cell>configuration</cell>
+	</row>        
+	<row>
+		<cell>OSB-SERVICE-00023</cell>
+		<cell>OSB_NONEXISTENT_ACTIVE_SERVICE_FAULT</cell>
+		<cell>Não é possível prosseguir com a ordem pois a rede deste endereço está bloqueada ou sem serviços disponíveis. Por favor, entrar em contato com a equipe do Gestão de Endereços.</cell>
+		<cell>Não é possível prosseguir com a ordem pois a rede deste endereço está bloqueada ou sem serviços disponíveis. Por favor, entrar em contato com a equipe do Gestão de Endereços.</cell>
+		<cell>ERROR</cell>
+		<cell />
+		<cell>service</cell>
+		<cell>configuration</cell>
+	</row>        
+	<row>
+		<cell>OSB-SERVICE-00024</cell>
+		<cell>OSB_USER_IS_HOLDER_FAULT</cell>
+		<cell>{0} é dependente e não pode ser titular.</cell>
+		<cell>{0} é dependente e não pode ser titular.</cell>
+		<cell>ERROR</cell>
+		<cell />
+		<cell>service</cell>
+		<cell>configuration</cell>
+	</row>	
+	<row>
+		<cell>OSB-SERVICE-00025</cell>
+		<cell>OSB_NO_DEPENDENCY_FAULT</cell>
+		<cell>{0} não é dependente do titular informado.</cell>
+		<cell>{0} não é dependente do titular informado.</cell>
+		<cell>ERROR</cell>
+		<cell />
+		<cell>service</cell>
+		<cell>configuration</cell>
+	</row>
+	<row>
+		<cell>OSB-SERVICE-00026</cell>	
+		<cell>BUSINESS_FAULT</cell>
+		<cell>Não foi possível retornar os dados.</cell>
+		<cell>Não foi possível retornar os dados.</cell>
+		<cell>ERROR</cell>
+		<cell/>
+		<cell>service</cell>
+		<cell>service</cell>
+	</row>
+  </rows>
+</dvm>

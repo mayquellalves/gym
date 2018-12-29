@@ -1,0 +1,66 @@
+<wsdl:definitions name="Logging" targetNamespace="http://www.netservicos.com.br/FormatLogMessageV1" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:flogmsg="http://www.netservicos.com.br/FormatLogMessageV1" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:log="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/monitoring/Logging" xmlns:mtd="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Metadata" xmlns:res="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/fault/RuntimeFault">
+	
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://www.netservicos.com.br/FormatLogMessageV1" elementFormDefault="qualified">
+		
+			<xsd:import schemaLocation="../../../../../canonicalmodel/nid/v1/netarchitecture/monitoring/Logging.xsd" namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/monitoring/Logging"/>
+			<xsd:import schemaLocation="../../../../../canonicalmodel/nid/v1/netarchitecture/common/Metadata.xsd" namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Metadata"/>				
+			<xsd:import schemaLocation="../../../../../canonicalmodel/nid/v1/netarchitecture/fault/RuntimeFault.xsd" namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/fault/RuntimeFault"/>	
+			
+			<xsd:element name="formatLogMessageRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element ref="log:LogMessage"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			
+			<xsd:element name="formatLogMessageResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element ref="log:FormattedLogMessage"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:schema>
+	</wsdl:types>
+
+	<wsdl:message name="formatLogMessageRequest">
+		<wsdl:part name="formatLogMessageRequest" element="flogmsg:formatLogMessageRequest"/>
+		<wsdl:part name="header" element="mtd:Metadata"/>
+	</wsdl:message>
+	
+	<wsdl:message name="formatLogMessageResponse">
+		<wsdl:part name="formatLogMessageResponse" element="flogmsg:formatLogMessageResponse"/>
+	</wsdl:message>
+	
+	<wsdl:message name="runtimeFault">
+		<wsdl:part name="fault" element="res:RuntimeFault"/>
+	</wsdl:message>
+
+	<wsdl:portType name="FormatLogMessagePortType">
+		<wsdl:operation name="formatLogMessage">
+			<wsdl:input message="flogmsg:formatLogMessageRequest"/>
+			<wsdl:output message="flogmsg:formatLogMessageResponse"/>
+			<wsdl:fault name="runtimeFault" message="flogmsg:runtimeFault"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	
+	<wsdl:binding name="FormatLogMessageBinding12" type="flogmsg:FormatLogMessagePortType">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="formatLogMessage">
+			<soap:operation soapAction=""/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+				<soap:header message="flogmsg:formatLogMessageRequest" wsdl:required="true" part="header" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="runtimeFault">
+				<soap:fault name="runtimeFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+	</wsdl:binding>
+	
+</wsdl:definitions>

@@ -1,0 +1,1401 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions name="InvoiceV1"
+	targetNamespace="http://www.netservicos.com.br/InvoiceV1/"
+	xmlns:invsid="http://www.netservicos.com.br/InvoiceV1/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap11="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+	xmlns:met="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Metadata"
+	xmlns:pag="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/pagination/Pagination"
+	xmlns:tps="http://www.netservicos.com.br/netarchitecture/common/xsd/CommonTypes"
+	xmlns:rtf="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/fault/RuntimeFault"
+	xmlns:err="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/fault/ErrorInfo"
+	xmlns:cub="http://www.netservicos.com.br/canonicalmodel/nid/v1/customer/bill/CustomerBill"
+	xmlns:cua="http://www.netservicos.com.br/canonicalmodel/nid/v1/customer/customer/CustomerAccount"
+	xmlns:ind="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/party/Individual"
+	xmlns:inn="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/party/IndividualName"
+	xmlns:org="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/party/Organization"
+	xmlns:orn="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/party/OrganizationName"
+	xmlns:ore="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/party/OrganizationEnterprise"
+	xmlns:par="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/party/Party"
+	xmlns:pai="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/party/PartyIdentification"
+	xmlns:pit="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/party/PartyIdentificationType"
+	xmlns:cus="http://www.netservicos.com.br/canonicalmodel/nid/v1/customer/customer/Customer"
+	xmlns:pao="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/party/PartyRole"
+	xmlns:woo="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/project/WorkOrder"
+	xmlns:woi="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/project/WorkOrderItem"
+	xmlns:acbr="http://www.netservicos.com.br/canonicalmodel/nid/v1/customer/billingrates/AppliedCustomerBillingRate"
+	xmlns:upa="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/location/UrbanPropertyAddress"
+	xmlns:upsa="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/location/UrbanPropertySubAddress"
+	xmlns:prc="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/product/ProductComponent">
+
+	<wsdl:documentation>
+
+		*** Atualizações realizadas ***
+
+		17/07/2014 - Inclusão da porta InvoiceV1Port12WSSUTS
+		
+		10/07/2017 - Inclusão da operação searchOverdueForPEC - CR 122162
+
+	</wsdl:documentation>
+
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://www.netservicos.com.br/InvoiceV1/"
+			elementFormDefault="qualified">
+
+			<xsd:import
+				namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Metadata"
+				schemaLocation="../../../../../../canonicalmodel/nid/v1/netarchitecture/common/Metadata.xsd" />
+
+			<xsd:import
+				namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/pagination/Pagination"
+				schemaLocation="../../../../../../canonicalmodel/nid/v1/netarchitecture/pagination/Pagination.xsd" />
+
+			<xsd:import
+				namespace="http://www.netservicos.com.br/netarchitecture/common/xsd/CommonTypes"
+				schemaLocation="../../../../../../netarchitecture/common/xsd/CommonTypes.xsd" />
+
+			<xsd:import
+				namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/fault/RuntimeFault"
+				schemaLocation="../../../../../../canonicalmodel/nid/v1/netarchitecture/fault/RuntimeFault.xsd" />
+
+			<xsd:import
+				namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/fault/ErrorInfo"
+				schemaLocation="../../../../../../canonicalmodel/nid/v1/netarchitecture/fault/ErrorInfo.xsd" />
+
+			<xsd:import
+				namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/customer/bill/CustomerBill"
+				schemaLocation="../../../../../../canonicalmodel/nid/v1/customer/bill/CustomerBill.xsd" />
+
+			<xsd:import
+				namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/customer/customer/CustomerAccount"
+				schemaLocation="../../../../../../canonicalmodel/nid/v1/customer/customer/CustomerAccount.xsd" />
+
+			<xsd:import
+				namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/customer/customer/Customer"
+				schemaLocation="../../../../../../canonicalmodel/nid/v1/customer/customer/Customer.xsd" />
+				
+			<xsd:import
+				namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/party/Individual"
+				schemaLocation="../../../../../../canonicalmodel/nid/v1/common/party/Individual.xsd" />
+				
+			<xsd:import
+				namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/party/IndividualName"
+				schemaLocation="../../../../../../canonicalmodel/nid/v1/common/party/IndividualName.xsd" />	
+				
+			<xsd:import
+				namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/party/Organization"
+				schemaLocation="../../../../../../canonicalmodel/nid/v1/common/party/Organization.xsd" />
+				
+			<xsd:import
+				namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/party/OrganizationName"
+				schemaLocation="../../../../../../canonicalmodel/nid/v1/common/party/OrganizationName.xsd" />	
+				
+			<xsd:import
+				namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/party/OrganizationEnterprise"
+				schemaLocation="../../../../../../canonicalmodel/nid/v1/common/party/OrganizationEnterprise.xsd" />	
+
+			<xsd:import
+				namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/party/Party"
+				schemaLocation="../../../../../../canonicalmodel/nid/v1/common/party/Party.xsd" />
+
+			<xsd:import
+				namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/party/PartyRole"
+				schemaLocation="../../../../../../canonicalmodel/nid/v1/common/party/PartyRole.xsd" />
+
+			<xsd:import
+				namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/party/PartyIdentification"
+				schemaLocation="../../../../../../canonicalmodel/nid/v1/common/party/PartyIdentification.xsd" />
+
+			<xsd:import
+				namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/party/PartyIdentificationType"
+				schemaLocation="../../../../../../canonicalmodel/nid/v1/common/party/PartyIdentificationType.xsd" />
+
+			<xsd:import
+				namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/project/WorkOrder"
+				schemaLocation="../../../../../../canonicalmodel/nid/v1/common/project/WorkOrder.xsd" />
+
+			<xsd:import
+				namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/project/WorkOrderItem"
+				schemaLocation="../../../../../../canonicalmodel/nid/v1/common/project/WorkOrderItem.xsd" />
+
+
+			<xsd:import
+				namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/customer/billingrates/AppliedCustomerBillingRate"
+				schemaLocation="../../../../../../canonicalmodel/nid/v1/customer/billingrates/AppliedCustomerBillingRate.xsd" />
+
+			<xsd:import
+				namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/location/UrbanPropertyAddress"
+				schemaLocation="../../../../../../canonicalmodel/nid/v1/common/location/UrbanPropertyAddress.xsd" />
+
+			<xsd:import
+				namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/location/UrbanPropertySubAddress"
+				schemaLocation="../../../../../../canonicalmodel/nid/v1/common/location/UrbanPropertySubAddress.xsd" />
+
+			<xsd:import
+				namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/product/ProductComponent"
+				schemaLocation="../../../../../../canonicalmodel/nid/v1/product/product/ProductComponent.xsd" />
+
+			<xsd:complexType name="partyType">
+				<xsd:sequence>
+					<xsd:element ref="par:Party" minOccurs="1" maxOccurs="1">
+						<xsd:annotation>
+							<xsd:documentation>
+								From Canonical Entity "Party".
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element ref="invsid:partyIdentification" minOccurs="1" maxOccurs="1" />
+				</xsd:sequence>
+			</xsd:complexType>
+
+			<xsd:complexType name="partyIdentificationTypeType">
+				<xsd:sequence>
+					<xsd:element ref="pit:PartyIdentificationType" minOccurs="1" maxOccurs="1">
+						<xsd:annotation>
+							<xsd:documentation>
+								From Canonical Entity "PartyIdentificationType".
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+			
+			<xsd:complexType name="partyIdentificationsForSearchOverdueForPECType">
+				<xsd:sequence>
+					<xsd:element ref="invsid:partyIdentificationForSearchOverdueForPEC" minOccurs="1" maxOccurs="unbounded"/>	
+				</xsd:sequence>
+			</xsd:complexType>
+
+			<xsd:complexType name="partyIdentificationType">
+				<xsd:sequence>
+					<xsd:element ref="pai:PartyIdentification" minOccurs="1" maxOccurs="1">
+						<xsd:annotation>
+							<xsd:documentation>
+								From Canonical Entity "PartyIdentification".
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element ref="invsid:partyIdentificationType" minOccurs="1" maxOccurs="1" />
+				</xsd:sequence>
+			</xsd:complexType>
+			
+			<xsd:complexType name="partyForSearchOverdueForPECType">
+				<xsd:sequence>
+					<xsd:element ref="par:Party" minOccurs="1" maxOccurs="1">
+						<xsd:annotation>
+							<xsd:documentation>
+								From Canonical Entity "Party".
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element ref="invsid:partyIdentificationsForSearchOverdueForPEC" minOccurs="0" maxOccurs="1" />
+				</xsd:sequence>
+			</xsd:complexType>
+			
+			<xsd:complexType name="partyIdentificationForSearchOverdueForPECType">
+				<xsd:sequence>
+					<xsd:element ref="pai:PartyIdentification" minOccurs="1" maxOccurs="1">
+						<xsd:annotation>
+							<xsd:documentation>
+								From Canonical Entity "PartyIdentification".
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element ref="invsid:partyIdentificationType" minOccurs="0" maxOccurs="1" />
+				</xsd:sequence>
+			</xsd:complexType>
+
+			<xsd:complexType name="customerAccountType">
+				<xsd:sequence>
+					<xsd:element ref="cua:CustomerAccount" minOccurs="1" maxOccurs="1">
+						<xsd:annotation>
+							<xsd:documentation>
+								From Canonical Entity "CustomerAccount".
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+			
+			<xsd:complexType name="customerAccountForSearchOverdueForPECType">
+				<xsd:sequence>
+					<xsd:element ref="cua:CustomerAccount" minOccurs="1" maxOccurs="1">
+						<xsd:annotation>
+							<xsd:documentation>
+								From Canonical Entity "CustomerAccount".
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element ref="invsid:organizationEnterprise" minOccurs="0" maxOccurs="1" />
+					<xsd:element ref="invsid:customerForSearchOverdueForPEC" minOccurs="0" maxOccurs="1"/>
+				</xsd:sequence>
+			</xsd:complexType>
+			
+			<xsd:complexType name="organizationEnterpriseType">
+				<xsd:sequence>
+					<xsd:element ref="ore:OrganizationEnterprise" minOccurs="1" maxOccurs="1" >
+						<xsd:annotation>
+							<xsd:documentation>From Canonical Entity "OrganizationEnterprise".
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+
+			<xsd:complexType name="customerBillType">
+				<xsd:sequence>
+					<xsd:element ref="cub:CustomerBill" minOccurs="1" maxOccurs="1">
+						<xsd:annotation>
+							<xsd:documentation>
+								From Canonical Entity "CustomerBill".
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element ref="invsid:customerAccount" minOccurs="0" maxOccurs="1" />
+					<xsd:element name="customerAccountCRM" type="tps:string020" minOccurs="0" maxOccurs="1">
+						<xsd:annotation>
+							<xsd:documentation>
+								Billing Arrangement interno do CRM.
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="billNumberAR" type="tps:string020" minOccurs="0" maxOccurs="1">
+						<xsd:annotation>
+							<xsd:documentation>
+								Número da Fatura interno do Amdocs AR.
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+
+			<xsd:complexType name="customerBillsType">
+				<xsd:sequence>
+					<xsd:element ref="invsid:customerBill" minOccurs="1" maxOccurs="unbounded" />
+				</xsd:sequence>
+			</xsd:complexType>
+			
+			<xsd:complexType name="customerBillForSearchOverdueForPECType">
+				<xsd:sequence>
+					<xsd:element ref="cub:CustomerBill" minOccurs="1" maxOccurs="1">
+						<xsd:annotation>
+							<xsd:documentation>
+								From Canonical Entity "CustomerBill".
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element ref="invsid:customerAccountForSearchOverdueForPEC" minOccurs="0" maxOccurs="1" />
+					<xsd:element name="customerAccountCRM" type="tps:string020" minOccurs="0" maxOccurs="1">
+						<xsd:annotation>
+							<xsd:documentation>
+								Billing Arrangement interno do CRM.
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="billNumberAR" type="tps:string020" minOccurs="0" maxOccurs="1">
+						<xsd:annotation>
+							<xsd:documentation>
+								Número da Fatura interno do Amdocs AR.
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="federationBanksId" type="tps:string004" minOccurs="0" maxOccurs="1">
+						<xsd:annotation>
+							<xsd:documentation>
+								Id Febraban.
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+
+			<xsd:complexType name="customerBillsForSearchOverdueForPECType">
+				<xsd:sequence>
+					<xsd:element ref="invsid:customerBillForSearchOverdueForPEC" minOccurs="1" maxOccurs="unbounded" />
+				</xsd:sequence>
+			</xsd:complexType>
+
+
+			<!-- ComplexTypes referente à operação createCharge -->
+
+
+			<xsd:complexType name="appliedCustomerBillingRatesType">
+				<xsd:sequence>
+					<xsd:element ref="acbr:AppliedCustomerBillingRates" minOccurs="1" maxOccurs="1">
+						<xsd:annotation>
+							<xsd:documentation>
+								From Canonical Entity "AppliedCustomerBillingRate".
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+
+			<xsd:complexType name="partyRoleType">
+				<xsd:sequence>
+					<xsd:element ref="pao:PartyRole" minOccurs="1" maxOccurs="1">
+						<xsd:annotation>
+							<xsd:documentation>
+								From Canonical Entity "PartyRole".
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element ref="invsid:party" minOccurs="1" maxOccurs="1" />
+				</xsd:sequence>
+			</xsd:complexType>
+			
+			<xsd:complexType name="partyRoleForSearchOverdueForPECType">
+				<xsd:sequence>
+					<xsd:element ref="pao:PartyRole" minOccurs="1" maxOccurs="1">
+						<xsd:annotation>
+							<xsd:documentation>
+								From Canonical Entity "PartyRole".
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element ref="invsid:partyForSearchOverdueForPEC" minOccurs="0" maxOccurs="1" />
+					<xsd:choice>
+						<xsd:element ref="invsid:individual" minOccurs="0" maxOccurs="1" />
+						<xsd:element ref="invsid:organization" minOccurs="0" maxOccurs="1" />
+					</xsd:choice>
+				</xsd:sequence>
+			</xsd:complexType>
+			
+			<xsd:complexType name="individualType">
+				<xsd:sequence>
+					<xsd:element ref="ind:Individual" minOccurs="1" maxOccurs="1">
+						<xsd:annotation>
+							<xsd:documentation>From Canonical Entity "Individual".
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>	
+					<xsd:element ref="invsid:individualNames" minOccurs="0" maxOccurs="1"/>
+				</xsd:sequence>
+			</xsd:complexType>
+			
+			<xsd:complexType name="individualNamesType">
+				<xsd:sequence>
+					<xsd:element ref="inn:IndividualNames" minOccurs="1" maxOccurs="1">
+						<xsd:annotation>
+							<xsd:documentation>From Canonical Entity "IndividualName".
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+			
+			<xsd:complexType name="organizationType">
+				<xsd:sequence>
+					<xsd:element ref="org:Organization" minOccurs="1" maxOccurs="1" >
+						<xsd:annotation>
+							<xsd:documentation>From Canonical Entity "Organization".
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element ref="invsid:organizationNames" minOccurs="0" maxOccurs="1" />	
+				</xsd:sequence>
+			</xsd:complexType>
+			
+			<xsd:complexType name="organizationNamesType">
+				<xsd:sequence>
+					<xsd:element ref="orn:OrganizationNames" minOccurs="1" maxOccurs="1" >
+						<xsd:annotation>
+							<xsd:documentation>From Canonical Entity "OrganizationName".
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+
+			<xsd:complexType name="customerType">
+				<xsd:complexContent>
+					<xsd:extension base="invsid:partyRoleType">
+						<xsd:sequence>
+							<xsd:element ref="cus:Customer" minOccurs="1" maxOccurs="1">
+								<xsd:annotation>
+									<xsd:documentation>
+										From Canonical Entity "Customer".
+									</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+						</xsd:sequence>
+					</xsd:extension>
+				</xsd:complexContent>
+			</xsd:complexType>
+			
+			<xsd:complexType name="customerForSearchOverdueForPECType">
+				<xsd:complexContent>
+					<xsd:extension base="invsid:partyRoleForSearchOverdueForPECType">
+						<xsd:sequence>
+							<xsd:element ref="cus:Customer" minOccurs="1" maxOccurs="1">
+								<xsd:annotation>
+									<xsd:documentation>
+										From Canonical Entity "Customer".
+									</xsd:documentation>
+								</xsd:annotation>
+							</xsd:element>
+						</xsd:sequence>
+					</xsd:extension>
+				</xsd:complexContent>
+			</xsd:complexType>
+			
+			<xsd:complexType name="customerAccountForCreateChargeType">
+				<xsd:sequence>
+					<xsd:element ref="cua:CustomerAccount" minOccurs="1" maxOccurs="1">
+						<xsd:annotation>
+							<xsd:documentation>
+								From Canonical Entity "CustomerAccount".
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element ref="invsid:customer" minOccurs="0" maxOccurs="1" />
+					<xsd:element ref="invsid:appliedCustomerBillingRates" minOccurs="0" maxOccurs="1" />
+				</xsd:sequence>
+			</xsd:complexType>
+
+			<xsd:complexType name="productComponentType">
+				<xsd:sequence>
+					<xsd:element ref="prc:ProductComponent" minOccurs="1" maxOccurs="1">
+						<xsd:annotation>
+							<xsd:documentation>
+								From Canonical Entity "ProductComponent".
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+
+			<xsd:complexType name="urbanPropertySubAddressesType">
+				<xsd:sequence>
+					<xsd:element ref="upsa:UrbanPropertySubAddresses" minOccurs="1" maxOccurs="1">
+						<xsd:annotation>
+							<xsd:documentation>
+								From Canonical Entity "UrbanPropertySubAddress".
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+
+			<xsd:complexType name="urbanPropertyAddressType">
+				<xsd:sequence>
+					<xsd:element ref="upa:UrbanPropertyAddress" minOccurs="1" maxOccurs="1">
+						<xsd:annotation>
+							<xsd:documentation>
+								From Canonical Entity "UrbanPropertyAddress".
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element ref="invsid:urbanPropertySubAddresses" minOccurs="0" maxOccurs="1" />
+				</xsd:sequence>
+			</xsd:complexType>
+
+			<xsd:complexType name="workOrderItemType">
+				<xsd:sequence>
+					<xsd:element ref="woi:WorkOrderItem" minOccurs="1" maxOccurs="1">
+						<xsd:annotation>
+							<xsd:documentation>
+								From Canonical Entity "WorkOrderItem".
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+
+			<xsd:complexType name="workOrderType">
+				<xsd:sequence>
+					<xsd:element ref="woo:WorkOrder" minOccurs="1" maxOccurs="1">
+						<xsd:annotation>
+							<xsd:documentation>
+								From Canonical Entity "WorkOrder".
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element ref="invsid:workOrderItem" minOccurs="0" maxOccurs="1" />
+				</xsd:sequence>
+			</xsd:complexType>
+
+			<xsd:complexType name="retrieveRequestType">
+				<xsd:sequence>
+					<xsd:element ref="invsid:customerBill" minOccurs="1" maxOccurs="1">
+						<xsd:annotation>
+							<xsd:documentation>
+								From canonical entity "CustomerBill".
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+
+
+			<xsd:complexType name="retrieveResponseType">
+				<xsd:sequence>
+					<xsd:element ref="invsid:customerBill" minOccurs="0" maxOccurs="1">
+						<xsd:annotation>
+							<xsd:documentation>
+								From canonical entity "CustomerBill".
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+
+			<xsd:complexType name="retrieveAllRequestType">
+				<xsd:sequence>
+					<xsd:element ref="invsid:customerAccount" minOccurs="1" maxOccurs="1">
+						<xsd:annotation>
+							<xsd:documentation>
+								From canonical entity "CustomerAccount".
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+
+			<xsd:complexType name="retrieveAllResponseType">
+				<xsd:sequence>
+					<xsd:element ref="invsid:customerBills" minOccurs="0" maxOccurs="1">
+						<xsd:annotation>
+							<xsd:documentation>
+								List From canonical entity "CustomerBill".
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+
+			<xsd:complexType name="searchOverdueRequestType">
+				<xsd:sequence>
+					<xsd:element ref="invsid:customerAccount" minOccurs="1" maxOccurs="1">
+						<xsd:annotation>
+							<xsd:documentation>
+								From canonical entity "CustomerAccount".
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+
+			<xsd:complexType name="searchOverdueResponseType">
+				<xsd:sequence>
+					<xsd:element ref="invsid:customerBills" minOccurs="0" maxOccurs="1">
+						<xsd:annotation>
+							<xsd:documentation>
+								List From canonical entity "CustomerBill".
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+			
+			<xsd:complexType name="searchOverdueForPECRequestType">
+				<xsd:sequence>
+					<xsd:element ref="invsid:partyIdentificationForSearchOverdueForPEC" minOccurs="1" maxOccurs="1">
+						<xsd:annotation>
+							<xsd:documentation>
+								From canonical entity "PartyIdentification".
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="startDate" type="xsd:date" minOccurs="0" maxOccurs="1">
+						<xsd:annotation>
+							<xsd:documentation>
+								Data início para busca de faturas.
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element name="endDate" type="xsd:date" minOccurs="0" maxOccurs="1">
+						<xsd:annotation>
+							<xsd:documentation>
+								Data fim para busca de faturas.
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+
+			<xsd:complexType name="searchOverdueForPECResponseType">
+				<xsd:sequence>
+					<xsd:element ref="invsid:customerBillsForSearchOverdueForPEC" minOccurs="0" maxOccurs="1">
+						<xsd:annotation>
+							<xsd:documentation>
+								List From canonical entity "CustomerBill".
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+
+			<xsd:complexType name="searchUnpaidRequestType">
+				<xsd:sequence>
+					<xsd:element ref="invsid:customer" minOccurs="1" maxOccurs="1">
+						<xsd:annotation>
+							<xsd:documentation>
+								From canonical entity "Customer".
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+
+			<xsd:complexType name="searchUnpaidResponseType">
+				<xsd:sequence>
+					<xsd:element ref="invsid:customerBills" minOccurs="0" maxOccurs="1">
+						<xsd:annotation>
+							<xsd:documentation>
+								List From canonical entity "CustomerBill".
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+
+			<xsd:complexType name="createChargeRequestType">
+				<xsd:sequence>
+					<xsd:element name="activityOrigin" type="tps:string003" minOccurs="1" maxOccurs="1">
+						<xsd:annotation>
+							<xsd:documentation>
+								Origem de Atividade. Será fixo “NET”.
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element ref="invsid:workOrder" minOccurs="1" maxOccurs="1">
+						<xsd:annotation>
+							<xsd:documentation>
+								From canonical entity "WorkOrder".
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element ref="invsid:customerAccountForCreateCharge" minOccurs="1" maxOccurs="1">
+						<xsd:annotation>
+							<xsd:documentation>
+								From Canonical Entity "CustomerAccount".
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element ref="invsid:productComponent" minOccurs="1" maxOccurs="1">
+						<xsd:annotation>
+							<xsd:documentation>
+								From Canonical Entity "CustomerAccount".
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					<xsd:element ref="invsid:urbanPropertyAddress" minOccurs="1" maxOccurs="1">
+						<xsd:annotation>
+							<xsd:documentation>
+								From Canonical Entity "UrbanPropertyAddress".
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+
+			<xsd:complexType name="createChargeResponseType" />
+
+			<xsd:complexType name="invoiceIdNotExistsFaultType">
+				<xsd:sequence>
+					<xsd:element ref="err:ErrorInfo" minOccurs="0" maxOccurs="1" />
+				</xsd:sequence>
+			</xsd:complexType>
+
+			<xsd:complexType name="invoiceNotExistsFaultType">
+				<xsd:sequence>
+					<xsd:element ref="err:ErrorInfo" minOccurs="0" maxOccurs="1" />
+				</xsd:sequence>
+			</xsd:complexType>
+
+			<xsd:complexType name="invoiceOverdueNotExistsFaultType">
+				<xsd:sequence>
+					<xsd:element ref="err:ErrorInfo" minOccurs="0" maxOccurs="1" />
+				</xsd:sequence>
+			</xsd:complexType>
+			
+			<xsd:complexType name="invoiceUnpaidNotExistsFaultType">
+				<xsd:sequence>
+					<xsd:element ref="err:ErrorInfo" minOccurs="0" maxOccurs="1" />
+				</xsd:sequence>
+			</xsd:complexType>
+			
+			<xsd:element name="customerBills" type="invsid:customerBillsType" />
+			<xsd:element name="customerBill" type="invsid:customerBillType" />
+			<xsd:element name="customerBillsForSearchOverdueForPEC" type="invsid:customerBillsForSearchOverdueForPECType" />
+			<xsd:element name="customerBillForSearchOverdueForPEC" type="invsid:customerBillForSearchOverdueForPECType" />
+			<xsd:element name="customerAccountForSearchOverdueForPEC" type="invsid:customerAccountForSearchOverdueForPECType" />
+			<xsd:element name="individual" type="invsid:individualType" />
+			<xsd:element name="individualNames" type="invsid:individualNamesType" />
+			<xsd:element name="organization" type="invsid:organizationType" />
+			<xsd:element name="organizationNames" type="invsid:organizationNamesType" />
+			<xsd:element name="organizationEnterprise" type="invsid:organizationEnterpriseType" />
+			<xsd:element name="customerAccount" type="invsid:customerAccountType" />
+			<xsd:element name="partyIdentification" type="invsid:partyIdentificationType" />
+			<xsd:element name="partyIdentificationsForSearchOverdueForPEC" type="invsid:partyIdentificationsForSearchOverdueForPECType" />
+			<xsd:element name="partyIdentificationForSearchOverdueForPEC" type="invsid:partyIdentificationForSearchOverdueForPECType" />
+			<xsd:element name="partyIdentificationType" type="invsid:partyIdentificationTypeType" />
+			<xsd:element name="workOrder" type="invsid:workOrderType" />
+			<xsd:element name="workOrderItem" type="invsid:workOrderItemType" />
+			<xsd:element name="customerAccountForCreateCharge" type="invsid:customerAccountForCreateChargeType" />
+			<xsd:element name="customer" type="invsid:customerType" />
+			<xsd:element name="customerForSearchOverdueForPEC" type="invsid:customerForSearchOverdueForPECType" />
+			
+			<xsd:element name="party" type="invsid:partyType" />
+			<xsd:element name="partyForSearchOverdueForPEC" type="invsid:partyForSearchOverdueForPECType" />
+			<xsd:element name="partyRole" type="invsid:partyRoleType" />
+			<xsd:element name="appliedCustomerBillingRates" type="invsid:appliedCustomerBillingRatesType" />
+			<xsd:element name="urbanPropertyAddress" type="invsid:urbanPropertyAddressType" />
+			<xsd:element name="urbanPropertySubAddresses" type="invsid:urbanPropertySubAddressesType" />
+			<xsd:element name="productComponent" type="invsid:productComponentType" />
+			<xsd:element name="retrieveRequest" type="invsid:retrieveRequestType" />
+			<xsd:element name="retrieveResponse" type="invsid:retrieveResponseType" />
+			<xsd:element name="retrieveAllRequest" type="invsid:retrieveAllRequestType" />
+			<xsd:element name="retrieveAllResponse" type="invsid:retrieveAllResponseType" />
+			<xsd:element name="searchOverdueRequest" type="invsid:searchOverdueRequestType" />
+			<xsd:element name="searchOverdueResponse" type="invsid:searchOverdueResponseType" />
+			<xsd:element name="searchOverdueForPECRequest" type="invsid:searchOverdueForPECRequestType" />
+			<xsd:element name="searchOverdueForPECResponse" type="invsid:searchOverdueForPECResponseType" />
+			<xsd:element name="searchUnpaidRequest" type="invsid:searchUnpaidRequestType" />
+			<xsd:element name="searchUnpaidResponse" type="invsid:searchUnpaidResponseType" />
+			<xsd:element name="createChargeRequest" type="invsid:createChargeRequestType" />
+			<xsd:element name="createChargeResponse" type="invsid:createChargeResponseType" />
+			<xsd:element name="invoiceIdNotExistsFault" type="invsid:invoiceIdNotExistsFaultType" />
+			<xsd:element name="invoiceNotExistsFault" type="invsid:invoiceNotExistsFaultType" />
+			<xsd:element name="invoiceOverdueNotExistsFault" type="invsid:invoiceOverdueNotExistsFaultType" />
+			<xsd:element name="invoiceUnpaidNotExistsFault" type="invsid:invoiceUnpaidNotExistsFaultType" />
+		</xsd:schema>
+	</wsdl:types>
+
+	<wsdl:message name="retrieveRequest">
+		<wsdl:part name="payload" element="invsid:retrieveRequest" />
+		<wsdl:part name="headerMetadata" element="met:Metadata" />
+		<wsdl:part name="headerPagination" element="pag:Pagination" />
+	</wsdl:message>
+	<wsdl:message name="retrieveResponse">
+		<wsdl:part name="payload" element="invsid:retrieveResponse" />
+		<wsdl:part name="headerPagination" element="pag:Pagination" />
+	</wsdl:message>
+
+	<wsdl:message name="retrieveAllRequest">
+		<wsdl:part name="payload" element="invsid:retrieveAllRequest" />
+		<wsdl:part name="headerMetadata" element="met:Metadata" />
+		<wsdl:part name="headerPagination" element="pag:Pagination" />
+	</wsdl:message>
+	<wsdl:message name="retrieveAllResponse">
+		<wsdl:part name="payload" element="invsid:retrieveAllResponse" />
+		<wsdl:part name="headerPagination" element="pag:Pagination" />
+	</wsdl:message>
+
+	<wsdl:message name="searchOverdueRequest">
+		<wsdl:part name="payload" element="invsid:searchOverdueRequest" />
+		<wsdl:part name="headerMetadata" element="met:Metadata" />
+		<wsdl:part name="headerPagination" element="pag:Pagination" />
+	</wsdl:message>
+	<wsdl:message name="searchOverdueResponse">
+		<wsdl:part name="payload" element="invsid:searchOverdueResponse" />
+		<wsdl:part name="headerPagination" element="pag:Pagination" />
+	</wsdl:message>
+	
+	<wsdl:message name="searchOverdueForPECRequest">
+		<wsdl:part name="payload" element="invsid:searchOverdueForPECRequest" />
+		<wsdl:part name="headerMetadata" element="met:Metadata" />
+	</wsdl:message>
+	<wsdl:message name="searchOverdueForPECResponse">
+		<wsdl:part name="payload" element="invsid:searchOverdueForPECResponse" />
+	</wsdl:message>
+
+	<wsdl:message name="searchUnpaidRequest">
+		<wsdl:part name="payload" element="invsid:searchUnpaidRequest" />
+		<wsdl:part name="headerMetadata" element="met:Metadata" />
+	</wsdl:message>
+
+	<wsdl:message name="searchUnpaidResponse">
+		<wsdl:part name="payload" element="invsid:searchUnpaidResponse" />
+	</wsdl:message>
+
+	<wsdl:message name="createChargeRequest">
+		<wsdl:part name="payload" element="invsid:createChargeRequest" />
+		<wsdl:part name="header" element="met:Metadata" />
+	</wsdl:message>
+
+	<wsdl:message name="createChargeResponse">
+		<wsdl:part name="payload" element="invsid:createChargeResponse" />
+	</wsdl:message>
+
+	<wsdl:message name="runtimeFault">
+		<wsdl:part name="fault" element="rtf:RuntimeFault" />
+	</wsdl:message>
+
+	<wsdl:message name="invoiceIdNotExistsFault">
+		<wsdl:part name="fault" element="invsid:invoiceIdNotExistsFault" />
+	</wsdl:message>
+
+	<wsdl:message name="invoiceNotExistsFault">
+		<wsdl:part name="fault" element="invsid:invoiceNotExistsFault" />
+	</wsdl:message>
+
+	<wsdl:message name="invoiceOverdueNotExistsFault">
+		<wsdl:part name="fault" element="invsid:invoiceOverdueNotExistsFault" />
+	</wsdl:message>
+
+	<wsdl:message name="invoiceUnpaidNotExistsFault">
+		<wsdl:part name="fault" element="invsid:invoiceUnpaidNotExistsFault" />
+	</wsdl:message>
+
+	<wsdl:portType name="InvoiceV1PortType">
+		<wsdl:operation name="retrieve">
+			<wsdl:input message="invsid:retrieveRequest" />
+			<wsdl:output message="invsid:retrieveResponse" />
+			<wsdl:fault name="runtimeFault" message="invsid:runtimeFault" />
+			<wsdl:fault name="invoiceIdNotExistsFault" message="invsid:invoiceIdNotExistsFault" />
+		</wsdl:operation>
+
+		<wsdl:operation name="retrieveAll">
+			<wsdl:input message="invsid:retrieveAllRequest" />
+			<wsdl:output message="invsid:retrieveAllResponse" />
+			<wsdl:fault name="runtimeFault" message="invsid:runtimeFault" />
+			<wsdl:fault name="invoiceNotExistsFault" message="invsid:invoiceNotExistsFault" />
+		</wsdl:operation>
+
+		<wsdl:operation name="searchOverdue">
+			<wsdl:input message="invsid:searchOverdueRequest" />
+			<wsdl:output message="invsid:searchOverdueResponse" />
+			<wsdl:fault name="runtimeFault" message="invsid:runtimeFault" />
+			<wsdl:fault name="invoiceOverdueNotExistsFault" message="invsid:invoiceOverdueNotExistsFault" />
+		</wsdl:operation>
+		
+		<wsdl:operation name="searchOverdueForPEC">
+			<wsdl:input message="invsid:searchOverdueForPECRequest" />
+			<wsdl:output message="invsid:searchOverdueForPECResponse" />
+			<wsdl:fault name="runtimeFault" message="invsid:runtimeFault" />
+		</wsdl:operation>
+
+		<wsdl:operation name="searchUnpaid">
+			<wsdl:input message="invsid:searchUnpaidRequest" />
+			<wsdl:output message="invsid:searchUnpaidResponse" />
+			<wsdl:fault name="runtimeFault" message="invsid:runtimeFault" />
+			<wsdl:fault name="invoiceUnpaidNotExistsFault" message="invsid:invoiceUnpaidNotExistsFault" />
+		</wsdl:operation>
+
+		<wsdl:operation name="createCharge">
+			<wsdl:input message="invsid:createChargeRequest" />
+			<wsdl:output message="invsid:createChargeResponse" />
+			<wsdl:fault name="runtimeFault" message="invsid:runtimeFault" />
+		</wsdl:operation>
+	</wsdl:portType>
+
+	<wsdl:binding name="InvoiceV1Binding11" type="invsid:InvoiceV1PortType">
+		<soap11:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="retrieve">
+			<soap11:operation soapAction="" />
+			<wsdl:input>
+				<soap11:header use="literal" part="headerMetadata"
+					message="invsid:retrieveRequest" wsdl:required="true" />
+				<soap11:header use="literal" part="headerPagination"
+					message="invsid:retrieveRequest" wsdl:required="true" />
+				<soap11:body parts="payload" use="literal"
+					wsdl:required="true" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap11:header use="literal" part="headerPagination"
+					message="invsid:retrieveResponse" wsdl:required="true" />
+				<soap11:body parts="payload" use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="runtimeFault">
+				<soap11:fault name="runtimeFault" use="literal" />
+			</wsdl:fault>
+			<wsdl:fault name="invoiceIdNotExistsFault">
+				<soap11:fault name="invoiceIdNotExistsFault" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+
+		<wsdl:operation name="retrieveAll">
+			<soap11:operation soapAction="" />
+			<wsdl:input>
+				<soap11:header use="literal" part="headerMetadata"
+					message="invsid:retrieveAllRequest" wsdl:required="true" />
+				<soap11:header use="literal" part="headerPagination"
+					message="invsid:retrieveAllRequest" wsdl:required="true" />
+				<soap11:body parts="payload" use="literal"
+					wsdl:required="true" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap11:header use="literal" part="headerPagination"
+					message="invsid:retrieveAllResponse" wsdl:required="true" />
+				<soap11:body parts="payload" use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="runtimeFault">
+				<soap11:fault name="runtimeFault" use="literal" />
+			</wsdl:fault>
+			<wsdl:fault name="invoiceNotExistsFault">
+				<soap11:fault name="invoiceNotExistsFault" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+
+		<wsdl:operation name="searchOverdue">
+			<soap11:operation soapAction="" />
+			<wsdl:input>
+				<soap11:header use="literal" part="headerMetadata"
+					message="invsid:searchOverdueRequest" wsdl:required="true" />
+				<soap11:header use="literal" part="headerPagination"
+					message="invsid:searchOverdueRequest" wsdl:required="true" />
+				<soap11:body parts="payload" use="literal"
+					wsdl:required="true" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap11:header use="literal" part="headerPagination"
+					message="invsid:searchOverdueResponse" wsdl:required="true" />
+				<soap11:body parts="payload" use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="runtimeFault">
+				<soap11:fault name="runtimeFault" use="literal" />
+			</wsdl:fault>
+			<wsdl:fault name="invoiceOverdueNotExistsFault">
+				<soap11:fault name="invoiceOverdueNotExistsFault" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+		
+		<wsdl:operation name="searchOverdueForPEC">
+			<soap11:operation soapAction="" />
+			<wsdl:input>
+				<soap11:header use="literal" part="headerMetadata"
+					message="invsid:searchOverdueForPECRequest" wsdl:required="true" />
+				<soap11:body parts="payload" use="literal"
+					wsdl:required="true" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap11:body parts="payload" use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="runtimeFault">
+				<soap11:fault name="runtimeFault" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+
+		<wsdl:operation name="searchUnpaid">
+			<soap11:operation soapAction="" />
+			<wsdl:input>
+				<soap11:header use="literal" part="headerMetadata"
+					message="invsid:searchUnpaidRequest" wsdl:required="true" />
+				<soap11:body parts="payload" use="literal"
+					wsdl:required="true" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap11:body parts="payload" use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="runtimeFault">
+				<soap11:fault name="runtimeFault" use="literal" />
+			</wsdl:fault>
+			<wsdl:fault name="invoiceUnpaidNotExistsFault">
+				<soap11:fault name="invoiceUnpaidNotExistsFault" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+
+		<wsdl:operation name="createCharge">
+			<soap11:operation soapAction="" />
+			<wsdl:input>
+				<soap11:header use="literal" part="header"
+					message="invsid:createChargeRequest" wsdl:required="true" />
+				<soap11:body parts="payload" use="literal"
+					wsdl:required="true" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap11:body parts="payload" use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="runtimeFault">
+				<soap11:fault name="runtimeFault" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+	</wsdl:binding>
+
+
+	<wsdl:binding name="InvoiceV1Binding12" type="invsid:InvoiceV1PortType">
+		<soap12:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="retrieve">
+			<soap12:operation soapAction="" />
+			<wsdl:input>
+				<soap12:header use="literal" part="headerMetadata"
+					message="invsid:retrieveRequest" wsdl:required="true" />
+				<soap12:header use="literal" part="headerPagination"
+					message="invsid:retrieveRequest" wsdl:required="true" />
+				<soap12:body parts="payload" use="literal"
+					wsdl:required="true" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:header use="literal" part="headerPagination"
+					message="invsid:retrieveResponse" wsdl:required="true" />
+				<soap12:body parts="payload" use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="runtimeFault">
+				<soap12:fault name="runtimeFault" use="literal" />
+			</wsdl:fault>
+			<wsdl:fault name="invoiceIdNotExistsFault">
+				<soap12:fault name="invoiceIdNotExistsFault" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+
+		<wsdl:operation name="retrieveAll">
+			<soap12:operation soapAction="" />
+			<wsdl:input>
+				<soap12:header use="literal" part="headerMetadata"
+					message="invsid:retrieveAllRequest" wsdl:required="true" />
+				<soap12:header use="literal" part="headerPagination"
+					message="invsid:retrieveAllRequest" wsdl:required="true" />
+				<soap12:body parts="payload" use="literal"
+					wsdl:required="true" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:header use="literal" part="headerPagination"
+					message="invsid:retrieveAllResponse" wsdl:required="true" />
+				<soap12:body parts="payload" use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="runtimeFault">
+				<soap12:fault name="runtimeFault" use="literal" />
+			</wsdl:fault>
+			<wsdl:fault name="invoiceNotExistsFault">
+				<soap12:fault name="invoiceNotExistsFault" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+
+		<wsdl:operation name="searchOverdue">
+			<soap12:operation soapAction="" />
+			<wsdl:input>
+				<soap12:header use="literal" part="headerMetadata"
+					message="invsid:searchOverdueRequest" wsdl:required="true" />
+				<soap12:header use="literal" part="headerPagination"
+					message="invsid:searchOverdueRequest" wsdl:required="true" />
+				<soap12:body parts="payload" use="literal"
+					wsdl:required="true" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:header use="literal" part="headerPagination"
+					message="invsid:searchOverdueResponse" wsdl:required="true" />
+				<soap12:body parts="payload" use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="runtimeFault">
+				<soap12:fault name="runtimeFault" use="literal" />
+			</wsdl:fault>
+			<wsdl:fault name="invoiceOverdueNotExistsFault">
+				<soap12:fault name="invoiceOverdueNotExistsFault" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+		
+		<wsdl:operation name="searchOverdueForPEC">
+			<soap12:operation soapAction="" />
+			<wsdl:input>
+				<soap12:header use="literal" part="headerMetadata"
+					message="invsid:searchOverdueForPECRequest" wsdl:required="true" />
+				<soap12:body parts="payload" use="literal"
+					wsdl:required="true" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body parts="payload" use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="runtimeFault">
+				<soap12:fault name="runtimeFault" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+
+		<wsdl:operation name="searchUnpaid">
+			<soap12:operation soapAction="" />
+			<wsdl:input>
+				<soap12:header use="literal" part="headerMetadata"
+					message="invsid:searchUnpaidRequest" wsdl:required="true" />
+				<soap12:body parts="payload" use="literal"
+					wsdl:required="true" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body parts="payload" use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="runtimeFault">
+				<soap12:fault name="runtimeFault" use="literal" />
+			</wsdl:fault>
+			<wsdl:fault name="invoiceUnpaidNotExistsFault">
+				<soap12:fault name="invoiceUnpaidNotExistsFault" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+
+		<wsdl:operation name="createCharge">
+			<soap12:operation soapAction="" />
+			<wsdl:input>
+				<soap12:header use="literal" part="header"
+					message="invsid:createChargeRequest" wsdl:required="true" />
+				<soap12:body parts="payload" use="literal"
+					wsdl:required="true" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body parts="payload" use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="runtimeFault">
+				<soap12:fault name="runtimeFault" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+	</wsdl:binding>
+
+
+	<wsdl:binding name="InvoiceV1BindingSB" type="invsid:InvoiceV1PortType">
+		<soap12:binding style="document"
+			transport="http://www.bea.com/transport/2007/05/sb" />
+		<wsdl:operation name="retrieve">
+			<soap12:operation soapAction="" />
+			<wsdl:input>
+				<soap12:header use="literal" part="headerMetadata"
+					message="invsid:retrieveRequest" wsdl:required="true" />
+				<soap12:header use="literal" part="headerPagination"
+					message="invsid:retrieveRequest" wsdl:required="true" />
+				<soap12:body parts="payload" use="literal"
+					wsdl:required="true" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:header use="literal" part="headerPagination"
+					message="invsid:retrieveResponse" wsdl:required="true" />
+				<soap12:body parts="payload" use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="runtimeFault">
+				<soap12:fault name="runtimeFault" use="literal" />
+			</wsdl:fault>
+			<wsdl:fault name="invoiceIdNotExistsFault">
+				<soap12:fault name="invoiceIdNotExistsFault" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+
+		<wsdl:operation name="retrieveAll">
+			<soap12:operation soapAction="" />
+			<wsdl:input>
+				<soap12:header use="literal" part="headerMetadata"
+					message="invsid:retrieveAllRequest" wsdl:required="true" />
+				<soap12:header use="literal" part="headerPagination"
+					message="invsid:retrieveAllRequest" wsdl:required="true" />
+				<soap12:body parts="payload" use="literal"
+					wsdl:required="true" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:header use="literal" part="headerPagination"
+					message="invsid:retrieveAllResponse" wsdl:required="true" />
+				<soap12:body parts="payload" use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="runtimeFault">
+				<soap12:fault name="runtimeFault" use="literal" />
+			</wsdl:fault>
+			<wsdl:fault name="invoiceNotExistsFault">
+				<soap12:fault name="invoiceNotExistsFault" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+
+		<wsdl:operation name="searchOverdue">
+			<soap12:operation soapAction="" />
+			<wsdl:input>
+				<soap12:header use="literal" part="headerMetadata"
+					message="invsid:searchOverdueRequest" wsdl:required="true" />
+				<soap12:header use="literal" part="headerPagination"
+					message="invsid:searchOverdueRequest" wsdl:required="true" />
+				<soap12:body parts="payload" use="literal"
+					wsdl:required="true" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:header use="literal" part="headerPagination"
+					message="invsid:searchOverdueResponse" wsdl:required="true" />
+				<soap12:body parts="payload" use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="runtimeFault">
+				<soap12:fault name="runtimeFault" use="literal" />
+			</wsdl:fault>
+			<wsdl:fault name="invoiceOverdueNotExistsFault">
+				<soap12:fault name="invoiceOverdueNotExistsFault" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+		
+		<wsdl:operation name="searchOverdueForPEC">
+			<soap12:operation soapAction="" />
+			<wsdl:input>
+				<soap12:header use="literal" part="headerMetadata"
+					message="invsid:searchOverdueForPECRequest" wsdl:required="true" />
+				<soap12:body parts="payload" use="literal"
+					wsdl:required="true" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body parts="payload" use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="runtimeFault">
+				<soap12:fault name="runtimeFault" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+
+		<wsdl:operation name="searchUnpaid">
+			<soap12:operation soapAction="" />
+			<wsdl:input>
+				<soap12:header use="literal" part="headerMetadata"
+					message="invsid:searchUnpaidRequest" wsdl:required="true" />
+				<soap12:body parts="payload" use="literal"
+					wsdl:required="true" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body parts="payload" use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="runtimeFault">
+				<soap12:fault name="runtimeFault" use="literal" />
+			</wsdl:fault>
+			<wsdl:fault name="invoiceUnpaidNotExistsFault">
+				<soap12:fault name="invoiceUnpaidNotExistsFault" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+
+		<wsdl:operation name="createCharge">
+			<soap12:operation soapAction="" />
+			<wsdl:input>
+				<soap12:header use="literal" part="header"
+					message="invsid:createChargeRequest" wsdl:required="true" />
+				<soap12:body parts="payload" use="literal"
+					wsdl:required="true" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body parts="payload" use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="runtimeFault">
+				<soap12:fault name="runtimeFault" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+	</wsdl:binding>
+
+
+	<wsdl:binding name="InvoiceV1BindingLCL" type="invsid:InvoiceV1PortType">
+		<soap12:binding style="document"
+			transport="http://www.bea.com/transport/2007/05/local" />
+		<wsdl:operation name="retrieve">
+			<soap12:operation soapAction="" />
+			<wsdl:input>
+				<soap12:header use="literal" part="headerMetadata"
+					message="invsid:retrieveRequest" wsdl:required="true" />
+				<soap12:header use="literal" part="headerPagination"
+					message="invsid:retrieveRequest" wsdl:required="true" />
+				<soap12:body parts="payload" use="literal"
+					wsdl:required="true" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:header use="literal" part="headerPagination"
+					message="invsid:retrieveResponse" wsdl:required="true" />
+				<soap12:body parts="payload" use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="runtimeFault">
+				<soap12:fault name="runtimeFault" use="literal" />
+			</wsdl:fault>
+			<wsdl:fault name="invoiceIdNotExistsFault">
+				<soap12:fault name="invoiceIdNotExistsFault" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+
+		<wsdl:operation name="retrieveAll">
+			<soap12:operation soapAction="" />
+			<wsdl:input>
+				<soap12:header use="literal" part="headerMetadata"
+					message="invsid:retrieveAllRequest" wsdl:required="true" />
+				<soap12:header use="literal" part="headerPagination"
+					message="invsid:retrieveAllRequest" wsdl:required="true" />
+				<soap12:body parts="payload" use="literal"
+					wsdl:required="true" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:header use="literal" part="headerPagination"
+					message="invsid:retrieveAllResponse" wsdl:required="true" />
+				<soap12:body parts="payload" use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="runtimeFault">
+				<soap12:fault name="runtimeFault" use="literal" />
+			</wsdl:fault>
+			<wsdl:fault name="invoiceNotExistsFault">
+				<soap12:fault name="invoiceNotExistsFault" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+
+		<wsdl:operation name="searchOverdue">
+			<soap12:operation soapAction="" />
+			<wsdl:input>
+				<soap12:header use="literal" part="headerMetadata"
+					message="invsid:searchOverdueRequest" wsdl:required="true" />
+				<soap12:header use="literal" part="headerPagination"
+					message="invsid:searchOverdueRequest" wsdl:required="true" />
+				<soap12:body parts="payload" use="literal"
+					wsdl:required="true" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:header use="literal" part="headerPagination"
+					message="invsid:searchOverdueResponse" wsdl:required="true" />
+				<soap12:body parts="payload" use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="runtimeFault">
+				<soap12:fault name="runtimeFault" use="literal" />
+			</wsdl:fault>
+			<wsdl:fault name="invoiceOverdueNotExistsFault">
+				<soap12:fault name="invoiceOverdueNotExistsFault" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+		
+		<wsdl:operation name="searchOverdueForPEC">
+			<soap12:operation soapAction="" />
+			<wsdl:input>
+				<soap12:header use="literal" part="headerMetadata"
+					message="invsid:searchOverdueForPECRequest" wsdl:required="true" />
+				<soap12:body parts="payload" use="literal"
+					wsdl:required="true" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body parts="payload" use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="runtimeFault">
+				<soap12:fault name="runtimeFault" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+
+		<wsdl:operation name="searchUnpaid">
+			<soap12:operation soapAction="" />
+			<wsdl:input>
+				<soap12:header use="literal" part="headerMetadata"
+					message="invsid:searchUnpaidRequest" wsdl:required="true" />
+				<soap12:body parts="payload" use="literal"
+					wsdl:required="true" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body parts="payload" use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="runtimeFault">
+				<soap12:fault name="runtimeFault" use="literal" />
+			</wsdl:fault>
+			<wsdl:fault name="invoiceUnpaidNotExistsFault">
+				<soap12:fault name="invoiceUnpaidNotExistsFault" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+
+		<wsdl:operation name="createCharge">
+			<soap12:operation soapAction="" />
+			<wsdl:input>
+				<soap12:header use="literal" part="header"
+					message="invsid:createChargeRequest" wsdl:required="true" />
+				<soap12:body parts="payload" use="literal"
+					wsdl:required="true" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body parts="payload" use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="runtimeFault">
+				<soap12:fault name="runtimeFault" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+	</wsdl:binding>
+
+	<wsdl:service name="InvoiceV1Service">
+		<wsdl:port binding="invsid:InvoiceV1Binding11" name="InvoiceV1Port11">
+			<soap11:address location="http://servbus/customer/bill/Invoice11V1" />
+		</wsdl:port>
+
+		<wsdl:port binding="invsid:InvoiceV1Binding12" name="InvoiceV1Port12">
+			<soap12:address location="http://servbus/customer/bill/Invoice12V1" />
+		</wsdl:port>
+
+		<wsdl:port binding="invsid:InvoiceV1BindingSB" name="InvoiceV1PortSB">
+			<soap12:address location="sb://servbus/customer.bill.Invoice12V1SB" />
+		</wsdl:port>
+
+		<wsdl:port binding="invsid:InvoiceV1Binding12" name="InvoiceV1Port12WSSUTS">
+			<soap12:address location="https://servbus/customer/bill/Invoice12V1WSSUTS" />
+		</wsdl:port>
+	</wsdl:service>
+
+</wsdl:definitions>

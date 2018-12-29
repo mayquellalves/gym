@@ -1,0 +1,185 @@
+<wsdl:definitions name="FaultHandler12V1" targetNamespace="http://www.netservicos.com.br/FaultHandlerV1" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soap11="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:hdl="http://www.netservicos.com.br/FaultHandlerV1" xmlns:err="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/fault/ErrorInfo" xmlns:log="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/monitoring/Logging" xmlns:mtd="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Metadata">
+	<wsdl:documentation>
+		Proxy responsável pelo tratamento de exceções. Com base nos
+		parâmetros enviados, identifica qual dos parâmetros possui
+		informações da falha ocorrida, classifica a falha encontrada e
+		constrói uma resposta adequando as informações da falha para o
+		preenchimento de um elemento do tipo ErrorInfo.
+	</wsdl:documentation>
+	
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://www.netservicos.com.br/FaultHandlerV1" elementFormDefault="qualified" xmlns:excepclass="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/fault/ExceptionClassification">
+
+			<xsd:import schemaLocation="../../../../../canonicalmodel/nid/v1/netarchitecture/fault/ErrorInfo.xsd" namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/fault/ErrorInfo"/>
+			<xsd:import schemaLocation="../../../../../canonicalmodel/nid/v1/netarchitecture/monitoring/Logging.xsd" namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/monitoring/Logging"/>
+			<xsd:import schemaLocation="../../../../../canonicalmodel/nid/v1/netarchitecture/fault/ExceptionClassification.xsd" namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/fault/ExceptionClassification"/>
+			<xsd:import schemaLocation="../../../../../canonicalmodel/nid/v1/netarchitecture/common/Metadata.xsd" namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Metadata"/>
+			
+			<xsd:complexType name="faultHandlerRequestType">
+				<xsd:sequence>
+					<xsd:element name="currentBody" type="xsd:anyType" minOccurs="1" maxOccurs="1" nillable="false">
+						<xsd:annotation>
+							<xsd:documentation>
+								Parâmetro que recebe a variável $body,
+								do proxy onde ocorreu a falha. O
+								conteúdo deste parâmetro será analisado
+								para verificar a existência de falhas.
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+
+					<xsd:element name="currentFault" type="xsd:anyType" minOccurs="1" maxOccurs="1" nillable="true">
+						<xsd:annotation>
+							<xsd:documentation>
+								Parâmetro que recebe a variável $fault,
+								do proxy onde ocorreu a falha. O
+								conteúdo deste parâmetro será analisado
+								para verificar a existência de falhas.
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					
+					<xsd:element name="callResponse" type="xsd:anyType" minOccurs="1" maxOccurs="1" nillable="true">
+						<xsd:annotation>
+							<xsd:documentation>
+								Parâmetro que recebe a variável
+								informada para armazenar a resposta do
+								recurso sendo chamado no proxy onde
+								ocorreu a falha. O conteúdo deste
+								parâmetro será analisado para verificar
+								a existência de falhas.
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+
+					<xsd:element name="messageCode" type="xsd:string" maxOccurs="1" minOccurs="1" nillable="false">
+						<xsd:annotation>
+							<xsd:documentation>
+								Código da mensagem a ser logada. O
+								código deve estar cadastrado no XML de
+								mensagens de cada domínio.
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					
+					<xsd:element ref="log:MessageParameters" maxOccurs="1" minOccurs="1" nillable="true">
+						<xsd:annotation>
+							<xsd:documentation>
+								Parâmetros que serão substituídos na
+								mensagem de Log. O primeiro parâmetro, é
+								associado ao índice 0 (Zero). Ex:
+								message: 'Usuário {0} foi {1} com
+								sucesso.', parametros:
+								{'root','excluído'}. Resulta em 'Usuário
+								root foi excluído com sucesso.'
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					
+					<xsd:element ref="excepclass:ExceptionClassification" maxOccurs="1" minOccurs="1" nillable="true">
+						<xsd:annotation>
+							<xsd:documentation>
+								Classificação da exceção, para ser
+								incluido no elemento de mesmo nome
+								dentro do elemento ErrorInfo, caso não
+								seja possível identificar essa
+								informação na falha enviada.
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+
+					<xsd:element name="accessResourceName" type="xsd:string" maxOccurs="1" minOccurs="1" nillable="true">
+						<xsd:annotation>
+							<xsd:documentation>
+								Recurso responsável pela geração da
+								exceção, para ser incluido no elemento
+								de mesmo nome dentro do elemento
+								ErrorInfo, caso não seja possível
+								identificar essa informação na falha
+								enviada.
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					
+					<xsd:element name="additionalInformation" type="xsd:anyType" maxOccurs="1" minOccurs="1" nillable="true">
+						<xsd:annotation>
+							<xsd:documentation>
+								Informações adicionais da exceção, para
+								ser incluido no elemento de mesmo nome
+								dentro do elemento ErrorInfo, caso não
+								seja possível identificar essa
+								informação na falha enviada.
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+
+					<xsd:element ref="err:ValidationMessages" minOccurs="1" maxOccurs="1" nillable="true"> 
+						<xsd:annotation>
+							<xsd:documentation>
+								Mensagens de validação da exceção, para
+								ser incluido no elemento de mesmo nome
+								dentro do elemento ErrorInfo, caso não
+								seja possível identificar essa
+								informação na falha enviada.
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					
+					<xsd:element name="exceptionStackTrace" type="xsd:string" maxOccurs="1" minOccurs="1" nillable="true">
+						<xsd:annotation>
+							<xsd:documentation>
+								Pilha de rastreamento da exceção, para
+								ser incluido no elemento de mesmo nome
+								dentro do elemento ErrorInfo, caso não
+								seja possível identificar essa
+								informação na falha enviada.
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:element>
+					
+				</xsd:sequence>
+			</xsd:complexType>
+			
+			<xsd:element name="faultHandlerResponse" type="xsd:anyType"/>
+			<xsd:element name="faultHandlerRequest" type="hdl:faultHandlerRequestType"/>
+		</xsd:schema>
+	</wsdl:types>
+
+	<wsdl:message name="faultHandlerRequest">
+		<wsdl:part name="parameters" element="hdl:faultHandlerRequest"/>
+		<wsdl:part name="header" element="mtd:Metadata"/>
+	</wsdl:message>
+
+	<wsdl:message name="faultHandlerResponse">
+		<wsdl:part name="parameters" element="hdl:faultHandlerResponse"/>
+	</wsdl:message>
+
+	<wsdl:portType name="FaultHandlerPortType">
+		<wsdl:operation name="faultHandler">
+			<wsdl:documentation>
+				Operação responsável pela conversão de diversos tipos de
+				falha que proxy sevicers podem receber em um elemento
+				ErrorInfo, adequando as informações da falha e
+				encapsulando este elemento em um SOAP Fault 1.1, SOAP
+				Fault 1.2 ou ESB Fault.
+			</wsdl:documentation>
+			<wsdl:input message="hdl:faultHandlerRequest"/>
+			<wsdl:output message="hdl:faultHandlerResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+
+	<wsdl:binding name="FaultHandlerBinding12" type="hdl:FaultHandlerPortType">
+		<soap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="faultHandler">
+			<soap12:operation soapAction=""/>
+			<wsdl:input>
+				<soap12:body parts="parameters" use="literal"/>
+				<soap12:header message="hdl:faultHandlerRequest" wsdl:required="true" part="header" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body parts="parameters" use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+
+</wsdl:definitions>

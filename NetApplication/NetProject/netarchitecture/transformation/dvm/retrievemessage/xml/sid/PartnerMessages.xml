@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dvm name="netarchitecture.messages.partner.dvm" xmlns="http://xmlns.oracle.com/dvm">
+	<description>
+		Only messages belonging to partner domain can be defined here.
+	</description>
+	<columns>
+		<column name="ID_MSG" />
+		<column name="ERROR_NAME" />
+		<column name="USER_MESSAGE" />
+		<column name="DETAIL_MESSAGE" />
+		<column name="CATEGORY_MESSAGE" />
+		<column name="SYSTEM_CODE" />
+		<column name="NID_DOMAIN" />
+		<column name="ABE_LEVEL" />
+	</columns>
+	<rows>
+		<row>
+			<cell>OSB-PARTNER-00001</cell>
+			<cell>OSB_REQUEST_INVALIDO</cell>
+			<cell>Request Inválido para operação: {0}.</cell>
+			<cell>Request Inválido para operação: {0}.</cell>
+			<cell>ERROR</cell>
+			<cell />
+			<cell>partner</cell>	
+			<cell>order</cell>
+		</row>
+		<row>
+			<cell>OSB-PARTNER-00002</cell>
+			<cell>OSB_OPERACAO_INVALIDA</cell>
+			<cell>A operação solicitada para o serviço não é válida.</cell>
+			<cell>A operação solicitada para o serviço não é válida.</cell>
+			<cell>ERROR</cell>
+			<cell />
+			<cell>partner</cell>
+			<cell>order</cell>
+		</row>
+		<row>
+			<cell>OSB-PARTNER-00003</cell>
+			<cell>OSB_ERRO_INESPERADO</cell>
+			<cell>Erro durante a execução do recurso: {0}.</cell>
+			<cell>Erro durante a execução do recurso: {0}.</cell>
+			<cell>ERROR</cell>
+			<cell />
+			<cell>partner</cell>
+			<cell>order</cell>
+		</row>
+		<row>
+			<cell>OSB-PARTNER-00006</cell>
+			<cell>OSB_OPERACAO_NAO_PERMITIDA</cell>
+			<cell>Existe uma portabilidade em andamento para o número de telefone informado.</cell>
+			<cell>Existe uma portabilidade em andamento para o número de telefone informado.</cell>
+			<cell>ERROR</cell>
+			<cell />
+			<cell>partner</cell>
+			<cell>order</cell>
+		</row>
+		<row>
+			<cell>OSB-PARTNER-00007</cell>
+			<cell>OSB_OPERACAO_NAO_PERMITIDA</cell>
+			<cell>Operação não permitida, pois o status da solicitação de portabilidade não permite o cancelamento da portabilidade, esta solicitação será encaminhada a uma equipe responsável.</cell>
+			<cell>Operação não permitida, pois o status da solicitação de portabilidade não permite o cancelamento da portabilidade, esta solicitação será encaminhada a uma equipe responsável.</cell>
+			<cell>ERROR</cell>
+			<cell />
+			<cell>partner</cell>
+			<cell>order</cell>
+		</row>
+		
+		<row>
+			<cell>OSB-PARTNER-00008</cell>
+			<cell>OSB_OPERACAO_NAO_PERMITIDA</cell>
+			<cell>Não foi possível recuperar todas as informações necessárias para o reenvio da mensagem de solicitação de portabilidade.</cell>
+			<cell>Não foi possível recuperar todas as informações necessárias para o reenvio da mensagem de solicitação de portabilidade.</cell>
+			<cell>ERROR</cell>
+			<cell />
+			<cell>partner</cell>
+			<cell>order</cell>
+		</row>
+		
+		<row>
+			<cell>OSB-PARTNER-00009</cell>
+			<cell>OSB_OPERACAO_NAO_PERMITIDA</cell>
+			<cell>Operação não permitida, pois somente bilhetes com status igual a Requerido podem ser reenviados.</cell>
+			<cell>Operação não permitida, pois somente bilhetes com status igual a Requerido podem ser reenviados.</cell>
+			<cell>ERROR</cell>
+			<cell />
+			<cell>partner</cell>
+			<cell>order</cell>
+		</row>
+		<row>
+			<cell>OSB-PARTNER-00010</cell>
+			<cell>OSB_OPERACAO_NAO_PERMITIDA</cell>
+			<cell>Operação não permitida, pois o status atual da portabilidade não permite o cancelamento.</cell>
+			<cell>Operação não permitida, pois o status atual da portabilidade não permite o cancelamento.</cell>
+			<cell>ERROR</cell>
+			<cell />
+			<cell>partner</cell>
+			<cell>order</cell>
+		</row>
+		<row>
+			<cell>OSB-PARTNER-00011</cell>
+			<cell>OSB_OPERACAO_NAO_PERMITIDA</cell>
+			<cell>Operação não permitida, pois o status atual  da portabilidade não permite o reagendamento.</cell>
+			<cell>Operação não permitida, pois o status atual  da portabilidade não permite o reagendamento.</cell>
+			<cell>ERROR</cell>
+			<cell />
+			<cell>partner</cell>
+			<cell>order</cell>
+		</row>
+		<row>
+			<cell>OSB-PARTNER-00012</cell>
+			<cell>OSB_OPERACAO_NAO_PERMITIDA</cell>
+			<cell>Operação não permitida, pois  o status atual  da portabilidade não permite a remoção de conflito.</cell>
+			<cell>Operação não permitida, pois  o status atual  da portabilidade não permite a remoção de conflito.</cell>
+			<cell>ERROR</cell>
+			<cell />
+			<cell>partner</cell>
+			<cell>order</cell>
+		</row>
+		<row>
+			<cell>OSB-PARTNER-00014</cell>
+			<cell>OSB_TELEFONE_NAO_ENCONTRADO</cell>
+			<cell>Não foi possível encontrar na base de dados o telefone informado: {0}</cell>
+			<cell>Não foi possível encontrar na base de dados o telefone informado: {0}</cell>
+			<cell>ERROR</cell>
+			<cell />
+			<cell>partner</cell>
+			<cell>order</cell>
+		</row>
+		<row>
+			<cell>OSB-PARTNER-00015</cell>
+			<cell>OSB_TELEFONE_NAO_ENCONTRADO</cell>
+			<cell>Não foi possível encontrar nenhuma portabilidade para o cliente informado: {0}</cell>
+			<cell>Não foi possível encontrar nenhuma portabilidade para o cliente informado: {0}</cell>
+			<cell>ERROR</cell>
+			<cell />
+			<cell>partner</cell>
+			<cell>order</cell>
+		</row>
+		<row>
+			<cell>OSB-PARTNER-00016</cell>
+			<cell>OSB_CAMPOS_OBRIGATORIOS</cell>
+			<cell>O(s) campo(s) {0} deve(m) ser informado(s) para requisição de Portabilidade {1}.</cell>
+			<cell>O(s) campo(s) {0} deve(m) ser informado(s) para requisição de Portabilidade {1}.</cell>
+			<cell>ERROR</cell>
+			<cell />
+			<cell>partner</cell>
+			<cell>order</cell>
+		</row>
+	</rows>
+</dvm>

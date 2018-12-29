@@ -1,0 +1,19 @@
+<schema elementFormDefault="qualified" targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/service/service/CustomerFacingServiceSpec" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/service/service/CustomerFacingServiceSpec" xmlns:tps="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types">
+
+	<import schemaLocation="../../netarchitecture/common/Types.xsd" namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types"/>
+
+
+	<complexType name="CustomerFacingServiceSpecType">
+	</complexType>
+
+	<element name="CustomerFacingServiceSpec" type="tns:CustomerFacingServiceSpecType"/>
+
+	<element name="CustomerFacingServiceSpecs">
+		<complexType>
+			<sequence>
+				<element ref="tns:CustomerFacingServiceSpec" minOccurs="1" maxOccurs="unbounded"/>
+			</sequence>
+		</complexType>
+	</element>
+
+</schema>

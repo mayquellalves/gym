@@ -1,0 +1,22 @@
+<schema elementFormDefault="qualified" targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/service/performance/ServiceLevelAgreementItem" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/service/performance/ServiceLevelAgreementItem" xmlns:tps="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types">
+
+	<import schemaLocation="../../netarchitecture/common/Types.xsd" namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types"/>
+
+	<complexType name="ServiceLevelAgreementItemType">
+		<sequence>
+			<element name="Name" type="tps:string050" minOccurs="0" maxOccurs="1"/>
+			<element name="Status" type="tps:string050" minOccurs="0" maxOccurs="1"/>
+		</sequence>
+	</complexType>
+
+	<element name="ServiceLevelAgreementItem" type="tns:ServiceLevelAgreementItemType"/>
+
+	<element name="ServiceLevelAgreementItems">
+		<complexType>
+			<sequence>
+				<element ref="tns:ServiceLevelAgreementItem" minOccurs="1" maxOccurs="unbounded"/>
+			</sequence>
+		</complexType>
+	</element>
+
+</schema>

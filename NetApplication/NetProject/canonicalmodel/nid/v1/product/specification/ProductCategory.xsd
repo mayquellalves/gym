@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/specification/ProductCategory"
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/specification/ProductCategory"
+	xmlns:tps="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types">
+
+	<import schemaLocation="../../netarchitecture/common/Types.xsd"
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types" />
+	
+	
+
+	<complexType name="ProductCategoryType">
+	
+				<sequence>
+					<element name="CategoryId" type="tps:string020" minOccurs="0" maxOccurs="1" />	
+					<element name="Name" type="tps:string100" minOccurs="0" maxOccurs="1" />	
+				</sequence>
+	</complexType>
+
+	<element name="ProductCategory" type="tns:ProductCategoryType" />
+	
+	<element name="ProductCategories" type="tns:ProductCategoriesType"/>
+	
+		<complexType name="ProductCategoriesType">
+			<sequence>
+				<element ref="tns:ProductCategory" minOccurs="1" maxOccurs="unbounded" />
+			</sequence>
+		</complexType>
+	
+</schema>

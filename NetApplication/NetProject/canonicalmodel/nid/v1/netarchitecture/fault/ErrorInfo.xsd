@@ -1,0 +1,107 @@
+<schema targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/fault/ErrorInfo" elementFormDefault="qualified" xmlns:errorinfo="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/fault/ErrorInfo" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/fault/ErrorInfo" xmlns:pref="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/fault/ExceptionClassification">
+
+	<import namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/fault/ExceptionClassification" schemaLocation="ExceptionClassification.xsd">
+	</import>
+	<complexType name="ErrorInfo">
+        <annotation>
+        	<documentation>
+        		Estrutura que representa um soap fault ou 
+        		excecão que será passada entre as camadas das 
+        		aplicações SOA.
+        	</documentation>
+        </annotation>
+        <sequence>
+			<element name="Code" type="string">
+				<annotation>
+					<documentation>
+						Código da mensagem da exceção.
+					</documentation>
+				</annotation></element>
+			<element name="Message" type="string">
+				<annotation>
+					<documentation>
+						Texto da mensagem da exceção.
+					</documentation>
+				</annotation></element>
+			<element name="ExceptionDate" type="string">
+				<annotation>
+					<documentation>
+						Data Hora da Ocorrencia da exceção.
+					</documentation>
+				</annotation></element>
+			<element name="ExceptionClassification" type="tns:ExceptionClassificationType">
+				<annotation>
+					<documentation>
+						Classificação da exceção. Os valores permitidos
+						são: CLASSIFICATION_RESOURCE,
+						CLASSIFICATION_UNEXPECTED,
+						CLASSIFICATION_BUSINESS,
+						CLASSIFICATION_VALIDATION,
+						CLASSIFICATION_SECURITY
+					</documentation>
+				</annotation></element>
+			<element name="AccessResourceName" type="string">
+				<annotation>
+					<documentation>
+						Recurso responsável pela geração da exceção.
+					</documentation>
+				</annotation></element>
+			<element name="AdditionalInformation" type="anyType">
+				<annotation>
+					<documentation>
+						Informações adicionais da exceção.
+					</documentation>
+				</annotation></element>
+			<element ref="errorinfo:ValidationMessages"/>
+                
+			<element name="ExceptionStackTrace" type="string">
+				<annotation>
+					<documentation>
+						Pilha de rastreamento da exceção.
+					</documentation>
+				</annotation></element>
+        </sequence>
+	</complexType>
+
+	<simpleType name="ExceptionClassificationType">
+		<restriction base="pref:ExceptionClassification"/>
+	</simpleType>
+
+	<complexType name="ValidationMessagesType">
+		<sequence>
+			<element name="ValidationMessage" minOccurs="0" maxOccurs="unbounded">
+				<complexType>
+					<sequence>
+						<element name="Code" type="string">
+							<annotation>
+								<documentation>
+									Código da mensagem de
+									validação.
+								</documentation>
+							</annotation></element>
+						<element name="Message" type="string">
+							<annotation>
+								<documentation>
+									Texto da mensagem de
+									validação.
+								</documentation>
+							</annotation></element>
+					</sequence>
+				</complexType>
+			</element>
+		</sequence>
+	</complexType>
+	
+	<element name="ValidationMessages" type="tns:ValidationMessagesType">
+              <annotation>
+              	<documentation>
+              		Mensagens de validação que, quando aplicavel,
+              		geraram a exceção.
+              	</documentation>
+              </annotation>
+	</element>
+
+
+	<element name="ErrorInfo" type="tns:ErrorInfo"/>
+
+</schema>

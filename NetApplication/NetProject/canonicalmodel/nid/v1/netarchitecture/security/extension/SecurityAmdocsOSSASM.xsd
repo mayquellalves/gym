@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/security/extension/SecurityAmdocsOSSASM"
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/security/extension/SecurityAmdocsOSSASM">
+
+	<complexType name="SecurityAmdocsOSSASMType">
+		<sequence>
+			<element name="ticket" type="string" minOccurs="0" maxOccurs="1"/>
+		</sequence>
+	</complexType>
+
+	<element name="SecurityAmdocsOSSASM" type="tns:SecurityAmdocsOSSASMType">
+		<annotation>
+			<documentation>
+				The element to be used in SecurityApplicationExtension.xsd. Must be set to Security + Authority.
+				Ex: Authority = AmdocsOSSASM
+					Extension = SecurityAmdocsOSSASM
+			</documentation>
+		</annotation>
+	</element>
+
+</schema>

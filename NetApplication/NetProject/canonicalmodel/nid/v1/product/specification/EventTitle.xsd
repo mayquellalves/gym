@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/specification/EventTitle"
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/specification/EventTitle"
+	xmlns:tps="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types">
+
+
+	
+	<import schemaLocation="../../netarchitecture/common/Types.xsd"
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types" />
+
+	
+	<complexType name="EventTitleType">
+		
+				<sequence>
+					<element name="TitleId" type="tps:string150" minOccurs="0" maxOccurs="1" />
+					<element name="IsPreview" type="boolean" minOccurs="0" maxOccurs="1" />
+					<element name="ProductionDate" type="date" minOccurs="0" maxOccurs="1" />
+					<element name="RecomendationRanking" type="int" minOccurs="0" maxOccurs="1" />
+					
+				</sequence>
+			
+	</complexType>
+
+	<element name="EventTitle" type="tns:EventTitleType" />
+	
+	<element name="EventTitles" type="tns:EventTitlesType"/>
+	
+	<complexType name="EventTitlesType">
+			<sequence>
+				<element ref="tns:EventTitle" minOccurs="1" maxOccurs="unbounded" />
+			</sequence>
+		</complexType>
+		
+	
+
+</schema>

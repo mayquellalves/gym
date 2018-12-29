@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/partner/order/RejectionReason"
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/partner/order/RejectionReason">
+
+	<element name="RejectionReason">
+		<simpleType>
+			<restriction base="string">
+				<enumeration value="Automatically cancelled by BDR" />
+				<enumeration value="No response from donator" />
+				<enumeration
+					value="without documentation 3 hours before the start of migration window" />
+				<enumeration value="Empty portability number" />
+				<enumeration value="Invalid CPF" />
+				<enumeration value="Generic field identification invalid" />
+				<enumeration value="Invalid CNPJ" />
+				<enumeration value="Type of customer doesn't match" />
+				<enumeration value="Rejection of reversion of fraud" />
+				<enumeration value="Invalid local area" />
+				<enumeration value="Number of special services" />
+			</restriction>
+		</simpleType>
+	</element>
+
+	<element name="RejectionReasons">
+		<complexType>
+			<sequence>
+				<element ref="tns:RejectionReason" minOccurs="1" maxOccurs="unbounded" />
+			</sequence>
+		</complexType>
+	</element>
+
+</schema>

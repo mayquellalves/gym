@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified"
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/service/service/ServicePackageSpec"
+	xmlns="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/service/service/ServicePackageSpec"
+	xmlns:tps="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types">
+
+	<import schemaLocation="../../netarchitecture/common/Types.xsd"
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types" />
+
+
+	<complexType name="ServicePackageSpecType">
+		<sequence>
+			<element name="PackageType" type="int" minOccurs="0"
+				maxOccurs="1" />
+		</sequence>
+	</complexType>
+
+	<element name="ServicePackageSpec" type="tns:ServicePackageSpecType" />
+
+	<element name="ServicePackageSpecs">
+		<complexType>
+			<sequence>
+				<element ref="tns:ServicePackageSpec" minOccurs="1"
+					maxOccurs="unbounded" />
+			</sequence>
+		</complexType>
+	</element>
+
+</schema>

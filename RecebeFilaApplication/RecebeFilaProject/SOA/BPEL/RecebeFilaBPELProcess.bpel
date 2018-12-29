@@ -1,0 +1,87 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Wed Nov 07 18:33:11 BRST 2018
+  Author:  supadmin
+  Type: BPEL 2.0 Process
+  Purpose: Synchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="RecebeFilaBPELProcess"
+               targetNamespace="http://xmlns.oracle.com/RecebeFilaApplication/RecebeFilaProject/RecebeFilaBPELProcess"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://xmlns.oracle.com/RecebeFilaApplication/RecebeFilaProject/RecebeFilaBPELProcess"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:ui="http://xmlns.oracle.com/soa/designer"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns1="http://xmlns.oracle.com/pcbpel/adapter/db/RecebeFilaApplication/RecebeFilaProject/dbReferenceRecebeFila"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:ns2="http://xmlns.oracle.com/pcbpel/adapter/db/top/dbReferenceRecebeFila">
+
+    <import ui:processWSDL="true" namespace="http://xmlns.oracle.com/RecebeFilaApplication/RecebeFilaProject/RecebeFilaBPELProcess" location="../WSDLs/RecebeFilaBPELProcess.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        PARTNERLINKS                                                      
+        List of services participating in this BPEL process               
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    --> 
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="recebefilabpelprocess_client" partnerLinkType="client:RecebeFilaBPELProcess" myRole="RecebeFilaBPELProcessProvider"/>
+    <partnerLink name="dbReferenceRecebeFila" partnerLinkType="ns1:dbReferenceRecebeFila_plt"
+                 partnerRole="dbReferenceRecebeFila_role"/>
+  </partnerLinks>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <variables>
+    <!-- Reference to the message passed as input during initiation -->
+    <variable name="inputVariable" messageType="client:RecebeFilaBPELProcessRequestMessage"/>
+
+    <!-- Reference to the message that will be returned to the requester-->
+    <variable name="outputVariable" messageType="client:RecebeFilaBPELProcessResponseMessage"/>
+    <variable name="Invoke1_merge_InputVariable" messageType="ns1:DepartamentCollection_msg"/>
+  </variables>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="main">
+
+    <!-- Receive input from requestor. (Note: This maps to operation defined in RecebeFilaBPELProcess.wsdl) -->
+    <receive name="receiveInput" partnerLink="recebefilabpelprocess_client" portType="client:RecebeFilaBPELProcess" operation="process" variable="inputVariable" createInstance="yes"/>
+    <assign name="Assign1">
+      <copy>
+        <from>$inputVariable.payload/client:numeroDepartamento</from>
+        <to>$Invoke1_merge_InputVariable.DepartamentCollection/ns2:Departament/ns2:numero</to>
+      </copy>
+      <copy>
+        <from>$inputVariable.payload/client:nomeDepartamento</from>
+        <to>$Invoke1_merge_InputVariable.DepartamentCollection/ns2:Departament/ns2:nome</to>
+      </copy>
+      <copy>
+        <from>$inputVariable.payload/client:localDepartamento</from>
+        <to>$Invoke1_merge_InputVariable.DepartamentCollection/ns2:Departament/ns2:dLocal</to>
+      </copy>
+    </assign>
+    <invoke name="Invoke1" bpelx:invokeAsDetail="no" partnerLink="dbReferenceRecebeFila"
+            portType="ns1:dbReferenceRecebeFila_ptt" operation="merge" inputVariable="Invoke1_merge_InputVariable"/>
+    <!-- Generate reply to synchronous request -->
+    <reply name="replyOutput" partnerLink="recebefilabpelprocess_client" portType="client:RecebeFilaBPELProcess" operation="process" variable="outputVariable"/>
+  </sequence>
+</process>

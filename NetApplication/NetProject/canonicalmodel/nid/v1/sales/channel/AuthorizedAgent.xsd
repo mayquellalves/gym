@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified" 
+	xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/sales/channel/AuthorizedAgent" 
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/sales/channel/AuthorizedAgent" >
+
+	<import schemaLocation="../../netarchitecture/common/Types.xsd" 
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types"/>
+
+		
+	<complexType name="AuthorizedAgentType">
+		
+	</complexType>
+
+	<element name="AuthorizedAgent" type="tns:AuthorizedAgentType"/>
+
+	<complexType name="AuthorizedAgentsType">
+		<sequence>
+			<element ref="tns:AuthorizedAgent" minOccurs="1" maxOccurs="unbounded"/>
+		</sequence>
+	</complexType>
+	
+	<element name="AuthorizedAgents" type="tns:AuthorizedAgentsType"/>
+
+</schema>

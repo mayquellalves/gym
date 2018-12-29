@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Message"
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Message"
+	elementFormDefault="qualified" attributeFormDefault="qualified">
+
+	<xsd:complexType name="MessageType">
+		<xsd:sequence>
+			<xsd:element name="ID_MSG" minOccurs="1" maxOccurs="1" nillable="false">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:minLength value="1"></xsd:minLength>
+						<xsd:pattern
+							value="(OSB|SCA)(-)[a-z]{50}(-)[0-9][0-9][0-9][0-9]" />
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+
+			<xsd:element name="ERROR_NAME" type="xsd:string"/>
+			<xsd:element name="USER_MESSAGE" type="xsd:string"/>
+			<xsd:element name="DETAIL_MESSAGE" type="xsd:string"/>
+			<xsd:element name="CATEGORY_MESSAGE" minOccurs="1"
+				maxOccurs="1">
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:enumeration value="INFO"/>
+						<xsd:enumeration value="WARNING"/>
+						<xsd:enumeration value="ERROR"/>
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+
+			<xsd:element name="SYSTEM_CODE" type="xsd:string"/>
+			<xsd:element name="NID_DOMAIN" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="ABE_LEVEL" type="xsd:string" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:element name="Message" type="tns:MessageType"/>
+
+	<xsd:complexType name="MessagesType">
+		<xsd:sequence>
+			<xsd:element ref="tns:Message"
+				minOccurs="1" maxOccurs="unbounded" nillable="false">
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:element name="Messages" type="tns:MessagesType">
+		<xsd:unique name="un_name">
+			<xsd:selector xpath="./tns:Message" />
+			<xsd:field xpath="tns:ID_MSG" />
+		</xsd:unique>
+	</xsd:element>
+
+</xsd:schema>

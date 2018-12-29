@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/partner/order/PortabilityType"
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/partner/order/PortabilityType">
+
+	<element name="PortabilityType">
+		<simpleType>
+			<restriction base="string">
+				<enumeration value="External" />
+				<enumeration value="Internal" />
+				<enumeration value="InternalIntrinsic" />
+				<enumeration value="Intrinsic" />
+			</restriction>
+		</simpleType>
+	</element>
+
+</schema>

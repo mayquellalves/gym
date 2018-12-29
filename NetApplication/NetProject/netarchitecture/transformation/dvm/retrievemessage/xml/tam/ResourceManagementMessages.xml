@@ -1,0 +1,506 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dvm name="netarchitecture.messages.resourcemanagement.dvm" xmlns="http://xmlns.oracle.com/dvm">
+   <description>Only messages belonging to resource management domain can be defined here.</description>
+  <columns>
+    <column name="ID_MSG"/>
+    <column name="ERROR_NAME"/>
+    <column name="USER_MESSAGE"/>
+    <column name="DETAIL_MESSAGE"/>
+    <column name="CATEGORY_MESSAGE"/>
+    <column name="SYSTEM_CODE"/>
+    <column name="NID_DOMAIN"/>
+    <column name="ABE_LEVEL"/>
+  </columns>
+  <rows>
+    <row>
+      <cell>OSB-RESOURCEMANAGEMENT-00001</cell>
+      <cell>RUNTIME_FAULT</cell>
+      <cell>Request Inválido para operação: {0}.</cell>
+      <cell>Request Inválido para operação: {0}.</cell>
+      <cell>ERROR</cell>
+      <cell/>
+      <cell>resourcemanagement</cell>
+      <cell>domain</cell>
+    </row>    
+    <row>
+      <cell>OSB-RESOURCEMANAGEMENT-00002</cell>
+      <cell>RUNTIME_FAULT</cell>
+      <cell>Erro durante a execução do recurso: {0}.</cell>
+      <cell>Erro durante a execução do recurso: {0}.</cell>
+      <cell>ERROR</cell>
+      <cell/>
+      <cell>resourcemanagement</cell>
+      <cell>domain</cell>
+    </row>
+    <row>
+      <cell>OSB-RESOURCEMANAGEMENT-00003</cell>
+      <cell>RUNTIME_FAULT</cell>
+      <cell>O(s) campo(s) {0} deve(m) ser informado(s).</cell>
+      <cell>O(s) campo(s) {0} deve(m) ser informado(s).</cell>
+      <cell>ERROR</cell>
+      <cell/>
+      <cell>resourcemanagement</cell>
+      <cell>domain</cell>
+    </row>    
+    <row>
+      <cell>OSB-RESOURCEMANAGEMENT-00004</cell>
+      <cell>RUNTIME_FAULT</cell>
+      <cell>A operação solicitada para o serviço não é válida.</cell>
+      <cell>A operação solicitada para o serviço não é válida.</cell>
+      <cell>ERROR</cell>
+      <cell/>
+      <cell>resourcemanagement</cell>
+      <cell>domain</cell>
+    </row>  
+    <row>
+      <cell>OSB-RESOURCEMANAGEMENT-00005</cell>
+      <cell>RUNTIME_FAULT</cell>
+      <cell>Portabilidade Interna não é suportada.</cell>
+      <cell>Portabilidade Interna não é suportada.</cell>
+      <cell>ERROR</cell>
+      <cell/>
+      <cell>resourcemanagement</cell>
+      <cell>domain</cell>
+    </row>
+    <row>
+      <cell>OSB-RESOURCEMANAGEMENT-00006</cell>
+      <cell>OSB_DADOS_NAO_RETORNADOS</cell>
+      <cell>Não foi possível retornar os dados..</cell>
+      <cell>Não foi possível retornar os dados..</cell>
+      <cell>ERROR</cell>
+      <cell/>
+      <cell>resourcemanagement</cell>
+      <cell>location</cell>
+    </row>
+    <row>
+      <cell>OSB-RESOURCEMANAGEMENT-00036</cell>
+      <cell>RUNTIME_FAULT</cell>
+      <cell>O(s) campo(s) {0} ou {1} deve(m) ser informado(s).</cell>
+      <cell>O(s) campo(s) {0} ou {1} deve(m) ser informado(s).</cell>
+      <cell>ERROR</cell>
+      <cell/>
+      <cell>resourcemanagement</cell>
+      <cell>location</cell>
+    </row>
+    <row>
+      <cell>OSB-RESOURCEMANAGEMENT-00037</cell>
+      <cell>RUNTIME_FAULT</cell>
+      <cell>O(s) campo(s) {0} ou {1} ou {2} ou {3} deve(m) ser informado(s).</cell>
+      <cell>O(s) campo(s) {0} ou {1} ou {2} ou {3} deve(m) ser informado(s).</cell>
+      <cell>ERROR</cell>
+      <cell/>
+      <cell>resourcemanagement</cell>
+      <cell>location</cell>
+    </row>
+    <row>
+      <cell>OSB-RESOURCEMANAGEMENT-00038</cell>
+      <cell>RUNTIME_FAULT</cell>
+      <cell>O(s) campo(s) {0} ou {1} ou {2} deve(m) ser informado(s).</cell>
+      <cell>O(s) campo(s) {0} ou {1} ou {2} deve(m) ser informado(s).</cell>
+      <cell>ERROR</cell>
+      <cell/>
+      <cell>resourcemanagement</cell>
+      <cell>location</cell>
+    </row>
+    <row>
+	  <cell>OSB-RESOURCEMANAGEMENT-00039</cell>
+	  <cell>INVALID_POSTCODEORIT_DOES_NO_MATCH_INFORMED_FAULT</cell>
+	  <cell>CEP informado inválido ou não corresponde ao Logradouro/Bairro/Cidade informada.</cell>
+	  <cell>CEP informado inválido ou não corresponde ao Logradouro/Bairro/Cidade informada.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+	  <cell>resourcemanagement</cell>
+      <cell>location</cell>
+	</row>	
+	<row>
+	  <cell>OSB-RESOURCEMANAGEMENT-00040</cell>
+	  <cell>INVALID_STREETNAMEORIT_DOES_NO_MATCH_INFORMED_DFAULT</cell>
+	  <cell>Logradouro informado inválido ou não corresponde ao CEP/Bairro/cidade informada.</cell>
+	  <cell>Logradouro informado inválido ou não corresponde ao CEP/Bairro/cidade informada.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+	  <cell>resourcemanagement</cell>
+      <cell>location</cell>
+	</row>
+	<row>
+	  <cell>OSB-RESOURCEMANAGEMENT-00041</cell>
+	  <cell>INVALID_NEIGHBORHOODORIT_DOES_NO_MATCH_INFORMED_FAULT</cell>
+	  <cell>Bairro informado inválido ou não corresponde ao CEP/Logradouro/cidade informada.</cell>
+	  <cell>Bairro informado inválido ou não corresponde ao CEP/Logradouro/cidade informada.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+	  <cell>resourcemanagement</cell>
+      <cell>location</cell>
+	</row>
+	<row>
+	  <cell>OSB-RESOURCEMANAGEMENT-00042</cell>
+	  <cell>INVALID_CITYORIT_DOES_NO_MATCH_INFORMED_FAULT</cell>
+	  <cell>Cidade informada inválida ou não corresponde ao CEP/Logradouro/Bairro informado.</cell>
+	  <cell>Cidade informada inválida ou não corresponde ao CEP/Logradouro/Bairro informado.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+	  <cell>resourcemanagement</cell>
+      <cell>location</cell>
+	</row>
+	<row>
+	  <cell>OSB-RESOURCEMANAGEMENT-00043</cell>
+	  <cell>COMPLEMENT_TYPE_NOT_FOUND_FAULT</cell>
+	  <cell>Tipo de complemento informado não encontrado.</cell>
+	  <cell>Tipo de complemento informado não encontrado.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+	  <cell>resourcemanagement</cell>
+      <cell>location</cell>
+	</row>
+	<row>
+	  <cell>OSB-RESOURCEMANAGEMENT-00044</cell>
+	  <cell>COMPLEMENT_TYPE_REPORTED_MORE_THAN_ONCE_FAULT</cell>
+	  <cell>Tipo de complemento informado mais de uma vez.</cell>
+	  <cell>Tipo de complemento informado mais de uma vez.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+	  <cell>resourcemanagement</cell>
+      <cell>location</cell>
+	</row>
+	<row>
+	  <cell>OSB-RESOURCEMANAGEMENT-00045</cell>
+	  <cell>DUPLICATE_NEIGHBORHOOD_FAULT</cell>
+	  <cell>Bairro Duplicado.</cell>
+	  <cell>Bairro Duplicado.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+	  <cell>resourcemanagement</cell>
+      <cell>location</cell>
+	</row>
+	<row>
+	  <cell>OSB-RESOURCEMANAGEMENT-00046</cell>
+	  <cell>DUPLICATE_STREETNAME_FAULT</cell>
+	  <cell>Logradouro Duplicado.</cell>
+	  <cell>Logradouro Duplicado.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+	  <cell>resourcemanagement</cell>
+      <cell>location</cell>
+	</row>
+	<row>
+	  <cell>OSB-RESOURCEMANAGEMENT-00047</cell>
+	  <cell>ADDRESS_NOT_FOUND_FAULT</cell>
+	  <cell>Endereço não encontrado.</cell>
+	  <cell>Endereço não encontrado.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+	  <cell>resourcemanagement</cell>
+      <cell>location</cell>
+	</row>
+	<row>
+	  <cell>OSB-RESOURCEMANAGEMENT-00048</cell>
+	  <cell>NECESSARY_TO_INFORM_THE_COMPLEMENTID_WHEN_COMPLEMENT_INFORMED_FAULT</cell>
+	  <cell>É necessário informar o complemento quando o campo texto do complemento está preenchido.</cell>
+	  <cell>É necessário informar o complemento quando o campo texto do complemento está preenchido.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+	  <cell>resourcemanagement</cell>
+      <cell>location</cell>
+	</row>
+	<row>
+	  <cell>OSB-RESOURCEMANAGEMENT-00049</cell>
+	  <cell>BUSINESS_FAULT</cell>
+	  <cell>Não foi encontrado problema ou diagnóstico não foi identificado.</cell>
+	  <cell>Não foi encontrado problema ou diagnóstico não foi identificado.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+	  <cell>resourcemanagement</cell>
+      <cell>location</cell>
+	</row>
+<row>
+	  <cell>OSB-RESOURCEMANAGEMENT-00050</cell>
+	  <cell>BUSINESS_FAULT</cell>
+	  <cell>Número de dispositivos cadastrados excedeu a quantidade {0} permitida.</cell>
+	  <cell>Número de dispositivos cadastrados excedeu a quantidade {0} permitida.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+	  <cell>resourcemanagement</cell>
+      <cell>location</cell>
+	</row>
+	<row>
+	  <cell>OSB-RESOURCEMANAGEMENT-00053</cell>
+	  <cell>BUSINESS_FAULT</cell>
+	  <cell>Ao menos um dos campos de entrada deve ser informado.</cell>
+	  <cell>Ao menos um dos campos de entrada deve ser informado.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+	  <cell>resourcemanagement</cell>
+      <cell>location</cell>
+	</row>
+	<row>
+	  <cell>OSB-RESOURCEMANAGEMENT-00055</cell>
+	  <cell>BUSINESS_FAULT</cell>
+	  <cell>Request Inválido. Informar somente uma ocorrência de cada um dos campos {0}.</cell>
+	  <cell>Request Inválido. Informar somente uma ocorrência de cada um dos campos {0}.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+	  <cell>resourcemanagement</cell>
+      <cell>location</cell>
+	</row>
+	<row>
+      <cell>OSB-RESOURCEMANAGEMENT-00056</cell>
+      <cell>Localidade / município ou UF não encontrado no SNR.</cell>
+      <cell>Localidade / município ou UF não encontrado no SNR.</cell>
+         <cell/>
+      <cell/>
+      <cell/>
+      <cell>resourcemanagement</cell>
+      <cell>location</cell>
+    </row>
+    <row>
+      <cell>OSB-RESOURCEMANAGEMENT-00057</cell>
+      <cell>Localidade ou EOT não encontrado no TCO.</cell>
+      <cell>Localidade ou EOT não encontrado no TCO.</cell>
+         <cell/>
+      <cell/>
+      <cell/>
+      <cell>resourcemanagement</cell>
+      <cell>location</cell>
+    </row>
+    <row>
+      <cell>OSB-RESOURCEMANAGEMENT-00058</cell>
+      <cell>Código da área informado diferente do código DDD.</cell>
+      <cell>Código da área informado diferente do código DDD.</cell>
+         <cell/>
+      <cell/>
+      <cell/>
+      <cell>resourcemanagement</cell>
+      <cell>location</cell>
+    </row>
+	<row>
+	  <cell>OSB-RESOURCEMANAGEMENT-00059</cell>
+	  <cell>CANNOT_FIND_MATCHING_SERVICE_NUMBER_FAULT</cell>
+	  <cell>Número de telefone solicitado não encontrado na pesquisa. Favor efetuar nova busca.</cell>
+	  <cell>Número de telefone solicitado não encontrado na pesquisa. Favor efetuar nova busca.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+	  <cell>resourcemanagement</cell>
+      <cell>networknumber</cell>
+	</row>	
+	<row>
+	  <cell>OSB-RESOURCEMANAGEMENT-00060</cell>
+	  <cell>INVALID_PORTABILITY_NUMBER_OR_AREA_CODE_FAULT</cell>
+	  <cell>O número de telefone inserido não pertence ao código de área do endereço de instalação.</cell>
+	  <cell>O número de telefone inserido não pertence ao código de área do endereço de instalação.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+	  <cell>resourcemanagement</cell>
+      <cell>networknumber</cell>
+	</row>	
+	<row>
+	  <cell>OSB-RESOURCEMANAGEMENT-00061</cell>
+	  <cell>INVALID_TN_RANGE_FAULT</cell>
+	  <cell>Intervalo de números inválidos.</cell>
+	  <cell>Intervalo de números inválidos.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+	  <cell>resourcemanagement</cell>
+      <cell>networknumber</cell>
+	</row>	
+	<row>
+	  <cell>OSB-RESOURCEMANAGEMENT-00062</cell>
+	  <cell>SERVICE_NUMBER_ALREADY_EXIST_IN_OTHER_THAN_PORTED_IN_CATEGORY_FAULT</cell>
+	  <cell>Número de telefone com processo em andamento de portabilidade.</cell>
+	  <cell>Número de telefone com processo em andamento de portabilidade.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+	  <cell>resourcemanagement</cell>
+      <cell>networknumber</cell>
+	</row>
+	<row>
+      <cell>OSB-RESOURCEMANAGEMENT-00064</cell>
+      <cell>Área de atuação desconhecida.</cell>
+      <cell>Área de atuação desconhecida.</cell>
+         <cell/>
+      <cell/>
+      <cell/>
+      <cell>resourcemanagement</cell>
+      <cell>location</cell>
+    </row>
+	<row>
+      <cell>OSB-RESOURCEMANAGEMENT-00065</cell>
+      <cell>Falha no agendamento de trabalho.</cell>
+      <cell>Falha no agendamento de trabalho.</cell>
+         <cell/>
+      <cell/>
+      <cell/>
+      <cell>resourcemanagement</cell>
+      <cell>location</cell>
+    </row>
+	<row>
+      <cell>OSB-RESOURCEMANAGEMENT-00066</cell>
+      <cell>Não possui capacidade disponível na agenda.</cell>
+      <cell>Não possui capacidade disponível na agenda.</cell>
+         <cell/>
+      <cell/>
+      <cell/>
+      <cell>resourcemanagement</cell>
+      <cell>location</cell>
+    </row>
+	<row>
+      <cell>OSB-RESOURCEMANAGEMENT-00067</cell>
+      <cell>Ao menos um dos campos {0} de entrada devem ser informados.</cell>
+      <cell>Ao menos um dos campos {0} de entrada devem ser informados.</cell>
+         <cell/>
+      <cell/>
+      <cell/>
+      <cell>resourcemanagement</cell>
+      <cell>location</cell>
+    </row>
+    <row>
+      <cell>OSB-RESOURCEMANAGEMENT-00068</cell>
+      <cell>Status inválido para Work Order.</cell>
+      <cell>Status inválido para Work Order.</cell>
+         <cell/>
+      <cell/>
+      <cell/>
+      <cell>resourcemanagement</cell>
+      <cell>location</cell>
+    </row>
+     <row>
+      <cell>OSB-RESOURCEMANAGEMENT-00069</cell>
+      <cell>Data de agendamento inválida para Work Order.</cell>
+      <cell>Data de agendamento inválida para Work Order.</cell>
+         <cell/>
+      <cell/>
+      <cell/>
+      <cell>resourcemanagement</cell>
+      <cell>location</cell>
+    </row>
+    <row>
+      <cell>OSB-RESOURCEMANAGEMENT-00070</cell>
+      <cell>A requisição possui equipamento mas não possui task relacionada.</cell>
+      <cell>A requisição possui equipamento mas não possui task relacionada.</cell>
+         <cell/>
+      <cell/>
+      <cell/>
+      <cell>resourcemanagement</cell>
+      <cell>location</cell>
+    </row>
+	<row>
+      <cell>OSB-RESOURCEMANAGEMENT-00071</cell>
+      <cell>Work Order alcançou ponto de não retorno.</cell>
+      <cell>Work Order alcançou ponto de não retorno.</cell>
+         <cell/>
+      <cell/>
+      <cell/>
+      <cell>resourcemanagement</cell>
+      <cell>location</cell>
+    </row>
+<row>
+      <cell>OSB-RESOURCEMANAGEMENT-00072</cell>
+      <cell>Falha na Validação de Equipamento ou Porta.</cell>
+      <cell>Falha na Validação de Equipamento ou Porta.</cell>
+         <cell/>
+      <cell/>
+      <cell/>
+      <cell>resourcemanagement</cell>
+      <cell>location</cell>
+    </row>
+     <row>
+      <cell>OSB-RESOURCEMANAGEMENT-00073</cell>
+      <cell>Serviço inexistente na Work Order.</cell>
+      <cell>Serviço inexistente na Work Order.</cell>
+         <cell/>
+      <cell/>
+      <cell/>
+      <cell>resourcemanagement</cell>
+      <cell>location</cell>
+    </row>
+     <row>
+      <cell>OSB-RESOURCEMANAGEMENT-00074</cell>
+      <cell>Equipamento relacionado com outro cliente.</cell>
+      <cell>Equipamento relacionado com outro cliente.</cell>
+         <cell/>
+      <cell/>
+      <cell/>
+      <cell>resourcemanagement</cell>
+      <cell>location</cell>
+    </row>
+     <row>
+      <cell>OSB-RESOURCEMANAGEMENT-00075</cell>
+      <cell>Task code e tipo de equipamento inválidos para troca de equipamento.</cell>
+      <cell>Task code e tipo de equipamento inválidos para troca de equipamento.</cell>
+         <cell/>
+      <cell/>
+      <cell/>
+      <cell>resourcemanagement</cell>
+      <cell>location</cell>
+    </row>
+     <row>
+      <cell>OSB-RESOURCEMANAGEMENT-00076</cell>
+      <cell>Task não está em status final.</cell>
+      <cell>Task não está em status final.</cell>
+      <cell/>
+      <cell/>
+      <cell/>
+      <cell>resourcemanagement</cell>
+      <cell>location</cell>
+    </row>
+     <row>
+      <cell>OSB-RESOURCEMANAGEMENT-00077</cell>
+      <cell>Sem porta disponível.</cell>
+      <cell>Sem porta disponível.</cell>
+         <cell/>
+      <cell/>
+      <cell/>
+      <cell>resourcemanagement</cell>
+      <cell>location</cell>
+    </row>
+     <row>
+      <cell>OSB-RESOURCEMANAGEMENT-00078</cell>
+      <cell>Equipamento não encontrado.</cell>
+      <cell>Equipamento não encontrado.</cell>
+      <cell/>
+      <cell/>
+      <cell/>
+      <cell>resourcemanagement</cell>
+      <cell>location</cell>
+    </row>
+     <row>
+      <cell>OSB-RESOURCEMANAGEMENT-00079</cell>
+      <cell>Equipamento não encontrado no investário de recursos.</cell>
+      <cell>Equipamento não encontrado no investário de recursos.</cell>
+         <cell/>
+      <cell/>
+      <cell/>
+      <cell>resourcemanagement</cell>
+      <cell>location</cell>
+    </row>	
+      <row>
+         <cell>OSB-RESOURCEMANAGEMENT-00080</cell>
+         <cell>BUSINESS_FAULT</cell>
+         <cell>Não foi possível realizar a movimentação do equipamento.</cell>
+         <cell>Não foi possível realizar a movimentação do equipamento.</cell>
+         <cell>ERROR</cell>
+         <cell/>
+         <cell>resourcemanagement</cell>
+         <cell>networknumber</cell>
+      </row>
+      <row>
+         <cell>OSB-RESOURCEMANAGEMENT-00081</cell>
+         <cell>BUSINESS_FAULT</cell>
+         <cell>Não foi possível realizar a mudança de titularidade do equipamento.</cell>
+         <cell>Não foi possível realizar a mudança de titularidade do equipamento.</cell>
+         <cell>ERROR</cell>
+         <cell/>
+         <cell>resourcemanagement</cell>
+         <cell>networknumber</cell>
+      </row>
+      <row>
+         <cell>OSB-RESOURCEMANAGEMENT-00085</cell>
+         <cell>BUSINESS_FAULT</cell>
+         <cell>Não é possível prosseguir com a ordem pois a rede deste endereço está bloqueada ou sem serviços disponíveis. Por favor, entrar em contato com a equipe do Gestão de Endereços.</cell>
+         <cell>Não é possível prosseguir com a ordem pois a rede deste endereço está bloqueada ou sem serviços disponíveis. Por favor, entrar em contato com a equipe do Gestão de Endereços.</cell>
+         <cell>ERROR</cell>
+         <cell/>
+         <cell>resourcemanagement</cell>
+         <cell>inventory</cell>
+      </row>
+   </rows>
+</dvm>

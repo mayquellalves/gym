@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/partner/order/PortabilityMessage"
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/partner/order/PortabilityMessage"
+	xmlns:tps="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types">
+
+	<import schemaLocation="../../netarchitecture/common/Types.xsd"
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types" />
+
+	<complexType name="PortabilityMessageType">
+	
+	</complexType>
+
+	<element name="PortabilityMessage" type="tns:PortabilityMessageType" />
+
+	<element name="PortabilityMessages">
+		<complexType>
+			<sequence>
+				<element ref="tns:PortabilityMessage" minOccurs="1"
+					maxOccurs="unbounded" />
+			</sequence>
+		</complexType>
+	</element>
+
+</schema>

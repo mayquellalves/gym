@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/resource/specification/ResourceSpecification"
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/resource/specification/ResourceSpecification">
+
+
+	<complexType name="ResourceSpecificationType">
+	
+	</complexType>
+
+	<element name="ResourceSpecification" type="tns:ResourceSpecificationType" />
+
+	<complexType name="ResourceSpecificationsType">
+		<sequence>
+			<element ref="tns:ResourceSpecification" minOccurs="1" maxOccurs="unbounded" />
+		</sequence>
+	</complexType>
+
+	<element name="ResourceSpecifications" type="tns:ResourceSpecificationsType" />
+
+</schema>

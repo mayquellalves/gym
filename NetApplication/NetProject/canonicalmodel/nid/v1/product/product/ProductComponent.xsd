@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified"
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/product/ProductComponent"
+	xmlns="http://www.w3.org/2001/XMLSchema" 
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/product/ProductComponent"
+	xmlns:tps="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types">
+
+	<import schemaLocation="../../netarchitecture/common/Types.xsd"
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types" />
+
+	<complexType name="ProductComponentType">
+		<sequence>
+			<element name="ProductComponentId" type="tps:string050" minOccurs="0" maxOccurs="1" />
+		</sequence>
+	</complexType>
+
+	<element name="ProductComponent" type="tns:ProductComponentType" />
+
+	<element name="ProductComponents">
+		<complexType>
+			<sequence>
+				<element ref="tns:ProductComponent" minOccurs="1" maxOccurs="unbounded" />
+			</sequence>
+		</complexType>
+	</element>
+
+</schema>

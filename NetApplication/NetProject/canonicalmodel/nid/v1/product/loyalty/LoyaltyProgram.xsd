@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/loyalty/LoyaltyProgram"
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/loyalty/LoyaltyProgram"
+	xmlns:tps="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types">
+
+	<import schemaLocation="../../netarchitecture/common/Types.xsd"
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types" />
+
+	
+
+	<complexType name="LoyaltyProgramType">
+		<sequence>
+		    
+		</sequence>
+	</complexType>
+
+	<element name="LoyaltyProgram" type="tns:LoyaltyProgramType" />
+
+	<element name="LoyaltyPrograms">
+		<complexType>
+			<sequence>
+				<element ref="tns:LoyaltyProgram" minOccurs="1" maxOccurs="unbounded" />
+			</sequence>
+		</complexType>
+	</element>
+
+</schema>

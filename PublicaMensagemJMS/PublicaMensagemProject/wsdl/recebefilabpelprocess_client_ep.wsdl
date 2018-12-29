@@ -1,0 +1,42 @@
+<wsdl:definitions name="RecebeFilaBPELProcess" targetNamespace="http://xmlns.oracle.com/RecebeFilaApplication/RecebeFilaProject/RecebeFilaBPELProcess" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:client="http://xmlns.oracle.com/RecebeFilaApplication/RecebeFilaProject/RecebeFilaBPELProcess" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <wsdl:documentation>
+        <abstractWSDL>https://INV007312.spread.tecnologia:7104/soa-infra/services/default/RecebeFilaProject!1.0/WSDLs/RecebeFilaBPELProcess.wsdl</abstractWSDL>
+    </wsdl:documentation>
+    <plnk:partnerLinkType name="RecebeFilaBPELProcess">
+        <plnk:role name="RecebeFilaBPELProcessProvider" portType="client:RecebeFilaBPELProcess"/>
+    </plnk:partnerLinkType>
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema">
+            <import namespace="http://xmlns.oracle.com/RecebeFilaApplication/RecebeFilaProject/RecebeFilaBPELProcess" schemaLocation="XMLSchema_-29779175.xsd"/>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="RecebeFilaBPELProcessRequestMessage">
+        <wsdl:part name="payload" element="client:process"/>
+    </wsdl:message>
+    <wsdl:message name="RecebeFilaBPELProcessResponseMessage">
+        <wsdl:part name="payload" element="client:processResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="RecebeFilaBPELProcess">
+        <wsdl:operation name="process">
+            <wsdl:input message="client:RecebeFilaBPELProcessRequestMessage"/>
+            <wsdl:output message="client:RecebeFilaBPELProcessResponseMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="RecebeFilaBPELProcessBinding" type="client:RecebeFilaBPELProcess">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="process">
+            <soap:operation style="document" soapAction="process"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="recebefilabpelprocess_client_ep">
+        <wsdl:port name="RecebeFilaBPELProcess_pt" binding="client:RecebeFilaBPELProcessBinding">
+            <soap:address location="https://INV007312.spread.tecnologia:7104/soa-infra/services/default/RecebeFilaProject!1.0*soa_fff34b9c-6ec4-4012-873a-a1c4d864605f/recebefilabpelprocess_client_ep"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

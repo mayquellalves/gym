@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/partner/order/Portability"
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/partner/order/Portability"
+	xmlns:tps="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types">
+
+	
+
+	<import schemaLocation="../../netarchitecture/common/Types.xsd"
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types" />
+
+	<complexType name="PortabilityType">
+		<sequence>
+			
+			<element name="IsReturnPTO" type="boolean" minOccurs="0" maxOccurs="1" />
+			<element name="PortingDate" type="dateTime" minOccurs="0" maxOccurs="1" />
+			<element name="RequestDate" type="dateTime" minOccurs="0" maxOccurs="1" />
+			<element name="TicketPortability" type="tps:string050" minOccurs="0" maxOccurs="1" />
+			<element name="IsTicketRequired" type="boolean" minOccurs="0" maxOccurs="1" />
+			
+		</sequence>
+	</complexType>
+
+	<element name="Portability" type="tns:PortabilityType" />
+
+	<element name="Portabilities">
+		<complexType>
+			<sequence>
+				<element ref="tns:Portability" minOccurs="1" maxOccurs="unbounded" />
+			</sequence>
+		</complexType>
+	</element>
+
+	
+</schema>

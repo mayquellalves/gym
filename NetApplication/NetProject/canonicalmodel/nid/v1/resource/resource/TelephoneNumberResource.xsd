@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/resource/resource/TelephoneNumberResource"
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/resource/resource/TelephoneNumberResource"
+	xmlns:tps="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types">
+	
+	<import schemaLocation="../../netarchitecture/common/Types.xsd"
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types" />
+
+	
+
+	<complexType name="TelephoneNumberResourceType">
+		
+				<sequence>
+					<element name="InternationalCode" type="tps:string003" minOccurs="0" maxOccurs="1"/>
+					<element name="AreaCode" type="tps:string010" minOccurs="1" maxOccurs="1"/>
+					<element name="Number" type="tps:string020" minOccurs="1" maxOccurs="1"/>
+					<element name="SoftxName" type="tps:string050" minOccurs="0" maxOccurs="1"/>
+					
+				</sequence>
+			
+	</complexType>
+
+	<element name="TelephoneNumberResource" type="tns:TelephoneNumberResourceType" />
+
+	<complexType name="TelephoneNumberResourcesType">
+		<sequence>
+			<element ref="tns:TelephoneNumberResource" minOccurs="1" maxOccurs="unbounded" />
+		</sequence>
+	</complexType>
+
+	<element name="TelephoneNumberResources" type="tns:TelephoneNumberResourcesType" />
+
+</schema>

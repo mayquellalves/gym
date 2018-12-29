@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/partner/order/EAAuthentication"
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/partner/order/EAAuthentication">
+
+	<complexType name="EAAuthenticationType">
+		<sequence>
+			<element name="AuthenticationDate" type="dateTime" minOccurs="0"
+				maxOccurs="1" />
+			<element name="IsTacitAuthenticated" type="boolean"
+				minOccurs="0" maxOccurs="1" />
+		</sequence>
+	</complexType>
+
+	<element name="EAAuthentication" type="tns:EAAuthenticationType" />
+
+	<element name="EAAuthentications">
+		<complexType>
+			<sequence>
+				<element ref="tns:EAAuthentication" minOccurs="1" maxOccurs="unbounded" />
+			</sequence>
+		</complexType>
+	</element>
+
+</schema>

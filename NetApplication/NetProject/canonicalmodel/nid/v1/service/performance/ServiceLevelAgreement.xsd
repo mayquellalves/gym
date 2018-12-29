@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified"
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/service/performance/ServiceLevelAgreement"
+	xmlns="http://www.w3.org/2001/XMLSchema" 
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/service/performance/ServiceLevelAgreement">
+
+	<complexType name="ServiceLevelAgreementType">
+
+	</complexType>
+
+	<element name="ServiceLevelAgreement" type="tns:ServiceLevelAgreementType" />
+
+	<element name="ServiceLevelAgreements">
+		<complexType>
+			<sequence>
+				<element ref="tns:ServiceLevelAgreement" minOccurs="1" maxOccurs="unbounded" />
+			</sequence>
+		</complexType>
+	</element>
+
+</schema>

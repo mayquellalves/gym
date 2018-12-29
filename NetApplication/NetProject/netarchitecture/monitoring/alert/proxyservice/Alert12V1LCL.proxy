@@ -1,0 +1,1053 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:con="http://www.bea.com/wli/sb/stages/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/pipeline/config" xmlns:con3="http://www.bea.com/wli/sb/stages/logging/config">
+  <ser:coreEntry isProxy="true" isEnabled="true" isTracingEnabled="false" isAutoPublish="false">
+    <ser:binding type="SOAP" isSoap12="true" xsi:type="con3:SoapBindingType" xmlns:con3="http://www.bea.com/wli/sb/services/bindings/config">
+      <con3:wsdl ref="netarchitecture/monitoring/alert/wsdl/proxy/Alert12V1"/>
+      <con3:binding>
+        <con3:name>AlertBinding12</con3:name>
+        <con3:namespace>http://www.netservicos.com.br/AlertV1</con3:namespace>
+      </con3:binding>
+      <con3:selector type="SOAP body"/>
+    </ser:binding>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Pipeline</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+    <ser:ws-policy>
+      <ser:binding-mode>owsm-policy-bindings</ser:binding-mode>
+    </ser:ws-policy>
+    <ser:throttling enabled="false">
+      <ser:capacity>0</ser:capacity>
+      <ser:maxQueueLength>0</ser:maxQueueLength>
+      <ser:timeToLive>0</ser:timeToLive>
+    </ser:throttling>
+    <ser:messageTracing enabled="false">
+      <ser:detailsLevel>Terse</ser:detailsLevel>
+      <ser:maxSize>8192</ser:maxSize>
+    </ser:messageTracing>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>local</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:inbound-properties/>
+    <tran:all-headers>true</tran:all-headers>
+  </ser:endpointConfig>
+  <ser:router errorHandler="_onErrorHandler-1072603178614770030-45fa405b.134aa2db317.-6fb8">
+    <con:pipeline type="request" name="PipelinePairNode_request" xmlns:con="http://www.bea.com/wli/sb/pipeline/config">
+      <con:stage name="TransformMetadataDefaults">
+        <con4:context xmlns:con4="http://www.bea.com/wli/sb/pipeline/config" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:env="http://www.bea.com/wli/config/env">
+          <con1:userNsDecl namespace="http://www.netservicos.com.br/v2/NetHeader" prefix="netheader" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+          <con1:varNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Metadata" prefix="met" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+        </con4:context>
+        <con4:actions xmlns:con4="http://www.bea.com/wli/sb/pipeline/config" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:env="http://www.bea.com/wli/config/env">
+          <con1:replace varName="header" contents-only="true">
+            <con5:id xmlns:con5="http://www.bea.com/wli/sb/stages/config">_ActionId-7767715627125093276-34f28e4c.1350ab08abf.-77b9</con5:id>
+            <con1:location>
+              <con5:xpathText xmlns:con5="http://www.bea.com/wli/sb/stages/config">.</con5:xpathText>
+            </con1:location>
+            <con1:expr>
+              <con5:xqueryTransform xmlns:con5="http://www.bea.com/wli/sb/stages/config">
+                <con5:resource ref="netarchitecture/transformation/xquery/TransformMetadataDefaultsXQuery"/>
+                <con5:param name="tokenDefault">
+                  <con5:path>fn-bea:uuid()</con5:path>
+                </con5:param>
+                <con5:param name="currentDateTime">
+                  <con5:path>fn:current-dateTime()</con5:path>
+                </con5:param>
+                <con5:param name="vendorDefault">
+                  <con5:path>'OTHER'</con5:path>
+                </con5:param>
+                <con5:param name="metadataIN">
+                  <con5:path>$header/met:Metadata</con5:path>
+                </con5:param>
+                <con5:param name="featureDefault">
+                  <con5:path>'OTHER'</con5:path>
+                </con5:param>
+                <con5:param name="serviceVersionDefault">
+                  <con5:path>'1.0'</con5:path>
+                </con5:param>
+              </con5:xqueryTransform>
+            </con1:expr>
+          </con1:replace>
+        </con4:actions>
+      </con:stage>
+      <con:stage name="LogRequest">
+        <con:context xmlns:http="http://www.bea.com/wli/sb/transports/http"/>
+        <con:actions xmlns:http="http://www.bea.com/wli/sb/transports/http">
+          <con3:log>
+            <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-1108678829795421514-47e2cb16.134c91e8bec.-74f7</con4:id>
+            <con3:logLevel>info</con3:logLevel>
+            <con3:expr>
+              <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config">$header</con4:xqueryText>
+            </con3:expr>
+            <con3:message>header</con3:message>
+          </con3:log>
+          <con3:log>
+            <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-1108678829795421514-47e2cb16.134c91e8bec.-74f6</con4:id>
+            <con3:logLevel>info</con3:logLevel>
+            <con3:expr>
+              <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config">$body</con4:xqueryText>
+            </con3:expr>
+            <con3:message>body</con3:message>
+          </con3:log>
+        </con:actions>
+      </con:stage>
+      <con:stage name="ValidateRequestContent">
+        <con:comment/>
+        <con:context>
+          <con1:varNsDecl namespace="http://www.netservicos.com.br/Alert" prefix="alert" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+          <con1:varNsDecl namespace="http://www.netservicos.com.br/modelocanonico/v2/alert" prefix="alertacanon" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+          <con1:varNsDecl namespace="http://www.netservicos.com.br/AlertV1" prefix="aler" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+          <con1:varNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/monitoring/Alert" prefix="aler1" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+          <con1:varNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/NidDomain" prefix="nid" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+          <con1:varNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/NidAbeLevel" prefix="nid1" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+        </con:context>
+        <con:actions>
+          <con1:ifThenElse>
+            <con2:comment xmlns:con2="http://www.bea.com/wli/sb/stages/config">Valida se os campos necessários foram informados e estão válidos.</con2:comment>
+            <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-2457651307343466875--321af984.1204333b27a.-8000</con2:id>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">not(fn:exists($body/aler:alertRequest/aler1:Message))
+or not($body/aler:alertRequest/aler1:Message/node())
+or ($body/aler:alertRequest/aler1:Message eq "")</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con1:Error>
+                  <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-2457651307343466875--321af984.1204333b27a.-7fff</con2:id>
+                  <con1:errCode>OSB-NETARCHITECTURE-00011</con1:errCode>
+                  <con1:message/>
+                </con1:Error>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">not(fn:exists($body/aler:alertRequest/aler1:ServiceSeverityLevel))
+or not($body/aler:alertRequest/aler1:ServiceSeverityLevel/node())
+or ($body/aler:alertRequest/aler1:ServiceSeverityLevel eq "")
+or not(fn:matches(fn:concat('-',fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel),'-'),"-LEVEL1-|-LEVEL2-|-LEVEL3-|-LEVEL4-|-LEVEL5-"))</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con1:Error>
+                  <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-2457651307343466875--321af984.1204333b27a.-7ffc</con2:id>
+                  <con1:errCode>OSB-NETARCHITECTURE-00009</con1:errCode>
+                  <con1:message/>
+                </con1:Error>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">fn:exists($body/aler:alertRequest/aler1:ExceptionClassification)
+and $body/aler:alertRequest/aler1:ExceptionClassification/node()
+and ($body/aler:alertRequest/aler1:ExceptionClassification ne "")
+and not(fn:matches(fn:concat('-',$body/aler:alertRequest/aler1:ExceptionClassification,'-'),"-CLASSIFICATION_RESOURCE-|-CLASSIFICATION_UNEXPECTED-|-CLASSIFICATION_BUSINESS-|-CLASSIFICATION_VALIDATION-|-CLASSIFICATION_SECURITY-"))</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con1:Error>
+                  <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-1868099853632243644--32df0601.12087e6bdcf.-7f52</con2:id>
+                  <con1:errCode>OSB-NETARCHITECTURE-00010</con1:errCode>
+                  <con1:message/>
+                </con1:Error>
+              </con1:actions>
+            </con1:case>
+            <con1:default/>
+          </con1:ifThenElse>
+        </con:actions>
+      </con:stage>
+      <con:stage name="ValidateDomainSubDomainDVM">
+        <con:context>
+          <con3:userNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Message" prefix="coreschema" xmlns:con3="http://www.bea.com/wli/sb/stages/config"/>
+          <con3:varNsDecl namespace="http://www.netservicos.com.br/AlertV1" prefix="aler" xmlns:con3="http://www.bea.com/wli/sb/stages/config"/>
+          <con3:varNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/NidDomain" prefix="nid" xmlns:con3="http://www.bea.com/wli/sb/stages/config"/>
+          <con3:varNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/NidAbeLevel" prefix="nid1" xmlns:con3="http://www.bea.com/wli/sb/stages/config"/>
+        </con:context>
+        <con:actions>
+          <con1:assign varName="domainAndAbeLevel">
+            <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-1072603178614770030-45fa405b.134aa2db317.-70ae</con3:id>
+            <con1:expr>
+              <con4:xqueryTransform xmlns:con4="http://www.bea.com/wli/sb/stages/config">
+                <con4:resource ref="netarchitecture/transformation/dvm/validatedomainsubdomain/xquery/ValidateDomainSubDomainDVM"/>
+                <con4:param name="subDomain">
+                  <con4:path>data($body/aler:alertRequest/nid1:NidAbeLevel)</con4:path>
+                </con4:param>
+                <con4:param name="domain">
+                  <con4:path>data($body/aler:alertRequest/nid:NidDomain)</con4:path>
+                </con4:param>
+              </con4:xqueryTransform>
+            </con1:expr>
+          </con1:assign>
+          <con1:ifThenElse>
+            <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-1072603178614770030-45fa405b.134aa2db317.-708d</con3:id>
+            <con1:case>
+              <con1:condition>
+                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$domainAndAbeLevel eq 'true'</con3:xqueryText>
+              </con1:condition>
+              <con1:actions/>
+            </con1:case>
+            <con1:default>
+              <con1:Error>
+                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-1072603178614770030-45fa405b.134aa2db317.-6fd4</con3:id>
+                <con1:errCode>OSB-NETARCHITECTURE-00008</con1:errCode>
+              </con1:Error>
+            </con1:default>
+          </con1:ifThenElse>
+        </con:actions>
+      </con:stage>
+      <con:stage name="CalloutToAlertNidDomain12V1LCLBy">
+        <con:comment>Callout to respective Alert proxy LCL according to the Nid domain</con:comment>
+        <con:context>
+          <con1:varNsDecl prefix="alertacanon" namespace="http://www.netservicos.com.br/modelocanonico/v2/alert" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+          <con1:varNsDecl prefix="alert" namespace="http://www.netservicos.com.br/Alert" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+          <con1:varNsDecl namespace="http://www.netservicos.com.br/AlertV1" prefix="aler" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+          <con1:varNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/NidDomain" prefix="nid" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+          <con4:varNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/monitoring/Alert" prefix="aler1" xmlns:con4="http://www.bea.com/wli/sb/stages/config"/>
+          <con4:varNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/NidAbeLevel" prefix="nid1" xmlns:con4="http://www.bea.com/wli/sb/stages/config"/>
+        </con:context>
+        <con:actions>
+          <con1:ifThenElse>
+            <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-2457651307343466875--321af984.1204333b27a.-7ffe</con2:id>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"COMMON" eq fn:upper-case($body/aler:alertRequest/nid:NidDomain)</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con1:wsCallout>
+                  <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-1868099853632243644--32df0601.12087e6bdcf.-7ff1</con2:id>
+                  <con1:service xsi:type="ref:ProxyRef" ref="netarchitecture/monitoring/alert/proxyservice/AlertCommon12V1LCL" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con1:operation>alert</con1:operation>
+                  <con1:request>
+                    <con1:body wrapped="true">$requestBody</con1:body>
+                    <con1:header>$header</con1:header>
+                  </con1:request>
+                  <con1:response>
+                    <con1:body wrapped="true">responseBody</con1:body>
+                    <con1:header>header</con1:header>
+                  </con1:response>
+                  <con1:requestTransform>
+                    <con1:assign varName="requestBody">
+                      <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-2045340803048442338-6a111e98.13465ef993c.-6c7a</con2:id>
+                      <con1:expr>
+                        <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$body</con2:xqueryText>
+                      </con1:expr>
+                    </con1:assign>
+                  </con1:requestTransform>
+                  <con1:responseTransform/>
+                </con1:wsCallout>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"CUSTOMER" eq fn:upper-case($body/aler:alertRequest/nid:NidDomain)</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con1:wsCallout>
+                  <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-5222106484185122771-eb2b097.145f0c0e964.-6ca5</con4:id>
+                  <con1:service xsi:type="ref:ProxyRef" ref="netarchitecture/monitoring/alert/proxyservice/AlertCustomer12V1LCL" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con1:operation>alert</con1:operation>
+                  <con1:request>
+                    <con1:body wrapped="true">$requestBody</con1:body>
+                    <con1:header>$header</con1:header>
+                  </con1:request>
+                  <con1:response>
+                    <con1:body wrapped="true">responseBody</con1:body>
+                    <con1:header>header</con1:header>
+                  </con1:response>
+                  <con1:requestTransform>
+                    <con1:assign varName="requestBody">
+                      <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-5222106484185122771-eb2b097.145f0c0e964.-6ca6</con4:id>
+                      <con1:expr>
+                        <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$body</con2:xqueryText>
+                      </con1:expr>
+                    </con1:assign>
+                  </con1:requestTransform>
+                  <con1:responseTransform/>
+                </con1:wsCallout>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config">"APPLICATIONINTEGRATION" eq fn:upper-case($body/aler:alertRequest/nid:NidDomain)</con4:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con1:wsCallout>
+                  <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-5222106484185122771-eb2b097.145f0c0e964.-6c98</con4:id>
+                  <con1:service xsi:type="ref:ProxyRef" ref="netarchitecture/monitoring/alert/proxyservice/AlertApplicationIntegration12V1LCL" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con1:operation>alert</con1:operation>
+                  <con1:request>
+                    <con1:body wrapped="true">$requestBody</con1:body>
+                    <con1:header>$header</con1:header>
+                  </con1:request>
+                  <con1:response>
+                    <con1:body wrapped="true">responseBody</con1:body>
+                    <con1:header>header</con1:header>
+                  </con1:response>
+                  <con1:requestTransform>
+                    <con1:assign varName="requestBody">
+                      <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-5222106484185122771-eb2b097.145f0c0e964.-6c95</con4:id>
+                      <con1:expr>
+                        <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$body</con2:xqueryText>
+                      </con1:expr>
+                    </con1:assign>
+                  </con1:requestTransform>
+                  <con1:responseTransform/>
+                </con1:wsCallout>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"ENTERPRISE" eq fn:upper-case($body/aler:alertRequest/nid:NidDomain)</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con1:wsCallout>
+                  <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-1868099853632243644--32df0601.12087e6bdcf.-7ff1</con2:id>
+                  <con1:service xsi:type="ref:ProxyRef" ref="netarchitecture/monitoring/alert/proxyservice/AlertEnterprise12V1LCL" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con1:operation>alert</con1:operation>
+                  <con1:request>
+                    <con1:body wrapped="true">$requestBody</con1:body>
+                    <con1:header>$header</con1:header>
+                  </con1:request>
+                  <con1:response>
+                    <con1:body wrapped="true">responseBody</con1:body>
+                    <con1:header>header</con1:header>
+                  </con1:response>
+                  <con1:requestTransform>
+                    <con1:assign varName="requestBody">
+                      <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-2045340803048442338-6a111e98.13465ef993c.-6c7a</con2:id>
+                      <con1:expr>
+                        <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$body</con2:xqueryText>
+                      </con1:expr>
+                    </con1:assign>
+                  </con1:requestTransform>
+                  <con1:responseTransform/>
+                </con1:wsCallout>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config">"MARKETMANAGEMENT" eq fn:upper-case($body/aler:alertRequest/nid:NidDomain)</con4:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con1:wsCallout>
+                  <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-1445721328115578041--38b75155.14619ddf914.-6fba</con4:id>
+                  <con1:service xsi:type="ref:ProxyRef" ref="netarchitecture/monitoring/alert/proxyservice/AlertMarketManagement12V1LCL" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con1:operation>alert</con1:operation>
+                  <con1:request>
+                    <con1:body wrapped="true">$requestBody</con1:body>
+                    <con1:header>$header</con1:header>
+                  </con1:request>
+                  <con1:response>
+                    <con1:body wrapped="true">responseBody</con1:body>
+                    <con1:header>header</con1:header>
+                  </con1:response>
+                  <con1:requestTransform>
+                    <con1:assign varName="requestBody">
+                      <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-1445721328115578041--38b75155.14619ddf914.-6fb7</con4:id>
+                      <con1:expr>
+                        <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$body</con2:xqueryText>
+                      </con1:expr>
+                    </con1:assign>
+                  </con1:requestTransform>
+                  <con1:responseTransform/>
+                </con1:wsCallout>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config">"CUSTOMERMANAGEMENT" eq fn:upper-case($body/aler:alertRequest/nid:NidDomain)</con4:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con1:wsCallout>
+                  <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-7273287582514980643--7fefc6b7.145f1eb2494.-6405</con4:id>
+                  <con1:service xsi:type="ref:ProxyRef" ref="netarchitecture/monitoring/alert/proxyservice/AlertCustomerManagement12V1LCL" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con1:operation>alert</con1:operation>
+                  <con1:request>
+                    <con1:body wrapped="true">$requestBody</con1:body>
+                    <con1:header>$header</con1:header>
+                  </con1:request>
+                  <con1:response>
+                    <con1:body wrapped="true">responseBody</con1:body>
+                    <con1:header>header</con1:header>
+                  </con1:response>
+                  <con1:requestTransform>
+                    <con1:assign varName="requestBody">
+                      <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-7273287582514980643--7fefc6b7.145f1eb2494.-6402</con4:id>
+                      <con1:expr>
+                        <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$body</con2:xqueryText>
+                      </con1:expr>
+                    </con1:assign>
+                  </con1:requestTransform>
+                  <con1:responseTransform/>
+                </con1:wsCallout>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config">"ENTERPRISEMANAGEMENT" eq fn:upper-case($body/aler:alertRequest/nid:NidDomain)</con4:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con1:wsCallout>
+                  <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-891713592541520805--6b39dbb0.14615857ce8.-74c3</con4:id>
+                  <con1:service xsi:type="ref:ProxyRef" ref="netarchitecture/monitoring/alert/proxyservice/AlertEnterpriseManagement12V1LCL" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con1:operation>alert</con1:operation>
+                  <con1:request>
+                    <con1:body wrapped="true">$requestBody</con1:body>
+                    <con1:header>$header</con1:header>
+                  </con1:request>
+                  <con1:response>
+                    <con1:body wrapped="true">responseBody</con1:body>
+                    <con1:header>header</con1:header>
+                  </con1:response>
+                  <con1:requestTransform>
+                    <con1:assign varName="requestBody">
+                      <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-891713592541520805--6b39dbb0.14615857ce8.-74c0</con4:id>
+                      <con1:expr>
+                        <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$body</con2:xqueryText>
+                      </con1:expr>
+                    </con1:assign>
+                  </con1:requestTransform>
+                  <con1:responseTransform/>
+                </con1:wsCallout>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config">"CROSSDOMAINAPPLICATIONS" eq fn:upper-case($body/aler:alertRequest/nid:NidDomain)</con4:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con1:wsCallout>
+                  <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-7273287582514980643--7fefc6b7.145f1eb2494.-6f3f</con4:id>
+                  <con1:service xsi:type="ref:ProxyRef" ref="netarchitecture/monitoring/alert/proxyservice/AlertCrossDomainApplications12V1LCL" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con1:operation>alert</con1:operation>
+                  <con1:request>
+                    <con1:body wrapped="true">$requestBody</con1:body>
+                    <con1:header>$header</con1:header>
+                  </con1:request>
+                  <con1:response>
+                    <con1:body wrapped="true">responseBody</con1:body>
+                    <con1:header>header</con1:header>
+                  </con1:response>
+                  <con1:requestTransform>
+                    <con1:assign varName="requestBody">
+                      <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-7273287582514980643--7fefc6b7.145f1eb2494.-6f3c</con4:id>
+                      <con1:expr>
+                        <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$body</con2:xqueryText>
+                      </con1:expr>
+                    </con1:assign>
+                  </con1:requestTransform>
+                  <con1:responseTransform/>
+                </con1:wsCallout>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"MARKET" eq fn:upper-case($body/aler:alertRequest/nid:NidDomain)</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con1:wsCallout>
+                  <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-1868099853632243644--32df0601.12087e6bdcf.-7ff1</con2:id>
+                  <con1:service xsi:type="ref:ProxyRef" ref="netarchitecture/monitoring/alert/proxyservice/AlertMarket12V1LCL" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con1:operation>alert</con1:operation>
+                  <con1:request>
+                    <con1:body wrapped="true">$requestBody</con1:body>
+                    <con1:header>$header</con1:header>
+                  </con1:request>
+                  <con1:response>
+                    <con1:body wrapped="true">responseBody</con1:body>
+                    <con1:header>header</con1:header>
+                  </con1:response>
+                  <con1:requestTransform>
+                    <con1:assign varName="requestBody">
+                      <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-2045340803048442338-6a111e98.13465ef993c.-6c7a</con2:id>
+                      <con1:expr>
+                        <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$body</con2:xqueryText>
+                      </con1:expr>
+                    </con1:assign>
+                  </con1:requestTransform>
+                  <con1:responseTransform/>
+                </con1:wsCallout>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"PARTNER" eq fn:upper-case($body/aler:alertRequest/nid:NidDomain)</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con1:wsCallout>
+                  <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-1868099853632243644--32df0601.12087e6bdcf.-7ff1</con2:id>
+                  <con1:service xsi:type="ref:ProxyRef" ref="netarchitecture/monitoring/alert/proxyservice/AlertPartner12V1LCL" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con1:operation>alert</con1:operation>
+                  <con1:request>
+                    <con1:body wrapped="true">$requestBody</con1:body>
+                    <con1:header>$header</con1:header>
+                  </con1:request>
+                  <con1:response>
+                    <con1:body wrapped="true">responseBody</con1:body>
+                    <con1:header>header</con1:header>
+                  </con1:response>
+                  <con1:requestTransform>
+                    <con1:assign varName="requestBody">
+                      <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-2045340803048442338-6a111e98.13465ef993c.-6c7a</con2:id>
+                      <con1:expr>
+                        <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$body</con2:xqueryText>
+                      </con1:expr>
+                    </con1:assign>
+                  </con1:requestTransform>
+                  <con1:responseTransform/>
+                </con1:wsCallout>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"PRODUCT" eq fn:upper-case($body/aler:alertRequest/nid:NidDomain)</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con1:wsCallout>
+                  <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-1868099853632243644--32df0601.12087e6bdcf.-7ff1</con2:id>
+                  <con1:service xsi:type="ref:ProxyRef" ref="netarchitecture/monitoring/alert/proxyservice/AlertProduct12V1LCL" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con1:operation>alert</con1:operation>
+                  <con1:request>
+                    <con1:body wrapped="true">$requestBody</con1:body>
+                    <con1:header>$header</con1:header>
+                  </con1:request>
+                  <con1:response>
+                    <con1:body wrapped="true">responseBody</con1:body>
+                    <con1:header>header</con1:header>
+                  </con1:response>
+                  <con1:requestTransform>
+                    <con1:assign varName="requestBody">
+                      <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-2045340803048442338-6a111e98.13465ef993c.-6c7a</con2:id>
+                      <con1:expr>
+                        <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$body</con2:xqueryText>
+                      </con1:expr>
+                    </con1:assign>
+                  </con1:requestTransform>
+                  <con1:responseTransform/>
+                </con1:wsCallout>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"RESOURCE" eq fn:upper-case($body/aler:alertRequest/nid:NidDomain)</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con1:wsCallout>
+                  <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-1868099853632243644--32df0601.12087e6bdcf.-7ff1</con2:id>
+                  <con1:service xsi:type="ref:ProxyRef" ref="netarchitecture/monitoring/alert/proxyservice/AlertResource12V1LCL" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con1:operation>alert</con1:operation>
+                  <con1:request>
+                    <con1:body wrapped="true">$requestBody</con1:body>
+                    <con1:header>$header</con1:header>
+                  </con1:request>
+                  <con1:response>
+                    <con1:body wrapped="true">responseBody</con1:body>
+                    <con1:header>header</con1:header>
+                  </con1:response>
+                  <con1:requestTransform>
+                    <con1:assign varName="requestBody">
+                      <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-1445721328115578041--38b75155.14619ddf914.-5863</con4:id>
+                      <con1:expr>
+                        <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$body</con2:xqueryText>
+                      </con1:expr>
+                    </con1:assign>
+                  </con1:requestTransform>
+                  <con1:responseTransform/>
+                </con1:wsCallout>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config">"SERVICEMANAGEMENT" eq fn:upper-case($body/aler:alertRequest/nid:NidDomain)</con4:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con1:wsCallout>
+                  <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-739b</con4:id>
+                  <con1:service xsi:type="ref:ProxyRef" ref="netarchitecture/monitoring/alert/proxyservice/AlertServiceManagement12V1LCL" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con1:operation>alert</con1:operation>
+                  <con1:request>
+                    <con1:body wrapped="true">$requestBody</con1:body>
+                    <con1:header>$header</con1:header>
+                  </con1:request>
+                  <con1:response>
+                    <con1:body wrapped="true">responseBody</con1:body>
+                    <con1:header>header</con1:header>
+                  </con1:response>
+                  <con1:requestTransform>
+                    <con1:assign varName="requestBody">
+                      <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-7398</con4:id>
+                      <con1:expr>
+                        <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$body</con2:xqueryText>
+                      </con1:expr>
+                    </con1:assign>
+                  </con1:requestTransform>
+                  <con1:responseTransform/>
+                </con1:wsCallout>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config">"RESOURCEMANAGEMENT" eq fn:upper-case($body/aler:alertRequest/nid:NidDomain)</con4:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con1:wsCallout>
+                  <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-1445721328115578041--38b75155.14619ddf914.-5847</con4:id>
+                  <con1:service xsi:type="ref:ProxyRef" ref="netarchitecture/monitoring/alert/proxyservice/AlertResourceManagement12V1LCL" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con1:operation>alert</con1:operation>
+                  <con1:request>
+                    <con1:body wrapped="true">$requestBody</con1:body>
+                    <con1:header>$header</con1:header>
+                  </con1:request>
+                  <con1:response>
+                    <con1:body wrapped="true">responseBody</con1:body>
+                    <con1:header>header</con1:header>
+                  </con1:response>
+                  <con1:requestTransform>
+                    <con1:assign varName="requestBody">
+                      <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-1445721328115578041--38b75155.14619ddf914.-5844</con4:id>
+                      <con1:expr>
+                        <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$body</con2:xqueryText>
+                      </con1:expr>
+                    </con1:assign>
+                  </con1:requestTransform>
+                  <con1:responseTransform/>
+                </con1:wsCallout>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config">"PARTNERMANAGEMENT" eq fn:upper-case($body/aler:alertRequest/nid:NidDomain)</con4:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con1:wsCallout>
+                  <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-1445721328115578041--38b75155.14619ddf914.-6c68</con4:id>
+                  <con1:service xsi:type="ref:ProxyRef" ref="netarchitecture/monitoring/alert/proxyservice/AlertPartnerManagement12V1LCL" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con1:operation>alert</con1:operation>
+                  <con1:request>
+                    <con1:body wrapped="true">$requestBody</con1:body>
+                    <con1:header>$header</con1:header>
+                  </con1:request>
+                  <con1:response>
+                    <con1:body wrapped="true">responseBody</con1:body>
+                    <con1:header>header</con1:header>
+                  </con1:response>
+                  <con1:requestTransform>
+                    <con1:assign varName="requestBody">
+                      <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-1445721328115578041--38b75155.14619ddf914.-6c65</con4:id>
+                      <con1:expr>
+                        <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$body</con2:xqueryText>
+                      </con1:expr>
+                    </con1:assign>
+                  </con1:requestTransform>
+                  <con1:responseTransform/>
+                </con1:wsCallout>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config">"PRODUCTMANAGEMENT" eq fn:upper-case($body/aler:alertRequest/nid:NidDomain)</con4:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con1:wsCallout>
+                  <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-1445721328115578041--38b75155.14619ddf914.-6653</con4:id>
+                  <con1:service xsi:type="ref:ProxyRef" ref="netarchitecture/monitoring/alert/proxyservice/AlertProductManagement12V1LCL" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con1:operation>alert</con1:operation>
+                  <con1:request>
+                    <con1:body wrapped="true">$requestBody</con1:body>
+                    <con1:header>$header</con1:header>
+                  </con1:request>
+                  <con1:response>
+                    <con1:body wrapped="true">responseBody</con1:body>
+                    <con1:header>header</con1:header>
+                  </con1:response>
+                  <con1:requestTransform>
+                    <con1:assign varName="requestBody">
+                      <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-1445721328115578041--38b75155.14619ddf914.-6651</con4:id>
+                      <con1:expr>
+                        <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$body</con2:xqueryText>
+                      </con1:expr>
+                    </con1:assign>
+                  </con1:requestTransform>
+                  <con1:responseTransform/>
+                </con1:wsCallout>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"SALES" eq fn:upper-case($body/aler:alertRequest/nid:NidDomain)</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con1:wsCallout>
+                  <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-1868099853632243644--32df0601.12087e6bdcf.-7ff1</con2:id>
+                  <con1:service xsi:type="ref:ProxyRef" ref="netarchitecture/monitoring/alert/proxyservice/AlertSales12V1LCL" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con1:operation>alert</con1:operation>
+                  <con1:request>
+                    <con1:body wrapped="true">$requestBody</con1:body>
+                    <con1:header>$header</con1:header>
+                  </con1:request>
+                  <con1:response>
+                    <con1:body wrapped="true">responseBody</con1:body>
+                    <con1:header>header</con1:header>
+                  </con1:response>
+                  <con1:requestTransform>
+                    <con1:assign varName="requestBody">
+                      <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-2045340803048442338-6a111e98.13465ef993c.-6c7a</con2:id>
+                      <con1:expr>
+                        <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$body</con2:xqueryText>
+                      </con1:expr>
+                    </con1:assign>
+                  </con1:requestTransform>
+                  <con1:responseTransform/>
+                </con1:wsCallout>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"SERVICE" eq fn:upper-case($body/aler:alertRequest/nid:NidDomain)</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con1:wsCallout>
+                  <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-1868099853632243644--32df0601.12087e6bdcf.-7ff1</con2:id>
+                  <con1:service xsi:type="ref:ProxyRef" ref="netarchitecture/monitoring/alert/proxyservice/AlertService12V1LCL" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con1:operation>alert</con1:operation>
+                  <con1:request>
+                    <con1:body wrapped="true">$requestBody</con1:body>
+                    <con1:header>$header</con1:header>
+                  </con1:request>
+                  <con1:response>
+                    <con1:body wrapped="true">responseBody</con1:body>
+                    <con1:header>header</con1:header>
+                  </con1:response>
+                  <con1:requestTransform>
+                    <con1:assign varName="requestBody">
+                      <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-2045340803048442338-6a111e98.13465ef993c.-6c7a</con2:id>
+                      <con1:expr>
+                        <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$body</con2:xqueryText>
+                      </con1:expr>
+                    </con1:assign>
+                  </con1:requestTransform>
+                  <con1:responseTransform/>
+                </con1:wsCallout>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"SUPPLIER" eq fn:upper-case($body/aler:alertRequest/nid:NidDomain)</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con1:wsCallout>
+                  <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-1868099853632243644--32df0601.12087e6bdcf.-7ff1</con2:id>
+                  <con1:service xsi:type="ref:ProxyRef" ref="netarchitecture/monitoring/alert/proxyservice/AlertSupplier12V1LCL" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con1:operation>alert</con1:operation>
+                  <con1:request>
+                    <con1:body wrapped="true">$requestBody</con1:body>
+                    <con1:header>$header</con1:header>
+                  </con1:request>
+                  <con1:response>
+                    <con1:body wrapped="true">responseBody</con1:body>
+                    <con1:header>header</con1:header>
+                  </con1:response>
+                  <con1:requestTransform>
+                    <con1:assign varName="requestBody">
+                      <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-2045340803048442338-6a111e98.13465ef993c.-6c7a</con2:id>
+                      <con1:expr>
+                        <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$body</con2:xqueryText>
+                      </con1:expr>
+                    </con1:assign>
+                  </con1:requestTransform>
+                  <con1:responseTransform/>
+                </con1:wsCallout>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config">"NETARCHITECTURE" eq fn:upper-case($body/aler:alertRequest/nid:NidDomain)</con4:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con1:wsCallout>
+                  <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-4558025622620199009-51cb67ed.13a885a62a5.-7cc3</con4:id>
+                  <con1:service xsi:type="ref:ProxyRef" ref="netarchitecture/monitoring/alert/proxyservice/AlertNetarchitecture12V1LCL" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con1:operation>alert</con1:operation>
+                  <con1:request>
+                    <con1:body wrapped="true">$requestBody</con1:body>
+                    <con1:header>$header</con1:header>
+                  </con1:request>
+                  <con1:response>
+                    <con1:body wrapped="true">responseBody</con1:body>
+                    <con1:header>header</con1:header>
+                  </con1:response>
+                  <con1:requestTransform>
+                    <con1:assign varName="requestBody">
+                      <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-4558025622620199009-51cb67ed.13a885a62a5.-7c6f</con4:id>
+                      <con1:expr>
+                        <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$body</con2:xqueryText>
+                      </con1:expr>
+                    </con1:assign>
+                  </con1:requestTransform>
+                  <con1:responseTransform/>
+                </con1:wsCallout>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config">"SALESMANAGEMENT" eq fn:upper-case($body/aler:alertRequest/nid:NidDomain)</con4:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con1:wsCallout>
+                  <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-1445721328115578041--38b75155.14619ddf914.-361c</con4:id>
+                  <con1:service xsi:type="ref:ProxyRef" ref="netarchitecture/monitoring/alert/proxyservice/AlertSalesManagement12V1LCL" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con1:operation>alert</con1:operation>
+                  <con1:request>
+                    <con1:body wrapped="true">$requestBody</con1:body>
+                    <con1:header>$header</con1:header>
+                  </con1:request>
+                  <con1:response>
+                    <con1:body wrapped="true">responseBody</con1:body>
+                    <con1:header>header</con1:header>
+                  </con1:response>
+                  <con1:requestTransform>
+                    <con1:assign varName="requestBody">
+                      <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-1445721328115578041--38b75155.14619ddf914.-3619</con4:id>
+                      <con1:expr>
+                        <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$body</con2:xqueryText>
+                      </con1:expr>
+                    </con1:assign>
+                  </con1:requestTransform>
+                  <con1:responseTransform/>
+                </con1:wsCallout>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config">"SUPPLIERMANAGEMENT" eq fn:upper-case($body/aler:alertRequest/nid:NidDomain)</con4:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con1:wsCallout>
+                  <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-5b72</con4:id>
+                  <con1:service xsi:type="ref:ProxyRef" ref="netarchitecture/monitoring/alert/proxyservice/AlertSupplierManagement12V1LCL" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con1:operation>alert</con1:operation>
+                  <con1:request>
+                    <con1:body wrapped="true">$requestBody</con1:body>
+                    <con1:header>$header</con1:header>
+                  </con1:request>
+                  <con1:response>
+                    <con1:body wrapped="true">responseBody</con1:body>
+                    <con1:header>header</con1:header>
+                  </con1:response>
+                  <con1:requestTransform>
+                    <con1:assign varName="requestBody">
+                      <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-5b6f</con4:id>
+                      <con1:expr>
+                        <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$body</con2:xqueryText>
+                      </con1:expr>
+                    </con1:assign>
+                  </con1:requestTransform>
+                  <con1:responseTransform/>
+                </con1:wsCallout>
+              </con1:actions>
+            </con1:case>
+            <con1:default/>
+          </con1:ifThenElse>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="response" name="PipelinePairNode_response" xmlns:con="http://www.bea.com/wli/sb/pipeline/config">
+      <con:stage name="PrepareResponse">
+        <con:context>
+          <con1:userNsDecl namespace="http://www.netservicos.com.br/AlertV1" prefix="alertv1" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+          <con1:varNsDecl namespace="http://www.netservicos.com.br/Alert" prefix="alert" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+        </con:context>
+        <con:actions>
+          <con1:replace varName="body" contents-only="true">
+            <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-2457651307343466875--321af984.1204333b27a.-7fcd</con2:id>
+            <con1:location>
+              <con2:xpathText xmlns:con2="http://www.bea.com/wli/sb/stages/config">.</con2:xpathText>
+            </con1:location>
+            <con1:expr>
+              <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">&lt;alertv1:alertResponse/></con2:xqueryText>
+            </con1:expr>
+          </con1:replace>
+          <con1:delete varName="header">
+            <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-967156512052211097-511c787b.1350f727680.-7f3e</con4:id>
+          </con1:delete>
+        </con:actions>
+      </con:stage>
+      <con:stage name="LogResponse">
+        <con:context xmlns:http="http://www.bea.com/wli/sb/transports/http"/>
+        <con:actions xmlns:http="http://www.bea.com/wli/sb/transports/http">
+          <con3:log>
+            <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-1108678829795421514-47e2cb16.134c91e8bec.-7485</con4:id>
+            <con3:logLevel>info</con3:logLevel>
+            <con3:expr>
+              <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config">$header</con4:xqueryText>
+            </con3:expr>
+            <con3:message>header</con3:message>
+          </con3:log>
+          <con3:log>
+            <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-1108678829795421514-47e2cb16.134c91e8bec.-7484</con4:id>
+            <con3:logLevel>info</con3:logLevel>
+            <con3:expr>
+              <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config">$body</con4:xqueryText>
+            </con3:expr>
+            <con3:message>body</con3:message>
+          </con3:log>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con2:pipeline type="error" name="_onErrorHandler-1072603178614770030-45fa405b.134aa2db317.-6fb8">
+      <con2:stage name="ErrorHandlerPipelinePairNode">
+        <con2:comment>Estágio de tratamento de erro geral.</con2:comment>
+        <con2:context xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:env="http://www.bea.com/wli/config/env">
+          <con:userNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/fault/ErrorInfo" prefix="err"/>
+          <con:userNsDecl namespace="http://www.netservicos.com.br/FormatLogMessageV1" prefix="for"/>
+          <con:userNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/monitoring/Logging" prefix="log"/>
+          <con:userNsDecl namespace="http://www.netservicos.com.br/FaultHandlerV1" prefix="faul"/>
+          <con:varNsDecl namespace="http://www.netservicos.com.br/AlertV1" prefix="aler"/>
+        </con2:context>
+        <con2:actions xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:env="http://www.bea.com/wli/config/env">
+          <con1:ifThenElse>
+            <con2:comment xmlns:con2="http://www.bea.com/wli/sb/stages/config">IF que verifica se a variavel contento o erro, ErrorHandlerRequest, esta presente</con2:comment>
+            <con:id>_ActionId-1072603178614770030-45fa405b.134aa2db317.-6e19</con:id>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">empty($errorHandlerRequest)</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con1:assign varName="errorHandlerRequest">
+                  <con:id>_ActionId-1072603178614770030-45fa405b.134aa2db317.-6e18</con:id>
+                  <con1:expr>
+                    <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                      <con2:resource ref="netarchitecture/fault/faulthandler/transformation/xquery/MapFaultHandlerReqXQuery"/>
+                      <con2:param name="validationMessages">
+                        <con2:path>$null</con2:path>
+                      </con2:param>
+                      <con2:param name="messageParameters">
+                        <con2:path>$null</con2:path>
+                      </con2:param>
+                      <con2:param name="currentFault">
+                        <con2:path>$null</con2:path>
+                      </con2:param>
+                      <con2:param name="currentBody">
+                        <con2:path>$body</con2:path>
+                      </con2:param>
+                      <con2:param name="accessResourceName">
+                        <con2:path>'netarchitecture/monitoring/alert/proxyservice/Alert12V1LCL/PipelinePairNode'</con2:path>
+                      </con2:param>
+                      <con2:param name="exceptionStackTrace">
+                        <con2:path>$null</con2:path>
+                      </con2:param>
+                      <con2:param name="messageCode">
+                        <con2:path>fn:data($fault/ctx:errorCode)</con2:path>
+                      </con2:param>
+                      <con2:param name="callResponse">
+                        <con2:path>$null</con2:path>
+                      </con2:param>
+                      <con2:param name="exceptionClassification">
+                        <con2:path>'CLASSIFICATION_UNEXPECTED'</con2:path>
+                      </con2:param>
+                      <con2:param name="additionalInformation">
+                        <con2:path>$body/aler:alertRequest</con2:path>
+                      </con2:param>
+                    </con2:xqueryTransform>
+                  </con1:expr>
+                </con1:assign>
+              </con1:actions>
+            </con1:case>
+            <con1:default/>
+          </con1:ifThenElse>
+          <con1:wsCallout>
+            <con:id>_ActionId-1072603178614770030-45fa405b.134aa2db317.-6e15</con:id>
+            <con1:service xsi:type="ref:ProxyRef" ref="netarchitecture/fault/faulthandler/proxyservice/FaultHandler12V1LCL" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+            <con1:operation>faultHandler</con1:operation>
+            <con1:request>
+              <con1:body>$errorHandlerRequest</con1:body>
+            </con1:request>
+            <con1:response>
+              <con1:body>errorHandlerResponse</con1:body>
+            </con1:response>
+            <con1:requestTransform/>
+            <con1:responseTransform/>
+          </con1:wsCallout>
+          <con1:assign varName="customFault" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con2="http://www.bea.com/wli/sb/stages/logging/config">
+            <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-5301043438263413021--2d300142.138ee357328.-6938</con4:id>
+            <con1:expr>
+              <con3:xqueryTransform xmlns:con3="http://www.bea.com/wli/sb/stages/config">
+                <con3:resource ref="netarchitecture/fault/faulthandler/transformation/xquery/TransformOSBFaultToRuntimeFaultXQuery"/>
+                <con3:param name="fault">
+                  <con3:path>$errorHandlerResponse/ctx:fault</con3:path>
+                </con3:param>
+              </con3:xqueryTransform>
+            </con1:expr>
+          </con1:assign>
+          <con1:wsCallout xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con2="http://www.bea.com/wli/sb/stages/logging/config">
+            <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-5301043438263413021--2d300142.138ee357328.-6936</con4:id>
+            <con1:service xsi:type="ref:ProxyRef" ref="netarchitecture/monitoring/formatlogmessage/proxyservice/FormatLogMessage12V1SB" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+            <con1:operation>formatLogMessage</con1:operation>
+            <con1:request>
+              <con1:body>$formatLogMessageRequest</con1:body>
+              <con1:header>$header</con1:header>
+            </con1:request>
+            <con1:response>
+              <con1:body>formatLogMessageResponse</con1:body>
+            </con1:response>
+            <con1:requestTransform>
+              <con1:assign varName="formatLogMessageRequest">
+                <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-5301043438263413021--2d300142.138ee357328.-6937</con4:id>
+                <con1:expr>
+                  <con4:xqueryText xmlns:con4="http://www.bea.com/wli/sb/stages/config"><![CDATA[<for:formatLogMessageRequest>
+    <log:LogMessage>
+        <log:Timestamp>{fn:data(fn:current-dateTime())}</log:Timestamp>
+        <log:LogType>{'ERROR'}</log:LogType>
+        <log:MessageCode>{data($errorHandlerRequest/faul:messageCode)}</log:MessageCode>
+        <err:ErrorInfo>
+            {$errorHandlerResponse/ctx:fault/ctx:details/err:ErrorInfo/@* , $errorHandlerResponse/ctx:fault/ctx:details/err:ErrorInfo/node() }
+        </err:ErrorInfo>
+    </log:LogMessage>
+</for:formatLogMessageRequest>]]></con4:xqueryText>
+                </con1:expr>
+              </con1:assign>
+            </con1:requestTransform>
+            <con1:responseTransform/>
+          </con1:wsCallout>
+          <con3:log>
+            <con:id>_ActionId-5301043438263413021--2d300142.138ee357328.-6445</con:id>
+            <con3:logLevel>error</con3:logLevel>
+            <con3:expr>
+              <con:xqueryText>data($formatLogMessageResponse/log:FormattedLogMessage/log:Message)</con:xqueryText>
+            </con3:expr>
+            <con3:message>Erro</con3:message>
+          </con3:log>
+          <con1:replace varName="body" contents-only="true" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con2="http://www.bea.com/wli/sb/stages/logging/config">
+            <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-5301043438263413021--2d300142.138ee357328.-68db</con4:id>
+            <con1:location>
+              <con2:xpathText xmlns:con2="http://www.bea.com/wli/sb/stages/config">.</con2:xpathText>
+            </con1:location>
+            <con1:expr>
+              <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$customFault</con3:xqueryText>
+            </con1:expr>
+          </con1:replace>
+          <con1:delete varName="header" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con2="http://www.bea.com/wli/sb/stages/logging/config">
+            <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-5301043438263413021--2d300142.138ee357328.-68da</con4:id>
+          </con1:delete>
+          <con4:reply isError="true" xmlns:con3="http://www.bea.com/wli/sb/stages/config" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con2="http://www.bea.com/wli/sb/stages/logging/config" xmlns:con4="http://www.bea.com/wli/sb/stages/config">
+            <con4:id>_ActionId-5301043438263413021--2d300142.138ee357328.-68d9</con4:id>
+          </con4:reply>
+        </con2:actions>
+      </con2:stage>
+    </con2:pipeline>
+    <con:flow xmlns:con="http://www.bea.com/wli/sb/pipeline/config">
+      <con:pipeline-node name="PipelinePairNode">
+        <con:request>PipelinePairNode_request</con:request>
+        <con:response>PipelinePairNode_response</con:response>
+      </con:pipeline-node>
+    </con:flow>
+  </ser:router>
+</xml-fragment>

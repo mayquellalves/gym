@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/partner/order/ReturnInfo"
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/partner/order/ReturnInfo"
+	xmlns:tps="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types">
+
+	<import schemaLocation="../../netarchitecture/common/Types.xsd"
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types" />
+
+	
+
+	<complexType name="ReturnInfoType">
+		<sequence>
+			<element name="Status" type="boolean" minOccurs="0" maxOccurs="1" />
+			
+		</sequence>
+	</complexType>
+
+	<element name="ReturnInfo" type="tns:ReturnInfoType" />
+
+	<element name="ReturnInfos">
+		<complexType>
+			<sequence>
+				<element ref="tns:ReturnInfo" minOccurs="1" maxOccurs="unbounded" />
+			</sequence>
+		</complexType>
+	</element>
+
+</schema>

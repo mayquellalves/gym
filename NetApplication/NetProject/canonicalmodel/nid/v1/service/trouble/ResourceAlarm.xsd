@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified"
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/service/trouble/ResourceAlarm"
+	xmlns="http://www.w3.org/2001/XMLSchema" 
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/service/trouble/ResourceAlarm"
+	xmlns:tps="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types">
+	
+	<import schemaLocation="../../netarchitecture/common/Types.xsd"
+				namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types" />
+		
+
+	<complexType name="ResourceAlarmType">
+		<sequence>
+				<element name="Code" type="tps:string015" minOccurs="0" maxOccurs="1" />
+				<element name="Name" type="tps:string060" minOccurs="0" maxOccurs="1" />
+		</sequence>
+	</complexType>
+
+	<element name="ResourceAlarm" type="tns:ResourceAlarmType" />
+
+	<element name="ResourceAlarms">
+		<complexType>
+			<sequence>
+				<element ref="tns:ResourceAlarm" minOccurs="1" maxOccurs="unbounded" />
+			</sequence>
+		</complexType>
+	</element>
+
+</schema>

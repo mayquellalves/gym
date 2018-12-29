@@ -1,0 +1,105 @@
+<wsdl:definitions name="PaginationV1" 
+	targetNamespace="http://www.netservicos.com.br/PaginationV1" 
+	xmlns:pag="http://www.netservicos.com.br/PaginationV1" 
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+	xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" 
+	xmlns:met="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Metadata" 
+	xmlns:pah="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/pagination/Pagination"
+	xmlns:rtf="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/fault/RuntimeFault">
+
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://www.netservicos.com.br/PaginationV1" 
+			elementFormDefault="qualified" attributeFormDefault="qualified">
+
+			<xsd:import namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Metadata" 
+				schemaLocation="../../../../../canonicalmodel/nid/v1/netarchitecture/common/Metadata.xsd"/>
+				
+			<xsd:import namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/pagination/Pagination" 
+				schemaLocation="../../../../../canonicalmodel/nid/v1/netarchitecture/pagination/Pagination.xsd"/>
+			
+			<xsd:import namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/fault/RuntimeFault" 
+				schemaLocation="../../../../../canonicalmodel/nid/v1/netarchitecture/fault/RuntimeFault.xsd"/>
+			
+			<xsd:element name="paginateRequest" type="xsd:anyType">
+				<xsd:annotation>
+					<xsd:documentation>Any type of list that will be paginated.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>			
+			
+			<xsd:element name="paginateResponse" type="xsd:anyType">
+				<xsd:annotation>
+					<xsd:documentation>Paginated list.</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:schema>
+	</wsdl:types>
+
+	<wsdl:message name="paginateRequest">
+		<wsdl:part name="payload" element="pag:paginateRequest"/>
+		<wsdl:part name="headerMetadata" element="met:Metadata"/>
+		<wsdl:part name="headerPagination" element="pah:Pagination"/>
+	</wsdl:message>
+	
+	<wsdl:message name="paginateResponse">
+		<wsdl:part name="payload" element="pag:paginateResponse"/>
+		<wsdl:part name="headerPagination" element="pah:Pagination"/>
+	</wsdl:message>
+	
+	<wsdl:message name="runtimeFault">
+		<wsdl:part name="fault" element="rtf:RuntimeFault"/>
+	</wsdl:message>
+
+	<wsdl:portType name="PaginationV1PortType">
+		<wsdl:operation name="paginate">
+			<wsdl:input message="pag:paginateRequest"/>
+			<wsdl:output message="pag:paginateResponse"/>
+			<wsdl:fault name="runtimeFault" message="pag:runtimeFault"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	
+	<wsdl:binding name="PaginationV1BindingLCL" type="pag:PaginationV1PortType">
+		<soap12:binding style="document" transport="http://www.bea.com/transport/2007/05/local"/>
+		<wsdl:operation name="paginate">
+			<soap12:operation soapAction=""/>
+			<wsdl:input>
+				<soap12:header message="pag:paginateRequest" wsdl:required="true" part="headerMetadata" use="literal"/>
+				<soap12:header message="pag:paginateRequest" wsdl:required="true" part="headerPagination" use="literal"/>
+				<soap12:body parts="payload" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:header message="pag:paginateResponse" wsdl:required="true" part="headerPagination" use="literal"/>
+				<soap12:body parts="payload" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="runtimeFault">
+				<soap12:fault name="runtimeFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+	</wsdl:binding>
+	
+	<wsdl:binding name="PaginationV1BindingSB" type="pag:PaginationV1PortType">
+		<soap12:binding style="document" transport="http://www.bea.com/transport/2007/05/sb"/>
+		<wsdl:operation name="paginate">
+			<soap12:operation soapAction=""/>
+			<wsdl:input>
+				<soap12:header message="pag:paginateRequest" wsdl:required="true" part="headerMetadata" use="literal"/>
+				<soap12:header message="pag:paginateRequest" wsdl:required="true" part="headerPagination" use="literal"/>
+				<soap12:body parts="payload" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:header message="pag:paginateResponse" wsdl:required="true" part="headerPagination" use="literal"/>
+				<soap12:body parts="payload" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="runtimeFault">
+				<soap12:fault name="runtimeFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+	</wsdl:binding>
+	
+	<wsdl:service name="PaginationV1Service">
+		<wsdl:port name="PaginationV1PortSB" binding="pag:PaginationV1BindingSB">
+			<soap12:address location="sb://servbus/netarchitecture.pagination.Pagination12V1SB"/>
+		</wsdl:port>
+	</wsdl:service>
+
+</wsdl:definitions>

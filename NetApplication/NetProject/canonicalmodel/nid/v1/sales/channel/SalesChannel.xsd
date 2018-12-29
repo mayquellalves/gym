@@ -1,0 +1,19 @@
+<schema elementFormDefault="qualified" targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/sales/channel/SalesChannel" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/sales/channel/SalesChannel" xmlns:tps="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types">
+
+	<import schemaLocation="../../netarchitecture/common/Types.xsd" namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types"/>
+		
+	<complexType name="SalesChannelType">
+		
+	</complexType>
+
+	<element name="SalesChannel" type="tns:SalesChannelType"/>
+
+	<complexType name="SalesChannelsType">
+		<sequence>
+			<element ref="tns:SalesChannel" minOccurs="1" maxOccurs="unbounded"/>
+		</sequence>
+	</complexType>
+	
+	<element name="SalesChannels" type="tns:SalesChannelsType"/>
+
+</schema>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/partner/order/EAAuthenticationInfo"
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/partner/order/EAAuthenticationInfo">
+
+	<import schemaLocation="RejectionReason.xsd"
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/partner/order/RejectionReason" />
+
+	<complexType name="EAAuthenticationInfoType">
+		<sequence>
+			<element name="AuthenticationForecastDate" type="dateTime"
+				minOccurs="0" maxOccurs="1" />
+			
+		</sequence>
+	</complexType>
+
+	<element name="EAAuthenticationInfo" type="tns:EAAuthenticationInfoType" />
+
+	<element name="EAAuthenticationInfos">
+		<complexType>
+			<sequence>
+				<element ref="tns:EAAuthenticationInfo" minOccurs="1"
+					maxOccurs="unbounded" />
+			</sequence>
+		</complexType>
+	</element>
+
+</schema>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/resource/specification/PhysicalResourceSpecComposite"
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/resource/specification/PhysicalResourceSpecComposite"
+	xmlns:tps="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types">
+
+	<import schemaLocation="../../netarchitecture/common/Types.xsd"
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types" />
+
+	
+
+
+	<import schemaLocation="PhysicalResourceSpec.xsd"
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/resource/specification/PhysicalResourceSpec" />
+
+	<complexType name="PhysicalResourceSpecCompositeType">
+		
+	</complexType>
+
+	<element name="PhysicalResourceSpecComposite" type="tns:PhysicalResourceSpecCompositeType" />
+
+	<element name="PhysicalResourceSpecsAtomic">
+		<complexType>
+			<sequence>
+				<element ref="tns:PhysicalResourceSpecComposite" minOccurs="1"
+					maxOccurs="unbounded" />
+			</sequence>
+		</complexType>
+	</element>
+
+
+</schema>

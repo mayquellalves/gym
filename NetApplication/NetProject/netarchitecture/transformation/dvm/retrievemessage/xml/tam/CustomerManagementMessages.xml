@@ -1,0 +1,759 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dvm name="netarchitecture.messages.customermanagement.dvm" xmlns="http://xmlns.oracle.com/dvm">
+	<description>
+		Only messages belonging to customer management domain can
+		be defined here.
+	</description>
+	<columns>
+		<column name="ID_MSG" />
+		<column name="ERROR_NAME" />
+		<column name="USER_MESSAGE" />
+		<column name="DETAIL_MESSAGE" />
+		<column name="CATEGORY_MESSAGE" />
+		<column name="SYSTEM_CODE" />
+		<column name="NID_DOMAIN" />
+		<column name="ABE_LEVEL" />
+	</columns>
+	<rows>
+		<row>
+			<cell>OSB-CUSTOMERMANAGEMENT-00001</cell>
+			<cell>OSB_REQUEST_INVALIDO</cell>
+			<cell>Request Inválido para operação: {0}.</cell>
+			<cell>Request Inválido para operação: {0}.</cell>
+			<cell>ERROR</cell>
+			<cell />
+			<cell>customermanagement</cell>
+			<cell>information</cell>
+		</row>
+		<row>
+			<cell>OSB-CUSTOMERMANAGEMENT-00002</cell>
+			<cell>OSB_ERRO_INESPERADO</cell>
+			<cell>Erro durante a execução do recurso: {0}.</cell>
+			<cell>Erro durante a execução do recurso: {0}.</cell>
+			<cell>ERROR</cell>
+			<cell />
+			<cell>customermanagement</cell>
+			<cell>information</cell>
+		</row>
+		<row>
+			<cell>OSB-CUSTOMERMANAGEMENT-00003</cell>
+			<cell>OSB_OPERACAO_INVALIDA</cell>
+			<cell>A operação solicitada para o serviço não é válida.</cell>
+			<cell>A operação solicitada para o serviço não é válida.</cell>
+			<cell>ERROR</cell>
+			<cell />
+			<cell>customermanagement</cell>
+			<cell>information</cell>
+		</row>
+		<row>
+			<cell>OSB-CUSTOMERMANAGEMENT-00004</cell>
+			<cell>OSB_BASE_DADOS</cell>
+			<cell>Validação cadastral não realizada por indisponibilidade do sistema.</cell>
+			<cell>Validação cadastral não realizada por indisponibilidade do sistema.</cell>
+			<cell>ERROR</cell>
+			<cell />
+			<cell>customermanagement</cell>
+			<cell>information</cell>
+		</row>
+	    <row>
+	      <cell>OSB-CUSTOMERMANAGEMENT-00005</cell>
+	      <cell>OSB_STB_MODO_STANDBY</cell>
+	      <cell>STB está em modo standby.</cell>
+	      <cell>STB está em modo standby.</cell>
+	      <cell>ERROR</cell>
+	      <cell/>
+	      <cell>customermanagement</cell>
+	      <cell>self</cell>
+	    </row>
+	    <row>
+	      <cell>OSB-CUSTOMERMANAGEMENT-00006</cell>
+	      <cell>OSB_EPG_INDISPONIVEL</cell>
+	      <cell>EPG (Guia de programação) está indisponível.</cell>
+	      <cell>EPG (Guia de programação) está indisponível.</cell>
+	      <cell>ERROR</cell>
+	      <cell/>
+	      <cell>customermanagement</cell>
+	      <cell>self</cell>
+	    </row>
+	    <row>
+	      <cell>OSB-CUSTOMERMANAGEMENT-00007</cell>
+	      <cell>OSB_STB_SEM_COMUNICACAO</cell>
+	      <cell>Impossibilidade de comunicação com o equipamento.</cell>
+	      <cell>Impossibilidade de comunicação com o equipamento.</cell>
+	      <cell>ERROR</cell>
+	      <cell/>
+	      <cell>customermanagement</cell>
+	      <cell>self</cell>
+	    </row>
+	    <row>
+	      <cell>OSB-CUSTOMERMANAGEMENT-00008</cell>
+	      <cell>OSB_STB_INDISPONIVEL</cell>
+	      <cell>Equipamento indisponível.</cell>
+	      <cell>Equipamento indisponível.</cell>
+	      <cell>ERROR</cell>
+	      <cell/>
+	      <cell>customermanagement</cell>
+	      <cell>self</cell>
+	    </row>
+	    <row>
+	      <cell>OSB-CUSTOMERMANAGEMENT-00009</cell>
+	      <cell>OSB_STB_ERRO_DESCONHECIDO</cell>
+	      <cell>Erro desconhecido.</cell>
+	      <cell>Erro desconhecido.</cell>
+	      <cell>ERROR</cell>
+	      <cell/>
+	      <cell>customermanagement</cell>
+	      <cell>self</cell>
+	    </row>
+	    <row>
+	      <cell>OSB-CUSTOMERMANAGEMENT-00010</cell>
+	      <cell>OSB_STB_EM_VOD</cell>
+	      <cell>Em VOD (Video on Demand).</cell>
+	      <cell>Em VOD (Video on Demand).</cell>
+	      <cell>ERROR</cell>
+	      <cell/>
+	      <cell>customermanagement</cell>
+	      <cell>self</cell>
+	    </row>
+	    <row>
+	      <cell>OSB-CUSTOMERMANAGEMENT-00011</cell>
+	      <cell>OSB_STB_EM_REPRODUCAO_PROGRAMA_GRAVADO</cell>
+	      <cell>Em reprodução de programa gravado.</cell>
+	      <cell>Em reprodução de programa gravado.</cell>
+	      <cell>ERROR</cell>
+	      <cell/>
+	      <cell>customermanagement</cell>
+	      <cell>self</cell>
+	    </row>
+	    <row>
+	      <cell>OSB-CUSTOMERMANAGEMENT-00012</cell>
+	      <cell>OSB_STB_EM_PROCESSO_GRAVACAO_REPRODUCAO</cell>
+	      <cell>Em processo de gravação e reprodução.</cell>
+	      <cell>Em processo de gravação e reprodução.</cell>
+	      <cell>ERROR</cell>
+	      <cell/>
+	      <cell>customermanagement</cell>
+	      <cell>self</cell>
+	    </row>
+	    <row>
+	      <cell>OSB-CUSTOMERMANAGEMENT-00013</cell>
+	      <cell>OSB_STB_CONFLITO_GRAVACAO</cell>
+	      <cell>Conflito de gravação.</cell>
+	      <cell>Conflito de gravação.</cell>
+	      <cell>ERROR</cell>
+	      <cell/>
+	      <cell>customermanagement</cell>
+	      <cell>self</cell>
+	    </row>
+	    <row>
+	      <cell>OSB-CUSTOMERMANAGEMENT-00014</cell>
+	      <cell>OSB_STB_ESPACO_INSUFICIENTE</cell>
+	      <cell>Espaço insuficiente.</cell>
+	      <cell>Espaço insuficiente.</cell>
+	      <cell>ERROR</cell>
+	      <cell/>
+	      <cell>customermanagement</cell>
+	      <cell>self</cell>
+	    </row>
+		<row>
+			<cell>OSB-CUSTOMERMANAGEMENT-00015</cell>
+			<cell>OSB_PAGAMENTO_NAO_AUTORIZADO</cell>
+			<cell>Pagamento não foi autorizado.</cell>
+			<cell>Pagamento não foi autorizado.</cell>
+			<cell>ERROR</cell>
+			<cell />
+			<cell>customermanagement</cell>
+			<cell>information</cell>
+		</row>
+		<row>
+			<cell>OSB-CUSTOMERMANAGEMENT-00016</cell>
+			<cell>OSB_DADOS_NAO_RETORNADOS</cell>
+			<cell>Não foi possível retornar os dados.</cell>
+			<cell>Não foi possível retornar os dados.</cell>
+			<cell>ERROR</cell>
+			<cell />
+			<cell>customermanagement</cell>
+			<cell>information</cell>
+		</row>
+		<row>
+			<cell>OSB-CUSTOMERMANAGEMENT-00017</cell>
+			<cell>OSB_METODO_PAGAMENTO_INVALIDO</cell>
+			<cell>Método de pagamento inválido.</cell>
+			<cell>Método de pagamento inválido.</cell>
+			<cell>ERROR</cell>
+			<cell />
+			<cell>customermanagement</cell>
+			<cell>information</cell>
+		</row>
+		<row>
+			<cell>OSB-CUSTOMERMANAGEMENT-00018</cell>
+			<cell>OSB_DADOS_CARTAO_CREDITO</cell>
+			<cell>Obrigatório informar os dados do cartão de crédito.</cell>
+			<cell>Obrigatório informar os dados do cartão de crédito.</cell>
+			<cell>ERROR</cell>
+			<cell />
+			<cell>customermanagement</cell>
+			<cell>information</cell>
+		</row>
+		<row>
+			<cell>OSB-CUSTOMERMANAGEMENT-00019</cell>
+			<cell>OSB_INTERACOES_NAO_RETORNADAS</cell>
+			<cell>Não existem dados para retornar os detalhes de uma interação.</cell>
+			<cell>Não existem dados para retornar os detalhes de uma interação.</cell>
+			<cell>ERROR</cell>
+			<cell />
+			<cell>customermanagement</cell>
+			<cell>information</cell>
+		</row>
+		<row>
+			<cell>OSB-CUSTOMERMANAGEMENT-00020</cell>
+			<cell>OSB_ID_FATURA_NAO_EXISTE</cell>
+			<cell>O ID da fatura informado não existe.</cell>
+			<cell>O ID da fatura informado não existe.</cell>
+			<cell>ERROR</cell>
+			<cell />
+			<cell>customermanagement</cell>
+			<cell>information</cell>
+		</row>
+		<row>
+			<cell>OSB-CUSTOMERMANAGEMENT-00021</cell>
+			<cell>OSB_NAO_EXISTE_FATURAS</cell>
+			<cell>Não existem faturas para o cliente informado.</cell>
+			<cell>Não existem faturas para o cliente informado.</cell>
+			<cell>ERROR</cell>
+			<cell />
+			<cell>customermanagement</cell>
+			<cell>information</cell>
+		</row>
+		<row>
+			<cell>OSB-CUSTOMERMANAGEMENT-00022</cell>
+			<cell>OSB_NAO_EXISTE_FATURAS_ABERTO_VENCIDAS</cell>
+			<cell>O cliente não possui faturas em aberto vencidas.</cell>
+			<cell>O cliente não possui faturas em aberto vencidas.</cell>
+			<cell>ERROR</cell>
+			<cell />
+			<cell>customermanagement</cell>
+			<cell>information</cell>
+		</row>
+		<row>
+			<cell>OSB-CUSTOMERMANAGEMENT-00023</cell>
+			<cell>OSB_NAO_EXISTE_FATURAS_ABERTO</cell>
+			<cell>O cliente não possui faturas em aberto.</cell>
+			<cell>O cliente não possui faturas em aberto.</cell>
+			<cell>ERROR</cell>
+			<cell />
+			<cell>customermanagement</cell>
+			<cell>information</cell>
+		</row>
+		<row>
+			<cell>OSB-CUSTOMERMANAGEMENT-00025</cell>
+			<cell>OSB_NAO_EXISTE_SERVICOS_CONTRATADOS_CLIENTE</cell>
+			<cell>Não existem serviços contratados pelo cliente.</cell>
+			<cell>Não existem serviços contratados pelo cliente.</cell>
+			<cell>ERROR</cell>
+			<cell />
+			<cell>customermanagement</cell>
+			<cell>information</cell>
+		</row>
+		<row>
+			<cell>OSB-CUSTOMERMANAGEMENT-00026</cell>
+			<cell>OSB_CLIENTE_NAO_ENCONTRADO</cell>
+			<cell>Cliente não foi encontrado.</cell>
+			<cell>Cliente não foi encontrado.</cell>
+			<cell>ERROR</cell>
+			<cell />
+			<cell>customermanagement</cell>
+			<cell>information</cell>
+		</row>
+	    <row>
+	      <cell>OSB-CUSTOMERMANAGEMENT-00027</cell>
+	      <cell>OSB_STB_MAC_ADDRESS_INVALIDO</cell>
+	      <cell>MAC Address inválido.</cell>
+	      <cell>MAC Address inválido.</cell>
+	      <cell>ERROR</cell>
+	      <cell/>
+	      <cell>customermanagement</cell>
+	      <cell>self</cell>
+	    </row>
+	    <row>
+	      <cell>OSB-CUSTOMERMANAGEMENT-00028</cell>
+	      <cell>OSB_STB_MAC_ADDRESS_INEXISTENTE</cell>
+	      <cell>MAC Address inexistente.</cell>
+	      <cell>MAC Address inexistente.</cell>
+	      <cell>ERROR</cell>
+	      <cell/>
+	      <cell>customermanagement</cell>
+	      <cell>self</cell>
+	    </row>
+	    <row>
+	      <cell>OSB-CUSTOMERMANAGEMENT-00029</cell>
+	      <cell>OSB_CODIGO_CIDADE_INVALIDO</cell>
+	      <cell>Código da cidade inválido.</cell>
+	      <cell>Código da cidade inválido.</cell>
+	      <cell>ERROR</cell>
+	      <cell/>
+	      <cell>customermanagement</cell>
+	      <cell>self</cell>
+	    </row>
+	    <row>
+	      <cell>OSB-CUSTOMERMANAGEMENT-00030</cell>
+	      <cell>OSB_IMPOSSIBILIDADE_CONEXAO_SERVIDOR_DADOS</cell>
+	      <cell>Impossibilidade de conexão ao servidor de dados.</cell>
+	      <cell>Impossibilidade de conexão ao servidor de dados.</cell>
+	      <cell>ERROR</cell>
+	      <cell/>
+	      <cell>customermanagement</cell>
+	      <cell>self</cell>
+	    </row>
+	    <row>
+	      <cell>OSB-CUSTOMERMANAGEMENT-00031</cell>
+	      <cell>OSB_IMPOSSIBILIDADE_CONSULTA_SERVIDOR_DADOS</cell>
+	      <cell>Impossibilidade de seleção do schema no servidor de dados.</cell>
+	      <cell>Impossibilidade de seleção do schema no servidor de dados.</cell>
+	      <cell>ERROR</cell>
+	      <cell/>
+	      <cell>customermanagement</cell>
+	      <cell>self</cell>
+	    </row>
+	    <row>
+	      <cell>OSB-CUSTOMERMANAGEMENT-00032</cell>
+	      <cell>OSB_IMPOSSIBILIDADE_CONSULTA_DADOS</cell>
+	      <cell>Impossibilidade de consulta na tabela de cidades.</cell>
+	      <cell>Impossibilidade de consulta na tabela de cidades.</cell>
+	      <cell>ERROR</cell>
+	      <cell/>
+	      <cell>customermanagement</cell>
+	      <cell>self</cell>
+	    </row>
+	    <row>
+	      <cell>OSB-CUSTOMERMANAGEMENT-00033</cell>
+	      <cell>OSB_IMPOSSIBILIDADE_CONSULTA_DADOS</cell>
+	      <cell>Impossibilidade de consulta na tabela cidade_mac_cep.</cell>
+	      <cell>Impossibilidade de consulta na tabela cidade_mac_cep.</cell>
+	      <cell>ERROR</cell>
+	      <cell/>
+	      <cell>customermanagement</cell>
+	      <cell>self</cell>
+	    </row>
+	    <row>
+	      <cell>OSB-CUSTOMERMANAGEMENT-00034</cell>
+	      <cell>OSB_IMPOSSIBILIDADE_CONSULTA_DADOS</cell>
+	      <cell>Impossibilidade de inclusão na tabela cidade_mac_cep.</cell>
+	      <cell>Impossibilidade de inclusão na tabela cidade_mac_cep.</cell>
+	      <cell>ERROR</cell>
+	      <cell/>
+	      <cell>customermanagement</cell>
+	      <cell>self</cell>
+	    </row>
+	    <row>
+	      <cell>OSB-CUSTOMERMANAGEMENT-00035</cell>
+	      <cell>OSB_IMPOSSIBILIDADE_CONEXAO_WEBSERVICE</cell>
+	      <cell>Impossibilidade de conexão ao webservice local de coleta.</cell>
+	      <cell>Impossibilidade de conexão ao webservice local de coleta.</cell>
+	      <cell>ERROR</cell>
+	      <cell/>
+	      <cell>customermanagement</cell>
+	      <cell>self</cell>
+	    </row>
+	    <row>
+	      <cell>OSB-CUSTOMERMANAGEMENT-00036</cell>
+	      <cell>OSB_IMPOSSIBILIDADE_CONEXAO_WEBSERVICE</cell>
+	      <cell>Impossibilidade de execução de operação no webservice local de coleta.</cell>
+	      <cell>Impossibilidade de execução de operação no webservice local de coleta.</cell>
+	      <cell>ERROR</cell>
+	      <cell/>
+	      <cell>customermanagement</cell>
+	      <cell>self</cell>
+	    </row>
+	    <row>
+	      <cell>OSB-CUSTOMERMANAGEMENT-00037</cell>
+	      <cell>OSB_STB_MODEM_SEM_IP</cell>
+	      <cell>Modem interno do decoder HD sem IP.</cell>
+	      <cell>Modem interno do decoder HD sem IP.</cell>
+	      <cell>ERROR</cell>
+	      <cell/>
+	      <cell>customermanagement</cell>
+	      <cell>self</cell>
+	    </row>
+	    <row>
+	      <cell>OSB-CUSTOMERMANAGEMENT-00038</cell>
+	      <cell>OSB_IMPOSSIBILIDADE_CONEXAO_WEBSERVICE</cell>
+	      <cell>Impossibilidade de conexão ao webservice local do STB.</cell>
+	      <cell>Impossibilidade de conexão ao webservice local do STB.</cell>
+	      <cell>ERROR</cell>
+	      <cell/>
+	      <cell>customermanagement</cell>
+	      <cell>self</cell>
+	    </row>
+	    <row>
+	      <cell>OSB-CUSTOMERMANAGEMENT-00039</cell>
+	      <cell>OSB_IMPOSSIBILIDADE_CONEXAO_WEBSERVICE</cell>
+	      <cell>Impossibilidade de execução de operação no webservice local do STB.</cell>
+	      <cell>Impossibilidade de execução de operação no webservice local do STB.</cell>
+	      <cell>ERROR</cell>
+	      <cell/>
+	      <cell>customermanagement</cell>
+	      <cell>self</cell>
+	    </row>
+		<row>
+			<cell>OSB-CUSTOMERMANAGEMENT-00040</cell>
+			<cell>OSB_EVENTS_NOT_EXISTS</cell>
+			<cell>Não existem eventos selecionados como favoritos para o cliente informado.</cell>
+			<cell>Não existem eventos selecionados como favoritos para o cliente informado.</cell>
+			<cell>ERROR</cell>
+			<cell />
+			<cell>customermanagement</cell>
+			<cell>information</cell>
+		</row>
+		<row>
+			<cell>OSB-CUSTOMERMANAGEMENT-00041</cell>
+			<cell>OSB_INVALID_REGISTRATION</cell>
+			<cell>Registro informado inválido.</cell>
+			<cell>Registro informado inválido.</cell>
+			<cell>ERROR</cell>
+			<cell />
+			<cell>customermanagement</cell>
+			<cell>information</cell>
+		</row>
+		<row>
+			<cell>OSB-CUSTOMERMANAGEMENT-00042</cell>
+			<cell>OSB_CUSTOM_DATA_EXCEEDS_ALLOWED</cell>
+			<cell>Os dados personalizado excede o tamanho permitido configurado.</cell>
+			<cell>Os dados personalizado excede o tamanho permitido configurado.</cell>
+			<cell>ERROR</cell>
+			<cell />
+			<cell>customermanagement</cell>
+			<cell>information</cell>
+		</row>
+		<row>
+			<cell>OSB-CUSTOMERMANAGEMENT-00043</cell>
+			<cell>OSB_FIELDS_NOT_INFORMED</cell>
+			<cell>O(s) campo(s) {0} deve(m) ser informado(s).</cell>
+			<cell>O(s) campo(s) {0} deve(m) ser informado(s).</cell>
+			<cell>ERROR</cell>
+			<cell />
+			<cell>customermanagement</cell>
+			<cell>chargecalculation</cell>
+		</row>
+		<row>
+			<cell>OSB-CUSTOMERMANAGEMENT-00044</cell>
+			<cell>OSB_FIELDS_NOT_INFORMED</cell>
+			<cell>O(s) campo(s) {0} ou {1} deve(m) ser informado(s).</cell>
+			<cell>O(s) campo(s) {0} ou {1} deve(m) ser informado(s).</cell>
+			<cell>ERROR</cell>
+			<cell />
+			<cell>customermanagement</cell>
+			<cell>information</cell>
+		</row>
+		<row>
+			<cell>OSB-CUSTOMERMANAGEMENT-00045</cell>
+			<cell>OSB_FIELDS_NOT_INFORMED</cell>
+			<cell>O(s) campo(s) {0} ou {1} ou {2} ou {3} ou {4} ou {5} ou {6} deve(m) ser informado(s).</cell>
+			<cell>O(s) campo(s) {0} ou {1} ou {2} ou {3} ou {4} ou {5} ou {6} deve(m) ser informado(s).</cell>
+			<cell>ERROR</cell>
+			<cell />
+			<cell>customermanagement</cell>
+			<cell>information</cell>
+		</row>
+		<row>
+			<cell>OSB-CUSTOMERMANAGEMENT-00048</cell>
+			<cell>OSB_FIELDS_NOT_INFORMED</cell>
+			<cell>O(s) campo(s) {0} ou {1} ou {2} ou {3} deve(m) ser informado(s).</cell>
+			<cell>O(s) campo(s) {0} ou {1} ou {2} ou {3} deve(m) ser informado(s).</cell>
+			<cell>ERROR</cell>
+			<cell />
+			<cell>customermanagement</cell>
+			<cell>transactionaldocument</cell>
+		</row>
+		<row>
+			<cell>OSB-CUSTOMERMANAGEMENT-00049</cell>
+			<cell>OSB_NO_FLAGS_OF_LOANS_REPORTED</cell>
+			<cell>Não existem bandeiras das operações de crédito informadas.</cell>
+			<cell>Não existem bandeiras das operações de crédito informadas.</cell>
+			<cell>ERROR</cell>
+			<cell />
+			<cell>customermanagement</cell>
+			<cell>information</cell>
+		</row>
+	    <row>
+			<cell>OSB-CUSTOMERMANAGEMENT-00050</cell>
+			<cell>OSB_NO_FLAGS_INSURED_BANKS_TO_BE_INFORMED</cell>
+			<cell>Não existem bandeiras dos bancos conveniados para serem informadas.</cell>
+			<cell>Não existem bandeiras dos bancos conveniados para serem informadas.</cell>
+			<cell>ERROR</cell>
+			<cell />
+			<cell>customermanagement</cell>
+			<cell>information</cell>
+		</row>
+		<row>
+			<cell>OSB-CUSTOMERMANAGEMENT-00051</cell>
+			<cell>OSB_NO_ERROR_CREATE_CREDIT_ANALYSIS</cell>
+			<cell>Ocorreu erro na criação da análise de crédito {0}.</cell>
+			<cell>Ocorreu erro na criação da análise de crédito {0}.</cell>
+			<cell>ERROR</cell>
+			<cell />
+			<cell>customermanagement</cell>
+			<cell>information</cell>
+		</row>
+		<row>
+			<cell>OSB-CUSTOMERMANAGEMENT-00053</cell>
+			<cell>OSB_BANK_UNREGISTERED</cell>
+			<cell>Banco não cadastrado.</cell>
+			<cell>Banco não cadastrado.</cell>
+			<cell>ERROR</cell>
+			<cell />
+			<cell>customermanagement</cell>
+			<cell>information</cell>
+		</row>
+		<row>
+			<cell>OSB-CUSTOMERMANAGEMENT-00054</cell>
+			<cell>OSB_NOT_AGENCY_REGISTERED</cell>
+			<cell>Agência não cadastrada.</cell>
+			<cell>Agência não cadastrada.</cell>
+			<cell>ERROR</cell>
+			<cell />
+			<cell>customermanagement</cell>
+			<cell>information</cell>
+		</row>
+		<row>
+			<cell>OSB-CUSTOMERMANAGEMENT-00055</cell>
+			<cell>OSB_ACCOUNT_NUMBER_INVALID</cell>
+			<cell>Número da conta fora do padrão do banco.</cell>
+			<cell>Número da conta fora do padrão do banco.</cell>
+			<cell>ERROR</cell>
+			<cell />
+			<cell>customermanagement</cell>
+			<cell>information</cell>
+		</row>
+		<row>
+			<cell>OSB-CUSTOMERMANAGEMENT-00056</cell>
+			<cell>OSB_RULE_TO_VALIDATE_ACCOUNT_NUMBER_UNKNOWN</cell>
+			<cell>Os dados informados pertence a um banco não credenciado.</cell>
+			<cell>Os dados informados pertence a um banco não credenciado.</cell>
+			<cell>ERROR</cell>
+			<cell />
+			<cell>customermanagement</cell>
+			<cell>information</cell>
+		</row>
+		<row>
+			<cell>OSB-CUSTOMERMANAGEMENT-00059</cell>	
+			<cell>CASE_DETAILS_NOT_FOUND_FAULT</cell>
+			<cell>Detalhes do case não encontrado.</cell>
+			<cell>Detalhes do case não encontrado.</cell>
+			<cell>ERROR</cell>
+			<cell/>
+			<cell>customermanagement</cell>
+			<cell>case</cell>
+		</row>
+		<row>
+			<cell>OSB-CUSTOMERMANAGEMENT-00062</cell>	
+			<cell>IMPOSSIBLE_CREATE_PROMISE_FAULT</cell>
+			<cell>Não foi possível criar promessa de pagamento para a Fatura {0}.</cell>
+			<cell>Não foi possível criar promessa de pagamento para a Fatura {0}.</cell>
+			<cell>ERROR</cell>
+			<cell/>
+			<cell>customermanagement</cell>
+			<cell>information</cell>
+		</row>
+		<row>
+			<cell>OSB-CUSTOMERMANAGEMENT-00063</cell>	
+			<cell>OSB_INCORRECT_INPUT_PARAMETERS_FAULT</cell>
+			<cell>Favor informar os dados bancários (banco, agência e conta).</cell>
+			<cell>Favor informar os dados bancários (banco, agência e conta).</cell>
+			<cell>ERROR</cell>
+			<cell/>
+			<cell>customermanagement</cell>
+			<cell>information</cell>
+		</row>
+		<row>
+			<cell>OSB-CUSTOMERMANAGEMENT-00064</cell>	
+			<cell>OSB_AGENCY_NOT_INFORMATION_FAULT</cell>
+			<cell>Favor informar agência.</cell>
+			<cell>Favor informar agência.</cell>
+			<cell>ERROR</cell>
+			<cell/>
+			<cell>customermanagement</cell>
+			<cell>information</cell>
+		</row>
+		<row>
+			<cell>OSB-CUSTOMERMANAGEMENT-00065</cell>	
+			<cell>OSB_ACCOUNT_NOT_INFORMATION_FAULT</cell>
+			<cell>Favor informar conta.</cell>
+			<cell>Favor informar conta.</cell>
+			<cell>ERROR</cell>
+			<cell/>
+			<cell>customermanagement</cell>
+			<cell>information</cell>
+		</row>
+	    <row>
+		  <cell>OSB-CUSTOMERMANAGEMENT-00066</cell>
+		  <cell>DATA_NOT_FOUND_FAULT</cell>
+		  <cell>{0} não cadastrado(s) no SPR.</cell>
+		  <cell>{0} não cadastrado(s) no SPR.</cell>
+		  <cell>ERROR</cell>
+		  <cell/>
+		  <cell>common</cell>
+	      <cell>root</cell>
+		</row>
+		<row>
+		  <cell>OSB-CUSTOMERMANAGEMENT-00067</cell>
+		  <cell>DATA_NOT_FOUND_FAULT</cell>
+		  <cell>{0} já cadastrado(s) no SPR.</cell>
+		  <cell>{0} já cadastrado(s) no SPR.</cell>
+		  <cell>ERROR</cell>
+		  <cell/>
+		  <cell>common</cell>
+	      <cell>root</cell>
+		</row>
+	    <row>
+		  <cell>OSB-CUSTOMERMANAGEMENT-00068</cell>
+		  <cell>INVALID_SECRET_ANSWER</cell>
+		  <cell>Resposta secreta inválida para a pergunta secreta informada.</cell>
+		  <cell>Resposta secreta inválida para a pergunta secreta informada.</cell>
+		  <cell>ERROR</cell>
+		  <cell/>
+		  <cell>common</cell>
+	      <cell>root</cell>
+		</row>		
+		<row>
+		  <cell>OSB-CUSTOMERMANAGEMENT-00069</cell>
+		  <cell>INVALID_PASSWORD</cell>
+		  <cell>Nova senha deve ser diferente da senha atual.</cell>
+		  <cell>Nova senha deve ser diferente da senha atual.</cell>
+		  <cell>ERROR</cell>
+		  <cell/>
+		  <cell>common</cell>
+	      <cell>root</cell>
+		</row>
+		<row>
+			<cell>OSB-CUSTOMERMANAGEMENT-00079</cell>	
+			<cell>OSB_UNABLE_DELIVERY_EVENT_PURCHASE_ORDER_FAULT</cell>
+			<cell>Não foi possivel entregar a requisição de compra do evento.</cell>
+			<cell>Não foi possivel entregar a requisição de compra do evento.</cell>
+			<cell>ERROR</cell>
+			<cell/>
+			<cell>customermanagement</cell>
+			<cell>order</cell>
+		</row>
+		<row>
+			<cell>OSB-CUSTOMERMANAGEMENT-00080</cell>	
+			<cell>BUSINESS_FAULT</cell>
+			<cell>Erro durante a integração com sistema {}.</cell>
+			<cell>Erro durante a integração com sistema {}.</cell>
+			<cell>ERROR</cell>
+			<cell/>
+			<cell>customermanagement</cell>
+			<cell>order</cell>
+		</row>	
+		<row>
+			<cell>OSB-CUSTOMERMANAGEMENT-00081</cell>	
+			<cell>OSB_FIELDS_NOT_INFORMED</cell>
+			<cell>O(s) campo(s) {0} ou {1} ou {2} ou {3} ou {4} ou {5} deve(m) ser informado(s).</cell>
+			<cell>O(s) campo(s) {0} ou {1} ou {2} ou {3} ou {4} ou {5} deve(m) ser informado(s).</cell>
+			<cell>ERROR</cell>
+			<cell/>
+			<cell>customermanagement</cell>
+			<cell>order</cell>
+		</row>	
+		<row>
+			<cell>OSB-CUSTOMERMANAGEMENT-00082</cell>	
+			<cell>OSB_FIELDS_NOT_INFORMED</cell>
+			<cell>O(s) campo(s) {0} ou {1} ou {2} ou {3} ou {4} deve(m) ser informado(s).</cell>
+			<cell>O(s) campo(s) {0} ou {1} ou {2} ou {3} ou {4} deve(m) ser informado(s).</cell>
+			<cell>ERROR</cell>
+			<cell/>
+			<cell>customermanagement</cell>
+			<cell>order</cell>
+		</row>		
+		<row>
+			<cell>OSB-CUSTOMERMANAGEMENT-00083</cell>	
+			<cell>BUSINESS_FAULT</cell>
+			<cell>Não foi encontrado o identificador do serviço de TV informado.</cell>
+			<cell>Não foi encontrado o identificador do serviço de TV informado.</cell>
+			<cell>ERROR</cell>
+			<cell/>
+			<cell>customermanagement</cell>
+			<cell>order</cell>
+		</row>
+		<row>
+			<cell>OSB-CUSTOMERMANAGEMENT-00084</cell>	
+			<cell>BUSINESS_FAULT</cell>
+			<cell>Falha Engenharia. Operação: {0}. Mensagem: {1}.</cell>
+			<cell>Falha Engenharia. Operação: {0}. Mensagem: {1}.</cell>
+			<cell>ERROR</cell>
+			<cell/>
+			<cell>customermanagement</cell>
+			<cell>self</cell>
+		</row>
+		<row>
+			 <cell>OSB-CUSTOMERMANAGEMENT-00086</cell>
+			 <cell>BUSINESS_FAULT</cell>
+			 <cell>Não foi possível continuar o cadastro do usuário dependente, pois não foi possível incluir os dados do mesmo no usuário titular.</cell>
+			 <cell>Não foi possível continuar o cadastro do usuário dependente, pois não foi possível incluir os dados do mesmo no usuário titular.</cell>
+			 <cell>ERROR</cell>
+			 <cell />
+			 <cell>customermanagement</cell>
+			 <cell>self</cell>
+		</row>
+		<row>
+			 <cell>OSB-CUSTOMERMANAGEMENT-00087</cell>
+			 <cell>BUSINESS_FAULT</cell>
+			 <cell>Não foi possível efetuar o roolbak da criação/atualização do usuário filho. Necessária atualização/remoção do usuário {0}.</cell>
+			 <cell>Não foi possível efetuar o roolbak da criação/atualização do usuário filho. Necessária atualização/remoção do usuário {0}.</cell>
+			 <cell>ERROR</cell>
+			 <cell />
+			 <cell>customermanagement</cell>
+			 <cell>self</cell>
+		</row>
+		<row>
+			 <cell>OSB-CUSTOMERMANAGEMENT-00088</cell>
+			 <cell>BUSINESS_FAULT</cell>
+			 <cell>O(s) campo(s) {0} ou {1} ou {2} deve(m) ser informado(s).</cell>
+			 <cell>O(s) campo(s) {0} ou {1} ou {2} deve(m) ser informado(s).</cell>
+			 <cell>ERROR</cell>
+			 <cell />
+			 <cell>customermanagement</cell>
+			 <cell>self</cell>
+		</row>
+		<row>
+			 <cell>OSB-CUSTOMERMANAGEMENT-00090</cell>
+			 <cell>BUSINESS_FAULT</cell>
+			 <cell>Não foi possível retirar o vínculo do usuário filho da conta do usuário pai.</cell>
+			 <cell>Não foi possível retirar o vínculo do usuário filho da conta do usuário pai.</cell>
+			 <cell>ERROR</cell>
+			 <cell />
+			 <cell>customermanagement</cell>
+			 <cell>self</cell>
+		</row>
+		<row>
+			 <cell>OSB-CUSTOMERMANAGEMENT-00091</cell>
+			 <cell>BUSINESS_FAULT</cell>
+			 <cell>Não foi possível remover o usuário filho.</cell>
+			 <cell>Não foi possível remover o usuário filho.</cell>
+			 <cell>ERROR</cell>
+			 <cell />
+			 <cell>customermanagement</cell>
+			 <cell>self</cell>
+		</row>
+		<row>
+			 <cell>OSB-CUSTOMERMANAGEMENT-00092</cell>
+			 <cell>BUSINESS_FAULT</cell>
+			 <cell>Assinante não foi encontrado.</cell>
+			 <cell>Assinante não foi encontrado.</cell>
+			 <cell>ERROR</cell>
+			 <cell />
+			 <cell>customermanagement</cell>
+			 <cell>billingaccount</cell>
+		</row>
+		<row>
+			 <cell>OSB-CUSTOMERMANAGEMENT-00094</cell>
+			 <cell>BUSINESS_FAULT</cell>
+			 <cell>Ordem não encontrada.</cell>
+			 <cell>Ordem não encontrada.</cell>
+			 <cell>ERROR</cell>
+			 <cell />
+			 <cell>customermanagement</cell>
+			 <cell>order</cell>
+		</row>
+	</rows>
+</dvm>

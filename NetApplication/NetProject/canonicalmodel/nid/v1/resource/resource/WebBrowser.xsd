@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+    xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/resource/resource/WebBrowser"
+    targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/resource/resource/WebBrowser"
+    elementFormDefault="qualified">
+
+
+    <complexType name="WebBrowserType"/>
+    
+    <element name="WebBrowser" type="tns:WebBrowserType"/>
+    
+    <element name="WebBrowsers">
+        <complexType>
+            <sequence>
+                <element ref="tns:WebBrowser" minOccurs="0" maxOccurs="unbounded"/>
+            </sequence>
+        </complexType>
+        
+    </element>
+
+</schema>

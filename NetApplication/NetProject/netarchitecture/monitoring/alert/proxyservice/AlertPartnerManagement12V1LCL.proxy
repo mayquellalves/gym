@@ -1,0 +1,854 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con3="http://www.bea.com/wli/sb/stages/alert/config">
+  <ser:coreEntry isProxy="true" isEnabled="true" isAutoPublish="false" isTracingEnabled="false">
+    <ser:binding type="SOAP" isSoap12="true" xsi:type="con:SoapBindingType" xmlns:con="http://www.bea.com/wli/sb/services/bindings/config">
+      <con:wsdl ref="netarchitecture/monitoring/alert/wsdl/proxy/Alert12V1"/>
+      <con:binding>
+        <con:name>AlertBinding12</con:name>
+        <con:namespace>http://www.netservicos.com.br/AlertV1</con:namespace>
+      </con:binding>
+      <con:selector type="SOAP body"/>
+    </ser:binding>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Pipeline</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+    <ser:ws-policy>
+      <ser:binding-mode>owsm-policy-bindings</ser:binding-mode>
+    </ser:ws-policy>
+    <ser:throttling enabled="false">
+      <ser:capacity>0</ser:capacity>
+      <ser:maxQueueLength>0</ser:maxQueueLength>
+      <ser:timeToLive>0</ser:timeToLive>
+    </ser:throttling>
+    <ser:messageTracing enabled="false">
+      <ser:detailsLevel>Terse</ser:detailsLevel>
+      <ser:maxSize>8192</ser:maxSize>
+    </ser:messageTracing>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>local</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:inbound-properties/>
+    <tran:all-headers>true</tran:all-headers>
+  </ser:endpointConfig>
+  <ser:router>
+    <con:pipeline type="request" name="PipelinePairNode_request">
+      <con:stage name="GetClassificationSeverity">
+        <con:context>
+          <con1:varNsDecl namespace="http://www.netservicos.com.br/AlertV1" prefix="aler"/>
+          <con1:varNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/monitoring/Alert" prefix="aler1"/>
+          <con1:varNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/NidDomain" prefix="nid"/>
+          <con1:varNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/NidAbeLevel" prefix="nid1"/>
+        </con:context>
+        <con:actions>
+          <con2:ifThenElse>
+            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-6c3d</con1:id>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>not(fn:exists($body/aler:alertRequest/aler1:ExceptionClassification))
+or not($body/aler:alertRequest/aler1:ExceptionClassification/node())
+or ($body/aler:alertRequest/aler1:ExceptionClassification eq "")</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:assign varName="severidadeAlerta">
+                  <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-6c1e</con1:id>
+                  <con2:expr>
+                    <con1:xqueryText>"NORMAL"</con1:xqueryText>
+                  </con2:expr>
+                </con2:assign>
+              </con2:actions>
+            </con2:case>
+            <con2:default>
+              <con1:javaCallout varName="severidadeAlerta" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-1445721328115578041--38b75155.14619ddf914.-6c3a</con4:id>
+                <con1:archive ref="netarchitecture/transformation/jar/NETServiceBusUtilClient"/>
+                <con1:className>br.com.netservicos.sb.config.alert.NETAlertConfig</con1:className>
+                <con1:method>public static java.lang.String getClassificationSeverty(java.lang.String)</con1:method>
+                <con1:expr>
+                  <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">fn:data($body/aler:alertRequest/aler1:ExceptionClassification)</con2:xqueryText>
+                </con1:expr>
+              </con1:javaCallout>
+            </con2:default>
+          </con2:ifThenElse>
+        </con:actions>
+      </con:stage>
+      <con:stage name="CreateAlertAccordingToNidAbeLevelAndSeverity">
+        <con:context>
+          <con1:varNsDecl namespace="http://www.netservicos.com.br/AlertV1" prefix="aler"/>
+          <con1:varNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/monitoring/Alert" prefix="aler1"/>
+          <con1:varNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/NidDomain" prefix="nid"/>
+          <con1:varNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/NidAbeLevel" prefix="nid1"/>
+        </con:context>
+        <con:actions>
+          <con2:ifThenElse>
+            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-6bfe</con1:id>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>fn:upper-case("Partner") eq fn:upper-case($body/aler:alertRequest/nid1:NidAbeLevel)</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:ifThenElse>
+                  <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-6bad</con1:id>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>"LEVEL1" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-6b57</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"FATAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-69e3</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/partnermanagement/partner/alert/PartnerManagementPartnerLevel1"/>
+                              <con3:description>Alert LEVEL1 FATAL em PartnerManagement.Partner</con3:description>
+                              <con3:severity>fatal</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"CRITICAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-69c9</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/partnermanagement/partner/alert/PartnerManagementPartnerLevel1"/>
+                              <con3:description>Alert LEVEL1 CRITICAL em PartnerManagement.Partner</con3:description>
+                              <con3:severity>critical</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"WARNING" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-69ae</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/partnermanagement/partner/alert/PartnerManagementPartnerLevel1"/>
+                              <con3:description>Alert LEVEL1 WARNING em PartnerManagement.Partner</con3:description>
+                              <con3:severity>warning</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                          <con3:alert>
+                            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-69a2</con1:id>
+                            <con3:destination ref="netarchitecture/monitoring/alert/alerts/partnermanagement/partner/alert/PartnerManagementPartnerLevel1"/>
+                            <con3:description>Alert LEVEL1 NORMAL em PartnerManagement.Partner</con3:description>
+                            <con3:severity>normal</con3:severity>
+                            <con3:payload>
+                              <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                            </con3:payload>
+                          </con3:alert>
+                        </con2:default>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>"LEVEL2" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-6b3b</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"FATAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-698a</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/partnermanagement/partner/alert/PartnerManagementPartnerLevel2"/>
+                              <con3:description>Alert LEVEL2 FATAL em PartnerManagement.Partner</con3:description>
+                              <con3:severity>fatal</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                              >
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"CRITICAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-697d</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/partnermanagement/partner/alert/PartnerManagementPartnerLevel2"/>
+                              <con3:description>Alert LEVEL2 CRITICAL em PartnerManagement.Partner</con3:description>
+                              <con3:severity>critical</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                              >
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"WARNING" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-6962</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/partnermanagement/partner/alert/PartnerManagementPartnerLevel2"/>
+                              <con3:description>Alert LEVEL2 WARNING em PartnerManagement.Partner</con3:description>
+                              <con3:severity>warning</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                              >
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                          <con3:alert>
+                            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-6952</con1:id>
+                            <con3:destination ref="netarchitecture/monitoring/alert/alerts/partnermanagement/partner/alert/PartnerManagementPartnerLevel2"/>
+                            <con3:description>Alert LEVEL2 NORMAL em PartnerManagement.Partner</con3:description>
+                            <con3:severity>normal</con3:severity>
+                            <con3:payload>
+                              <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                            </con3:payload>
+                            >
+                          </con3:alert>
+                        </con2:default>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>"LEVEL3" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-6b21</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"FATAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-6940</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/partnermanagement/partner/alert/PartnerManagementPartnerLevel3"/>
+                              <con3:description>Alert LEVEL3 FATAL em PartnerManagement.Partner</con3:description>
+                              <con3:severity>fatal</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                              >
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"CRITICAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-692e</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/partnermanagement/partner/alert/PartnerManagementPartnerLevel3"/>
+                              <con3:description>Alert LEVEL3 CRITICAL em PartnerManagement.Partner</con3:description>
+                              <con3:severity>critical</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                              >
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"WARNING" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-691f</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/partnermanagement/partner/alert/PartnerManagementPartnerLevel3"/>
+                              <con3:description>Alert LEVEL3 WARNING em PartnerManagement.Partner</con3:description>
+                              <con3:severity>warning</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                              >
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                          <con3:alert>
+                            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-690d</con1:id>
+                            <con3:destination ref="netarchitecture/monitoring/alert/alerts/partnermanagement/partner/alert/PartnerManagementPartnerLevel3"/>
+                            <con3:description>Alert LEVEL3 NORMAL em PartnerManagement.Partner</con3:description>
+                            <con3:severity>normal</con3:severity>
+                            <con3:payload>
+                              <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                            </con3:payload>
+                            >
+                          </con3:alert>
+                        </con2:default>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>"LEVEL4" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-6afe</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"FATAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-68f9</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/partnermanagement/partner/alert/PartnerManagementPartnerLevel4"/>
+                              <con3:description>Alert LEVEL4 FATAL em PartnerManagement.Partner</con3:description>
+                              <con3:severity>fatal</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                              >
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"CRITICAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-68e4</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/partnermanagement/partner/alert/PartnerManagementPartnerLevel4"/>
+                              <con3:description>Alert LEVEL4 CRITICAL em PartnerManagement.Partner</con3:description>
+                              <con3:severity>critical</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                              >
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"WARNING" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-68d5</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/partnermanagement/partner/alert/PartnerManagementPartnerLevel4"/>
+                              <con3:description>Alert LEVEL4 WARNING em PartnerManagement.Partner</con3:description>
+                              <con3:severity>warning</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                              >
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                          <con3:alert>
+                            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-68ba</con1:id>
+                            <con3:destination ref="netarchitecture/monitoring/alert/alerts/partnermanagement/partner/alert/PartnerManagementPartnerLevel4"/>
+                            <con3:description>Alert LEVEL4 NORMAL em PartnerManagement.Partner</con3:description>
+                            <con3:severity>normal</con3:severity>
+                            <con3:payload>
+                              <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                            </con3:payload>
+                            >
+                          </con3:alert>
+                        </con2:default>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>"LEVEL5" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-6ad7</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"FATAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-689c</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/partnermanagement/partner/alert/PartnerManagementPartnerLevel5"/>
+                              <con3:description>Alert LEVEL5 FATAL em PartnerManagement.Partner</con3:description>
+                              <con3:severity>fatal</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                              >
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"CRITICAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-6885</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/partnermanagement/partner/alert/PartnerManagementPartnerLevel5"/>
+                              <con3:description>Alert LEVEL5 CRITICAL em PartnerManagement.Partner</con3:description>
+                              <con3:severity>critical</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                              >
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"WARNING" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-6873</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/partnermanagement/partner/alert/PartnerManagementPartnerLevel5"/>
+                              <con3:description>Alert LEVEL5 WARNING em PartnerManagement.Partner</con3:description>
+                              <con3:severity>warning</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                              >
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                          <con3:alert>
+                            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-685e</con1:id>
+                            <con3:destination ref="netarchitecture/monitoring/alert/alerts/partnermanagement/partner/alert/PartnerManagementPartnerLevel5"/>
+                            <con3:description>Alert LEVEL5 NORMAL em PartnerManagement.Partner</con3:description>
+                            <con3:severity>normal</con3:severity>
+                            <con3:payload>
+                              <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                            </con3:payload>
+                            >
+                          </con3:alert>
+                        </con2:default>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:default/>
+                </con2:ifThenElse>
+              </con2:actions>
+            </con2:case>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>fn:upper-case("WholeSaleAndInterConnectBilling") eq fn:upper-case($body/aler:alertRequest/nid1:NidAbeLevel)</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:ifThenElse>
+                  <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-6b90</con1:id>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>"LEVEL1" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-6ab1</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"FATAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-684c</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/partnermanagement/wholesaleandinterconnectbilling/alert/PartnerManagementWholeSaleAndInterconnectBillingLevel1"/>
+                              <con3:description>Alert LEVEL1 FATAL em PartnerManagement.WholeSaleAndInterConnectBilling</con3:description>
+                              <con3:severity>fatal</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"CRITICAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-6837</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/partnermanagement/wholesaleandinterconnectbilling/alert/PartnerManagementWholeSaleAndInterconnectBillingLevel1"/>
+                              <con3:description>Alert LEVEL1 CRITICAL em PartnerManagement.WholeSaleAndInterConnectBilling</con3:description>
+                              <con3:severity>critical</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"WARNING" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-6823</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/partnermanagement/wholesaleandinterconnectbilling/alert/PartnerManagementWholeSaleAndInterconnectBillingLevel1"/>
+                              <con3:description>Alert LEVEL1 WARNING em PartnerManagement.WholeSaleAndInterConnectBilling</con3:description>
+                              <con3:severity>warning</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                          <con3:alert>
+                            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-6810</con1:id>
+                            <con3:destination ref="netarchitecture/monitoring/alert/alerts/partnermanagement/wholesaleandinterconnectbilling/alert/PartnerManagementWholeSaleAndInterconnectBillingLevel1"/>
+                            <con3:description>Alert LEVEL1 NORMAL em PartnerManagement.WholeSaleAndInterConnectBilling</con3:description>
+                            <con3:severity>normal</con3:severity>
+                            <con3:payload>
+                              <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                            </con3:payload>
+                          </con3:alert>
+                        </con2:default>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>"LEVEL2" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-6a84</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"FATAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-67ff</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/partnermanagement/wholesaleandinterconnectbilling/alert/PartnerManagementWholeSaleAndInterconnectBillingLevel2"/>
+                              <con3:description>Alert LEVEL2 FATAL em PartnerManagement.WholeSaleAndInterConnectBilling</con3:description>
+                              <con3:severity>fatal</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"CRITICAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-67eb</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/partnermanagement/wholesaleandinterconnectbilling/alert/PartnerManagementWholeSaleAndInterconnectBillingLevel2"/>
+                              <con3:description>Alert LEVEL2 CRITICAL em PartnerManagement.WholeSaleAndInterConnectBilling</con3:description>
+                              <con3:severity>critical</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"WARNING" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-67c6</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/partnermanagement/wholesaleandinterconnectbilling/alert/PartnerManagementWholeSaleAndInterconnectBillingLevel2"/>
+                              <con3:description>Alert LEVEL2 WARNING em PartnerManagement.WholeSaleAndInterConnectBilling</con3:description>
+                              <con3:severity>warning</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                          <con3:alert>
+                            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-67ad</con1:id>
+                            <con3:destination ref="netarchitecture/monitoring/alert/alerts/partnermanagement/wholesaleandinterconnectbilling/alert/PartnerManagementWholeSaleAndInterconnectBillingLevel2"/>
+                            <con3:description>Alert LEVEL2 NORMAL em PartnerManagement.WholeSaleAndInterConnectBilling</con3:description>
+                            <con3:severity>normal</con3:severity>
+                            <con3:payload>
+                              <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                            </con3:payload>
+                          </con3:alert>
+                        </con2:default>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>"LEVEL3" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-6a5d</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"FATAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-6796</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/partnermanagement/wholesaleandinterconnectbilling/alert/PartnerManagementWholeSaleAndInterconnectBillingLevel3"/>
+                              <con3:description>Alert LEVEL3 FATAL em PartnerManagement.WholeSaleAndInterConnectBilling</con3:description>
+                              <con3:severity>fatal</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"CRITICAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-6787</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/partnermanagement/wholesaleandinterconnectbilling/alert/PartnerManagementWholeSaleAndInterconnectBillingLevel3"/>
+                              <con3:description>Alert LEVEL3 CRITICAL em PartnerManagement.WholeSaleAndInterConnectBilling</con3:description>
+                              <con3:severity>critical</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"WARNING" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-6776</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/partnermanagement/wholesaleandinterconnectbilling/alert/PartnerManagementWholeSaleAndInterconnectBillingLevel3"/>
+                              <con3:description>Alert LEVEL3 WARNING em PartnerManagement.WholeSaleAndInterConnectBilling</con3:description>
+                              <con3:severity>warning</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                          <con3:alert>
+                            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-6767</con1:id>
+                            <con3:destination ref="netarchitecture/monitoring/alert/alerts/partnermanagement/wholesaleandinterconnectbilling/alert/PartnerManagementWholeSaleAndInterconnectBillingLevel3"/>
+                            <con3:description>Alert LEVEL3 NORMAL em PartnerManagement.WholeSaleAndInterConnectBilling</con3:description>
+                            <con3:severity>normal</con3:severity>
+                            <con3:payload>
+                              <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                            </con3:payload>
+                          </con3:alert>
+                        </con2:default>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>"LEVEL4" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-6a23</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"FATAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-6752</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/partnermanagement/wholesaleandinterconnectbilling/alert/PartnerManagementWholeSaleAndInterconnectBillingLevel4"/>
+                              <con3:description>Alert LEVEL4 FATAL em PartnerManagement.WholeSaleAndInterConnectBilling</con3:description>
+                              <con3:severity>fatal</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"CRITICAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-672b</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/partnermanagement/wholesaleandinterconnectbilling/alert/PartnerManagementWholeSaleAndInterconnectBillingLevel4"/>
+                              <con3:description>Alert LEVEL4 CRITICAL em PartnerManagement.WholeSaleAndInterConnectBilling</con3:description>
+                              <con3:severity>critical</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"WARNING" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-6722</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/partnermanagement/wholesaleandinterconnectbilling/alert/PartnerManagementWholeSaleAndInterconnectBillingLevel4"/>
+                              <con3:description>Alert LEVEL4 WARNING em PartnerManagement.WholeSaleAndInterConnectBilling</con3:description>
+                              <con3:severity>warning</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                          <con3:alert>
+                            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-670a</con1:id>
+                            <con3:destination ref="netarchitecture/monitoring/alert/alerts/partnermanagement/wholesaleandinterconnectbilling/alert/PartnerManagementWholeSaleAndInterconnectBillingLevel4"/>
+                            <con3:description>Alert LEVEL4 NORMAL em PartnerManagement.WholeSaleAndInterConnectBilling</con3:description>
+                            <con3:severity>normal</con3:severity>
+                            <con3:payload>
+                              <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                            </con3:payload>
+                          </con3:alert>
+                        </con2:default>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>"LEVEL5" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-69f9</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"FATAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-66f7</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/partnermanagement/wholesaleandinterconnectbilling/alert/PartnerManagementWholeSaleAndInterconnectBillingLevel5"/>
+                              <con3:description>Alert LEVEL5 FATAL em PartnerManagement.WholeSaleAndInterConnectBilling</con3:description>
+                              <con3:severity>fatal</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"CRITICAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-66da</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/partnermanagement/wholesaleandinterconnectbilling/alert/PartnerManagementWholeSaleAndInterconnectBillingLevel5"/>
+                              <con3:description>Alert LEVEL5 CRITICAL em PartnerManagement.WholeSaleAndInterConnectBilling</con3:description>
+                              <con3:severity>critical</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"WARNING" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-66c8</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/partnermanagement/wholesaleandinterconnectbilling/alert/PartnerManagementWholeSaleAndInterconnectBillingLevel5"/>
+                              <con3:description>Alert LEVEL5 WARNING em PartnerManagement.WholeSaleAndInterConnectBilling</con3:description>
+                              <con3:severity>warning</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                          <con3:alert>
+                            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-66b2</con1:id>
+                            <con3:destination ref="netarchitecture/monitoring/alert/alerts/partnermanagement/wholesaleandinterconnectbilling/alert/PartnerManagementWholeSaleAndInterconnectBillingLevel5"/>
+                            <con3:description>Alert LEVEL5 NORMAL em PartnerManagement.WholeSaleAndInterConnectBilling</con3:description>
+                            <con3:severity>normal</con3:severity>
+                            <con3:payload>
+                              <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                            </con3:payload>
+                          </con3:alert>
+                        </con2:default>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:default/>
+                </con2:ifThenElse>
+              </con2:actions>
+            </con2:case>
+            <con2:default/>
+          </con2:ifThenElse>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="response" name="PipelinePairNode_response">
+      <con:stage name="PrepareResponse">
+        <con:context xmlns:con1="http://www.bea.com/wli/sb/stages/alert/config">
+          <con1:varNsDecl namespace="http://www.netservicos.com.br/AlertV1" prefix="aler" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+        </con:context>
+        <con:actions xmlns:con1="http://www.bea.com/wli/sb/stages/alert/config">
+          <con1:replace varName="body" contents-only="true" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+            <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-1445721328115578041--38b75155.14619ddf914.-6c1b</con4:id>
+            <con1:location>
+              <con2:xpathText xmlns:con2="http://www.bea.com/wli/sb/stages/config">.</con2:xpathText>
+            </con1:location>
+            <con1:expr>
+              <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">&lt;aler:alertResponse/></con2:xqueryText>
+            </con1:expr>
+          </con1:replace>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:flow>
+      <con:pipeline-node name="PipelinePairNode">
+        <con:request>PipelinePairNode_request</con:request>
+        <con:response>PipelinePairNode_response</con:response>
+      </con:pipeline-node>
+    </con:flow>
+  </ser:router>
+</xml-fragment>

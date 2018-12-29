@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified"
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/service/trouble/OutageEvent"
+	xmlns="http://www.w3.org/2001/XMLSchema" 
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/service/trouble/OutageEvent"
+	xmlns:tps="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types"
+	xmlns:evt="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/event/Event"
+	xmlns:bis="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/businessinteraction/BusinessInteractionStatus"
+	xmlns:bui="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/businessinteraction/BusinessInteraction"
+	xmlns:cfs="http://www.netservicos.com.br/canonicalmodel/nid/v1/service/service/CustomerFacingService"
+	xmlns:cfss="http://www.netservicos.com.br/canonicalmodel/nid/v1/service/service/CustomerFacingServiceSpec"
+	xmlns:cit="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/location/City"
+	xmlns:gel="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/location/GeographicLocation"
+	xmlns:out="http://www.netservicos.com.br/canonicalmodel/nid/v1/service/trouble/Outage"
+	xmlns:net="http://www.netservicos.com.br/canonicalmodel/nid/v1/resource/topology/Network"
+	xmlns:prc="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/problem/ProblemCategory"
+	xmlns:pro="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/problem/Problem"
+	xmlns:ree="http://www.netservicos.com.br/canonicalmodel/nid/v1/resource/topology/ResourceElement"
+	xmlns:sep="http://www.netservicos.com.br/canonicalmodel/nid/v1/service/trouble/ServiceProblem"
+	xmlns:ses="http://www.netservicos.com.br/canonicalmodel/nid/v1/service/service/ServiceSpecification"
+	xmlns:ssc="http://www.netservicos.com.br/canonicalmodel/nid/v1/service/specification/ServiceSpecCharacteristic"
+	xmlns:sst="http://www.netservicos.com.br/canonicalmodel/nid/v1/service/service/ServiceSpecificationType"	
+	xmlns:sta="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/location/State"
+	xmlns:trt="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/problem/TroubleTicket"
+	xmlns:upa="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/location/UrbanPropertyAddress">
+	
+	<import 
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/event/Event"
+		schemaLocation="../../netarchitecture/event/Event.xsd" />
+	<import 
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types"
+		schemaLocation="../../netarchitecture/common/Types.xsd"/>
+	<import
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/businessinteraction/BusinessInteraction"
+		schemaLocation="../../common/businessinteraction/BusinessInteraction.xsd" />
+	<import
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/businessinteraction/BusinessInteractionStatus"
+		schemaLocation="../../common/businessinteraction/BusinessInteractionStatus.xsd" />
+	<import
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/location/City"
+		schemaLocation="../../common/location/City.xsd" />
+	 <import
+	    namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/service/service/CustomerFacingService"
+	    schemaLocation="../../service/service/CustomerFacingService.xsd" />
+	 <import
+	    namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/service/service/CustomerFacingServiceSpec"
+	    schemaLocation="../../service/service/CustomerFacingServiceSpec.xsd" />	
+	 <import
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/location/GeographicLocation"
+		schemaLocation="../../common/location/GeographicLocation.xsd" />
+	<import
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/resource/topology/Network"
+		schemaLocation="../../resource/topology/Network.xsd" />
+	<import
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/service/trouble/Outage"
+		schemaLocation="../../service/trouble/Outage.xsd" />			
+	<import
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/problem/Problem"
+		schemaLocation="../../common/problem/Problem.xsd" />	
+	<import
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/problem/ProblemCategory"
+		schemaLocation="../../common/problem/ProblemCategory.xsd" />	
+	<import
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/resource/topology/ResourceElement"
+		schemaLocation="../../resource/topology/ResourceElement.xsd" />	
+	<import
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/service/trouble/ServiceProblem"
+		schemaLocation="../../service/trouble/ServiceProblem.xsd" />
+	<import
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/service/specification/ServiceSpecCharacteristic"
+		schemaLocation="../../service/specification/ServiceSpecCharacteristic.xsd" />	
+	<import
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/service/service/ServiceSpecification"
+		schemaLocation="../../service/service/ServiceSpecification.xsd" />
+	<import
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/service/service/ServiceSpecificationType"
+		schemaLocation="../../service/service/ServiceSpecificationType.xsd" />
+	<import
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/location/State"
+		schemaLocation="../../common/location/State.xsd" />
+	<import
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/problem/TroubleTicket"
+		schemaLocation="../../common/problem/TroubleTicket.xsd" />
+	<import
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/location/UrbanPropertyAddress"
+		schemaLocation="../../common/location/UrbanPropertyAddress.xsd" />				
+
+
+	<complexType name="OutageEventType">
+		<complexContent>
+			<extension base="evt:EventType">
+				<sequence>
+					<element ref="tns:outage" minOccurs="1" maxOccurs="1"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="outageType">
+		<complexContent>
+			<extension base="tns:serviceProblemType">
+				<sequence>
+					<element ref="out:Outage" minOccurs="1" maxOccurs="1">
+						<annotation>
+							<documentation>
+								From Canonical Entity "Outage".
+							</documentation>
+						</annotation>
+					</element>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+	
+	<complexType name="serviceProblemType">
+		<complexContent>
+			<extension base="tns:problemType">
+				<sequence>
+					<element ref="sep:ServiceProblem" minOccurs="1" maxOccurs="1">
+						<annotation>
+							<documentation>
+								From Canonical Entity "ServiceProblem".
+							</documentation>
+						</annotation>
+					</element>
+					<element ref="tns:customerFacingService" minOccurs="0" maxOccurs="unbounded" />
+					<element ref="tns:network" minOccurs="0" maxOccurs="unbounded" />
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>	
+	
+	<complexType name="problemType">
+		<sequence>
+			<element ref="pro:Problem" minOccurs="1" maxOccurs="1">
+				<annotation>
+					<documentation>
+						From Canonical Entity "Problem".
+					</documentation>
+				</annotation>
+			</element>
+			<element ref="tns:troubleTicket" minOccurs="0" maxOccurs="1" />
+			<element ref="tns:urbanPropertyAddress" minOccurs="0" maxOccurs="1" />
+			<element ref="tns:problemCategory" minOccurs="0" maxOccurs="1" />
+		</sequence>
+	</complexType>
+
+	<complexType name="customerFacingServiceType">
+		<sequence>
+			<element ref="cfs:CustomerFacingService" minOccurs="1" maxOccurs="1">
+				<annotation>
+					<documentation>
+						From Canonical Entity "CustomerFacingService".
+					</documentation>
+				</annotation>
+			</element>
+			<element ref="tns:customerFacingServiceSpec" minOccurs="0" maxOccurs="1" />
+			<element ref="tns:serviceSpecification" minOccurs="0" maxOccurs="1" />
+		</sequence>
+	</complexType>
+
+	<complexType name="networkType">
+		<sequence>
+			<element ref="net:Network" minOccurs="1" maxOccurs="1">
+				<annotation>
+					<documentation>
+						From Canonical Entity "Network".
+					</documentation>
+				</annotation>
+			</element>
+			<element ref="tns:resourceElement" minOccurs="0" maxOccurs="unbounded" />
+		</sequence>
+	</complexType>
+
+	<complexType name="resourceElementType">
+		<sequence>
+			<element ref="ree:ResourceElement" minOccurs="1" maxOccurs="1">
+				<annotation>
+					<documentation>
+						From Canonical Entity "ResourceElement".
+					</documentation>
+				</annotation>
+			</element>
+			<element ref="tns:urbanPropertyAddress" minOccurs="0" maxOccurs="1"/>
+		</sequence>
+	</complexType>
+
+	<complexType name="customerFacingServiceSpecType">
+		<sequence>
+			<element ref="cfss:CustomerFacingServiceSpec" minOccurs="1" maxOccurs="1">
+				<annotation>
+					<documentation>
+						From Canonical Entity "CustomerFacingServiceSpec".
+					</documentation>
+				</annotation>
+			</element>
+			<element ref="tns:serviceSpecification" minOccurs="0" maxOccurs="1"></element>
+			<element ref="tns:serviceSpecCharacteristic" minOccurs="0" maxOccurs="1"></element>
+		</sequence>
+	</complexType>
+
+	<complexType name="serviceSpecificationType">
+		<sequence>
+			<element ref="ses:ServiceSpecification" minOccurs="1" maxOccurs="1">
+				<annotation>
+					<documentation>
+						From Canonical Entity "ServiceSpecification".
+					</documentation>
+				</annotation>
+			</element>
+			<element ref="tns:serviceSpecificationType" minOccurs="0" maxOccurs="1" />
+			<element ref="tns:serviceSpecCharacteristic" minOccurs="0" maxOccurs="unbounded" />
+		</sequence>
+	</complexType>	
+
+	<complexType name="serviceSpecCharacteristicType">
+		<sequence>
+			<element ref="ssc:ServiceSpecCharacteristic" minOccurs="1" maxOccurs="1">
+				<annotation>
+					<documentation>
+						From Canonical Entity "ServiceSpecCharacteristic".
+					</documentation>
+				</annotation>
+			</element>
+		</sequence>
+	</complexType>	
+
+	<complexType name="serviceSpecificationTypeType">
+		<sequence>
+			<element ref="sst:ServiceSpecificationType" minOccurs="1" maxOccurs="1">
+				<annotation>
+					<documentation>
+						From Canonical Entity "ServiceSpecificationType".
+					</documentation>
+				</annotation>
+			</element>
+		</sequence>
+	</complexType>	
+
+	<complexType name="troubleTicketType">
+		<complexContent>
+			<extension base="tns:businessInteractionType">
+				<sequence>
+					<element ref="trt:TroubleTicket" minOccurs="1" maxOccurs="1">
+						<annotation>
+							<documentation>
+								From Canonical Entity "TroubleTicket".
+							</documentation>
+						</annotation>
+					</element>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>	
+
+	<complexType name="businessInteractionType">
+		<sequence>
+			<element ref="bui:BusinessInteraction" minOccurs="1" maxOccurs="1">
+				<annotation>
+					<documentation>
+						From Canonical Entity "BusinessInteraction".
+					</documentation>
+				</annotation>
+			</element>
+			<element ref="tns:businessInteractionStatus" minOccurs="0" maxOccurs="1" />
+		</sequence>
+	</complexType>	
+
+	<complexType name="businessInteractionStatusType">
+		<sequence>
+			<element ref="bis:BusinessInteractionStatus" minOccurs="1" maxOccurs="1">
+				<annotation>
+					<documentation>
+						From Canonical Entity "BusinessInteractionStatus".
+					</documentation>
+				</annotation>
+			</element>
+		</sequence>
+	</complexType>
+
+	<complexType name="urbanPropertyAddressType">
+		<sequence>
+			<element ref="upa:UrbanPropertyAddress" minOccurs="1" maxOccurs="1">
+				<annotation>
+					<documentation>
+						From Canonical Entity "UrbanPropertyAddress".
+					</documentation>
+				</annotation>
+			</element>
+			<element ref="tns:city" minOccurs="0" maxOccurs="1"/>
+		</sequence>
+	</complexType>
+
+	<complexType name="cityType">
+		<complexContent>
+			<extension base="tns:geographicLocationType">
+				<sequence>
+					<element ref="cit:City" minOccurs="1" maxOccurs="1">
+						<annotation>
+							<documentation>
+								From Canonical Entity "City".
+							</documentation>
+						</annotation>
+					</element>
+					<element ref="tns:state" minOccurs="0" maxOccurs="1"/>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>	
+
+	<complexType name="geographicLocationType">
+		<sequence>
+			<element ref="gel:GeographicLocation" minOccurs="1" maxOccurs="1">
+				<annotation>
+					<documentation>
+						From Canonical Entity "GeographicLocation".
+					</documentation>
+				</annotation>
+			</element>
+		</sequence>
+	</complexType>	
+
+	<complexType name="stateType">
+		<sequence>
+			<element ref="sta:State" minOccurs="1" maxOccurs="1">
+				<annotation>
+					<documentation>
+						From Canonical Entity "State".
+					</documentation>
+				</annotation>
+			</element>
+		</sequence>
+	</complexType>
+
+    <complexType name="problemCategoryType">
+		<sequence>
+			<element ref="prc:ProblemCategory" minOccurs="1" maxOccurs="1">
+				<annotation>
+					<documentation>
+						From Canonical Entity "ProblemCategory".
+					</documentation>
+				</annotation>					
+			</element>
+			<element ref="tns:problemCategoryHas" minOccurs="0" maxOccurs="1" />
+		</sequence>			
+	</complexType>	
+
+	<complexType name="problemCategoryHasType">
+		<sequence>
+			<element ref="tns:problemCategoryChild" minOccurs="0" maxOccurs="1"/>
+		</sequence>
+	</complexType>
+
+	<complexType name="problemCategoryChildType">
+		<sequence>
+			<element ref="prc:ProblemCategory" minOccurs="1" maxOccurs="1">
+				<annotation>
+					<documentation>
+						From Canonical Entity "ProblemCategory".
+					</documentation>
+				</annotation>
+			</element>
+			<element ref="tns:problemCategoryHas" minOccurs="0" maxOccurs="1" />
+		</sequence>
+	</complexType>
+
+	<element name="businessInteractionStatus" type="tns:businessInteractionStatusType"/>
+	<element name="city" type="tns:cityType"/>
+	<element name="customerFacingService" type="tns:customerFacingServiceType" />
+	<element name="customerFacingServiceSpec" type="tns:customerFacingServiceSpecType" />
+	<element name="network" type="tns:networkType" />
+	<element name="outage" type="tns:outageType" />
+	<element name="problemCategory" type="tns:problemCategoryType" />
+	<element name="problemCategoryChild" type="tns:problemCategoryChildType" />
+	<element name="problemCategoryHas" type="tns:problemCategoryHasType" />
+	<element name="resourceElement" type="tns:resourceElementType" />
+	<element name="serviceProblem" type="tns:serviceProblemType" />
+	<element name="serviceSpecCharacteristic" type="tns:serviceSpecCharacteristicType" />
+	<element name="serviceSpecification" type="tns:serviceSpecificationType" />
+	<element name="serviceSpecificationType" type="tns:serviceSpecificationTypeType" />
+	<element name="state" type="tns:stateType"/>
+	<element name="troubleTicket" type="tns:troubleTicketType" />
+	<element name="urbanPropertyAddress" type="tns:urbanPropertyAddressType"/>
+
+	<element name="OutageUpdatedEvent" type="tns:OutageEventType">
+		<annotation>
+			<documentation>
+				Updated
+			</documentation>
+		</annotation>
+	</element>
+
+</schema>

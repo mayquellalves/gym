@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/specification/EventChannel"
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/specification/EventChannel"
+	xmlns:tps="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types">
+
+	
+	
+	<import schemaLocation="../../netarchitecture/common/Types.xsd"
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types" />
+
+
+	<complexType name="EventChannelType">
+		
+				<sequence>
+					<element name="Name" type="tps:string030" minOccurs="0" maxOccurs="1" />
+					<element name="Number" type="int" minOccurs="0" maxOccurs="1" />
+									
+				</sequence>
+			
+	</complexType>
+
+	<element name="EventChannel" type="tns:EventChannelType" />
+	
+	<element name="EventChannels">
+		<complexType >
+			<sequence>
+				<element ref="tns:EventChannel" minOccurs="1" maxOccurs="unbounded" />
+			</sequence>
+		</complexType>
+	</element>
+
+</schema>

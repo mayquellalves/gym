@@ -1,0 +1,2624 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/stages/alert/config">
+  <ser:coreEntry isProxy="true" isEnabled="true" isAutoPublish="false" isTracingEnabled="false">
+    <ser:binding type="SOAP" isSoap12="true" xsi:type="con:SoapBindingType" xmlns:con="http://www.bea.com/wli/sb/services/bindings/config">
+      <con:wsdl ref="netarchitecture/monitoring/alert/wsdl/proxy/Alert12V1"/>
+      <con:binding>
+        <con:name>AlertBinding12</con:name>
+        <con:namespace>http://www.netservicos.com.br/AlertV1</con:namespace>
+      </con:binding>
+      <con:selector type="SOAP body"/>
+    </ser:binding>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Pipeline</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+    <ser:ws-policy>
+      <ser:binding-mode>owsm-policy-bindings</ser:binding-mode>
+    </ser:ws-policy>
+    <ser:throttling enabled="false">
+      <ser:capacity>0</ser:capacity>
+      <ser:maxQueueLength>0</ser:maxQueueLength>
+      <ser:timeToLive>0</ser:timeToLive>
+    </ser:throttling>
+    <ser:messageTracing enabled="false">
+      <ser:detailsLevel>Terse</ser:detailsLevel>
+      <ser:maxSize>8192</ser:maxSize>
+    </ser:messageTracing>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>http</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:URI>
+      <env:value>/netarchitecture/monitoring/alert/proxyservice/AlertServiceManagement12V1LCL</env:value>
+    </tran:URI>
+    <tran:inbound-properties/>
+    <tran:all-headers>false</tran:all-headers>
+    <tran:provider-specific>
+      <http:inbound-properties/>
+    </tran:provider-specific>
+  </ser:endpointConfig>
+  <ser:router>
+    <con:pipeline type="request" name="PipelinePairNode_request" xmlns:con="http://www.bea.com/wli/sb/pipeline/config">
+      <con:stage name="GetClassificationSeverity">
+        <con:context>
+          <con2:varNsDecl namespace="http://www.netservicos.com.br/AlertV1" prefix="aler" xmlns:con2="http://www.bea.com/wli/sb/stages/config"/>
+          <con2:varNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/monitoring/Alert" prefix="aler1" xmlns:con2="http://www.bea.com/wli/sb/stages/config"/>
+          <con2:varNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/NidDomain" prefix="nid" xmlns:con2="http://www.bea.com/wli/sb/stages/config"/>
+          <con2:varNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/NidAbeLevel" prefix="nid1" xmlns:con2="http://www.bea.com/wli/sb/stages/config"/>
+        </con:context>
+        <con:actions>
+          <con1:ifThenElse>
+            <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-7304</con2:id>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">not(fn:exists($body/aler:alertRequest/aler1:ExceptionClassification))
+or not($body/aler:alertRequest/aler1:ExceptionClassification/node())
+or ($body/aler:alertRequest/aler1:ExceptionClassification eq "")</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con1:assign varName="severidadeAlerta">
+                  <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-72c7</con2:id>
+                  <con1:expr>
+                    <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"NORMAL"</con2:xqueryText>
+                  </con1:expr>
+                </con1:assign>
+              </con1:actions>
+            </con1:case>
+            <con1:default>
+              <con1:javaCallout varName="severidadeAlerta">
+                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-72a4</con2:id>
+                <con1:archive ref="netarchitecture/transformation/jar/NETServiceBusUtilClient"/>
+                <con1:className>br.com.netservicos.sb.config.alert.NETAlertConfig</con1:className>
+                <con1:method>public static java.lang.String getClassificationSeverty(java.lang.String)</con1:method>
+                <con1:expr>
+                  <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">fn:data($body/aler:alertRequest/aler1:ExceptionClassification)</con2:xqueryText>
+                </con1:expr>
+              </con1:javaCallout>
+            </con1:default>
+          </con1:ifThenElse>
+        </con:actions>
+      </con:stage>
+      <con:stage name="CreateAlertAccordingToNidAbeLevelAndSeverity">
+        <con:context>
+          <con2:varNsDecl namespace="http://www.netservicos.com.br/AlertV1" prefix="aler" xmlns:con2="http://www.bea.com/wli/sb/stages/config"/>
+          <con2:varNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/monitoring/Alert" prefix="aler1" xmlns:con2="http://www.bea.com/wli/sb/stages/config"/>
+          <con2:varNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/NidDomain" prefix="nid" xmlns:con2="http://www.bea.com/wli/sb/stages/config"/>
+          <con2:varNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/NidAbeLevel" prefix="nid1" xmlns:con2="http://www.bea.com/wli/sb/stages/config"/>
+        </con:context>
+        <con:actions>
+          <con1:ifThenElse>
+            <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-6c28</con2:id>
+            <con1:case>
+              <con1:condition>
+                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">fn:upper-case("Catalog") eq fn:upper-case($body/aler:alertRequest/nid1:NidAbeLevel)</con3:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con1:ifThenElse>
+                  <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-6bf4</con2:id>
+                  <con1:case>
+                    <con1:condition>
+                      <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"LEVEL1" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con2:xqueryText>
+                    </con1:condition>
+                    <con1:actions>
+                      <con1:ifThenElse>
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-6bd3</con2:id>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"FATAL" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-679f</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/catalog/alert/ServiceManagementCatalogLevel1"/>
+                              <con2:description>Alert LEVEL1 FATAL em ServiceManagement.Catalog</con2:description>
+                              <con2:severity>fatal</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"CRITICAL" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-6654</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/catalog/alert/ServiceManagementCatalogLevel1"/>
+                              <con2:description>Alert LEVEL1 CRITICAL em ServiceManagement.Catalog</con2:description>
+                              <con2:severity>critical</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"WARNING" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-6640</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/catalog/alert/ServiceManagementCatalogLevel1"/>
+                              <con2:description>Alert LEVEL1 WARNING em ServiceManagement.Catalog</con2:description>
+                              <con2:severity>warning</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:default>
+                          <con2:alert>
+                            <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-6632</con3:id>
+                            <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/catalog/alert/ServiceManagementCatalogLevel1"/>
+                            <con2:description>Alert LEVEL1 NORMAL em ServiceManagement.Catalog</con2:description>
+                            <con2:severity>normal</con2:severity>
+                            <con2:payload>
+                              <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                            </con2:payload>
+                          </con2:alert>
+                        </con1:default>
+                      </con1:ifThenElse>
+                    </con1:actions>
+                  </con1:case>
+                  <con1:case>
+                    <con1:condition>
+                      <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"LEVEL2" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con2:xqueryText>
+                    </con1:condition>
+                    <con1:actions>
+                      <con1:ifThenElse>
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-6bbb</con2:id>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"FATAL" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-661a</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/catalog/alert/ServiceManagementCatalogLevel2"/>
+                              <con2:description>Alert LEVEL2 FATAL em ServiceManagement.Catalog</con2:description>
+                              <con2:severity>fatal</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"CRITICAL" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-6606</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/catalog/alert/ServiceManagementCatalogLevel2"/>
+                              <con2:description>Alert LEVEL2 CRITICAL em ServiceManagement.Catalog</con2:description>
+                              <con2:severity>critical</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"WARNING" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-65fa</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/catalog/alert/ServiceManagementCatalogLevel2"/>
+                              <con2:description>Alert LEVEL2 WARNING em ServiceManagement.Catalog</con2:description>
+                              <con2:severity>warning</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:default>
+                          <con2:alert>
+                            <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-65d0</con3:id>
+                            <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/catalog/alert/ServiceManagementCatalogLevel2"/>
+                            <con2:description>Alert LEVEL2 NORMAL em ServiceManagement.Catalog</con2:description>
+                            <con2:severity>normal</con2:severity>
+                            <con2:payload>
+                              <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                            </con2:payload>
+                          </con2:alert>
+                        </con1:default>
+                      </con1:ifThenElse>
+                    </con1:actions>
+                  </con1:case>
+                  <con1:case>
+                    <con1:condition>
+                      <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"LEVEL3" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con2:xqueryText>
+                    </con1:condition>
+                    <con1:actions>
+                      <con1:ifThenElse>
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-6ba7</con2:id>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"FATAL" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-65c0</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/catalog/alert/ServiceManagementCatalogLevel3"/>
+                              <con2:description>Alert LEVEL3 FATAL em ServiceManagement.Catalog</con2:description>
+                              <con2:severity>fatal</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"CRITICAL" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-65a7</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/catalog/alert/ServiceManagementCatalogLevel3"/>
+                              <con2:description>Alert LEVEL3 CRITICAL em ServiceManagement.Catalog</con2:description>
+                              <con2:severity>critical</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"WARNING" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-6599</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/catalog/alert/ServiceManagementCatalogLevel3"/>
+                              <con2:description>Alert LEVEL3 WARNING em ServiceManagement.Catalog</con2:description>
+                              <con2:severity>warning</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:default>
+                          <con2:alert>
+                            <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-658c</con3:id>
+                            <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/catalog/alert/ServiceManagementCatalogLevel3"/>
+                            <con2:description>Alert LEVEL3 NORMAL em ServiceManagement.Catalog</con2:description>
+                            <con2:severity>normal</con2:severity>
+                            <con2:payload>
+                              <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                            </con2:payload>
+                          </con2:alert>
+                        </con1:default>
+                      </con1:ifThenElse>
+                    </con1:actions>
+                  </con1:case>
+                  <con1:case>
+                    <con1:condition>
+                      <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"LEVEL4" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con2:xqueryText>
+                    </con1:condition>
+                    <con1:actions>
+                      <con1:ifThenElse>
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-6b95</con2:id>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"FATAL" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-656f</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/catalog/alert/ServiceManagementCatalogLevel4"/>
+                              <con2:description>Alert LEVEL4 FATAL em ServiceManagement.Catalog</con2:description>
+                              <con2:severity>fatal</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"CRITICAL" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-6558</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/catalog/alert/ServiceManagementCatalogLevel4"/>
+                              <con2:description>Alert LEVEL4 CRITICAL em ServiceManagement.Catalog</con2:description>
+                              <con2:severity>critical</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"WARNING" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-6543</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/catalog/alert/ServiceManagementCatalogLevel4"/>
+                              <con2:description>Alert LEVEL4 WARNING em ServiceManagement.Catalog</con2:description>
+                              <con2:severity>warning</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:default>
+                          <con2:alert>
+                            <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-6533</con3:id>
+                            <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/catalog/alert/ServiceManagementCatalogLevel4"/>
+                            <con2:description>Alert LEVEL4 NORMAL em ServiceManagement.Catalog</con2:description>
+                            <con2:severity>normal</con2:severity>
+                            <con2:payload>
+                              <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                            </con2:payload>
+                          </con2:alert>
+                        </con1:default>
+                      </con1:ifThenElse>
+                    </con1:actions>
+                  </con1:case>
+                  <con1:case>
+                    <con1:condition>
+                      <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"LEVEL5" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con2:xqueryText>
+                    </con1:condition>
+                    <con1:actions>
+                      <con1:ifThenElse>
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-6b78</con2:id>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"FATAL" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-6523</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/catalog/alert/ServiceManagementCatalogLevel5"/>
+                              <con2:description>Alert LEVEL5 FATAL em ServiceManagement.Catalog</con2:description>
+                              <con2:severity>fatal</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"CRITICAL" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-6513</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/catalog/alert/ServiceManagementCatalogLevel5"/>
+                              <con2:description>Alert LEVEL5 CRITICAL em ServiceManagement.Catalog</con2:description>
+                              <con2:severity>critical</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"WARNING" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-6504</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/catalog/alert/ServiceManagementCatalogLevel5"/>
+                              <con2:description>Alert LEVEL5 WARNING em ServiceManagement.Catalog</con2:description>
+                              <con2:severity>warning</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:default>
+                          <con2:alert>
+                            <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-64f2</con3:id>
+                            <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/catalog/alert/ServiceManagementCatalogLevel5"/>
+                            <con2:description>Alert LEVEL5 NORMAL em ServiceManagement.Catalog</con2:description>
+                            <con2:severity>normal</con2:severity>
+                            <con2:payload>
+                              <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                            </con2:payload>
+                          </con2:alert>
+                        </con1:default>
+                      </con1:ifThenElse>
+                    </con1:actions>
+                  </con1:case>
+                  <con1:default/>
+                </con1:ifThenElse>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">fn:upper-case("Inventory") eq fn:upper-case($body/aler:alertRequest/nid1:NidAbeLevel)</con3:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con1:ifThenElse>
+                  <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-6b49</con2:id>
+                  <con1:case>
+                    <con1:condition>
+                      <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"LEVEL1" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con2:xqueryText>
+                    </con1:condition>
+                    <con1:actions>
+                      <con1:ifThenElse>
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-68a1</con2:id>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"FATAL" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-6744</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/inventory/alert/ServiceManagementInventoryLevel1"/>
+                              <con2:description>Alert LEVEL1 FATAL em ServiceManagement.Inventory</con2:description>
+                              <con2:severity>fatal</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"CRITICAL" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-64df</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/inventory/alert/ServiceManagementInventoryLevel1"/>
+                              <con2:description>Alert LEVEL1 CRITICAL em ServiceManagement.Inventory</con2:description>
+                              <con2:severity>critical</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"WARNING" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-64d4</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/inventory/alert/ServiceManagementInventoryLevel1"/>
+                              <con2:description>Alert LEVEL1 WARNING em ServiceManagement.Inventory</con2:description>
+                              <con2:severity>warning</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:default>
+                          <con2:alert>
+                            <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-64bb</con3:id>
+                            <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/inventory/alert/ServiceManagementInventoryLevel1"/>
+                            <con2:description>Alert LEVEL1 NORMAL em ServiceManagement.Inventory</con2:description>
+                            <con2:severity>normal</con2:severity>
+                            <con2:payload>
+                              <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                            </con2:payload>
+                          </con2:alert>
+                        </con1:default>
+                      </con1:ifThenElse>
+                    </con1:actions>
+                  </con1:case>
+                  <con1:case>
+                    <con1:condition>
+                      <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"LEVEL2" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con2:xqueryText>
+                    </con1:condition>
+                    <con1:actions>
+                      <con1:ifThenElse>
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-6891</con2:id>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"FATAL" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-64ac</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/inventory/alert/ServiceManagementInventoryLevel2"/>
+                              <con2:description>Alert LEVEL2 FATAL em ServiceManagement.Inventory</con2:description>
+                              <con2:severity>fatal</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"CRITICAL" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-648d</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/inventory/alert/ServiceManagementInventoryLevel2"/>
+                              <con2:description>Alert LEVEL2 CRITICAL em ServiceManagement.Inventory</con2:description>
+                              <con2:severity>critical</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"WARNING" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-6480</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/inventory/alert/ServiceManagementInventoryLevel2"/>
+                              <con2:description>Alert LEVEL2 WARNING em ServiceManagement.Inventory</con2:description>
+                              <con2:severity>warning</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:default>
+                          <con2:alert>
+                            <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-6478</con3:id>
+                            <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/inventory/alert/ServiceManagementInventoryLevel2"/>
+                            <con2:description>Alert LEVEL2 NORMAL em ServiceManagement.Inventory</con2:description>
+                            <con2:severity>normal</con2:severity>
+                            <con2:payload>
+                              <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                            </con2:payload>
+                          </con2:alert>
+                        </con1:default>
+                      </con1:ifThenElse>
+                    </con1:actions>
+                  </con1:case>
+                  <con1:case>
+                    <con1:condition>
+                      <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"LEVEL3" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con2:xqueryText>
+                    </con1:condition>
+                    <con1:actions>
+                      <con1:ifThenElse>
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-6871</con2:id>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"FATAL" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-6466</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/inventory/alert/ServiceManagementInventoryLevel3"/>
+                              <con2:description>Alert LEVEL3 FATAL em ServiceManagement.Inventory</con2:description>
+                              <con2:severity>fatal</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"CRITICAL" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-6455</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/inventory/alert/ServiceManagementInventoryLevel3"/>
+                              <con2:description>Alert LEVEL3 CRITICAL em ServiceManagement.Inventory</con2:description>
+                              <con2:severity>critical</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"WARNING" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-6438</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/inventory/alert/ServiceManagementInventoryLevel3"/>
+                              <con2:description>Alert LEVEL3 WARNING em ServiceManagement.Inventory</con2:description>
+                              <con2:severity>warning</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:default>
+                          <con2:alert>
+                            <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-6421</con3:id>
+                            <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/inventory/alert/ServiceManagementInventoryLevel3"/>
+                            <con2:description>Alert LEVEL3 NORMAL em ServiceManagement.Inventory</con2:description>
+                            <con2:severity>normal</con2:severity>
+                            <con2:payload>
+                              <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                            </con2:payload>
+                          </con2:alert>
+                        </con1:default>
+                      </con1:ifThenElse>
+                    </con1:actions>
+                  </con1:case>
+                  <con1:case>
+                    <con1:condition>
+                      <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"LEVEL4" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con2:xqueryText>
+                    </con1:condition>
+                    <con1:actions>
+                      <con1:ifThenElse>
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-685e</con2:id>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"FATAL" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-6407</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/inventory/alert/ServiceManagementInventoryLevel4"/>
+                              <con2:description>Alert LEVEL4 FATAL em ServiceManagement.Inventory</con2:description>
+                              <con2:severity>fatal</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"CRITICAL" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-63f5</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/inventory/alert/ServiceManagementInventoryLevel4"/>
+                              <con2:description>Alert LEVEL4 CRITICAL em ServiceManagement.Inventory</con2:description>
+                              <con2:severity>critical</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"WARNING" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-63e2</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/inventory/alert/ServiceManagementInventoryLevel4"/>
+                              <con2:description>Alert LEVEL4 WARNING em ServiceManagement.Inventory</con2:description>
+                              <con2:severity>warning</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:default>
+                          <con2:alert>
+                            <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-63d7</con3:id>
+                            <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/inventory/alert/ServiceManagementInventoryLevel4"/>
+                            <con2:description>Alert LEVEL4 NORMAL em ServiceManagement.Inventory</con2:description>
+                            <con2:severity>normal</con2:severity>
+                            <con2:payload>
+                              <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                            </con2:payload>
+                          </con2:alert>
+                        </con1:default>
+                      </con1:ifThenElse>
+                    </con1:actions>
+                  </con1:case>
+                  <con1:case>
+                    <con1:condition>
+                      <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"LEVEL5" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con2:xqueryText>
+                    </con1:condition>
+                    <con1:actions>
+                      <con1:ifThenElse>
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-6844</con2:id>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"FATAL" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-63c5</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/inventory/alert/ServiceManagementInventoryLevel5"/>
+                              <con2:description>Alert LEVEL5 FATAL em ServiceManagement.Inventory</con2:description>
+                              <con2:severity>fatal</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"CRITICAL" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-63b5</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/inventory/alert/ServiceManagementInventoryLevel5"/>
+                              <con2:description>Alert LEVEL5 CRITICAL em ServiceManagement.Inventory</con2:description>
+                              <con2:severity>critical</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"WARNING" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-639c</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/inventory/alert/ServiceManagementInventoryLevel5"/>
+                              <con2:description>Alert LEVEL5 WARNING em ServiceManagement.Inventory</con2:description>
+                              <con2:severity>warning</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:default>
+                          <con2:alert>
+                            <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-638e</con3:id>
+                            <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/inventory/alert/ServiceManagementInventoryLevel5"/>
+                            <con2:description>Alert LEVEL5 NORMAL em ServiceManagement.Inventory</con2:description>
+                            <con2:severity>normal</con2:severity>
+                            <con2:payload>
+                              <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                            </con2:payload>
+                          </con2:alert>
+                        </con1:default>
+                      </con1:ifThenElse>
+                    </con1:actions>
+                  </con1:case>
+                  <con1:default/>
+                </con1:ifThenElse>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">fn:upper-case("Order") eq fn:upper-case($body/aler:alertRequest/nid1:NidAbeLevel)</con3:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con1:ifThenElse>
+                  <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-6b2f</con2:id>
+                  <con1:case>
+                    <con1:condition>
+                      <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"LEVEL1" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con2:xqueryText>
+                    </con1:condition>
+                    <con1:actions>
+                      <con1:ifThenElse>
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-68fc</con2:id>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"FATAL" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-6726</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/order/alert/ServiceManagementOrderLevel1"/>
+                              <con2:description>Alert LEVEL1 FATAL em ServiceManagement.Order</con2:description>
+                              <con2:severity>fatal</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"CRITICAL" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-6378</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/order/alert/ServiceManagementOrderLevel1"/>
+                              <con2:description>Alert LEVEL1 CRITICAL em ServiceManagement.Order</con2:description>
+                              <con2:severity>critical</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"WARNING" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-636c</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/order/alert/ServiceManagementOrderLevel1"/>
+                              <con2:description>Alert LEVEL1 WARNING em ServiceManagement.Order</con2:description>
+                              <con2:severity>warning</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:default>
+                          <con2:alert>
+                            <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-635b</con3:id>
+                            <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/order/alert/ServiceManagementOrderLevel1"/>
+                            <con2:description>Alert LEVEL1 NORMAL em ServiceManagement.Order</con2:description>
+                            <con2:severity>normal</con2:severity>
+                            <con2:payload>
+                              <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                            </con2:payload>
+                          </con2:alert>
+                        </con1:default>
+                      </con1:ifThenElse>
+                    </con1:actions>
+                  </con1:case>
+                  <con1:case>
+                    <con1:condition>
+                      <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"LEVEL2" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con2:xqueryText>
+                    </con1:condition>
+                    <con1:actions>
+                      <con1:ifThenElse>
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-68eb</con2:id>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"FATAL" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-634f</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/order/alert/ServiceManagementOrderLevel2"/>
+                              <con2:description>Alert LEVEL2 FATAL em ServiceManagement.Order</con2:description>
+                              <con2:severity>fatal</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"CRITICAL" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-6339</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/order/alert/ServiceManagementOrderLevel2"/>
+                              <con2:description>Alert LEVEL2 CRITICAL em ServiceManagement.Order</con2:description>
+                              <con2:severity>critical</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"WARNING" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-6321</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/order/alert/ServiceManagementOrderLevel2"/>
+                              <con2:description>Alert LEVEL2 WARNING em ServiceManagement.Order</con2:description>
+                              <con2:severity>warning</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:default>
+                          <con2:alert>
+                            <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-630d</con3:id>
+                            <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/order/alert/ServiceManagementOrderLevel2"/>
+                            <con2:description>Alert LEVEL2 NORMAL em ServiceManagement.Order</con2:description>
+                            <con2:severity>normal</con2:severity>
+                            <con2:payload>
+                              <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                            </con2:payload>
+                          </con2:alert>
+                        </con1:default>
+                      </con1:ifThenElse>
+                    </con1:actions>
+                  </con1:case>
+                  <con1:case>
+                    <con1:condition>
+                      <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"LEVEL3" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con2:xqueryText>
+                    </con1:condition>
+                    <con1:actions>
+                      <con1:ifThenElse>
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-68df</con2:id>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"FATAL" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-62ff</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/order/alert/ServiceManagementOrderLevel3"/>
+                              <con2:description>Alert LEVEL3 FATAL em ServiceManagement.Order</con2:description>
+                              <con2:severity>fatal</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"CRITICAL" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-62ea</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/order/alert/ServiceManagementOrderLevel3"/>
+                              <con2:description>Alert LEVEL3 CRITICAL em ServiceManagement.Order</con2:description>
+                              <con2:severity>critical</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"WARNING" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-62d0</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/order/alert/ServiceManagementOrderLevel3"/>
+                              <con2:description>Alert LEVEL3 WARNING em ServiceManagement.Order</con2:description>
+                              <con2:severity>warning</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:default>
+                          <con2:alert>
+                            <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-62bf</con3:id>
+                            <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/order/alert/ServiceManagementOrderLevel3"/>
+                            <con2:description>Alert LEVEL3 NORMAL em ServiceManagement.Order</con2:description>
+                            <con2:severity>normal</con2:severity>
+                            <con2:payload>
+                              <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                            </con2:payload>
+                          </con2:alert>
+                        </con1:default>
+                      </con1:ifThenElse>
+                    </con1:actions>
+                  </con1:case>
+                  <con1:case>
+                    <con1:condition>
+                      <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"LEVEL4" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con2:xqueryText>
+                    </con1:condition>
+                    <con1:actions>
+                      <con1:ifThenElse>
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-68d7</con2:id>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"FATAL" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-62a0</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/order/alert/ServiceManagementOrderLevel4"/>
+                              <con2:description>Alert LEVEL4 FATAL em ServiceManagement.Order</con2:description>
+                              <con2:severity>fatal</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"CRITICAL" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-6286</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/order/alert/ServiceManagementOrderLevel4"/>
+                              <con2:description>Alert LEVEL4 CRITICAL em ServiceManagement.Order</con2:description>
+                              <con2:severity>critical</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"WARNING" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-6277</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/order/alert/ServiceManagementOrderLevel4"/>
+                              <con2:description>Alert LEVEL4 WARNING em ServiceManagement.Order</con2:description>
+                              <con2:severity>warning</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:default>
+                          <con2:alert>
+                            <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-6255</con3:id>
+                            <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/order/alert/ServiceManagementOrderLevel4"/>
+                            <con2:description>Alert LEVEL4 NORMAL em ServiceManagement.Order</con2:description>
+                            <con2:severity>normal</con2:severity>
+                            <con2:payload>
+                              <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                            </con2:payload>
+                          </con2:alert>
+                        </con1:default>
+                      </con1:ifThenElse>
+                    </con1:actions>
+                  </con1:case>
+                  <con1:case>
+                    <con1:condition>
+                      <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"LEVEL5" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con2:xqueryText>
+                    </con1:condition>
+                    <con1:actions>
+                      <con1:ifThenElse>
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-68b1</con2:id>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"FATAL" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-6244</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/order/alert/ServiceManagementOrderLevel5"/>
+                              <con2:description>Alert LEVEL5 FATAL em ServiceManagement.Order</con2:description>
+                              <con2:severity>fatal</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"CRITICAL" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-6227</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/order/alert/ServiceManagementOrderLevel5"/>
+                              <con2:description>Alert LEVEL5 CRITICAL em ServiceManagement.Order</con2:description>
+                              <con2:severity>critical</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"WARNING" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-6217</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/order/alert/ServiceManagementOrderLevel5"/>
+                              <con2:description>Alert LEVEL5 WARNING em ServiceManagement.Order</con2:description>
+                              <con2:severity>warning</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:default>
+                          <con2:alert>
+                            <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-620b</con3:id>
+                            <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/order/alert/ServiceManagementOrderLevel5"/>
+                            <con2:description>Alert LEVEL5 NORMAL em ServiceManagement.Order</con2:description>
+                            <con2:severity>normal</con2:severity>
+                            <con2:payload>
+                              <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                            </con2:payload>
+                          </con2:alert>
+                        </con1:default>
+                      </con1:ifThenElse>
+                    </con1:actions>
+                  </con1:case>
+                  <con1:default/>
+                </con1:ifThenElse>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">fn:upper-case("Performance") eq fn:upper-case($body/aler:alertRequest/nid1:NidAbeLevel)</con3:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con1:ifThenElse>
+                  <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-6b0e</con2:id>
+                  <con1:case>
+                    <con1:condition>
+                      <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"LEVEL1" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con2:xqueryText>
+                    </con1:condition>
+                    <con1:actions>
+                      <con1:ifThenElse>
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-6964</con2:id>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"FATAL" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-6711</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/performance/alert/ServiceManagementPerformanceLevel1"/>
+                              <con2:description>Alert LEVEL1 FATAL em ServiceManagement.Performance</con2:description>
+                              <con2:severity>fatal</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"CRITICAL" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-666c</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/performance/alert/ServiceManagementPerformanceLevel1"/>
+                              <con2:description>Alert LEVEL1 CRITICAL em ServiceManagement.Performance</con2:description>
+                              <con2:severity>critical</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"WARNING" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-61fd</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/performance/alert/ServiceManagementPerformanceLevel1"/>
+                              <con2:description>Alert LEVEL1 WARNING em ServiceManagement.Performance</con2:description>
+                              <con2:severity>warning</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:default>
+                          <con2:alert>
+                            <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-61ee</con3:id>
+                            <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/performance/alert/ServiceManagementPerformanceLevel1"/>
+                            <con2:description>Alert LEVEL1 NORMAL em ServiceManagement.Performance</con2:description>
+                            <con2:severity>normal</con2:severity>
+                            <con2:payload>
+                              <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                            </con2:payload>
+                          </con2:alert>
+                        </con1:default>
+                      </con1:ifThenElse>
+                    </con1:actions>
+                  </con1:case>
+                  <con1:case>
+                    <con1:condition>
+                      <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"LEVEL2" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con2:xqueryText>
+                    </con1:condition>
+                    <con1:actions>
+                      <con1:ifThenElse>
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-694b</con2:id>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"FATAL" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-61db</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/performance/alert/ServiceManagementPerformanceLevel2"/>
+                              <con2:description>Alert LEVEL2 FATAL em ServiceManagement.Performance</con2:description>
+                              <con2:severity>fatal</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"CRITICAL" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-61ca</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/performance/alert/ServiceManagementPerformanceLevel2"/>
+                              <con2:description>Alert LEVEL2 CRITICAL em ServiceManagement.Performance</con2:description>
+                              <con2:severity>critical</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"WARNING" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-61b8</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/performance/alert/ServiceManagementPerformanceLevel2"/>
+                              <con2:description>Alert LEVEL2 WARNING em ServiceManagement.Performance</con2:description>
+                              <con2:severity>warning</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:default>
+                          <con2:alert>
+                            <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-6197</con3:id>
+                            <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/performance/alert/ServiceManagementPerformanceLevel2"/>
+                            <con2:description>Alert LEVEL2 NORMAL em ServiceManagement.Performance</con2:description>
+                            <con2:severity>normal</con2:severity>
+                            <con2:payload>
+                              <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                            </con2:payload>
+                          </con2:alert>
+                        </con1:default>
+                      </con1:ifThenElse>
+                    </con1:actions>
+                  </con1:case>
+                  <con1:case>
+                    <con1:condition>
+                      <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"LEVEL3" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con2:xqueryText>
+                    </con1:condition>
+                    <con1:actions>
+                      <con1:ifThenElse>
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-693c</con2:id>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"FATAL" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-6179</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/performance/alert/ServiceManagementPerformanceLevel3"/>
+                              <con2:description>Alert LEVEL3 FATAL em ServiceManagement.Performance</con2:description>
+                              <con2:severity>fatal</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"CRITICAL" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-615b</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/performance/alert/ServiceManagementPerformanceLevel3"/>
+                              <con2:description>Alert LEVEL3 CRITICAL em ServiceManagement.Performance</con2:description>
+                              <con2:severity>critical</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"WARNING" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-6144</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/performance/alert/ServiceManagementPerformanceLevel3"/>
+                              <con2:description>Alert LEVEL3 WARNING em ServiceManagement.Performance</con2:description>
+                              <con2:severity>warning</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:default>
+                          <con2:alert>
+                            <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-6133</con3:id>
+                            <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/performance/alert/ServiceManagementPerformanceLevel3"/>
+                            <con2:description>Alert LEVEL3 NORMAL em ServiceManagement.Performance</con2:description>
+                            <con2:severity>normal</con2:severity>
+                            <con2:payload>
+                              <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                            </con2:payload>
+                          </con2:alert>
+                        </con1:default>
+                      </con1:ifThenElse>
+                    </con1:actions>
+                  </con1:case>
+                  <con1:case>
+                    <con1:condition>
+                      <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"LEVEL4" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con2:xqueryText>
+                    </con1:condition>
+                    <con1:actions>
+                      <con1:ifThenElse>
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-692a</con2:id>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"FATAL" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-6120</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/performance/alert/ServiceManagementPerformanceLevel4"/>
+                              <con2:description>Alert LEVEL4 FATAL em ServiceManagement.Performance</con2:description>
+                              <con2:severity>fatal</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"CRITICAL" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-610c</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/performance/alert/ServiceManagementPerformanceLevel4"/>
+                              <con2:description>Alert LEVEL4 CRITICAL em ServiceManagement.Performance</con2:description>
+                              <con2:severity>critical</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"WARNING" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-6100</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/performance/alert/ServiceManagementPerformanceLevel4"/>
+                              <con2:description>Alert LEVEL4 WARNING em ServiceManagement.Performance</con2:description>
+                              <con2:severity>warning</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:default>
+                          <con2:alert>
+                            <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-60cc</con3:id>
+                            <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/performance/alert/ServiceManagementPerformanceLevel4"/>
+                            <con2:description>Alert LEVEL4 NORMAL em ServiceManagement.Performance</con2:description>
+                            <con2:severity>normal</con2:severity>
+                            <con2:payload>
+                              <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                            </con2:payload>
+                          </con2:alert>
+                        </con1:default>
+                      </con1:ifThenElse>
+                    </con1:actions>
+                  </con1:case>
+                  <con1:case>
+                    <con1:condition>
+                      <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"LEVEL5" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con2:xqueryText>
+                    </con1:condition>
+                    <con1:actions>
+                      <con1:ifThenElse>
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-6915</con2:id>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"FATAL" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-60b2</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/performance/alert/ServiceManagementPerformanceLevel5"/>
+                              <con2:description>Alert LEVEL5 FATAL em ServiceManagement.Performance</con2:description>
+                              <con2:severity>fatal</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"CRITICAL" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-609f</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/performance/alert/ServiceManagementPerformanceLevel5"/>
+                              <con2:description>Alert LEVEL5 CRITICAL em ServiceManagement.Performance</con2:description>
+                              <con2:severity>critical</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"WARNING" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-6090</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/performance/alert/ServiceManagementPerformanceLevel5"/>
+                              <con2:description>Alert LEVEL5 WARNING em ServiceManagement.Performance</con2:description>
+                              <con2:severity>warning</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:default>
+                          <con2:alert>
+                            <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-607a</con3:id>
+                            <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/performance/alert/ServiceManagementPerformanceLevel5"/>
+                            <con2:description>Alert LEVEL5 NORMAL em ServiceManagement.Performance</con2:description>
+                            <con2:severity>normal</con2:severity>
+                            <con2:payload>
+                              <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                            </con2:payload>
+                          </con2:alert>
+                        </con1:default>
+                      </con1:ifThenElse>
+                    </con1:actions>
+                  </con1:case>
+                  <con1:default/>
+                </con1:ifThenElse>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">fn:upper-case("Problem") eq fn:upper-case($body/aler:alertRequest/nid1:NidAbeLevel)</con3:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con1:ifThenElse>
+                  <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-6afb</con2:id>
+                  <con1:case>
+                    <con1:condition>
+                      <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"LEVEL1" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con2:xqueryText>
+                    </con1:condition>
+                    <con1:actions>
+                      <con1:ifThenElse>
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-69ca</con2:id>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"FATAL" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-66ee</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/problem/alert/ServiceManagementPerformanceLevel1"/>
+                              <con2:description>Alert LEVEL1 FATAL em ServiceManagement.Problem</con2:description>
+                              <con2:severity>fatal</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"CRITICAL" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-6060</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/problem/alert/ServiceManagementPerformanceLevel1"/>
+                              <con2:description>Alert LEVEL1 CRITICAL em ServiceManagement.Problem</con2:description>
+                              <con2:severity>critical</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"WARNING" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-6046</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/problem/alert/ServiceManagementPerformanceLevel1"/>
+                              <con2:description>Alert LEVEL1 WARNING em ServiceManagement.Problem</con2:description>
+                              <con2:severity>warning</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:default>
+                          <con2:alert>
+                            <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-6022</con3:id>
+                            <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/problem/alert/ServiceManagementPerformanceLevel1"/>
+                            <con2:description>Alert LEVEL1 NORMAL em ServiceManagement.Problem</con2:description>
+                            <con2:severity>normal</con2:severity>
+                            <con2:payload>
+                              <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                            </con2:payload>
+                          </con2:alert>
+                        </con1:default>
+                      </con1:ifThenElse>
+                    </con1:actions>
+                  </con1:case>
+                  <con1:case>
+                    <con1:condition>
+                      <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"LEVEL2" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con2:xqueryText>
+                    </con1:condition>
+                    <con1:actions>
+                      <con1:ifThenElse>
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-69b6</con2:id>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"FATAL" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-6013</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/problem/alert/ServiceManagementPerformanceLevel2"/>
+                              <con2:description>Alert LEVEL2 FATAL em ServiceManagement.Problem</con2:description>
+                              <con2:severity>fatal</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"CRITICAL" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-6003</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/problem/alert/ServiceManagementPerformanceLevel2"/>
+                              <con2:description>Alert LEVEL2 CRITICAL em ServiceManagement.Problem</con2:description>
+                              <con2:severity>critical</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"WARNING" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-5ff4</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/problem/alert/ServiceManagementPerformanceLevel2"/>
+                              <con2:description>Alert LEVEL2 WARNING em ServiceManagement.Problem</con2:description>
+                              <con2:severity>warning</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:default>
+                          <con2:alert>
+                            <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-5fe8</con3:id>
+                            <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/problem/alert/ServiceManagementPerformanceLevel2"/>
+                            <con2:description>Alert LEVEL2 NORMAL em ServiceManagement.Problem</con2:description>
+                            <con2:severity>normal</con2:severity>
+                            <con2:payload>
+                              <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                            </con2:payload>
+                          </con2:alert>
+                        </con1:default>
+                      </con1:ifThenElse>
+                    </con1:actions>
+                  </con1:case>
+                  <con1:case>
+                    <con1:condition>
+                      <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"LEVEL3" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con2:xqueryText>
+                    </con1:condition>
+                    <con1:actions>
+                      <con1:ifThenElse>
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-699d</con2:id>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"FATAL" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-5fd3</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/problem/alert/ServiceManagementPerformanceLevel3"/>
+                              <con2:description>Alert LEVEL3 FATAL em ServiceManagement.Problem</con2:description>
+                              <con2:severity>fatal</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"CRITICAL" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-5fbe</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/problem/alert/ServiceManagementPerformanceLevel3"/>
+                              <con2:description>Alert LEVEL3 CRITICAL em ServiceManagement.Problem</con2:description>
+                              <con2:severity>critical</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"WARNING" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-5fa6</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/problem/alert/ServiceManagementPerformanceLevel3"/>
+                              <con2:description>Alert LEVEL3 WARNING em ServiceManagement.Problem</con2:description>
+                              <con2:severity>warning</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:default>
+                          <con2:alert>
+                            <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-5f90</con3:id>
+                            <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/problem/alert/ServiceManagementPerformanceLevel3"/>
+                            <con2:description>Alert LEVEL3 NORMAL em ServiceManagement.Problem</con2:description>
+                            <con2:severity>normal</con2:severity>
+                            <con2:payload>
+                              <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                            </con2:payload>
+                          </con2:alert>
+                        </con1:default>
+                      </con1:ifThenElse>
+                    </con1:actions>
+                  </con1:case>
+                  <con1:case>
+                    <con1:condition>
+                      <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"LEVEL4" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con2:xqueryText>
+                    </con1:condition>
+                    <con1:actions>
+                      <con1:ifThenElse>
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-698e</con2:id>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"FATAL" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-5f7f</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/problem/alert/ServiceManagementPerformanceLevel4"/>
+                              <con2:description>Alert LEVEL4 FATAL em ServiceManagement.Problem</con2:description>
+                              <con2:severity>fatal</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"CRITICAL" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-5f62</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/problem/alert/ServiceManagementPerformanceLevel4"/>
+                              <con2:description>Alert LEVEL4 CRITICAL em ServiceManagement.Problem</con2:description>
+                              <con2:severity>critical</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"WARNING" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-5f46</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/problem/alert/ServiceManagementPerformanceLevel4"/>
+                              <con2:description>Alert LEVEL4 WARNING em ServiceManagement.Problem</con2:description>
+                              <con2:severity>warning</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:default>
+                          <con2:alert>
+                            <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-5f38</con3:id>
+                            <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/problem/alert/ServiceManagementPerformanceLevel4"/>
+                            <con2:description>Alert LEVEL4 NORMAL em ServiceManagement.Problem</con2:description>
+                            <con2:severity>normal</con2:severity>
+                            <con2:payload>
+                              <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                            </con2:payload>
+                          </con2:alert>
+                        </con1:default>
+                      </con1:ifThenElse>
+                    </con1:actions>
+                  </con1:case>
+                  <con1:case>
+                    <con1:condition>
+                      <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"LEVEL5" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con2:xqueryText>
+                    </con1:condition>
+                    <con1:actions>
+                      <con1:ifThenElse>
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-697b</con2:id>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"FATAL" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-5f1c</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/problem/alert/ServiceManagementPerformanceLevel5"/>
+                              <con2:description>Alert LEVEL5 FATAL em ServiceManagement.Problem</con2:description>
+                              <con2:severity>fatal</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"CRITICAL" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-5f11</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/problem/alert/ServiceManagementPerformanceLevel5"/>
+                              <con2:description>Alert LEVEL5 CRITICAL em ServiceManagement.Problem</con2:description>
+                              <con2:severity>critical</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"WARNING" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-5f02</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/problem/alert/ServiceManagementPerformanceLevel5"/>
+                              <con2:description>Alert LEVEL5 WARNING em ServiceManagement.Problem</con2:description>
+                              <con2:severity>warning</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:default>
+                          <con2:alert>
+                            <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-5ee8</con3:id>
+                            <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/problem/alert/ServiceManagementPerformanceLevel5"/>
+                            <con2:description>Alert LEVEL5 NORMAL em ServiceManagement.Problem</con2:description>
+                            <con2:severity>normal</con2:severity>
+                            <con2:payload>
+                              <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                            </con2:payload>
+                          </con2:alert>
+                        </con1:default>
+                      </con1:ifThenElse>
+                    </con1:actions>
+                  </con1:case>
+                  <con1:default/>
+                </con1:ifThenElse>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">fn:upper-case("Quality") eq fn:upper-case($body/aler:alertRequest/nid1:NidAbeLevel)</con3:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con1:ifThenElse>
+                  <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-6ae2</con2:id>
+                  <con1:case>
+                    <con1:condition>
+                      <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"LEVEL1" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con2:xqueryText>
+                    </con1:condition>
+                    <con1:actions>
+                      <con1:ifThenElse>
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-6a3c</con2:id>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"FATAL" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-66d5</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/quality/alert/ServiceManagementQualityLevel1"/>
+                              <con2:description>Alert LEVEL1 FATAL em ServiceManagement.Quality</con2:description>
+                              <con2:severity>fatal</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"CRITICAL" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-5ed5</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/quality/alert/ServiceManagementQualityLevel1"/>
+                              <con2:description>Alert LEVEL1 CRITICAL em ServiceManagement.Quality</con2:description>
+                              <con2:severity>critical</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"WARNING" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-5eca</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/quality/alert/ServiceManagementQualityLevel1"/>
+                              <con2:description>Alert LEVEL1 WARNING em ServiceManagement.Quality</con2:description>
+                              <con2:severity>warning</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:default>
+                          <con2:alert>
+                            <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-5ea1</con3:id>
+                            <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/quality/alert/ServiceManagementQualityLevel1"/>
+                            <con2:description>Alert LEVEL1 NORMAL em ServiceManagement.Quality</con2:description>
+                            <con2:severity>normal</con2:severity>
+                            <con2:payload>
+                              <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                            </con2:payload>
+                          </con2:alert>
+                        </con1:default>
+                      </con1:ifThenElse>
+                    </con1:actions>
+                  </con1:case>
+                  <con1:case>
+                    <con1:condition>
+                      <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"LEVEL2" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con2:xqueryText>
+                    </con1:condition>
+                    <con1:actions>
+                      <con1:ifThenElse>
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-6a23</con2:id>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"FATAL" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-5e8d</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/quality/alert/ServiceManagementQualityLevel2"/>
+                              <con2:description>Alert LEVEL2 FATAL em ServiceManagement.Quality</con2:description>
+                              <con2:severity>fatal</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"CRITICAL" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-5e78</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/quality/alert/ServiceManagementQualityLevel2"/>
+                              <con2:description>Alert LEVEL2 CRITICAL em ServiceManagement.Quality</con2:description>
+                              <con2:severity>critical</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"WARNING" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-5e63</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/quality/alert/ServiceManagementQualityLevel2"/>
+                              <con2:description>Alert LEVEL2 WARNING em ServiceManagement.Quality</con2:description>
+                              <con2:severity>warning</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:default>
+                          <con2:alert>
+                            <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-5e52</con3:id>
+                            <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/quality/alert/ServiceManagementQualityLevel2"/>
+                            <con2:description>Alert LEVEL2 NORMAL em ServiceManagement.Quality</con2:description>
+                            <con2:severity>normal</con2:severity>
+                            <con2:payload>
+                              <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                            </con2:payload>
+                          </con2:alert>
+                        </con1:default>
+                      </con1:ifThenElse>
+                    </con1:actions>
+                  </con1:case>
+                  <con1:case>
+                    <con1:condition>
+                      <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"LEVEL3" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con2:xqueryText>
+                    </con1:condition>
+                    <con1:actions>
+                      <con1:ifThenElse>
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-6a0a</con2:id>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"FATAL" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-5e3a</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/quality/alert/ServiceManagementQualityLevel3"/>
+                              <con2:description>Alert LEVEL3 FATAL em ServiceManagement.Quality</con2:description>
+                              <con2:severity>fatal</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"CRITICAL" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-5e24</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/quality/alert/ServiceManagementQualityLevel3"/>
+                              <con2:description>Alert LEVEL3 CRITICAL em ServiceManagement.Quality</con2:description>
+                              <con2:severity>critical</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"WARNING" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-5e12</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/quality/alert/ServiceManagementQualityLevel3"/>
+                              <con2:description>Alert LEVEL3 WARNING em ServiceManagement.Quality</con2:description>
+                              <con2:severity>warning</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:default>
+                          <con2:alert>
+                            <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-5e05</con3:id>
+                            <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/quality/alert/ServiceManagementQualityLevel3"/>
+                            <con2:description>Alert LEVEL3 NORMAL em ServiceManagement.Quality</con2:description>
+                            <con2:severity>normal</con2:severity>
+                            <con2:payload>
+                              <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                            </con2:payload>
+                          </con2:alert>
+                        </con1:default>
+                      </con1:ifThenElse>
+                    </con1:actions>
+                  </con1:case>
+                  <con1:case>
+                    <con1:condition>
+                      <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"LEVEL4" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con2:xqueryText>
+                    </con1:condition>
+                    <con1:actions>
+                      <con1:ifThenElse>
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-69fb</con2:id>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"FATAL" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-5df6</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/quality/alert/ServiceManagementQualityLevel4"/>
+                              <con2:description>Alert LEVEL4 FATAL em ServiceManagement.Quality</con2:description>
+                              <con2:severity>fatal</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"CRITICAL" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-5dd7</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/quality/alert/ServiceManagementQualityLevel4"/>
+                              <con2:description>Alert LEVEL4 CRITICAl em ServiceManagement.Quality</con2:description>
+                              <con2:severity>critical</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"WARNING" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-5dc3</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/quality/alert/ServiceManagementQualityLevel4"/>
+                              <con2:description>Alert LEVEL4 WARNING em ServiceManagement.Quality</con2:description>
+                              <con2:severity>warning</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:default>
+                          <con2:alert>
+                            <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-5da8</con3:id>
+                            <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/quality/alert/ServiceManagementQualityLevel4"/>
+                            <con2:description>Alert LEVEL4 NORMAL em ServiceManagement.Quality</con2:description>
+                            <con2:severity>normal</con2:severity>
+                            <con2:payload>
+                              <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                            </con2:payload>
+                          </con2:alert>
+                        </con1:default>
+                      </con1:ifThenElse>
+                    </con1:actions>
+                  </con1:case>
+                  <con1:case>
+                    <con1:condition>
+                      <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"LEVEL5" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con2:xqueryText>
+                    </con1:condition>
+                    <con1:actions>
+                      <con1:ifThenElse>
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-69e5</con2:id>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"FATAL" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-5d8b</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/quality/alert/ServiceManagementQualityLevel4"/>
+                              <con2:description>Alert LEVEL5 FATAL em ServiceManagement.Quality</con2:description>
+                              <con2:severity>fatal</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"CRITICAL" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-5d7c</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/quality/alert/ServiceManagementQualityLevel4"/>
+                              <con2:description>Alert LEVEL5 CRITICAL em ServiceManagement.Quality</con2:description>
+                              <con2:severity>critical</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"WARNING" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-5d68</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/quality/alert/ServiceManagementQualityLevel4"/>
+                              <con2:description>Alert LEVEL5 WARNING em ServiceManagement.Quality</con2:description>
+                              <con2:severity>warning</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:default>
+                          <con2:alert>
+                            <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-5d4d</con3:id>
+                            <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/quality/alert/ServiceManagementQualityLevel4"/>
+                            <con2:description>Alert LEVEL5 NORMAL em ServiceManagement.Quality</con2:description>
+                            <con2:severity>normal</con2:severity>
+                            <con2:payload>
+                              <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                            </con2:payload>
+                          </con2:alert>
+                        </con1:default>
+                      </con1:ifThenElse>
+                    </con1:actions>
+                  </con1:case>
+                  <con1:default/>
+                </con1:ifThenElse>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">fn:upper-case("Test") eq fn:upper-case($body/aler:alertRequest/nid1:NidAbeLevel)</con3:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con1:ifThenElse>
+                  <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-6acc</con2:id>
+                  <con1:case>
+                    <con1:condition>
+                      <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"LEVEL1" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con2:xqueryText>
+                    </con1:condition>
+                    <con1:actions>
+                      <con1:ifThenElse>
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-6abc</con2:id>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"FATAL" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-66c9</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/test/alert/ServiceManagementTestLevel1"/>
+                              <con2:description>Alert LEVEL1 FATAL em ServiceManagement.Test</con2:description>
+                              <con2:severity>fatal</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"CRITICAL" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-5d39</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/test/alert/ServiceManagementTestLevel1"/>
+                              <con2:description>Alert LEVEL1 CRITICAL em ServiceManagement.Test</con2:description>
+                              <con2:severity>critical</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"WARNING" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-5d25</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/test/alert/ServiceManagementTestLevel1"/>
+                              <con2:description>Alert LEVEL1 WARNING em ServiceManagement.Test</con2:description>
+                              <con2:severity>warning</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:default>
+                          <con2:alert>
+                            <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-5d11</con3:id>
+                            <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/test/alert/ServiceManagementTestLevel1"/>
+                            <con2:description>Alert LEVEL1 NORMAL em ServiceManagement.Test</con2:description>
+                            <con2:severity>normal</con2:severity>
+                            <con2:payload>
+                              <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                            </con2:payload>
+                          </con2:alert>
+                        </con1:default>
+                      </con1:ifThenElse>
+                    </con1:actions>
+                  </con1:case>
+                  <con1:case>
+                    <con1:condition>
+                      <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"LEVEL2" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con2:xqueryText>
+                    </con1:condition>
+                    <con1:actions>
+                      <con1:ifThenElse>
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-6aa3</con2:id>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"FATAL" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-5d03</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/test/alert/ServiceManagementTestLevel2"/>
+                              <con2:description>Alert LEVEL2 FATAL em ServiceManagement.Test</con2:description>
+                              <con2:severity>fatal</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"CRITICAL" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-5cef</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/test/alert/ServiceManagementTestLevel2"/>
+                              <con2:description>Alert LEVEL2 CRITICAL em ServiceManagement.Test</con2:description>
+                              <con2:severity>critical</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"WARNING" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-5ccf</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/test/alert/ServiceManagementTestLevel2"/>
+                              <con2:description>Alert LEVEL2 WARNING em ServiceManagement.Test</con2:description>
+                              <con2:severity>warning</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:default>
+                          <con2:alert>
+                            <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-5cba</con3:id>
+                            <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/test/alert/ServiceManagementTestLevel2"/>
+                            <con2:description>Alert LEVEL2 NORMAL em ServiceManagement.Test</con2:description>
+                            <con2:severity>normal</con2:severity>
+                            <con2:payload>
+                              <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                            </con2:payload>
+                          </con2:alert>
+                        </con1:default>
+                      </con1:ifThenElse>
+                    </con1:actions>
+                  </con1:case>
+                  <con1:case>
+                    <con1:condition>
+                      <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"LEVEL3" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con2:xqueryText>
+                    </con1:condition>
+                    <con1:actions>
+                      <con1:ifThenElse>
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-6a82</con2:id>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"FATAL" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-5ca0</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/test/alert/ServiceManagementTestLevel3"/>
+                              <con2:description>Alert LEVEL3 FATAL em ServiceManagement.Test</con2:description>
+                              <con2:severity>fatal</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"CRITICAL" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-5c81</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/test/alert/ServiceManagementTestLevel3"/>
+                              <con2:description>Alert LEVEL3 CRITICAL em ServiceManagement.Test</con2:description>
+                              <con2:severity>critical</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"WARNING" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-5c62</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/test/alert/ServiceManagementTestLevel3"/>
+                              <con2:description>Alert LEVEL3 WARNING em ServiceManagement.Test</con2:description>
+                              <con2:severity>warning</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:default>
+                          <con2:alert>
+                            <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-5c32</con3:id>
+                            <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/test/alert/ServiceManagementTestLevel3"/>
+                            <con2:description>Alert LEVEL3 NORMAl em ServiceManagement.Test</con2:description>
+                            <con2:severity>normal</con2:severity>
+                            <con2:payload>
+                              <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                            </con2:payload>
+                          </con2:alert>
+                        </con1:default>
+                      </con1:ifThenElse>
+                    </con1:actions>
+                  </con1:case>
+                  <con1:case>
+                    <con1:condition>
+                      <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"LEVEL4" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con2:xqueryText>
+                    </con1:condition>
+                    <con1:actions>
+                      <con1:ifThenElse>
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-6a72</con2:id>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"FATAL" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-5c1e</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/test/alert/ServiceManagementTestLevel4"/>
+                              <con2:description>Alert LEVEL4 FATAL em ServiceManagement.Test</con2:description>
+                              <con2:severity>fatal</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"CRITICAL" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-5c0e</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/test/alert/ServiceManagementTestLevel4"/>
+                              <con2:description>Alert LEVEL4 CRITICAL em ServiceManagement.Test</con2:description>
+                              <con2:severity>critical</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"WARNING" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-5bf2</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/test/alert/ServiceManagementTestLevel4"/>
+                              <con2:description>Alert LEVEL4 WARNING em ServiceManagement.Test</con2:description>
+                              <con2:severity>warning</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:default>
+                          <con2:alert>
+                            <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-5bdd</con3:id>
+                            <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/test/alert/ServiceManagementTestLevel4"/>
+                            <con2:description>Alert LEVEL4 NORMAL em ServiceManagement.Test</con2:description>
+                            <con2:severity>normal</con2:severity>
+                            <con2:payload>
+                              <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                            </con2:payload>
+                          </con2:alert>
+                        </con1:default>
+                      </con1:ifThenElse>
+                    </con1:actions>
+                  </con1:case>
+                  <con1:case>
+                    <con1:condition>
+                      <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"LEVEL5" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con2:xqueryText>
+                    </con1:condition>
+                    <con1:actions>
+                      <con1:ifThenElse>
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-6a55</con2:id>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"FATAL" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-5bcc</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/test/alert/ServiceManagementTestLevel5"/>
+                              <con2:description>Alert LEVEL5 FATAL em ServiceManagement.Test</con2:description>
+                              <con2:severity>fatal</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"CRITICAL" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-5bb4</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/test/alert/ServiceManagementTestLevel5"/>
+                              <con2:description>Alert LEVEL5 CRITICAL em ServiceManagement.Test</con2:description>
+                              <con2:severity>critical</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"WARNING" eq $severidadeAlerta</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:alert>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-5ba8</con3:id>
+                              <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/test/alert/ServiceManagementTestLevel5"/>
+                              <con2:description>Alert LEVEL5 WARNING em ServiceManagement.Test</con2:description>
+                              <con2:severity>warning</con2:severity>
+                              <con2:payload>
+                                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                              </con2:payload>
+                            </con2:alert>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:default>
+                          <con2:alert>
+                            <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-5b93</con3:id>
+                            <con2:destination ref="netarchitecture/monitoring/alert/alerts/servicemanagement/test/alert/ServiceManagementTestLevel5"/>
+                            <con2:description>Alert LEVEL5 NORMAL em ServiceManagement.Test</con2:description>
+                            <con2:severity>normal</con2:severity>
+                            <con2:payload>
+                              <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/aler:alertRequest</con3:xqueryText>
+                            </con2:payload>
+                          </con2:alert>
+                        </con1:default>
+                      </con1:ifThenElse>
+                    </con1:actions>
+                  </con1:case>
+                  <con1:default/>
+                </con1:ifThenElse>
+              </con1:actions>
+            </con1:case>
+            <con1:default/>
+          </con1:ifThenElse>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="response" name="PipelinePairNode_response" xmlns:con="http://www.bea.com/wli/sb/pipeline/config">
+      <con:stage name="PrepareResponse">
+        <con:context xmlns:con1="http://www.bea.com/wli/sb/stages/alert/config">
+          <con1:varNsDecl namespace="http://www.netservicos.com.br/AlertV1" prefix="aler" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+        </con:context>
+        <con:actions xmlns:con1="http://www.bea.com/wli/sb/stages/alert/config">
+          <con1:replace varName="body" contents-only="true" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+            <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-3275737085448983459--25398d11.146246a6192.-7329</con2:id>
+            <con1:location>
+              <con2:xpathText xmlns:con2="http://www.bea.com/wli/sb/stages/config">.</con2:xpathText>
+            </con1:location>
+            <con1:expr>
+              <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">&lt;aler:alertResponse/></con2:xqueryText>
+            </con1:expr>
+          </con1:replace>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:flow xmlns:con="http://www.bea.com/wli/sb/pipeline/config">
+      <con:pipeline-node name="PipelinePairNode">
+        <con:request>PipelinePairNode_request</con:request>
+        <con:response>PipelinePairNode_response</con:response>
+      </con:pipeline-node>
+    </con:flow>
+  </ser:router>
+</xml-fragment>

@@ -1,0 +1,1331 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:con="http://www.bea.com/wli/sb/stages/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:con2="http://www.bea.com/wli/sb/stages/logging/config">
+  <ser:coreEntry isProxy="true" isEnabled="true" isAutoPublish="false" isTracingEnabled="false">
+    <ser:description>Proxy responsável pelo tratamento de exceções. Com base nos parâmetros enviados, identifica qual dos parâmetros possui informações da falha ocorrida, classifica a falha encontrada e constrói uma resposta adequando as informações da falha para o preenchimento de um elemento do tipo ErrorInfo.</ser:description>
+    <ser:binding type="SOAP" isSoap12="true" xsi:type="con2:SoapBindingType" xmlns:con2="http://www.bea.com/wli/sb/services/bindings/config">
+      <con2:wsdl ref="netarchitecture/fault/faulthandler/wsdl/proxy/FaultHandler12V1"/>
+      <con2:binding>
+        <con2:name>FaultHandlerBinding12</con2:name>
+        <con2:namespace>http://www.netservicos.com.br/FaultHandlerV1</con2:namespace>
+      </con2:binding>
+      <con2:selector type="SOAP body"/>
+    </ser:binding>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Pipeline</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+    <ser:ws-policy>
+      <ser:binding-mode>owsm-policy-bindings</ser:binding-mode>
+    </ser:ws-policy>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>local</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:inbound-properties/>
+    <tran:all-headers>true</tran:all-headers>
+  </ser:endpointConfig>
+  <ser:router errorHandler="_onErrorHandler-1977908114037174645-70ce5ca4.122a2ae7435.-7f97">
+    <con:pipeline type="request" name="PipelinePairNode_request" xmlns:con="http://www.bea.com/wli/sb/pipeline/config">
+      <con:stage name="TransformMetadataDefaults">
+        <con4:context xmlns:con3="http://www.bea.com/wli/sb/stages/logging/config" xmlns:con4="http://www.bea.com/wli/sb/pipeline/config" xmlns:env="http://www.bea.com/wli/config/env">
+          <con1:userNsDecl namespace="http://www.netservicos.com.br/v2/NetHeader" prefix="netheader" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+          <con1:varNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Metadata" prefix="met" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+        </con4:context>
+        <con4:actions xmlns:con3="http://www.bea.com/wli/sb/stages/logging/config" xmlns:con4="http://www.bea.com/wli/sb/pipeline/config" xmlns:env="http://www.bea.com/wli/config/env">
+          <con1:replace varName="header" contents-only="true">
+            <con5:id xmlns:con5="http://www.bea.com/wli/sb/stages/config">_ActionId-967156512052211097-511c787b.1350f727680.-7e95</con5:id>
+            <con1:location>
+              <con5:xpathText xmlns:con5="http://www.bea.com/wli/sb/stages/config">.</con5:xpathText>
+            </con1:location>
+            <con1:expr>
+              <con5:xqueryTransform xmlns:con5="http://www.bea.com/wli/sb/stages/config">
+                <con5:resource ref="netarchitecture/transformation/xquery/TransformMetadataDefaultsXQuery"/>
+                <con5:param name="tokenDefault">
+                  <con5:path>fn-bea:uuid()</con5:path>
+                </con5:param>
+                <con5:param name="currentDateTime">
+                  <con5:path>fn:current-dateTime()</con5:path>
+                </con5:param>
+                <con5:param name="vendorDefault">
+                  <con5:path>'OTHER'</con5:path>
+                </con5:param>
+                <con5:param name="metadataIN">
+                  <con5:path>$header/met:Metadata</con5:path>
+                </con5:param>
+                <con5:param name="featureDefault">
+                  <con5:path>'OTHER'</con5:path>
+                </con5:param>
+                <con5:param name="serviceVersionDefault">
+                  <con5:path>'1.0'</con5:path>
+                </con5:param>
+              </con5:xqueryTransform>
+            </con1:expr>
+          </con1:replace>
+        </con4:actions>
+      </con:stage>
+      <con:stage name="LogRequest">
+        <con:context/>
+        <con:actions>
+          <con2:log>
+            <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-1108678829795421514-47e2cb16.134c91e8bec.-75f7</con3:id>
+            <con2:logLevel>info</con2:logLevel>
+            <con2:expr>
+              <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$header</con3:xqueryText>
+            </con2:expr>
+            <con2:message>header</con2:message>
+          </con2:log>
+          <con2:log>
+            <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-1108678829795421514-47e2cb16.134c91e8bec.-75da</con3:id>
+            <con2:logLevel>info</con2:logLevel>
+            <con2:expr>
+              <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body</con3:xqueryText>
+            </con2:expr>
+            <con2:message>body</con2:message>
+          </con2:log>
+        </con:actions>
+      </con:stage>
+      <con:stage name="ValidateRequestContent">
+        <con:context>
+          <con1:userNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Message" prefix="coreschema" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+          <con1:varNsDecl namespace="http://www.netservicos.com.br/NETESBExceptionHandler12V1" prefix="net" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+          <con2:varNsDecl namespace="http://www.netservicos.com.br/FaultHandlerV1" prefix="faul" xmlns:con2="http://www.bea.com/wli/sb/stages/config"/>
+          <con2:varNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/NidDomain" prefix="nid" xmlns:con2="http://www.bea.com/wli/sb/stages/config"/>
+          <con2:varNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/NidAbeLevel" prefix="nid1" xmlns:con2="http://www.bea.com/wli/sb/stages/config"/>
+        </con:context>
+        <con:actions>
+          <con1:ifThenElse>
+            <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-580685730452354301-13f8ab43.122801e90e9.-7fff</con2:id>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">not(fn:exists($body/faul:faultHandlerRequest/faul:messageCode))
+or not($body/faul:faultHandlerRequest/faul:messageCode/node())
+or ($body/faul:faultHandlerRequest/faul:messageCode eq "")</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con1:assign varName="getFormatedMessageResponse">
+                  <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-5551657666986983004-25acaece.1347b1186ed.-7e1f</con2:id>
+                  <con1:expr>
+                    <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                      <con2:resource ref="netarchitecture/transformation/dvm/retrievemessage/xquery/RetrieveMessageDVM"/>
+                      <con2:param name="MessageCode">
+                        <con2:path>'OSB-NETARCHITECTURE-00007'</con2:path>
+                      </con2:param>
+                    </con2:xqueryTransform>
+                  </con1:expr>
+                </con1:assign>
+                <con1:assign varName="localErrorInfo">
+                  <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-2572391162904280512-3a4b8ec9.122acf787ec.-7fa0</con2:id>
+                  <con1:expr>
+                    <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config"><![CDATA[<errorinfo:ErrorInfo xmlns:errorinfo="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/fault/ErrorInfo">
+  <errorinfo:Code>{fn:data($getFormatedMessageResponse//coreschema:ID_MSG)}</errorinfo:Code>
+  <errorinfo:Message>{fn:data($getFormatedMessageResponse//coreschema:USER_MESSAGE)}</errorinfo:Message>
+  <errorinfo:ExceptionDate>{data(fn:current-dateTime())}</errorinfo:ExceptionDate>
+  <errorinfo:ExceptionClassification>CLASSIFICATION_VALIDATION</errorinfo:ExceptionClassification>
+  <errorinfo:AccessResourceName>{'netarchitecture/fault/faulthandler/proxyservice/FaultHandler12V1LCL/PipelinePairNode/ValidateRequestContent'}</errorinfo:AccessResourceName>
+  <errorinfo:AdditionalInformation>{$body/faul:faultHandlerRequest}</errorinfo:AdditionalInformation>
+  <errorinfo:ValidationMessages>
+    <errorinfo:ValidationMessage>  
+       <errorinfo:Code>{fn:data($getFormatedMessageResponse//coreschema:ID_MSG)}</errorinfo:Code>
+       <errorinfo:Message>{data($getFormatedMessageResponse//coreschema:USER_MESSAGE)}</errorinfo:Message>    
+    </errorinfo:ValidationMessage>  
+  </errorinfo:ValidationMessages>
+  <errorinfo:ExceptionStackTrace/>
+</errorinfo:ErrorInfo>]]></con3:xqueryText>
+                  </con1:expr>
+                </con1:assign>
+                <con1:Error>
+                  <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-5450381393894796237--2490a61b.1232e69b80c.-7ffd</con2:id>
+                  <con1:errCode>OSB-NETARCHITECTURE-00007</con1:errCode>
+                  <con1:message>O parâmetro código da mensagem não foi informado e é obrigatório.</con1:message>
+                </con1:Error>
+              </con1:actions>
+            </con1:case>
+            <con1:default/>
+          </con1:ifThenElse>
+        </con:actions>
+      </con:stage>
+      <con:stage name="RetrieveMessageDVM">
+        <con:context>
+          <con2:userNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Message" prefix="mes" xmlns:con2="http://www.bea.com/wli/sb/stages/config"/>
+          <con1:varNsDecl namespace="http://www.netservicos.com.br/NETESBExceptionHandler12V1" prefix="net" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+          <con2:varNsDecl namespace="http://www.netservicos.com.br/FaultHandlerV1" prefix="faul" xmlns:con2="http://www.bea.com/wli/sb/stages/config"/>
+          <con2:varNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/NidDomain" prefix="nid" xmlns:con2="http://www.bea.com/wli/sb/stages/config"/>
+          <con2:varNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/NidAbeLevel" prefix="nid1" xmlns:con2="http://www.bea.com/wli/sb/stages/config"/>
+          <con2:varNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/monitoring/Logging" prefix="log" xmlns:con2="http://www.bea.com/wli/sb/stages/config"/>
+        </con:context>
+        <con:actions>
+          <con1:assign varName="getFormatedMessageResponse">
+            <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-5551657666986983004-25acaece.1347b1186ed.-7df4</con2:id>
+            <con1:expr>
+              <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                <con2:resource ref="netarchitecture/transformation/dvm/retrievemessage/xquery/RetrieveMessageDVM"/>
+                <con2:param name="MessageCode">
+                  <con2:path>data($body/faul:faultHandlerRequest/faul:messageCode)</con2:path>
+                </con2:param>
+              </con2:xqueryTransform>
+            </con1:expr>
+          </con1:assign>
+          <con1:foreach xmlns:con3="http://www.bea.com/wli/sb/stages/logging/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:env="http://www.bea.com/wli/config/env">
+            <con2:comment>Loop nos parâmetros de mensagem para gerar Array para Java Callout</con2:comment>
+            <con2:id>_ActionId-5490136189273251808-2e7e2776.134aee77cdf.-7efa</con2:id>
+            <con1:variable>body</con1:variable>
+            <con1:expression>
+              <con2:xpathText>./faul:faultHandlerRequest/log:MessageParameters/log:Value</con2:xpathText>
+            </con1:expression>
+            <con1:value-variable>valor</con1:value-variable>
+            <con1:actions>
+              <con1:javaCallout varName="paramConcatenados">
+                <con2:id>_ActionId-5490136189273251808-2e7e2776.134aee77cdf.-7efb</con2:id>
+                <con1:archive ref="netarchitecture/transformation/jar/NETServiceBusUtilClient"/>
+                <con1:className>br.com.netservicos.sb.logging.format.NETMessageFormater</con1:className>
+                <con1:method>public static [Ljava.lang.Object; elementConcat(java.lang.String, [Ljava.lang.Object;)</con1:method>
+                <con1:expr>
+                  <con2:xqueryText>fn:data($valor)</con2:xqueryText>
+                </con1:expr>
+                <con1:expr>
+                  <con2:xqueryText>$paramConcatenados</con2:xqueryText>
+                </con1:expr>
+              </con1:javaCallout>
+            </con1:actions>
+          </con1:foreach>
+          <con1:javaCallout varName="retornoFormatacao">
+            <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-5490136189273251808-2e7e2776.134aee77cdf.-7e65</con2:id>
+            <con1:archive ref="netarchitecture/transformation/jar/NETServiceBusUtilClient"/>
+            <con1:className>br.com.netservicos.sb.logging.format.NETMessageFormater</con1:className>
+            <con1:method>public static java.lang.String formatMessage(java.lang.String, [Ljava.lang.Object;)</con1:method>
+            <con1:expr>
+              <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">fn:data($getFormatedMessageResponse//mes:USER_MESSAGE)</con2:xqueryText>
+            </con1:expr>
+            <con1:expr>
+              <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$paramConcatenados</con2:xqueryText>
+            </con1:expr>
+          </con1:javaCallout>
+          <con1:replace varName="getFormatedMessageResponse" contents-only="true">
+            <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-5490136189273251808-2e7e2776.134aee77cdf.-7df6</con2:id>
+            <con1:location>
+              <con2:xpathText xmlns:con2="http://www.bea.com/wli/sb/stages/config">.//mes:USER_MESSAGE</con2:xpathText>
+            </con1:location>
+            <con1:expr>
+              <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$retornoFormatacao</con2:xqueryText>
+            </con1:expr>
+          </con1:replace>
+        </con:actions>
+      </con:stage>
+      <con:stage name="ValidateDomainSubDomainDVM">
+        <con:context>
+          <con2:userNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Message" prefix="coreschema" xmlns:con2="http://www.bea.com/wli/sb/stages/config"/>
+          <con2:varNsDecl namespace="http://www.netservicos.com.br/FaultHandlerV1" prefix="faul" xmlns:con2="http://www.bea.com/wli/sb/stages/config"/>
+          <con2:varNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/NidDomain" prefix="nid" xmlns:con2="http://www.bea.com/wli/sb/stages/config"/>
+          <con2:varNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/NidAbeLevel" prefix="nid1" xmlns:con2="http://www.bea.com/wli/sb/stages/config"/>
+        </con:context>
+        <con:actions>
+          <con1:assign varName="domainAndAbeLevel">
+            <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-4999902511404809296-7f3eeb6c.13484cb2597.-7ffb</con2:id>
+            <con1:expr>
+              <con3:xqueryTransform xmlns:con3="http://www.bea.com/wli/sb/stages/config">
+                <con3:resource ref="netarchitecture/transformation/dvm/validatedomainsubdomain/xquery/ValidateDomainSubDomainDVM"/>
+                <con3:param name="subDomain">
+                  <con3:path>fn:data($getFormatedMessageResponse//coreschema:ABE_LEVEL)</con3:path>
+                </con3:param>
+                <con3:param name="domain">
+                  <con3:path>fn:data($getFormatedMessageResponse//coreschema:NID_DOMAIN)</con3:path>
+                </con3:param>
+              </con3:xqueryTransform>
+            </con1:expr>
+          </con1:assign>
+          <con1:ifThenElse>
+            <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-4999902511404809296-7f3eeb6c.13484cb2597.-7ffa</con2:id>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$domainAndAbeLevel eq 'true'</con2:xqueryText>
+              </con1:condition>
+              <con1:actions/>
+            </con1:case>
+            <con1:default>
+              <con1:assign varName="NidDomain">
+                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-4999902511404809296-7f3eeb6c.13484cb2597.-7fbf</con2:id>
+                <con1:expr>
+                  <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">fn:data($getFormatedMessageResponse//coreschema:NID_DOMAIN)</con2:xqueryText>
+                </con1:expr>
+              </con1:assign>
+              <con1:assign varName="AbeLevel">
+                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-4999902511404809296-7f3eeb6c.13484cb2597.-7fa2</con2:id>
+                <con1:expr>
+                  <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">fn:data($getFormatedMessageResponse//coreschema:ABE_LEVEL)</con2:xqueryText>
+                </con1:expr>
+              </con1:assign>
+              <con1:assign varName="getFormatedMessageResponse">
+                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-4999902511404809296-7f3eeb6c.13484cb2597.-7ff9</con2:id>
+                <con1:expr>
+                  <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                    <con2:resource ref="netarchitecture/transformation/dvm/retrievemessage/xquery/RetrieveMessageDVM"/>
+                    <con2:param name="MessageCode">
+                      <con2:path>'OSB-NETARCHITECTURE-00008'</con2:path>
+                    </con2:param>
+                  </con2:xqueryTransform>
+                </con1:expr>
+              </con1:assign>
+              <con1:assign varName="localErrorInfo">
+                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-4999902511404809296-7f3eeb6c.13484cb2597.-7ff8</con2:id>
+                <con1:expr>
+                  <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config"><![CDATA[<errorinfo:ErrorInfo xmlns:errorinfo="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/fault/ErrorInfo">
+  <errorinfo:Code>{fn:data($getFormatedMessageResponse//coreschema:ID_MSG)}</errorinfo:Code>
+  <errorinfo:Message>{fn:data($getFormatedMessageResponse//coreschema:USER_MESSAGE)}</errorinfo:Message>
+  <errorinfo:ExceptionDate>{data(fn:current-dateTime())}</errorinfo:ExceptionDate>
+  <errorinfo:ExceptionClassification>CLASSIFICATION_VALIDATION</errorinfo:ExceptionClassification>
+  <errorinfo:AccessResourceName>{'netarchitecture/fault/faulthandler/proxyservice/FaultHandler12V1LCL/PipelinePairNode/ValidateDomainSubDomainDVM'}</errorinfo:AccessResourceName>
+  <errorinfo:AdditionalInformation>
+  {fn:concat('A combinação NIDDomain ', $NidDomain, ' e AbeLevel ', $AbeLevel, ' obtida através da mensagem ',fn:data($body/faul:faultHandlerRequest/faul:messageCode), ' é inválida.' )}
+  </errorinfo:AdditionalInformation>
+  <errorinfo:ValidationMessages>
+    <errorinfo:ValidationMessage>  
+       <errorinfo:Code>{fn:data($getFormatedMessageResponse//coreschema:ID_MSG)}</errorinfo:Code>
+       <errorinfo:Message>{data($getFormatedMessageResponse//coreschema:USER_MESSAGE)}</errorinfo:Message>    
+    </errorinfo:ValidationMessage>  
+  </errorinfo:ValidationMessages>
+  <errorinfo:ExceptionStackTrace/>
+</errorinfo:ErrorInfo>]]></con3:xqueryText>
+                </con1:expr>
+              </con1:assign>
+              <con1:Error>
+                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-4999902511404809296-7f3eeb6c.13484cb2597.-7ff7</con2:id>
+                <con1:errCode>OSB-NETARCHITECTURE-00008</con1:errCode>
+                <con1:message/>
+              </con1:Error>
+            </con1:default>
+          </con1:ifThenElse>
+        </con:actions>
+      </con:stage>
+      <con:stage name="VerifyIfErrorInfoExistsInTheRequest">
+        <con:context>
+          <con1:userNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Message" prefix="coreschema" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+          <con1:userNsDecl namespace="http://www.bea.com/wli/sb/stages/transform/config" prefix="config" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+          <con1:varNsDecl namespace="http://www.netservicos.com.br/NETESBExceptionHandler12V1" prefix="net" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+          <con2:varNsDecl namespace="http://www.netservicos.com.br/FaultHandlerV1" prefix="faul" xmlns:con2="http://www.bea.com/wli/sb/stages/config"/>
+          <con2:varNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/fault/ErrorInfo" prefix="err" xmlns:con2="http://www.bea.com/wli/sb/stages/config"/>
+          <con2:varNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/fault/ExceptionClassification" prefix="exc" xmlns:con2="http://www.bea.com/wli/sb/stages/config"/>
+        </con:context>
+        <con:actions>
+          <con1:log xmlns:con1="http://www.bea.com/wli/sb/stages/logging/config">
+            <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-1977908114037174645-70ce5ca4.122a2ae7435.-7fa7</con2:id>
+            <con1:logLevel>debug</con1:logLevel>
+            <con1:message>Estagio Verificacao ErrorInfo</con1:message>
+          </con1:log>
+          <con1:ifThenElse>
+            <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-1977908114037174645-70ce5ca4.122a2ae7435.-8000</con2:id>
+            <con1:case>
+              <con1:condition>
+                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">exists($body/faul:faultHandlerRequest/faul:currentFault//err:ErrorInfo)</con3:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con2:log>
+                  <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-2572391162904280512-3a4b8ec9.122acf787ec.-7ffc</con3:id>
+                  <con2:logLevel>debug</con2:logLevel>
+                  <con2:message>Achou ErrorInfo em currentFault</con2:message>
+                </con2:log>
+                <con1:assign varName="localErrorInfo">
+                  <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-1977908114037174645-70ce5ca4.122a2ae7435.-7f9c</con2:id>
+                  <con1:expr>
+                    <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                      <con2:resource ref="netarchitecture/fault/faulthandler/transformation/xquery/TransformErrorInfoFaultToErrorInfoFullXQuery"/>
+                      <con2:param name="message">
+                        <con2:path>fn:data($getFormatedMessageResponse//coreschema:USER_MESSAGE)</con2:path>
+                      </con2:param>
+                      <con2:param name="validationMessages">
+                        <con2:path>$body/faul:faultHandlerRequest/err:ValidationMessages</con2:path>
+                      </con2:param>
+                      <con2:param name="accessResourceName">
+                        <con2:path>fn:data($body/faul:faultHandlerRequest/faul:accessResourceName)</con2:path>
+                      </con2:param>
+                      <con2:param name="exceptionStackTrace">
+                        <con2:path>fn:data($body/faul:faultHandlerRequest/faul:exceptionStackTrace)</con2:path>
+                      </con2:param>
+                      <con2:param name="messageCode">
+                        <con2:path>fn:data($getFormatedMessageResponse//coreschema:ID_MSG)</con2:path>
+                      </con2:param>
+                      <con2:param name="exceptionClassification">
+                        <con2:path>fn:data($body/faul:faultHandlerRequest/exc:ExceptionClassification)</con2:path>
+                      </con2:param>
+                      <con2:param name="errorInfoFault">
+                        <con2:path>$body/faul:faultHandlerRequest/faul:currentFault//err:ErrorInfo</con2:path>
+                      </con2:param>
+                      <con2:param name="additionalInformation">
+                        <con2:path>$body/faul:faultHandlerRequest/faul:additionalInformation</con2:path>
+                      </con2:param>
+                    </con2:xqueryTransform>
+                  </con1:expr>
+                </con1:assign>
+                <con1:assign varName="localLocation">
+                  <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-276057101004718004-310a0140.12380ddac38.-7ff5</con2:id>
+                  <con1:expr>
+                    <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                      <con2:resource ref="netarchitecture/fault/faulthandler/transformation/xquery/TransformLocationFromFaultToLocationXQuery"/>
+                      <con2:param name="localFault">
+                        <con2:path>$body/faul:faultHandlerRequest/faul:currentFault</con2:path>
+                      </con2:param>
+                    </con2:xqueryTransform>
+                  </con1:expr>
+                </con1:assign>
+                <con1:assign varName="getFormatedMessageResponse">
+                  <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-8933519956899224685--d7202e6.12503a9ae20.-7fff</con2:id>
+                  <con1:expr>
+                    <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                      <con2:resource ref="netarchitecture/fault/faulthandler/transformation/xquery/TransformFaultCodMsgToMessageXQuery"/>
+                      <con2:param name="fault">
+                        <con2:path>$body/faul:faultHandlerRequest/faul:currentFault</con2:path>
+                      </con2:param>
+                      <con2:param name="defaultMessage">
+                        <con2:path>$getFormatedMessageResponse</con2:path>
+                      </con2:param>
+                    </con2:xqueryTransform>
+                  </con1:expr>
+                </con1:assign>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">exists($body/faul:faultHandlerRequest/faul:currentBody//err:ErrorInfo)</con3:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con2:log>
+                  <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-2572391162904280512-3a4b8ec9.122acf787ec.-7ffc</con3:id>
+                  <con2:logLevel>debug</con2:logLevel>
+                  <con2:message>Achou ErrorInfo em currentBody</con2:message>
+                </con2:log>
+                <con1:assign varName="localErrorInfo">
+                  <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-1977908114037174645-70ce5ca4.122a2ae7435.-7f9c</con2:id>
+                  <con1:expr>
+                    <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                      <con2:resource ref="netarchitecture/fault/faulthandler/transformation/xquery/TransformErrorInfoFaultToErrorInfoFullXQuery"/>
+                      <con2:param name="message">
+                        <con2:path>fn:data($getFormatedMessageResponse//coreschema:USER_MESSAGE)</con2:path>
+                      </con2:param>
+                      <con2:param name="validationMessages">
+                        <con2:path>$body/faul:faultHandlerRequest/err:ValidationMessages</con2:path>
+                      </con2:param>
+                      <con2:param name="accessResourceName">
+                        <con2:path>fn:data($body/faul:faultHandlerRequest/faul:accessResourceName)</con2:path>
+                      </con2:param>
+                      <con2:param name="exceptionStackTrace">
+                        <con2:path>fn:data($body/faul:faultHandlerRequest/faul:exceptionStackTrace)</con2:path>
+                      </con2:param>
+                      <con2:param name="messageCode">
+                        <con2:path>fn:data($getFormatedMessageResponse//coreschema:ID_MSG)</con2:path>
+                      </con2:param>
+                      <con2:param name="exceptionClassification">
+                        <con2:path>fn:data($body/faul:faultHandlerRequest/exc:ExceptionClassification)</con2:path>
+                      </con2:param>
+                      <con2:param name="errorInfoFault">
+                        <con2:path>$body/faul:faultHandlerRequest/faul:currentBody//err:ErrorInfo</con2:path>
+                      </con2:param>
+                      <con2:param name="additionalInformation">
+                        <con2:path>$body/faul:faultHandlerRequest/faul:additionalInformation</con2:path>
+                      </con2:param>
+                    </con2:xqueryTransform>
+                  </con1:expr>
+                </con1:assign>
+                <con1:assign varName="localLocation">
+                  <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-276057101004718004-310a0140.12380ddac38.-7ff4</con2:id>
+                  <con1:expr>
+                    <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                      <con2:resource ref="netarchitecture/fault/faulthandler/transformation/xquery/TransformLocationFromFaultToLocationXQuery"/>
+                      <con2:param name="localFault">
+                        <con2:path>$body/faul:faultHandlerRequest/faul:currentBody</con2:path>
+                      </con2:param>
+                    </con2:xqueryTransform>
+                  </con1:expr>
+                </con1:assign>
+                <con1:assign varName="getFormatedMessageResponse">
+                  <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-8933519956899224685--d7202e6.12503a9ae20.-7ffc</con2:id>
+                  <con1:expr>
+                    <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                      <con2:resource ref="netarchitecture/fault/faulthandler/transformation/xquery/TransformFaultCodMsgToMessageXQuery"/>
+                      <con2:param name="fault">
+                        <con2:path>$body/faul:faultHandlerRequest/faul:currentBody</con2:path>
+                      </con2:param>
+                      <con2:param name="defaultMessage">
+                        <con2:path>$getFormatedMessageResponse</con2:path>
+                      </con2:param>
+                    </con2:xqueryTransform>
+                  </con1:expr>
+                </con1:assign>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">exists($body/faul:faultHandlerRequest/faul:callResponse//err:ErrorInfo)</con3:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con2:log>
+                  <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-2572391162904280512-3a4b8ec9.122acf787ec.-7ffc</con3:id>
+                  <con2:logLevel>debug</con2:logLevel>
+                  <con2:message>Achou ErrorInfo em callResponse</con2:message>
+                </con2:log>
+                <con1:assign varName="localErrorInfo">
+                  <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-1977908114037174645-70ce5ca4.122a2ae7435.-7f9c</con2:id>
+                  <con1:expr>
+                    <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                      <con2:resource ref="netarchitecture/fault/faulthandler/transformation/xquery/TransformErrorInfoFaultToErrorInfoFullXQuery"/>
+                      <con2:param name="message">
+                        <con2:path>fn:data($getFormatedMessageResponse//coreschema:USER_MESSAGE)</con2:path>
+                      </con2:param>
+                      <con2:param name="validationMessages">
+                        <con2:path>$body/faul:faultHandlerRequest/err:ValidationMessages</con2:path>
+                      </con2:param>
+                      <con2:param name="accessResourceName">
+                        <con2:path>fn:data($body/faul:faultHandlerRequest/faul:accessResourceName)</con2:path>
+                      </con2:param>
+                      <con2:param name="exceptionStackTrace">
+                        <con2:path>fn:data($body/faul:faultHandlerRequest/faul:exceptionStackTrace)</con2:path>
+                      </con2:param>
+                      <con2:param name="messageCode">
+                        <con2:path>fn:data($getFormatedMessageResponse//coreschema:ID_MSG)</con2:path>
+                      </con2:param>
+                      <con2:param name="exceptionClassification">
+                        <con2:path>fn:data($body/faul:faultHandlerRequest/exc:ExceptionClassification)</con2:path>
+                      </con2:param>
+                      <con2:param name="errorInfoFault">
+                        <con2:path>$body/faul:faultHandlerRequest/faul:callResponse//err:ErrorInfo</con2:path>
+                      </con2:param>
+                      <con2:param name="additionalInformation">
+                        <con2:path>$body/faul:faultHandlerRequest/faul:additionalInformation</con2:path>
+                      </con2:param>
+                    </con2:xqueryTransform>
+                  </con1:expr>
+                </con1:assign>
+                <con1:assign varName="localLocation">
+                  <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-276057101004718004-310a0140.12380ddac38.-7ff3</con2:id>
+                  <con1:expr>
+                    <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                      <con2:resource ref="netarchitecture/fault/faulthandler/transformation/xquery/TransformLocationFromFaultToLocationXQuery"/>
+                      <con2:param name="localFault">
+                        <con2:path>$body/faul:faultHandlerRequest/faul:callResponse</con2:path>
+                      </con2:param>
+                    </con2:xqueryTransform>
+                  </con1:expr>
+                </con1:assign>
+                <con1:assign varName="getFormatedMessageResponse">
+                  <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-8933519956899224685--d7202e6.12503a9ae20.-7ffb</con2:id>
+                  <con1:expr>
+                    <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                      <con2:resource ref="netarchitecture/fault/faulthandler/transformation/xquery/TransformFaultCodMsgToMessageXQuery"/>
+                      <con2:param name="fault">
+                        <con2:path>$body/faul:faultHandlerRequest/faul:callResponse</con2:path>
+                      </con2:param>
+                      <con2:param name="defaultMessage">
+                        <con2:path>$getFormatedMessageResponse</con2:path>
+                      </con2:param>
+                    </con2:xqueryTransform>
+                  </con1:expr>
+                </con1:assign>
+              </con1:actions>
+            </con1:case>
+            <con1:default>
+              <con2:log>
+                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-2572391162904280512-3a4b8ec9.122acf787ec.-7ff8</con3:id>
+                <con2:logLevel>debug</con2:logLevel>
+                <con2:message>NAO Achou ErrorInfo</con2:message>
+              </con2:log>
+            </con1:default>
+          </con1:ifThenElse>
+        </con:actions>
+      </con:stage>
+      <con:stage name="VerifyIfErrorCodeExistsInTheRequest">
+        <con:comment>Identifica se recebeu um erro tratado com mensagem ou algum outro erro padrão</con:comment>
+        <con:context>
+          <con1:varNsDecl namespace="http://www.netservicos.com.br/NETESBExceptionHandler12V1" prefix="net" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+          <con2:varNsDecl namespace="http://www.netservicos.com.br/FaultHandlerV1" prefix="faul" xmlns:con2="http://www.bea.com/wli/sb/stages/config"/>
+        </con:context>
+        <con:actions>
+          <con1:ifThenElse>
+            <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-2572391162904280512-3a4b8ec9.122acf787ec.-7fff</con2:id>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">fn:empty($localErrorInfo)</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con2:log>
+                  <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-2572391162904280512-3a4b8ec9.122acf787ec.-7ff7</con3:id>
+                  <con2:logLevel>debug</con2:logLevel>
+                  <con2:message>Como nao achou ErrorInfo em lugar algum vai procurar outras falhas.</con2:message>
+                </con2:log>
+                <con1:ifThenElse>
+                  <con2:comment xmlns:con2="http://www.bea.com/wli/sb/stages/config">Procura por Fault, se achar verifica se é erro padrão ou mensagem tratada custom</con2:comment>
+                  <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-1977908114037174645-70ce5ca4.122a2ae7435.-8000</con2:id>
+                  <con1:case>
+                    <con1:condition>
+                      <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">(exists($body/faul:faultHandlerRequest/faul:currentFault/ctx:fault/ctx:errorCode)
+or exists($body/faul:faultHandlerRequest/faul:currentFault//faultcode)
+or exists($body/faul:faultHandlerRequest/faul:currentFault//soap12-env:Code)
+)</con2:xqueryText>
+                    </con1:condition>
+                    <con1:actions>
+                      <con2:log>
+                        <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-2572391162904280512-3a4b8ec9.122acf787ec.-7ff6</con3:id>
+                        <con2:logLevel>debug</con2:logLevel>
+                        <con2:message>Achou Fault em CurrentFault</con2:message>
+                      </con2:log>
+                      <con1:ifThenElse>
+                        <con2:comment xmlns:con2="http://www.bea.com/wli/sb/stages/config">Se for uma mensagem custom Atribui para a variável que será tratada. Senão apenas indica que tem informações de falha no parâmetro.</con2:comment>
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-2572391162904280512-3a4b8ec9.122acf787ec.-7fd0</con2:id>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">exists($body/faul:faultHandlerRequest/faul:currentFault//faultcode)
+and (fn:matches(
+           fn:data($body/faul:faultHandlerRequest/faul:currentFault//faultcode)
+          ,"^(OSB|SCA)-[A-Z]{3,10}-[0-9]{4}\b"
+        ) or
+           fn:starts-with(
+           fn:data($body/faul:faultHandlerRequest/faul:currentFault//faultcode),
+           "soap"))</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:log>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-2572391162904280512-3a4b8ec9.122acf787ec.-7fbe</con3:id>
+                              <con2:logLevel>debug</con2:logLevel>
+                              <con2:message>Achou SOAP11</con2:message>
+                            </con2:log>
+                            <con1:assign varName="localFault11">
+                              <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-2572391162904280512-3a4b8ec9.122acf787ec.-7fee</con2:id>
+                              <con1:expr>
+                                <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$body/faul:faultHandlerRequest/faul:currentFault//soap-env:Fault</con2:xqueryText>
+                              </con1:expr>
+                            </con1:assign>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">exists($body/faul:faultHandlerRequest/faul:currentFault//soap12-env:Code)
+and (fn:matches(
+           fn:data($body/faul:faultHandlerRequest/faul:currentFault//soap12-env:Code/soap12-env:Subcode)
+          ,"^(OSB|SCA)-[A-Z]{3,10}-[0-9]{4}\b"
+       ) or
+           fn:starts-with(
+           fn:data($body/faul:faultHandlerRequest/faul:currentFault//soap12-env:Code/soap12-env:Value)
+           , "soap"))</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:log>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-2572391162904280512-3a4b8ec9.122acf787ec.-7fbd</con3:id>
+                              <con2:logLevel>debug</con2:logLevel>
+                              <con2:message>Achou SOAP12</con2:message>
+                            </con2:log>
+                            <con1:assign varName="localFault12">
+                              <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-2572391162904280512-3a4b8ec9.122acf787ec.-7fc9</con2:id>
+                              <con1:expr>
+                                <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$body/faul:faultHandlerRequest/faul:currentFault//soap12-env:Fault</con2:xqueryText>
+                              </con1:expr>
+                            </con1:assign>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:default>
+                          <con2:log>
+                            <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-2572391162904280512-3a4b8ec9.122acf787ec.-7fbc</con3:id>
+                            <con2:logLevel>debug</con2:logLevel>
+                            <con2:message>Achou falha que nao eh tratada em currentFault</con2:message>
+                          </con2:log>
+                          <con1:assign varName="currentFaultHasFault">
+                            <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-2572391162904280512-3a4b8ec9.122acf787ec.-7fcd</con2:id>
+                            <con1:expr>
+                              <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"TRUE"</con2:xqueryText>
+                            </con1:expr>
+                          </con1:assign>
+                        </con1:default>
+                      </con1:ifThenElse>
+                      <con1:assign varName="localLocation">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-276057101004718004-310a0140.12380ddac38.-7ff1</con2:id>
+                        <con1:expr>
+                          <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                            <con2:resource ref="netarchitecture/fault/faulthandler/transformation/xquery/TransformLocationFromFaultToLocationXQuery"/>
+                            <con2:param name="localFault">
+                              <con2:path>$body/faul:faultHandlerRequest/faul:currentFault</con2:path>
+                            </con2:param>
+                          </con2:xqueryTransform>
+                        </con1:expr>
+                      </con1:assign>
+                    </con1:actions>
+                  </con1:case>
+                  <con1:default/>
+                </con1:ifThenElse>
+                <con1:ifThenElse>
+                  <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-1977908114037174645-70ce5ca4.122a2ae7435.-8000</con2:id>
+                  <con1:case>
+                    <con1:condition>
+                      <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">(exists($body/faul:faultHandlerRequest/faul:currentBody/ctx:fault/ctx:errorCode)
+or exists($body/faul:faultHandlerRequest/faul:currentBody//faultcode)
+or exists($body/faul:faultHandlerRequest/faul:currentBody//soap12-env:Code)
+)
+and fn:empty($localFault11)
+and fn:empty($localFault12)</con2:xqueryText>
+                    </con1:condition>
+                    <con1:actions>
+                      <con2:log>
+                        <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-2572391162904280512-3a4b8ec9.122acf787ec.-7ff6</con3:id>
+                        <con2:logLevel>debug</con2:logLevel>
+                        <con2:message>Achou Fault em CurrentBody</con2:message>
+                      </con2:log>
+                      <con1:ifThenElse>
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-2572391162904280512-3a4b8ec9.122acf787ec.-7fcc</con2:id>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">exists($body/faul:faultHandlerRequest/faul:currentBody//faultcode)
+and (fn:matches(
+           fn:data($body/faul:faultHandlerRequest/faul:currentBody//faultcode)
+          ,"^(OSB|SCA)-[A-Z]{3,10}-[0-9]{4}\b"
+        ) or
+           fn:starts-with(
+                  fn:data($body/faul:faultHandlerRequest/faul:currentBody//faultcode)
+                 ,"soap"))</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:log>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-2572391162904280512-3a4b8ec9.122acf787ec.-7fbb</con3:id>
+                              <con2:logLevel>debug</con2:logLevel>
+                              <con2:message>Achou SOAP11</con2:message>
+                            </con2:log>
+                            <con1:assign varName="localFault11">
+                              <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-2572391162904280512-3a4b8ec9.122acf787ec.-7fed</con2:id>
+                              <con1:expr>
+                                <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$body/faul:faultHandlerRequest/faul:currentBody//soap-env:Fault</con2:xqueryText>
+                              </con1:expr>
+                            </con1:assign>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">exists($body/faul:faultHandlerRequest/faul:currentBody//soap12-env:Code)
+and (fn:matches(
+           fn:data($body/faul:faultHandlerRequest/faul:currentBody//soap12-env:Code/soap12-env:Subcode)
+          ,"^(OSB|SCA)-[A-Z]{3,10}-[0-9]{4}\b"
+       ) or
+           fn:starts-with(
+           fn:data($body/faul:faultHandlerRequest/faul:currentBody//soap12-env:Code/soap12-env:Value)
+           , "soap"))</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:log>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-2572391162904280512-3a4b8ec9.122acf787ec.-7fba</con3:id>
+                              <con2:logLevel>debug</con2:logLevel>
+                              <con2:message>Achou SOAP12</con2:message>
+                            </con2:log>
+                            <con1:assign varName="localFault12">
+                              <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-2572391162904280512-3a4b8ec9.122acf787ec.-7fc8</con2:id>
+                              <con1:expr>
+                                <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$body/faul:faultHandlerRequest/faul:currentBody//soap12-env:Fault</con2:xqueryText>
+                              </con1:expr>
+                            </con1:assign>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:default>
+                          <con2:log>
+                            <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-2572391162904280512-3a4b8ec9.122acf787ec.-7fb9</con3:id>
+                            <con2:logLevel>debug</con2:logLevel>
+                            <con2:message>Achou falha que nao eh tratada em currentBody</con2:message>
+                          </con2:log>
+                          <con1:assign varName="currentBodyHasFault">
+                            <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-2572391162904280512-3a4b8ec9.122acf787ec.-7fc7</con2:id>
+                            <con1:expr>
+                              <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"TRUE"</con2:xqueryText>
+                            </con1:expr>
+                          </con1:assign>
+                        </con1:default>
+                      </con1:ifThenElse>
+                      <con1:assign varName="localLocation">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-276057101004718004-310a0140.12380ddac38.-7ff0</con2:id>
+                        <con1:expr>
+                          <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                            <con2:resource ref="netarchitecture/fault/faulthandler/transformation/xquery/TransformLocationFromFaultToLocationXQuery"/>
+                            <con2:param name="localFault">
+                              <con2:path>$body/faul:faultHandlerRequest/faul:currentBody</con2:path>
+                            </con2:param>
+                          </con2:xqueryTransform>
+                        </con1:expr>
+                      </con1:assign>
+                    </con1:actions>
+                  </con1:case>
+                  <con1:default/>
+                </con1:ifThenElse>
+                <con1:ifThenElse>
+                  <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-1977908114037174645-70ce5ca4.122a2ae7435.-8000</con2:id>
+                  <con1:case>
+                    <con1:condition>
+                      <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">(exists($body/faul:faultHandlerRequest/faul:callResponse/ctx:fault/ctx:errorCode)
+or exists($body/faul:faultHandlerRequest/faul:callResponse//faultcode)
+or exists($body/faul:faultHandlerRequest/faul:callResponse//soap12-env:Code)
+)
+and fn:empty($localFault11)
+and fn:empty($localFault12)</con2:xqueryText>
+                    </con1:condition>
+                    <con1:actions>
+                      <con2:log>
+                        <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-2572391162904280512-3a4b8ec9.122acf787ec.-7ff6</con3:id>
+                        <con2:logLevel>debug</con2:logLevel>
+                        <con2:message>Achou Fault em CallResponse</con2:message>
+                      </con2:log>
+                      <con1:ifThenElse>
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-2572391162904280512-3a4b8ec9.122acf787ec.-7fcc</con2:id>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">exists($body/faul:faultHandlerRequest/faul:callResponse//faultcode)
+and (fn:matches(
+           fn:data($body/faul:faultHandlerRequest/faul:callResponse//faultcode)
+          ,"^(OSB|SCA)-[A-Z]{3,10}-[0-9]{4}\b"
+        ) or
+           fn:starts-with(
+                  fn:data($body/faul:faultHandlerRequest/faul:callResponse//faultcode)
+                 ,"soap"))</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:log>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-2572391162904280512-3a4b8ec9.122acf787ec.-7fb8</con3:id>
+                              <con2:logLevel>debug</con2:logLevel>
+                              <con2:message>Achou SOAP11</con2:message>
+                            </con2:log>
+                            <con1:assign varName="localFault11">
+                              <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-2572391162904280512-3a4b8ec9.122acf787ec.-7fed</con2:id>
+                              <con1:expr>
+                                <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$body/faul:faultHandlerRequest/faul:callResponse//soap-env:Fault</con2:xqueryText>
+                              </con1:expr>
+                            </con1:assign>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:case>
+                          <con1:condition>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">exists($body/faul:faultHandlerRequest/faul:callResponse//soap12-env:Code)
+and (fn:matches(
+           fn:data($body/faul:faultHandlerRequest/faul:callResponse//soap12-env:Code/soap12-env:Subcode)
+          ,"^(OSB|SCA)-[A-Z]{3,10}-[0-9]{4}\b"
+       ) or
+           fn:starts-with(
+           fn:data($body/faul:faultHandlerRequest/faul:callResponse//soap12-env:Code/soap12-env:Value)
+           , "soap"))</con2:xqueryText>
+                          </con1:condition>
+                          <con1:actions>
+                            <con2:log>
+                              <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-2572391162904280512-3a4b8ec9.122acf787ec.-7fb7</con3:id>
+                              <con2:logLevel>debug</con2:logLevel>
+                              <con2:message>Achou SOAP12</con2:message>
+                            </con2:log>
+                            <con1:assign varName="localFault12">
+                              <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-2572391162904280512-3a4b8ec9.122acf787ec.-7fc8</con2:id>
+                              <con1:expr>
+                                <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$body/faul:faultHandlerRequest/faul:callResponse//soap12-env:Fault</con2:xqueryText>
+                              </con1:expr>
+                            </con1:assign>
+                          </con1:actions>
+                        </con1:case>
+                        <con1:default>
+                          <con2:log>
+                            <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-2572391162904280512-3a4b8ec9.122acf787ec.-7fb6</con3:id>
+                            <con2:logLevel>debug</con2:logLevel>
+                            <con2:message>Achou falha que nao eh tratada</con2:message>
+                          </con2:log>
+                          <con1:assign varName="callResponseHasFault">
+                            <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-2572391162904280512-3a4b8ec9.122acf787ec.-7fc7</con2:id>
+                            <con1:expr>
+                              <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">"TRUE"</con2:xqueryText>
+                            </con1:expr>
+                          </con1:assign>
+                        </con1:default>
+                      </con1:ifThenElse>
+                      <con1:assign varName="localLocation">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-276057101004718004-310a0140.12380ddac38.-7fef</con2:id>
+                        <con1:expr>
+                          <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                            <con2:resource ref="netarchitecture/fault/faulthandler/transformation/xquery/TransformLocationFromFaultToLocationXQuery"/>
+                            <con2:param name="localFault">
+                              <con2:path>$body/faul:faultHandlerRequest/faul:callResponse</con2:path>
+                            </con2:param>
+                          </con2:xqueryTransform>
+                        </con1:expr>
+                      </con1:assign>
+                    </con1:actions>
+                  </con1:case>
+                  <con1:default/>
+                </con1:ifThenElse>
+              </con1:actions>
+            </con1:case>
+            <con1:default/>
+          </con1:ifThenElse>
+        </con:actions>
+      </con:stage>
+      <con:stage name="VerifyIfSoapFaultExistsInTheRequest">
+        <con:context>
+          <con1:userNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Message" prefix="coreschema" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+          <con1:varNsDecl namespace="http://www.netservicos.com.br/NETESBExceptionHandler12V1" prefix="net" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+          <con2:varNsDecl namespace="http://www.netservicos.com.br/FaultHandlerV1" prefix="faul" xmlns:con2="http://www.bea.com/wli/sb/stages/config"/>
+          <con2:varNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/fault/ErrorInfo" prefix="err" xmlns:con2="http://www.bea.com/wli/sb/stages/config"/>
+          <con2:varNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/fault/ExceptionClassification" prefix="exc" xmlns:con2="http://www.bea.com/wli/sb/stages/config"/>
+        </con:context>
+        <con:actions>
+          <con1:ifThenElse>
+            <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-2572391162904280512-3a4b8ec9.122acf787ec.-7feb</con2:id>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">fn:empty($localErrorInfo) and
+not(fn:empty($localFault11))</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con2:log>
+                  <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-2572391162904280512-3a4b8ec9.122acf787ec.-7fea</con3:id>
+                  <con2:logLevel>debug</con2:logLevel>
+                  <con2:message>Nao achou ErrorInfo mas achou Fault11</con2:message>
+                </con2:log>
+                <con1:assign varName="localErrorInfo">
+                  <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-2572391162904280512-3a4b8ec9.122acf787ec.-7fb4</con2:id>
+                  <con1:expr>
+                    <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                      <con2:resource ref="netarchitecture/fault/faulthandler/transformation/xquery/TransformSOAPFault11ToErrorInfoXQuery"/>
+                      <con2:param name="validationMessages">
+                        <con2:path>$body/faul:faultHandlerRequest/err:ValidationMessages</con2:path>
+                      </con2:param>
+                      <con2:param name="message">
+                        <con2:path>fn:data($getFormatedMessageResponse//coreschema:USER_MESSAGE)</con2:path>
+                      </con2:param>
+                      <con2:param name="accessResourceName">
+                        <con2:path>fn:data($body/faul:faultHandlerRequest/faul:accessResourceName)</con2:path>
+                      </con2:param>
+                      <con2:param name="fault">
+                        <con2:path>$localFault11</con2:path>
+                      </con2:param>
+                      <con2:param name="messageCode">
+                        <con2:path>fn:data($getFormatedMessageResponse//coreschema:ID_MSG)</con2:path>
+                      </con2:param>
+                      <con2:param name="exceptionStackTrace">
+                        <con2:path>fn:data($body/faul:faultHandlerRequest/faul:exceptionStackTrace)</con2:path>
+                      </con2:param>
+                      <con2:param name="exceptionClassification">
+                        <con2:path>fn:data($body/faul:faultHandlerRequest/exc:ExceptionClassification)</con2:path>
+                      </con2:param>
+                      <con2:param name="additionalInformation">
+                        <con2:path>$body/faul:faultHandlerRequest/faul:additionalInformation</con2:path>
+                      </con2:param>
+                    </con2:xqueryTransform>
+                  </con1:expr>
+                </con1:assign>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">fn:empty($localErrorInfo) and 
+not(fn:empty($localFault12))</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con2:log>
+                  <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-2572391162904280512-3a4b8ec9.122acf787ec.-7fb5</con3:id>
+                  <con2:logLevel>debug</con2:logLevel>
+                  <con2:message>Nao achou ErrorInfo mas achou Fault12</con2:message>
+                </con2:log>
+                <con1:assign varName="localErrorInfo">
+                  <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-2572391162904280512-3a4b8ec9.122acf787ec.-7fb3</con2:id>
+                  <con1:expr>
+                    <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                      <con2:resource ref="netarchitecture/fault/faulthandler/transformation/xquery/TransformSOAPFault12ToErrorInfoXQuery"/>
+                      <con2:param name="message">
+                        <con2:path>fn:data($getFormatedMessageResponse//coreschema:USER_MESSAGE)</con2:path>
+                      </con2:param>
+                      <con2:param name="validationMessages">
+                        <con2:path>$body/faul:faultHandlerRequest/err:ValidationMessages</con2:path>
+                      </con2:param>
+                      <con2:param name="accessResourceName">
+                        <con2:path>fn:data($body/faul:faultHandlerRequest/faul:accessResourceName)</con2:path>
+                      </con2:param>
+                      <con2:param name="fault">
+                        <con2:path>$localFault12</con2:path>
+                      </con2:param>
+                      <con2:param name="messageCode">
+                        <con2:path>fn:data($getFormatedMessageResponse//coreschema:ID_MSG)</con2:path>
+                      </con2:param>
+                      <con2:param name="exceptionStackTrace">
+                        <con2:path>fn:data($body/faul:faultHandlerRequest/faul:exceptionStackTrace)</con2:path>
+                      </con2:param>
+                      <con2:param name="exceptionClassification">
+                        <con2:path>fn:data($body/faul:faultHandlerRequest/exc:ExceptionClassification)</con2:path>
+                      </con2:param>
+                      <con2:param name="additionalInformation">
+                        <con2:path>$body/faul:faultHandlerRequest/faul:additionalInformation</con2:path>
+                      </con2:param>
+                    </con2:xqueryTransform>
+                  </con1:expr>
+                </con1:assign>
+              </con1:actions>
+            </con1:case>
+            <con1:default>
+              <con2:log>
+                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-2773469066867250701--3a61431c.1235384b837.-8000</con3:id>
+                <con2:logLevel>debug</con2:logLevel>
+                <con2:message>Não achou Erros Tratados nem SOAP fault</con2:message>
+              </con2:log>
+            </con1:default>
+          </con1:ifThenElse>
+        </con:actions>
+      </con:stage>
+      <con:stage name="PrepareErrorInfo">
+        <con:context>
+          <con1:userNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Message" prefix="coreschema" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+          <con1:varNsDecl namespace="http://www.netservicos.com.br/NETESBExceptionHandler12V1" prefix="net" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+          <con2:varNsDecl namespace="http://www.netservicos.com.br/FaultHandlerV1" prefix="faul" xmlns:con2="http://www.bea.com/wli/sb/stages/config"/>
+          <con2:varNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/fault/ErrorInfo" prefix="err" xmlns:con2="http://www.bea.com/wli/sb/stages/config"/>
+          <con2:varNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/fault/ExceptionClassification" prefix="exc" xmlns:con2="http://www.bea.com/wli/sb/stages/config"/>
+          <con2:varNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/NidDomain" prefix="nid" xmlns:con2="http://www.bea.com/wli/sb/stages/config"/>
+          <con2:varNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/NidAbeLevel" prefix="nid1" xmlns:con2="http://www.bea.com/wli/sb/stages/config"/>
+        </con:context>
+        <con:actions>
+          <con1:ifThenElse>
+            <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-2572391162904280512-3a4b8ec9.122acf787ec.-7fb2</con2:id>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">not(fn:empty($localErrorInfo))</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con2:log>
+                  <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-2572391162904280512-3a4b8ec9.122acf787ec.-7f91</con3:id>
+                  <con2:logLevel>debug</con2:logLevel>
+                  <con2:message>Ja achou mensagem entao eh soh retornar</con2:message>
+                </con2:log>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$currentFaultHasFault eq "TRUE" and
+fn:empty($localErrorInfo) and
+fn:empty($localFault11) and
+fn:empty($localFault12)</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con2:log>
+                  <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-2572391162904280512-3a4b8ec9.122acf787ec.-7faa</con3:id>
+                  <con2:logLevel>debug</con2:logLevel>
+                  <con2:message>Achou uma falha qualquer em currentFault</con2:message>
+                </con2:log>
+                <con1:assign varName="localErrorInfo">
+                  <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-2572391162904280512-3a4b8ec9.122acf787ec.-7fad</con2:id>
+                  <con1:expr>
+                    <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                      <con2:resource ref="netarchitecture/fault/faulthandler/transformation/xquery/TransformOSBFaultToErrorInfoXQuery"/>
+                      <con2:param name="validationMessages">
+                        <con2:path>$body/faul:faultHandlerRequest/err:ValidationMessages</con2:path>
+                      </con2:param>
+                      <con2:param name="accessResourceName">
+                        <con2:path>fn:data($body/faul:faultHandlerRequest/faul:accessResourceName)</con2:path>
+                      </con2:param>
+                      <con2:param name="fault">
+                        <con2:path>$body/faul:faultHandlerRequest/faul:currentFault</con2:path>
+                      </con2:param>
+                      <con2:param name="exceptionStackTrace">
+                        <con2:path>fn:data($body/faul:faultHandlerRequest/faul:exceptionStackTrace)</con2:path>
+                      </con2:param>
+                      <con2:param name="exceptionClassification">
+                        <con2:path>fn:data($body/faul:faultHandlerRequest/exc:ExceptionClassification)</con2:path>
+                      </con2:param>
+                      <con2:param name="additionalInformation">
+                        <con2:path>$body/faul:faultHandlerRequest/faul:additionalInformation</con2:path>
+                      </con2:param>
+                    </con2:xqueryTransform>
+                  </con1:expr>
+                </con1:assign>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$currentBodyHasFault eq "TRUE" and
+fn:empty($localErrorInfo) and
+fn:empty($localFault11) and
+fn:empty($localFault12)</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con2:log>
+                  <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-2572391162904280512-3a4b8ec9.122acf787ec.-7fa9</con3:id>
+                  <con2:logLevel>debug</con2:logLevel>
+                  <con2:message>Achou uma falha qualquer em currentBody</con2:message>
+                </con2:log>
+                <con1:assign varName="localErrorInfo">
+                  <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-2572391162904280512-3a4b8ec9.122acf787ec.-7fac</con2:id>
+                  <con1:expr>
+                    <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                      <con2:resource ref="netarchitecture/fault/faulthandler/transformation/xquery/TransformOSBFaultToErrorInfoXQuery"/>
+                      <con2:param name="validationMessages">
+                        <con2:path>$body/faul:faultHandlerRequest/err:ValidationMessages</con2:path>
+                      </con2:param>
+                      <con2:param name="accessResourceName">
+                        <con2:path>fn:data($body/faul:faultHandlerRequest/faul:accessResourceName)</con2:path>
+                      </con2:param>
+                      <con2:param name="fault">
+                        <con2:path>$body/faul:faultHandlerRequest/faul:currentBody</con2:path>
+                      </con2:param>
+                      <con2:param name="exceptionStackTrace">
+                        <con2:path>fn:data($body/faul:faultHandlerRequest/faul:exceptionStackTrace)</con2:path>
+                      </con2:param>
+                      <con2:param name="exceptionClassification">
+                        <con2:path>fn:data($body/faul:faultHandlerRequest/exc:ExceptionClassification)</con2:path>
+                      </con2:param>
+                      <con2:param name="additionalInformation">
+                        <con2:path>$body/faul:faultHandlerRequest/faul:additionalInformation</con2:path>
+                      </con2:param>
+                    </con2:xqueryTransform>
+                  </con1:expr>
+                </con1:assign>
+              </con1:actions>
+            </con1:case>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$callResponseHasFault eq "TRUE" and
+fn:empty($localErrorInfo) and
+fn:empty($localFault11) and
+fn:empty($localFault12)</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con2:log>
+                  <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-2572391162904280512-3a4b8ec9.122acf787ec.-7fa8</con3:id>
+                  <con2:logLevel>debug</con2:logLevel>
+                  <con2:message>Achou uma falha qualquer em callResponse</con2:message>
+                </con2:log>
+                <con1:assign varName="localErrorInfo">
+                  <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-2572391162904280512-3a4b8ec9.122acf787ec.-7fab</con2:id>
+                  <con1:expr>
+                    <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                      <con2:resource ref="netarchitecture/fault/faulthandler/transformation/xquery/TransformOSBFaultToErrorInfoXQuery"/>
+                      <con2:param name="validationMessages">
+                        <con2:path>$body/faul:faultHandlerRequest/err:ValidationMessages</con2:path>
+                      </con2:param>
+                      <con2:param name="accessResourceName">
+                        <con2:path>fn:data($body/faul:faultHandlerRequest/faul:accessResourceName)</con2:path>
+                      </con2:param>
+                      <con2:param name="fault">
+                        <con2:path>$body/faul:faultHandlerRequest/faul:callResponse</con2:path>
+                      </con2:param>
+                      <con2:param name="exceptionStackTrace">
+                        <con2:path>fn:data($body/faul:faultHandlerRequest/faul:exceptionStackTrace)</con2:path>
+                      </con2:param>
+                      <con2:param name="exceptionClassification">
+                        <con2:path>fn:data($body/faul:faultHandlerRequest/exc:ExceptionClassification)</con2:path>
+                      </con2:param>
+                      <con2:param name="additionalInformation">
+                        <con2:path>$body/faul:faultHandlerRequest/faul:additionalInformation</con2:path>
+                      </con2:param>
+                    </con2:xqueryTransform>
+                  </con1:expr>
+                </con1:assign>
+              </con1:actions>
+            </con1:case>
+            <con1:default>
+              <con2:log>
+                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-2572391162904280512-3a4b8ec9.122acf787ec.-7fb0</con3:id>
+                <con2:logLevel>debug</con2:logLevel>
+                <con2:message>Nao Achou Falha em Lugar Algum</con2:message>
+              </con2:log>
+              <con1:assign varName="localErrorInfo">
+                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-2572391162904280512-3a4b8ec9.122acf787ec.-7f93</con2:id>
+                <con1:expr>
+                  <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config"><![CDATA[<err:ErrorInfo>
+  <err:Code>{fn:data($getFormatedMessageResponse//coreschema:ID_MSG)}</err:Code>
+  <err:Message>{fn:data($getFormatedMessageResponse//coreschema:USER_MESSAGE)}</err:Message>
+  <err:ExceptionDate>{data(fn:current-dateTime())}</err:ExceptionDate>
+  <err:ExceptionClassification>{data($body/faul:faultHandlerRequest/exc:ExceptionClassification)}</err:ExceptionClassification>
+  <err:AccessResourceName>{data($body/faul:faultHandlerRequest/faul:accessResourceName)}</err:AccessResourceName>
+  <err:AdditionalInformation>{$body/faul:faultHandlerRequest/faul:additionalInformation/@* , $body/faul:faultHandlerRequest/faul:additionalInformation/node()}</err:AdditionalInformation>
+  <err:ValidationMessages>{$body/faul:faultHandlerRequest/err:ValidationMessages/@* , $body/faul:faultHandlerRequest/err:ValidationMessages/node()}</err:ValidationMessages>
+  <err:ExceptionStackTrace>{data($body/faul:faultHandlerRequest/faul:exceptionStackTrace)}</err:ExceptionStackTrace>
+</err:ErrorInfo>]]></con3:xqueryText>
+                </con1:expr>
+              </con1:assign>
+              <con1:Error>
+                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-3768720852343098687--225dee4e.12399dbfeaf.-7ff6</con2:id>
+                <con1:errCode>LOCAL_FAULT</con1:errCode>
+                <con1:message/>
+              </con1:Error>
+            </con1:default>
+          </con1:ifThenElse>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="response" name="PipelinePairNode_response" xmlns:con="http://www.bea.com/wli/sb/pipeline/config">
+      <con:stage name="PrepareResponse">
+        <con:context>
+          <con1:userNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Message" prefix="mes" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+          <con1:varNsDecl namespace="http://www.netservicos.com.br/NETESBExceptionHandler12V1" prefix="net" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+          <con2:varNsDecl namespace="http://www.netservicos.com.br/FaultHandlerV1" prefix="faul" xmlns:con2="http://www.bea.com/wli/sb/stages/config"/>
+        </con:context>
+        <con:actions>
+          <con1:replace varName="body" contents-only="true">
+            <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-4861144484322045929--4fcc0f25.13959fbb10b.-7ee4</con3:id>
+            <con1:location>
+              <con3:xpathText xmlns:con3="http://www.bea.com/wli/sb/stages/config">.</con3:xpathText>
+            </con1:location>
+            <con1:expr>
+              <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">&lt;faul:faultHandlerResponse/></con3:xqueryText>
+            </con1:expr>
+          </con1:replace>
+          <con1:replace varName="body" contents-only="true">
+            <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-967156512052211097-511c787b.1350f727680.-7de5</con3:id>
+            <con1:location>
+              <con3:xpathText xmlns:con3="http://www.bea.com/wli/sb/stages/config">./faul:faultHandlerResponse</con3:xpathText>
+            </con1:location>
+            <con1:expr>
+              <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                <con2:resource ref="netarchitecture/fault/faulthandler/transformation/xquery/TransformErrorInfoToOSBFaultXQuery"/>
+                <con2:param name="messageText">
+                  <con2:path>fn:data($getFormatedMessageResponse//mes:USER_MESSAGE)</con2:path>
+                </con2:param>
+                <con2:param name="customLocation">
+                  <con2:path>$localLocation</con2:path>
+                </con2:param>
+                <con2:param name="messageCode">
+                  <con2:path>fn:data($getFormatedMessageResponse//mes:ID_MSG)</con2:path>
+                </con2:param>
+                <con2:param name="errorInfo">
+                  <con2:path>$localErrorInfo</con2:path>
+                </con2:param>
+              </con2:xqueryTransform>
+            </con1:expr>
+          </con1:replace>
+          <con1:delete varName="header" xmlns:con3="http://www.bea.com/wli/sb/stages/logging/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con4="http://www.bea.com/wli/sb/pipeline/config" xmlns:env="http://www.bea.com/wli/config/env">
+            <con2:id>_ActionId-967156512052211097-511c787b.1350f727680.-7de4</con2:id>
+          </con1:delete>
+        </con:actions>
+      </con:stage>
+      <con:stage name="LogResponse">
+        <con:context/>
+        <con:actions>
+          <con2:log>
+            <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-1108678829795421514-47e2cb16.134c91e8bec.-7569</con3:id>
+            <con2:logLevel>info</con2:logLevel>
+            <con2:expr>
+              <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$header</con3:xqueryText>
+            </con2:expr>
+            <con2:message>header</con2:message>
+          </con2:log>
+          <con2:log>
+            <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-1108678829795421514-47e2cb16.134c91e8bec.-7568</con3:id>
+            <con2:logLevel>info</con2:logLevel>
+            <con2:expr>
+              <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body</con3:xqueryText>
+            </con2:expr>
+            <con2:message>body</con2:message>
+          </con2:log>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="error" name="_onErrorHandler-1977908114037174645-70ce5ca4.122a2ae7435.-7f97" xmlns:con="http://www.bea.com/wli/sb/pipeline/config">
+      <con:stage name="ErrorHandlerPipelinePairNode">
+        <con:context>
+          <con1:userNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Message" prefix="coreschema" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+          <con1:varNsDecl namespace="http://www.netservicos.com.br/NETESBExceptionHandler12V1" prefix="net" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+          <con2:varNsDecl namespace="http://www.netservicos.com.br/FaultHandlerV1" prefix="faul" xmlns:con2="http://www.bea.com/wli/sb/stages/config"/>
+          <con2:varNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/NidDomain" prefix="nid" xmlns:con2="http://www.bea.com/wli/sb/stages/config"/>
+          <con2:varNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/NidAbeLevel" prefix="nid1" xmlns:con2="http://www.bea.com/wli/sb/stages/config"/>
+        </con:context>
+        <con:actions>
+          <con1:ifThenElse>
+            <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-3555177581869765560--435cd61a.1235c507cb0.-8000</con2:id>
+            <con1:case>
+              <con1:condition>
+                <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">empty($localErrorInfo)</con2:xqueryText>
+              </con1:condition>
+              <con1:actions>
+                <con1:log xmlns:con1="http://www.bea.com/wli/sb/stages/logging/config">
+                  <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-1977908114037174645-70ce5ca4.122a2ae7435.-7f91</con2:id>
+                  <con1:logLevel>error</con1:logLevel>
+                  <con1:message>Deu erro no tratamento da exceção</con1:message>
+                </con1:log>
+                <con1:assign varName="getFormatedMessageResponse">
+                  <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-5551657666986983004-25acaece.1347b1186ed.-7d29</con2:id>
+                  <con1:expr>
+                    <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                      <con2:resource ref="netarchitecture/transformation/dvm/retrievemessage/xquery/RetrieveMessageDVM"/>
+                      <con2:param name="MessageCode">
+                        <con2:path>'OSB-NETARCHITECTURE-00006'</con2:path>
+                      </con2:param>
+                    </con2:xqueryTransform>
+                  </con1:expr>
+                </con1:assign>
+                <con1:assign varName="localErrorInfo">
+                  <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-2572391162904280512-3a4b8ec9.122acf787ec.-7fa0</con2:id>
+                  <con1:expr>
+                    <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config"><![CDATA[<errorinfo:ErrorInfo xmlns:errorinfo="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/fault/ErrorInfo">
+  <errorinfo:Code>{fn:data($getFormatedMessageResponse//coreschema:ID_MSG)}</errorinfo:Code>
+  <errorinfo:Message>{fn:data($getFormatedMessageResponse//coreschema:USER_MESSAGE)}</errorinfo:Message>
+  <errorinfo:ExceptionDate>{data(fn:current-dateTime())}</errorinfo:ExceptionDate>
+  <errorinfo:ExceptionClassification>{'CLASSIFICATION_UNEXPECTED'}</errorinfo:ExceptionClassification>
+  <errorinfo:AccessResourceName>{'netarchitecture/fault/faulthandler/proxyservice/FaultHandler12V1LCL/PipelinePairNode'}</errorinfo:AccessResourceName>
+  <errorinfo:AdditionalInformation>{$body/faul:faultHandlerRequest}</errorinfo:AdditionalInformation>
+  <errorinfo:ValidationMessages/>
+  <errorinfo:ExceptionStackTrace>{$fault}</errorinfo:ExceptionStackTrace>
+</errorinfo:ErrorInfo>]]></con3:xqueryText>
+                  </con1:expr>
+                </con1:assign>
+              </con1:actions>
+            </con1:case>
+            <con1:default/>
+          </con1:ifThenElse>
+          <con1:assign varName="localLocation">
+            <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-276057101004718004-310a0140.12380ddac38.-7ff2</con2:id>
+            <con1:expr>
+              <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                <con2:resource ref="netarchitecture/fault/faulthandler/transformation/xquery/TransformLocationFromFaultToLocationXQuery"/>
+                <con2:param name="localFault">
+                  <con2:path>$fault</con2:path>
+                </con2:param>
+              </con2:xqueryTransform>
+            </con1:expr>
+          </con1:assign>
+          <con1:replace varName="body" contents-only="true">
+            <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-4861144484322045929--4fcc0f25.13959fbb10b.-7eab</con3:id>
+            <con1:location>
+              <con3:xpathText xmlns:con3="http://www.bea.com/wli/sb/stages/config">.</con3:xpathText>
+            </con1:location>
+            <con1:expr>
+              <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">&lt;faul:faultHandlerResponse/></con3:xqueryText>
+            </con1:expr>
+          </con1:replace>
+          <con1:replace varName="body" contents-only="true">
+            <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-6765250005570103822--6175cb52.134d6d0aa63.-7e38</con3:id>
+            <con1:location>
+              <con3:xpathText xmlns:con3="http://www.bea.com/wli/sb/stages/config">./faul:faultHandlerResponse</con3:xpathText>
+            </con1:location>
+            <con1:expr>
+              <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                <con2:resource ref="netarchitecture/fault/faulthandler/transformation/xquery/TransformErrorInfoToOSBFaultXQuery"/>
+                <con2:param name="messageText">
+                  <con2:path>fn:data($getFormatedMessageResponse//coreschema:USER_MESSAGE)</con2:path>
+                </con2:param>
+                <con2:param name="customLocation">
+                  <con2:path>$localLocation</con2:path>
+                </con2:param>
+                <con2:param name="errorInfo">
+                  <con2:path>$localErrorInfo</con2:path>
+                </con2:param>
+                <con2:param name="messageCode">
+                  <con2:path>fn:data($getFormatedMessageResponse//coreschema:ID_MSG)</con2:path>
+                </con2:param>
+              </con2:xqueryTransform>
+            </con1:expr>
+          </con1:replace>
+          <con1:delete varName="header" xmlns:con3="http://www.bea.com/wli/sb/stages/logging/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con4="http://www.bea.com/wli/sb/pipeline/config" xmlns:env="http://www.bea.com/wli/config/env">
+            <con2:id>_ActionId-967156512052211097-511c787b.1350f727680.-7d8f</con2:id>
+          </con1:delete>
+          <con1:reply isError="false" xmlns:con1="http://www.bea.com/wli/sb/stages/config">
+            <con1:comment>Retorna com sucesso, caso contrário derá exceção no Error Handler de quem está chamando e não será possivel ver a mensagem.</con1:comment>
+            <con1:id>_ActionId-1977908114037174645-70ce5ca4.122a2ae7435.-7f93</con1:id>
+          </con1:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:flow xmlns:con="http://www.bea.com/wli/sb/pipeline/config">
+      <con:pipeline-node name="PipelinePairNode">
+        <con:request>PipelinePairNode_request</con:request>
+        <con:response>PipelinePairNode_response</con:response>
+      </con:pipeline-node>
+    </con:flow>
+  </ser:router>
+</xml-fragment>

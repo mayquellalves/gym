@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/loyalty/LoyaltyBurn" 
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/loyalty/LoyaltyBurn" 
+    xmlns:dap="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/basetypes/DatePeriod" 
+	xmlns:tps="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types">
+
+	<import schemaLocation="../../netarchitecture/common/Types.xsd"
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types" />
+
+    <import schemaLocation="../../common/basetypes/DatePeriod.xsd"
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/basetypes/DatePeriod" />
+	
+
+	<complexType name="LoyaltyBurnType">
+		<sequence>
+			<element name="Category" type="tps:string100" minOccurs="0" maxOccurs="1" />
+            <element name="GracePeriod" type="dap:DatePeriodType" minOccurs="0" maxOccurs="1" />
+		</sequence>
+	</complexType>
+
+	<element name="LoyaltyBurn" type="tns:LoyaltyBurnType" />
+
+	<element name="LoyaltyBurns">
+		<complexType>
+			<sequence>
+				<element ref="tns:LoyaltyBurn" minOccurs="1" maxOccurs="unbounded" />
+			</sequence>
+		</complexType>
+	</element>
+
+</schema>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/resource/specification/TypeOwner"
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/resource/specification/TypeOwner">
+        
+	<element name="TypeOwner">
+		<simpleType>
+			<restriction base="string">
+				<enumeration value="NET" />
+				<enumeration value="EBT" />
+				<enumeration value="CLIENTE" />
+			</restriction>
+		</simpleType>
+	</element>        
+        
+</schema>

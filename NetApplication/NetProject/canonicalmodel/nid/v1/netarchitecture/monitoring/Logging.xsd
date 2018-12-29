@@ -1,0 +1,130 @@
+<schema elementFormDefault="qualified" targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/monitoring/Logging" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/monitoring/Logging" xmlns:nid="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/NidDomain" xmlns:abe="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/NidAbeLevel" xmlns:error="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/fault/ErrorInfo">
+
+	<import namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/fault/ErrorInfo" schemaLocation="../fault/ErrorInfo.xsd"/>
+	
+	<complexType name="LogMessageType">
+        <annotation>
+        	<documentation>
+        		Tipo que representa uma mensagem de Log e seus detalhes.
+        	</documentation>
+        </annotation>
+        <sequence>
+        	<element name="Timestamp" type="dateTime">
+				<annotation>
+					<documentation>
+						TimeStamp indicando a data e hora da ocorrência
+						do evento de Log.
+					</documentation>
+				</annotation>
+			</element>
+ 			<element ref="tns:LogType">
+ 				<annotation>
+ 					<documentation>
+ 						Tipo da entrada de Log.
+ 					</documentation>
+ 				</annotation>
+ 			</element>
+			<element name="MessageCode" type="string">
+				<annotation>
+					<documentation>
+						Código da mensagem a ser logada. O código deve
+						estar cadastrado no XML de mensagens de cada
+						processo. Caso não seja encontrado, o valor
+						informado neste parâmetro será tratado como
+						sendo a mensagem a ser logada. Na mensage
+						cadastrada pode-se indicar a substituição de
+						parâmetros. Ex: O CPF {0} é inválido.
+					</documentation>
+				</annotation>
+			</element>
+			<element ref="tns:MessageParameters" minOccurs="0">
+				<annotation>
+					<documentation>
+						Parâmetros que serão substituídos na mensagem de
+						Log. O primeiro parâmetro, é associado ao índice
+						0 (Zero). Ex: message: 'Usuário {0} foi {1} com
+						sucesso.', parametros: {'root','excluído'}.
+						Resulta em 'Usuário root foi excluído com
+						sucesso.'
+					</documentation>
+				</annotation>
+			</element>
+			<element ref="error:ErrorInfo" minOccurs="0">
+				<annotation>
+					<documentation>
+						Elemento descrevendo o erro encontrado.
+					</documentation>
+				</annotation>
+			</element>
+		</sequence>
+	</complexType>
+
+	<complexType name="FormattedLogMessageType">
+        <annotation>
+        	<documentation>
+        		Tipo que representa uma mensagem de Log formatada.
+        	</documentation>
+        </annotation>
+        <sequence>
+			<element name="TransactionId" type="string">
+				<annotation>
+					<documentation>
+						Identificador da transação.
+					</documentation>
+				</annotation>
+			</element>
+			<element name="Message" type="string">
+				<annotation>
+					<documentation>
+						Mensagem traduzida ou composta com os parâmetros
+						informados.
+					</documentation>
+				</annotation>
+			</element>
+		</sequence>
+	</complexType>
+	
+	<simpleType name="LogTypeType">
+        <annotation>
+        	<documentation>
+        		Representa os Tipos de Log. Os valores possíveis são: INFO, WARN,  ERROR
+        	</documentation>
+        </annotation>
+        <restriction base="string">
+			<enumeration value="INFO"/>
+			<enumeration value="WARN"/>
+			<enumeration value="ERROR"/>
+		</restriction>
+	</simpleType>
+		
+	<complexType name="MessageParametersType">
+        <annotation>
+        	<documentation>
+        		Parâmetros que serão substituídos na mensagem de Log. O
+        		primeiro parâmetro, é associado ao índice 0 (Zero). Ex:
+        		message: 'Usuário {0} foi {1} com sucesso.', parametros:
+        		{'root','excluído'}. Resulta em 'Usuário root foi
+        		excluído com sucesso.'
+        	</documentation>
+        </annotation>
+        <sequence>
+			<element name="Value" type="string" minOccurs="0" maxOccurs="unbounded">
+				<annotation>
+					<documentation>
+						Conjunto de valores dos parâmetros que serão
+						substituidos na mensagem.
+					</documentation>
+				</annotation>
+			</element>
+		</sequence>
+	</complexType>
+	
+	<element name="MessageParameters" type="tns:MessageParametersType"/>
+	
+	<element name="LogMessage" type="tns:LogMessageType"/>
+	
+	<element name="LogType" type="tns:LogTypeType"/>
+			
+	<element name="FormattedLogMessage" type="tns:FormattedLogMessageType"/>
+
+</schema>

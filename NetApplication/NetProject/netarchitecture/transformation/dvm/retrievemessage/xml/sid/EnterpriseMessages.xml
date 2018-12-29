@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dvm name="netarchitecture.messages.enterprise.dvm" xmlns="http://xmlns.oracle.com/dvm">
+  <description>
+  	Only messages belonging to enterprise domain can be defined here.
+  </description>
+  <columns>
+    <column name="ID_MSG"/>
+    <column name="ERROR_NAME"/>
+    <column name="USER_MESSAGE"/>
+    <column name="DETAIL_MESSAGE"/>
+    <column name="CATEGORY_MESSAGE"/>
+    <column name="SYSTEM_CODE"/>
+    <column name="NID_DOMAIN"/>
+    <column name="ABE_LEVEL"/>
+  </columns>
+  <rows>
+	<row>
+		<cell>OSB-ENTERPRISE-00001</cell>
+		<cell>RUNTIME_FAULT</cell>
+		<cell>Request Inválido para operação: {0}.</cell>
+		<cell>Request Inválido para operação: {0}.</cell>
+		<cell>ERROR</cell>
+		<cell/>
+		<cell>enterprise</cell>
+	    <cell>workforce</cell>
+	</row>
+	<row>
+		<cell>OSB-ENTERPRISE-00002</cell>
+		<cell>RUNTIME_FAULT</cell>
+		<cell>A operação solicitada para o serviço não é válida.</cell>
+		<cell>A operação solicitada para o serviço não é válida.</cell>
+		<cell>ERROR</cell>
+		<cell/>
+		<cell>enterprise</cell>
+	    <cell>workforce</cell>
+	</row>
+	<row>
+		<cell>OSB-ENTERPRISE-00003</cell>
+		<cell>RUNTIME_FAULT</cell>
+		<cell>Erro durante a execução do recurso: {0}.</cell>
+		<cell>Erro durante a execução do recurso: {0}.</cell>
+		<cell>ERROR</cell>
+		<cell/>
+		<cell>enterprise</cell>
+	    <cell>workforce</cell>
+	</row>
+	<row>
+		<cell>OSB-ENTERPRISE-00004</cell>
+		<cell>RUNTIME_FAULT</cell>
+		<cell>O(s) campo(s) {0} deve(m) ser informado(s).</cell>
+		<cell>O(s) campo(s) {0} deve(m) ser informado(s).</cell>
+		<cell>ERROR</cell>
+		<cell/>
+		<cell>enterprise</cell>
+	    <cell>workforce</cell>
+	</row>
+  </rows>
+</dvm>

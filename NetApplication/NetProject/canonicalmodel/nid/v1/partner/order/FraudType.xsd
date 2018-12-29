@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/partner/order/FraudType"
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/partner/order/FraudType">
+
+	<element name="FraudType">
+		<simpleType>
+			<restriction base="string">
+				<enumeration value="Regular line" />
+				<enumeration value="Correction in line with fraud" />
+				<enumeration value="Error in line correction" />
+			</restriction>
+		</simpleType>
+	</element>
+	
+	<element name="FraudTypes">
+		<complexType>
+			<sequence>
+				<element ref="tns:FraudType" minOccurs="1" maxOccurs="unbounded" />
+			</sequence>
+		</complexType>
+	</element>
+
+</schema>

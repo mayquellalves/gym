@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified" 
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/resource/role/ResourceInstaller" 
+	xmlns="http://www.w3.org/2001/XMLSchema" 
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/resource/role/ResourceInstaller" >
+
+	<complexType name="ResourceInstallerType">
+	</complexType>
+
+	<element name="ResourceInstaller" type="tns:ResourceInstallerType"/>
+
+	<element name="ResourceInstallers">
+		<complexType>
+			<sequence>
+				<element ref="tns:ResourceInstaller" minOccurs="1" maxOccurs="unbounded"/>
+			</sequence>
+		</complexType>
+	</element>
+
+</schema>

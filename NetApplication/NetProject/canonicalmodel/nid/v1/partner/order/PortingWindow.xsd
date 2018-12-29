@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/partner/order/PortingWindow"
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/partner/order/PortingWindow">
+
+	
+	<complexType name="PortingWindowType">
+		<sequence>
+			<element name="IsSpecialWindow" type="boolean" minOccurs="0"
+				maxOccurs="1" />
+			<element name="IsConvenienceWindow" type="boolean" minOccurs="0"
+				maxOccurs="1" />
+			<element name="PortingWindowDate" type="dateTime" minOccurs="0"
+				maxOccurs="1" />
+
+		</sequence>
+	</complexType>
+
+	<element name="PortingWindow" type="tns:PortingWindowType" />
+
+	<element name="PortingWindows">
+		<complexType>
+			<sequence>
+				<element ref="tns:PortingWindow" minOccurs="1" maxOccurs="unbounded" />
+			</sequence>
+		</complexType>
+	</element>
+
+</schema>

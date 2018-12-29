@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified" 
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/service/usage/ServiceUsage" 
+	xmlns="http://www.w3.org/2001/XMLSchema" 
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/service/usage/ServiceUsage" >
+			
+	
+	<complexType name="ServiceUsageType">
+		
+	</complexType>
+
+	<element name="ServiceUsage" type="tns:ServiceUsageType"/>
+
+	<complexType name="ServiceUsagesType">
+		<sequence>
+			<element ref="tns:ServiceUsage" minOccurs="1" maxOccurs="unbounded"/>
+		</sequence>
+	</complexType>
+	
+	<element name="ServiceUsages" type="tns:ServiceUsagesType"/>
+
+</schema>

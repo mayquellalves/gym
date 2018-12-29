@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/specification/ScheduleRecordingStatus"
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/specification/ScheduleRecordingStatus"
+	xmlns:tps="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types">
+
+	
+	
+	<import schemaLocation="../../netarchitecture/common/Types.xsd"
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types" />
+
+
+	<complexType name="ScheduleRecordingStatusType">
+		
+				<sequence>
+					<element name="Name" type="tps:string020" minOccurs="0" maxOccurs="1" />
+					<element name="Value" type="int" minOccurs="0" maxOccurs="1" />
+				</sequence>
+			
+	</complexType>
+
+	<element name="ScheduleRecordingStatus" type="tns:ScheduleRecordingStatusType" />
+	
+	<element name="ScheduleRecordingStatuss">
+		<complexType >
+			<sequence>
+				<element ref="tns:ScheduleRecordingStatus" minOccurs="1" maxOccurs="unbounded" />
+			</sequence>
+		</complexType>
+	</element>
+
+</schema>

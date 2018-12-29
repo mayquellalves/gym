@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified"
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/product/ProductCharacteristicValue"
+	xmlns="http://www.w3.org/2001/XMLSchema" 
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/product/ProductCharacteristicValue"
+	xmlns:tps="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types"
+	xmlns:tmp="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/basetypes/TimePeriod">
+
+	<import schemaLocation="../../netarchitecture/common/Types.xsd"
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types" />
+		
+	<import schemaLocation="../../common/basetypes/TimePeriod.xsd"
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/basetypes/TimePeriod" />
+
+	
+	<complexType name="ProductCharacteristicValueType">
+		<sequence>
+			<element name="Name" type="tps:string080" minOccurs="0" maxOccurs="1" />
+			<element name="Value" type="tps:string255" minOccurs="0" maxOccurs="1" />
+			<element name="Type" type="tps:string020" minOccurs="0" maxOccurs="1" />
+			<element name="ValidFor" type="tmp:TimePeriodType" minOccurs="0" maxOccurs="1" />
+			
+		</sequence>
+	</complexType>
+
+	<element name="ProductCharacteristicValue" type="tns:ProductCharacteristicValueType" />
+
+	<complexType name="ProductCharacteristicValuesType">
+		<sequence>
+			<element ref="tns:ProductCharacteristicValue" minOccurs="1" maxOccurs="unbounded" />
+		</sequence>
+	</complexType>
+	
+	<element name="ProductCharacteristicValues" type="tns:ProductCharacteristicValuesType" />
+
+</schema>

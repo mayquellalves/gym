@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified" 
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/resource/resource/ResourceRole" 
+	xmlns="http://www.w3.org/2001/XMLSchema" 
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/resource/resource/ResourceRole" 
+	xmlns:res="http://www.netservicos.com.br/canonicalmodel/nid/v1/resource/resource/Resource">
+
+	
+	
+	<complexType name="ResourceRoleType">
+		
+	</complexType>
+
+	<element name="ResourceRole" type="tns:ResourceRoleType"/>
+
+	<element name="ResourceRoles">
+		<complexType>
+			<sequence>
+				<element ref="tns:ResourceRole" minOccurs="1" maxOccurs="unbounded"/>
+			</sequence>
+		</complexType>
+	</element>
+
+</schema>

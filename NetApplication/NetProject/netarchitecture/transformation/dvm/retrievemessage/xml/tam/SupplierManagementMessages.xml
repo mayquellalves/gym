@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dvm name="netarchitecture.messages.suppliermanagement.dvm" xmlns="http://xmlns.oracle.com/dvm">
+  <description>
+  	Only messages belonging to supplier management domain can be defined here.
+  </description>
+  <columns>
+    <column name="ID_MSG"/>
+    <column name="ERROR_NAME"/>
+    <column name="USER_MESSAGE"/>
+    <column name="DETAIL_MESSAGE"/>
+    <column name="CATEGORY_MESSAGE"/>
+    <column name="SYSTEM_CODE"/>
+    <column name="NID_DOMAIN"/>
+    <column name="ABE_LEVEL"/>
+  </columns>
+  <rows>
+    <row>
+      <cell>OSB-SUPPLIERMANAGEMENT-00000</cell>
+      <cell></cell>
+      <cell></cell>
+      <cell></cell>
+      <cell/>
+      <cell/>
+      <cell>suppliermanagement</cell>
+      <cell></cell>
+    </row>
+  </rows>
+</dvm>

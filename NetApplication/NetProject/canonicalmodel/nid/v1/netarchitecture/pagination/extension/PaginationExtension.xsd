@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/pagination/extension/PaginationExtension"
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/pagination/extension/PaginationExtension">
+
+	<complexType name="PaginationExtensionType">
+		<sequence>
+			<element name="Amdocs" minOccurs="0" maxOccurs="1">
+				<annotation>
+					<documentation>
+						Element related to the Amdocs pagination mechanism.
+					</documentation>
+				</annotation>
+				<complexType>
+                	<sequence>
+						<element name="IdsList" minOccurs="0" maxOccurs="1">
+							<complexType>
+								<sequence>
+									<element name="id" type="int" minOccurs="1" maxOccurs="unbounded" />
+								</sequence>
+							</complexType>
+						</element>
+					</sequence>
+				</complexType>
+			</element>
+		</sequence>
+	</complexType>
+
+	<element name="PaginationExtension" type="tns:PaginationExtensionType">
+		<annotation>
+			<documentation>
+			</documentation>
+		</annotation>
+	</element>
+
+</schema>

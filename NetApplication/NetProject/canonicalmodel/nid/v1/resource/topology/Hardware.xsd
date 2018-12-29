@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified" 
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/resource/topology/Hardware" 
+	xmlns="http://www.w3.org/2001/XMLSchema" 
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/resource/topology/Hardware">
+	
+
+		
+	<complexType name="HardwareType">
+		
+	</complexType>
+
+	<element name="Hardware" type="tns:HardwareType"/>
+
+	<element name="Hardwares">
+		<complexType>
+			<sequence>
+				<element ref="tns:Hardware" minOccurs="1" maxOccurs="unbounded"/>
+			</sequence>
+		</complexType>
+	</element>
+
+</schema>

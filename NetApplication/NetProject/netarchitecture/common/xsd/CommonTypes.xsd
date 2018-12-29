@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<schema elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.netservicos.com.br/netarchitecture/common/xsd/CommonTypes"
+	xmlns:tns="http://www.netservicos.com.br/netarchitecture/common/xsd/CommonTypes">
+
+	<simpleType name="string001">
+		<restriction base="string">
+			<minLength value="1" />
+			<maxLength value="1" />
+		</restriction>
+	</simpleType>
+
+	<simpleType name="string002">
+		<restriction base="string">
+			<minLength value="1" />
+			<maxLength value="2" />
+		</restriction>
+	</simpleType>
+
+	<simpleType name="string003">
+		<restriction base="string">
+			<minLength value="1" />
+			<maxLength value="3" />
+		</restriction>
+	</simpleType>
+
+	<simpleType name="string004">
+		<restriction base="string">
+			<minLength value="1" />
+			<maxLength value="4" />
+		</restriction>
+	</simpleType>
+
+	<simpleType name="string005">
+		<restriction base="string">
+			<minLength value="1" />
+			<maxLength value="5" />
+		</restriction>
+	</simpleType>
+
+	<simpleType name="string006">
+		<restriction base="string">
+			<minLength value="1" />
+			<maxLength value="6" />
+		</restriction>
+	</simpleType>
+
+	<simpleType name="string007">
+		<restriction base="string">
+			<minLength value="1" />
+			<maxLength value="7" />
+		</restriction>
+	</simpleType>
+
+	<simpleType name="string008">
+		<restriction base="string">
+			<minLength value="1" />
+			<maxLength value="8" />
+		</restriction>
+	</simpleType>
+	
+	<simpleType name="string009">
+		<restriction base="string">
+			<minLength value="1" />
+			<maxLength value="9" />
+		</restriction>
+	</simpleType>
+
+	<simpleType name="string010">
+		<restriction base="string">
+			<minLength value="1" />
+			<maxLength value="10" />
+		</restriction>
+	</simpleType>
+
+	<simpleType name="string011">
+		<restriction base="string">
+			<minLength value="1" />
+			<maxLength value="11" />
+		</restriction>
+	</simpleType>
+
+	<simpleType name="string012">
+		<restriction base="string">
+			<minLength value="1" />
+			<maxLength value="12" />
+		</restriction>
+	</simpleType>
+
+	<simpleType name="string014">
+		<restriction base="string">
+			<minLength value="1" />
+			<maxLength value="14" />
+		</restriction>
+	</simpleType>
+
+	<simpleType name="string015">
+		<restriction base="string">
+			<minLength value="1" />
+			<maxLength value="15" />
+		</restriction>
+	</simpleType>
+	
+	<simpleType name="string016">
+		<restriction base="string">
+			<minLength value="1" />
+			<maxLength value="16" />
+		</restriction>
+	</simpleType>
+
+	<simpleType name="string019">
+		<restriction base="string">
+			<minLength value="1" />
+			<maxLength value="19" />
+		</restriction>
+	</simpleType>
+
+	<simpleType name="string020">
+		<restriction base="string">
+			<minLength value="1" />
+			<maxLength value="20" />
+		</restriction>
+	</simpleType>
+
+	<simpleType name="string024">
+		<restriction base="string">
+			<minLength value="1" />
+			<maxLength value="24" />
+		</restriction>
+	</simpleType>
+	
+	<simpleType name="string025">
+		<restriction base="string">
+			<minLength value="1" />
+			<maxLength value="25" />
+		</restriction>
+	</simpleType>
+
+	<simpleType name="string030">
+		<restriction base="string">
+			<minLength value="1" />
+			<maxLength value="30" />
+		</restriction>
+	</simpleType>
+
+	<simpleType name="string032">
+		<restriction base="string">
+			<minLength value="1" />
+			<maxLength value="32" />
+		</restriction>
+	</simpleType>
+	
+	<simpleType name="string036">
+		<restriction base="string">
+			<minLength value="1"/>
+			<maxLength value="36"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="string040">
+		<restriction base="string">
+			<minLength value="1" />
+			<maxLength value="40" />
+		</restriction>
+	</simpleType>
+
+	<simpleType name="string050">
+		<restriction base="string">
+			<minLength value="1" />
+			<maxLength value="50" />
+		</restriction>
+	</simpleType>
+
+	<simpleType name="string060">
+		<restriction base="string">
+			<minLength value="1" />
+			<maxLength value="60" />
+		</restriction>
+	</simpleType>
+
+	<simpleType name="string064">
+		<restriction base="string">
+			<minLength value="1" />
+			<maxLength value="64" />
+		</restriction>
+	</simpleType>
+
+	<simpleType name="string080">
+		<restriction base="string">
+			<minLength value="1" />
+			<maxLength value="80" />
+		</restriction>
+	</simpleType>
+
+	<simpleType name="string100">
+		<restriction base="string">
+			<minLength value="1" />
+			<maxLength value="100" />
+		</restriction>
+	</simpleType>
+	
+	<simpleType name="string150">
+		<restriction base="string">
+			<minLength value="1" />
+			<maxLength value="150" />
+		</restriction>
+	</simpleType>
+	
+	<simpleType name="string180">
+		<restriction base="string">
+			<minLength value="1" />
+			<maxLength value="180" />
+		</restriction>
+	</simpleType>
+        
+    <simpleType name="string200">
+		<restriction base="string">
+			<minLength value="1" />
+			<maxLength value="200" />
+		</restriction>
+	</simpleType>
+	
+	<simpleType name="string240">
+		<restriction base="string">
+			<minLength value="1" />
+			<maxLength value="240" />
+		</restriction>
+	</simpleType>
+ 
+     <simpleType name="string250">
+		<restriction base="string">
+			<minLength value="1" />
+			<maxLength value="250" />
+		</restriction>
+	</simpleType>
+ 
+     <simpleType name="string255">
+		<restriction base="string">
+			<minLength value="1" />
+			<maxLength value="255" />
+		</restriction>
+	</simpleType>
+ 
+    <simpleType name="string256">
+		<restriction base="string">
+			<minLength value="1" />
+			<maxLength value="256" />
+		</restriction>
+	</simpleType>
+        
+	<simpleType name="string300">
+		<restriction base="string">
+			<minLength value="1" />
+			<maxLength value="300" />
+		</restriction>
+	</simpleType>
+
+	<simpleType name="string400">
+		<restriction base="string">
+			<minLength value="1" />
+			<maxLength value="400" />
+		</restriction>
+	</simpleType>
+
+	<simpleType name="string500">
+		<restriction base="string">
+			<minLength value="1" />
+			<maxLength value="500" />
+		</restriction>
+	</simpleType>
+
+	<simpleType name="string765">
+		<restriction base="string">
+			<minLength value="1" />
+			<maxLength value="765" />
+		</restriction>
+	</simpleType>
+
+	<simpleType name="string1000">
+		<restriction base="string">
+			<minLength value="1" />
+			<maxLength value="1000" />
+		</restriction>
+	</simpleType>
+	
+	<simpleType name="string1024">
+		<restriction base="string">
+			<minLength value="1" />
+			<maxLength value="1024" />
+		</restriction>
+	</simpleType>
+
+	<simpleType name="string1700">
+		<restriction base="string">
+			<minLength value="1" />
+			<maxLength value="1700" />
+		</restriction>
+	</simpleType>
+	
+	<simpleType name="string2000">
+		<restriction base="string">
+			<minLength value="1" />
+			<maxLength value="2000" />
+		</restriction>
+	</simpleType>
+        
+    <simpleType name="string4000">
+		<restriction base="string">
+			<minLength value="1" />
+			<maxLength value="4000" />
+		</restriction>
+	</simpleType>    
+	
+	<simpleType name="positiveInteger002">
+		<restriction base="positiveInteger">
+			<minInclusive value="1" />
+			<maxInclusive value="2" />
+		</restriction>
+	</simpleType>
+
+	<simpleType name="positiveInteger003">
+		<restriction base="positiveInteger">
+			<minInclusive value="1" />
+			<maxInclusive value="3" />
+		</restriction>
+	</simpleType>
+	
+	<simpleType name="positiveInteger006">
+		<restriction base="positiveInteger">
+			<minInclusive value="1" />
+			<maxInclusive value="6" />
+		</restriction>
+	</simpleType>
+
+	<simpleType name="positiveInteger1024">
+		<restriction base="positiveInteger">
+			<minInclusive value="1" />
+			<maxInclusive value="1024" />
+		</restriction>
+	</simpleType>
+
+	<simpleType name="nonNegativeInteger001">
+		<restriction base="nonNegativeInteger">
+			<minInclusive value="0" />
+			<maxInclusive value="1" />
+		</restriction>
+	</simpleType>
+
+	<simpleType name="nonNegativeInteger002">
+		<restriction base="nonNegativeInteger">
+			<minInclusive value="0" />
+			<maxInclusive value="2" />
+		</restriction>
+	</simpleType>
+
+	<simpleType name="nonNegativeInteger004">
+		<restriction base="nonNegativeInteger">
+			<minInclusive value="0" />
+			<maxInclusive value="4" />
+		</restriction>
+	</simpleType>
+	
+	<simpleType name="nonNegativeInteger008">
+		<restriction base="nonNegativeInteger">
+			<minInclusive value="0" />
+			<maxInclusive value="8" />
+		</restriction>
+	</simpleType>
+
+	<simpleType name="nonNegativeInteger012">
+		<restriction base="nonNegativeInteger">
+			<minInclusive value="0" />
+			<maxInclusive value="12" />
+		</restriction>
+	</simpleType>
+
+	<simpleType name="integer001">
+	    <restriction base="integer">
+	    	<minInclusive value="0"/>
+	        <maxInclusive value="9"/>
+		</restriction>
+	</simpleType>
+	
+	<simpleType name="integer003">
+	    <restriction base="integer">
+	    	<minInclusive value="0"/>
+	        <maxInclusive value="999"/>
+		</restriction>
+	</simpleType>
+	
+	<simpleType name="integer006">
+	    <restriction base="integer">
+	    	<minInclusive value="0"/>
+	        <maxInclusive value="999999"/>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="integer009">
+	    <restriction base="integer">
+	    	<minInclusive value="0"/>
+	        <maxInclusive value="999999999"/>
+		</restriction>
+	</simpleType>
+	
+	<simpleType name="integer012">
+	    <restriction base="integer">
+	    	<minInclusive value="1"/>
+	        <maxInclusive value="999999999999"/>
+		</restriction>
+	</simpleType>
+
+</schema>

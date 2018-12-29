@@ -1,0 +1,746 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dvm name="netarchitecture.messages.customer.dvm" xmlns="http://xmlns.oracle.com/dvm">
+  <description>Only messages belonging to customer domain can be defined here.</description>
+  <columns>
+    <column name="ID_MSG"/>
+    <column name="ERROR_NAME"/>
+    <column name="USER_MESSAGE"/>
+    <column name="DETAIL_MESSAGE"/>
+    <column name="CATEGORY_MESSAGE"/>
+    <column name="SYSTEM_CODE"/>
+    <column name="NID_DOMAIN"/>
+    <column name="ABE_LEVEL"/>
+  </columns>
+  <rows>
+    <row>
+		<cell>OSB-CUSTOMER-00001</cell>	
+		<cell>OSB_REQUEST_INVALIDO</cell>
+		<cell>Request Inválido para operação: {0}.</cell>
+		<cell>Request Inválido para operação: {0}.</cell>
+		<cell>ERROR</cell>
+		<cell/>
+		<cell>customer</cell>
+		<cell>customer</cell>
+	</row>
+	<row>
+		<cell>OSB-CUSTOMER-00002</cell>	
+      	<cell>OSB_ERRO_INESPERADO</cell>
+		<cell>Erro durante a execução do recurso: {0}.</cell>
+		<cell>Erro durante a execução do recurso: {0}.</cell>
+		<cell>ERROR</cell>
+		<cell/>
+		<cell>customer</cell>
+		<cell>customer</cell>
+	</row>
+	<row>
+		<cell>OSB-CUSTOMER-00003</cell>	
+		<cell>CASE_DETAILS_NOT_FOUND_FAULT</cell>
+		<cell>Detalhes do case não encontrado.</cell>
+		<cell>Detalhes do case não encontrado.</cell>
+		<cell>ERROR</cell>
+		<cell/>
+		<cell>customer</cell>
+		<cell>customer</cell>
+	</row>
+	<row>
+		<cell>OSB-CUSTOMER-00004</cell>	
+		<cell>CUSTOMER_NOT_FOUND_FAULT</cell>
+		<cell>Cliente não foi encontrado.</cell>
+		<cell>Cliente não foi encontrado.</cell>
+		<cell>ERROR</cell>
+		<cell/>
+		<cell>customer</cell>
+		<cell>customer</cell>
+	</row>
+	<row>
+		<cell>OSB-CUSTOMER-00005</cell>	
+		<cell>BUSINESS_FAULT</cell>
+		<cell>Contato não foi encontrado.</cell>
+		<cell>Contato não foi encontrado.</cell>
+		<cell>ERROR</cell>
+		<cell/>
+		<cell>customer</cell>
+		<cell>customer</cell>
+	</row>
+	<row>
+		<cell>OSB-CUSTOMER-00006</cell>	
+		<cell>RUNTIME_FAULT</cell>
+		<cell>Ao menos um dos campos de entrada deve ser informado.</cell>
+		<cell>Ao menos um dos campos de entrada deve ser informado.</cell>
+		<cell>ERROR</cell>
+		<cell/>
+		<cell>customer</cell>
+		<cell>customer</cell>
+	</row>
+	<row>
+		<cell>OSB-CUSTOMER-00007</cell>	
+		<cell>BUSINESS_FAULT</cell>
+		<cell>Ocorreu um erro na atualização do endereço.</cell>
+		<cell>Ocorreu um erro na atualização do endereço.</cell>
+		<cell>ERROR</cell>
+		<cell/>
+		<cell>customer</cell>
+		<cell>customer</cell>
+	</row>
+	<row>
+		<cell>OSB-CUSTOMER-00008</cell>	
+		<cell>NOT_CHANGE_PAYMANT_MEANS_FAULT</cell>
+		<cell>Não foi possível alterar para novo meio de pagamento.</cell>
+		<cell>Não foi possível alterar para novo meio de pagamento.</cell>
+		<cell>ERROR</cell>
+		<cell/>
+		<cell>customer</cell>
+		<cell>customer</cell>
+	</row>
+	<row>
+		<cell>OSB-CUSTOMER-00009</cell>	
+		<cell>BUSINESS_FAULT</cell>
+		<cell>Não foi possível retornar os dados.</cell>
+		<cell>Não foi possível retornar os dados.</cell>
+		<cell>ERROR</cell>
+		<cell/>
+		<cell>customer</cell>
+		<cell>customer</cell>
+	</row>
+	<row>
+		<cell>OSB-CUSTOMER-00010</cell>	
+		<cell>BUSINESS_FAULT</cell>
+		<cell>A conta bancária é inválida.</cell>
+		<cell>A conta bancária é inválida.</cell>
+		<cell>ERROR</cell>
+		<cell/>
+		<cell>customer</cell>
+		<cell>customer</cell>
+	</row>
+	<row>
+		<cell>OSB-CUSTOMER-00011</cell>	
+		<cell>BUSINESS_FAULT</cell>
+		<cell>Não existem dados para retornar os detalhes de uma interação.</cell>
+		<cell>Não existem dados para retornar os detalhes de uma interação.</cell>
+		<cell>ERROR</cell>
+		<cell/>
+		<cell>customer</cell>
+		<cell>customer</cell>
+	</row>
+	<row>
+		<cell>OSB-CUSTOMER-00012</cell>	
+		<cell>BUSINESS_FAULT</cell>
+		<cell>O Cliente não possui faturas em aberto.</cell>
+		<cell>O Cliente não possui faturas em aberto.</cell>
+		<cell>ERROR</cell>
+		<cell/>
+		<cell>customer</cell>
+		<cell>customer</cell>
+	</row>
+	<row>
+		<cell>OSB-CUSTOMER-00013</cell>	
+		<cell>BUSINESS_FAULT</cell>
+		<cell>O ID da fatura informado não existe.</cell>
+		<cell>O ID da fatura informado não existe.</cell>
+		<cell>ERROR</cell>
+		<cell/>
+		<cell>customer</cell>
+		<cell>customer</cell>
+	</row>
+	<row>
+		<cell>OSB-CUSTOMER-00014</cell>	
+		<cell>PAYMENT_METHOD_NOT_FOUND_FAULT</cell>
+		<cell>Não existem faturas para o Cliente informado.</cell>
+		<cell>Não existem faturas para o Cliente informado.</cell>
+		<cell>ERROR</cell>
+		<cell/>
+		<cell>customer</cell>
+		<cell>customer</cell>
+	</row>
+	<row>
+		<cell>OSB-CUSTOMER-00015</cell>	
+		<cell>BUSINESS_FAULT</cell>
+		<cell>O cliente não possui faturas em aberto vencidas.</cell>
+		<cell>O cliente não possui faturas em aberto vencidas.</cell>
+		<cell>ERROR</cell>
+		<cell/>
+		<cell>customer</cell>
+		<cell>customer</cell>
+	</row>
+	<row>
+		<cell>OSB-CUSTOMER-00016</cell>	
+		<cell>POINTS_NOT_FOUND_FAULT</cell>
+		<cell>Os pontos do Cliente não foram encontrados.</cell>
+		<cell>Os pontos do Cliente não foram encontrados.</cell>
+		<cell>ERROR</cell>
+		<cell/>
+		<cell>customer</cell>
+		<cell>customer</cell>
+	</row>
+	<row>
+		<cell>OSB-CUSTOMER-00017</cell>	
+		<cell>OSB_OPERACAO_INVALIDA</cell>
+		<cell>A operação solicitada para o serviço não é válida.</cell>
+		<cell>A operação solicitada para o serviço não é válida.</cell>
+		<cell>ERROR</cell>
+		<cell/>
+		<cell>customer</cell>
+		<cell>customer</cell>
+	</row>
+	<row>
+         <cell>OSB-CUSTOMER-00018</cell>
+         <cell>BUSINESS_FAULT</cell>
+         <cell>Não foi possível recuperar os dados do endereço informado {0}.</cell>
+         <cell>Não foi possível recuperar os dados do endereço informado {0}.</cell>
+         <cell/>
+         <cell/>
+         <cell>customer</cell>
+         <cell>customer</cell>
+      </row>
+      <row>
+         <cell>OSB-CUSTOMER-00019</cell>
+         <cell>BUSINESS_FAULT</cell>
+         <cell>Base de dados indisponível.</cell>
+         <cell>Base de dados indisponível.</cell>
+         <cell/>
+         <cell/>
+         <cell>customer</cell>
+         <cell>customer</cell>
+      </row>
+	  <row>
+		<cell>OSB-CUSTOMER-00020</cell>	
+		<cell>OSB_VALIDACAO_CAMPOS_OBRIGATORIOS</cell>
+		<cell>O(s) campo(s) {0} ou {1} deve(m) ser informado(s).</cell>
+		<cell>O(s) campo(s) {0} ou {1} deve(m) ser informado(s).</cell>
+		<cell>ERROR</cell>
+		<cell/>
+		<cell>customer</cell>
+		<cell>customer</cell>
+	</row>
+	<row>
+		<cell>OSB-CUSTOMER-00021</cell>
+		<cell>NAME_NOT_MATCH_IN_BASE_REGISTER_FAULT</cell>
+		<cell>Nome informado não corresponde com a base de cadastro.</cell>
+		<cell>Nome informado não corresponde com a base de cadastro.</cell>
+		<cell>ERROR</cell>
+		<cell/>
+		<cell>customer</cell>
+		<cell>customer</cell>
+	</row>
+	<row>
+		<cell>OSB-CUSTOMER-00022</cell>
+		<cell>BILLING_CYCLE_NOT_FOUND_FAULT</cell>
+		<cell>Não foram encontrados cliclos de faturamento.</cell>
+		<cell>Não foram encontrados cliclos de faturamento.</cell>
+		<cell>ERROR</cell>
+		<cell/>
+		<cell>customer</cell>
+		<cell>bill</cell>
+	</row>
+	<row>
+		<cell>OSB-CUSTOMER-00023</cell>
+		<cell>BUSINESS_FAULT</cell>
+		<cell>Não existem serviços contratados pelo cliente.</cell>
+		<cell>Não existem serviços contratados pelo cliente.</cell>
+		<cell>ERROR</cell>
+		<cell/>
+		<cell>customer</cell>
+		<cell>customer</cell>
+	</row>
+	<row>
+		<cell>OSB-CUSTOMER-00025</cell>
+		<cell>BUSINESS_FAULT</cell>
+		<cell>Pagamento não foi autorizado.</cell>
+		<cell>Pagamento não foi autorizado.</cell>
+		<cell>ERROR</cell>
+		<cell/>
+		<cell>customer</cell>
+		<cell>customer</cell>
+	</row>
+	<row>
+		<cell>OSB-CUSTOMER-00027</cell>
+		<cell>BUSINESS_FAULT</cell>
+		<cell>O(s) campo(s) {0} deve(m) ser informado(s).</cell>
+		<cell>O(s) campo(s) {0} deve(m) ser informado(s).</cell>
+		<cell>ERROR</cell>
+		<cell/>
+		<cell>customer</cell>
+		<cell>customer</cell>
+	</row>
+	<row>
+		<cell>OSB-CUSTOMER-00028</cell>
+		<cell>BUSINESS_FAULT</cell>
+		<cell>Nome da mãe informado não corresponde com a base de cadastro.</cell>
+		<cell>Nome da mãe informado não corresponde com a base de cadastro.</cell>
+		<cell>ERROR</cell>
+		<cell/>
+		<cell>customer</cell>
+		<cell>customer</cell>
+	</row>
+	<row>
+		<cell>OSB-CUSTOMER-00029</cell>
+		<cell>BUSINESS_FAULT</cell>
+		<cell>Data de Nascimento informada não corresponde com a base de cadastro.</cell>
+		<cell>Data de Nascimento informada não corresponde com a base de cadastro.</cell>
+		<cell>ERROR</cell>
+		<cell/>
+		<cell>customer</cell>
+		<cell>customer</cell>
+	</row>
+	<row>
+		<cell>OSB-CUSTOMER-00030</cell>
+		<cell>BUSINESS_FAULT</cell>
+		<cell>O(s) campo(s) {0} ou {1} ou {2} ou {3} ou {4} ou {5} ou {6} deve(m) ser informado(s).</cell>
+		<cell>O(s) campo(s) {0} ou {1} ou {2} ou {3} ou {4} ou {5} ou {6} deve(m) ser informado(s).</cell>
+		<cell>ERROR</cell>
+		<cell/>
+		<cell>customer</cell>
+		<cell>customer</cell>
+	</row>
+	<row>
+         <cell>OSB-CUSTOMER-00031</cell>
+         <cell>BUSINESS_FAULT</cell>
+         <cell>Análise de fraude não encontrada.</cell>
+         <cell>Análise de fraude não encontrada.</cell>
+         <cell>ERROR</cell>
+         <cell/>
+         <cell>customer</cell>
+         <cell>customer</cell>
+    </row>
+	<row>
+		<cell>OSB-CUSTOMER-00032</cell>
+		<cell>BUSINESS_FAULT</cell>
+		<cell>O(s) campo(s) {0} ou {1} ou {2} ou {3} deve(m) ser informado(s).</cell>
+		<cell>O(s) campo(s) {0} ou {1} ou {2} ou {3} deve(m) ser informado(s).</cell>
+		<cell>ERROR</cell>
+		<cell/>
+		<cell>customer</cell>
+		<cell>customer</cell>
+	</row>
+	<row>
+        <cell>OSB-CUSTOMER-00033</cell>
+        <cell>BUSINESS_FAULT</cell>
+        <cell>Ocorreu erro na criação da análise de crédito {0}.</cell>
+        <cell>Ocorreu erro na criação da análise de crédito {0}.</cell>
+        <cell>ERROR</cell>
+        <cell/>
+        <cell>customer</cell>
+        <cell>customer</cell>
+      </row>
+      <row>
+         <cell>OSB-CUSTOMER-00034</cell>
+         <cell>BUSINESS_FAULT</cell>
+         <cell>Ocorreu erro na atualização da análise de crédito {0}.</cell>
+         <cell>Ocorreu erro na atualização da análise de crédito {0}.</cell>
+         <cell>ERROR</cell>
+         <cell/>
+         <cell>customer</cell>
+         <cell>customer</cell>
+      </row>
+      <row>
+         <cell>OSB-CUSTOMER-00035</cell>
+         <cell>BUSINESS_FAULT</cell>
+         <cell>Não foi encontrado o identificador do serviço de TV informado.</cell>
+         <cell>Não foi encontrado o identificador do serviço de TV informado.</cell>
+         <cell>ERROR</cell>
+         <cell/>
+         <cell>customer</cell>
+         <cell>customer</cell>
+      </row>
+	<row>
+		<cell>OSB-CUSTOMER-00036</cell>
+		<cell>BUSINESS_FAULT</cell>
+		<cell>Banco não cadastrado.</cell>
+		<cell>Banco não cadastrado.</cell>
+		<cell>ERROR</cell>
+		<cell />
+		<cell>customer</cell>
+		<cell>customer</cell>
+	</row>
+	<row>
+		<cell>OSB-CUSTOMER-00037</cell>
+		<cell>BUSINESS_FAULT</cell>
+		<cell>Agência não cadastrada.</cell>
+		<cell>Agência não cadastrada.</cell>
+		<cell>ERROR</cell>
+		<cell />
+		<cell>customer</cell>
+		<cell>customer</cell>
+	</row>
+	<row>
+		<cell>OSB-CUSTOMER-00038</cell>
+		<cell>BUSINESS_FAULT</cell>
+		<cell>Número da conta fora do padrão do banco.</cell>
+		<cell>Número da conta fora do padrão do banco.</cell>
+		<cell>ERROR</cell>
+		<cell />
+		<cell>customer</cell>
+		<cell>customer</cell>
+	</row>
+	<row>
+		<cell>OSB-CUSTOMER-00039</cell>
+		<cell>BUSINESS_FAULT</cell>
+		<cell>Os dados informados pertence a um banco não credenciado.</cell>
+		<cell>Os dados informados pertence a um banco não credenciado.</cell>
+		<cell>ERROR</cell>
+		<cell />
+		<cell>customer</cell>
+		<cell>customer</cell>
+	</row>
+	<row>
+		<cell>OSB-CUSTOMER-00040</cell>
+		<cell>EVENT_NOT_FOUND_FAULT</cell>
+		<cell>Evento não encontrado.</cell>
+		<cell>Evento não encontrado.</cell>
+		<cell>ERROR</cell>
+		<cell />
+         <cell>customer</cell>
+         <cell>customer</cell>
+	</row>
+    <row>
+         <cell>OSB-CUSTOMER-00041</cell>
+         <cell>BUSINESS_FAULT</cell>
+         <cell>Erro durante o processo, não foi possível realizar a atualização de status do produto informado.</cell>
+         <cell>Erro durante o processo, não foi possível realizar a atualização de status do produto informado.</cell>
+         <cell>ERROR</cell>
+         <cell/>
+         <cell>customer</cell>
+         <cell>customer</cell>
+    </row>
+	<row>
+		<cell>OSB-CUSTOMER-00042</cell>	
+		<cell>IMPOSSIBLE_CREATE_PROMISE_FAULT</cell>
+		<cell>Não foi possível criar promessa de pagamento para a Fatura {0}.</cell>
+		<cell>Não foi possível criar promessa de pagamento para a Fatura {0}.</cell>
+		<cell>ERROR</cell>
+		<cell/>
+		<cell>customer</cell>
+		<cell>bill</cell>
+	</row>
+	<row>
+		<cell>OSB-CUSTOMER-00043</cell>	
+		<cell>OSB_INCORRECT_INPUT_PARAMETERS_FAULT</cell>
+		<cell>Favor informar os dados bancários (banco, agência e conta).</cell>
+		<cell>Favor informar os dados bancários (banco, agência e conta).</cell>
+		<cell>ERROR</cell>
+		<cell/>
+		<cell>customer</cell>
+		<cell>customer</cell>
+	</row>
+	<row>
+		<cell>OSB-CUSTOMER-00044</cell>	
+		<cell>OSB_AGENCY_NOT_INFORMATION_FAULT</cell>
+		<cell>Favor informar agência.</cell>
+		<cell>Favor informar agência.</cell>
+		<cell>ERROR</cell>
+		<cell/>
+		<cell>customer</cell>
+		<cell>customer</cell>
+	</row>
+	<row>
+		<cell>OSB-CUSTOMER-00045</cell>	
+		<cell>OSB_ACCOUNT_NOT_INFORMATION_FAULT</cell>
+		<cell>Favor informar conta.</cell>
+		<cell>Favor informar conta.</cell>
+		<cell>ERROR</cell>
+		<cell/>
+		<cell>customer</cell>
+		<cell>customer</cell>
+	</row>
+	<row>
+         <cell>OSB-CUSTOMER-00046</cell>
+         <cell>BUSINESS_FAULT</cell>
+         <cell>Número de protocolo inválido.</cell>
+         <cell>Número de protocolo inválido.</cell>
+         <cell>ERROR</cell>
+         <cell/>
+         <cell>customer</cell>
+         <cell>customer</cell>
+    </row>
+	<row>
+		<cell>OSB-CUSTOMER-00047</cell>
+		<cell>BUSINESS_FAULT</cell>
+		<cell>Análise de crédito não encontrada</cell>
+		<cell>Análise de crédito não encontrada.</cell>
+		<cell>ERROR</cell>
+		<cell/>
+		<cell>customer</cell>
+		<cell>customer</cell>
+	</row>
+	<row>
+		<cell>OSB-CUSTOMER-00048</cell>	
+		<cell>BUSINESS_FAULT</cell>
+		<cell>O status do documento CPF/CNPJ é inválido: {0}.</cell>
+		<cell>O status do documento CPF/CNPJ é inválido: {0}.</cell>
+		<cell>ERROR</cell>
+		<cell/>
+		<cell>customer</cell>
+		<cell>customer</cell>
+	</row>
+	<row>
+		<cell>OSB-CUSTOMER-00049</cell>	
+		<cell>CLIENT_DOES_NOT_HAVE_AVAILABLE_CREDITO_LIMIT_FAULT</cell>
+		<cell>O cliente não possui limite de crédito disponível.</cell>
+		<cell>O cliente não possui limite de crédito disponível.</cell>
+		<cell>ERROR</cell>
+		<cell/>
+		<cell>customer</cell>
+		<cell>order</cell>
+	</row>
+	<row>
+		<cell>OSB-CUSTOMER-00050</cell>	
+		<cell>UNABLE_DELIVER_EVENT_PURCHASE_ORDER_FAULT</cell>
+		<cell>Não foi possivel entregar a requisição de compra do evento.</cell>
+		<cell>Não foi possivel entregar a requisição de compra do evento.</cell>
+		<cell>ERROR</cell>
+		<cell/>
+		<cell>customer</cell>
+		<cell>order</cell>
+	</row>
+	<row>
+		<cell>OSB-CUSTOMER-00051</cell>	
+		<cell>BUSINESS_FAULT</cell>
+		<cell>Não foi encontrado histórico de vendas.</cell>
+		<cell>Não foi encontrado histórico de vendas.</cell>
+		<cell>ERROR</cell>
+		<cell/>
+		<cell>customer</cell>
+		<cell>customer</cell>
+	</row>
+	<row>
+         <cell>OSB-CUSTOMER-00052</cell>
+         <cell>BUSINESS_FAULT</cell>
+         <cell>Classificação do cliente não encontrada.</cell>
+         <cell>Classificação do cliente não encontrada.</cell>
+         <cell>ERROR</cell>
+         <cell/>
+         <cell>customer</cell>
+         <cell>customer</cell>
+    </row>
+    <row>
+         <cell>OSB-CUSTOMER-00053</cell>
+         <cell>BUSINESS_FAULT</cell>
+         <cell>Ocorreu um erro durante a consulta da analise de crédito na base do SUC.</cell>
+         <cell>Ocorreu um erro durante a consulta da analise de crédito na base do SUC.</cell>
+         <cell>ERROR</cell>
+         <cell/>
+         <cell>customer</cell>
+         <cell>customer</cell>
+    </row>
+    <row>
+         <cell>OSB-CUSTOMER-00054</cell>
+         <cell>BUSINESS_FAULT</cell>
+         <cell>Ocorreu um erro durante a consulta do código CNL do endereço de cobrança na base do SUC.</cell>
+         <cell>Ocorreu um erro durante a consulta do código CNL do endereço de cobrança na base do SUC.</cell>
+         <cell>ERROR</cell>
+         <cell/>
+         <cell>customer</cell>
+         <cell>customer</cell>
+    </row>
+    <row>
+         <cell>OSB-CUSTOMER-00055</cell>
+         <cell>BUSINESS_FAULT</cell>
+         <cell>Ocorreu um erro durante a consulta do endereço de cobrança na base do SUC.</cell>
+         <cell>Ocorreu um erro durante a consulta do endereço de cobrança na base do SUC.</cell>
+         <cell>ERROR</cell>
+         <cell/>
+         <cell>customer</cell>
+         <cell>customer</cell>
+    </row>
+    <row>
+         <cell>OSB-CUSTOMER-00056</cell>
+         <cell>BUSINESS_FAULT</cell>
+         <cell>Ocorreu um erro durante a consulta do código CNL do endereço de instalação na base do SUC.</cell>
+         <cell>Ocorreu um erro durante a consulta do código CNL do endereço de instalação na base do SUC.</cell>
+         <cell>ERROR</cell>
+         <cell/>
+         <cell>customer</cell>
+         <cell>customer</cell>
+    </row>
+    <row>
+         <cell>OSB-CUSTOMER-00057</cell>
+         <cell>BUSINESS_FAULT</cell>
+         <cell> Ocorreu um erro durante a consulta do endereço de instalação na base do SUC.</cell>
+         <cell> Ocorreu um erro durante a consulta do endereço de instalação na base do SUC.</cell>
+         <cell>ERROR</cell>
+         <cell/>
+         <cell>customer</cell>
+         <cell>customer</cell>
+    </row>
+    <row>
+         <cell>OSB-CUSTOMER-00058</cell>
+         <cell>BUSINESS_FAULT</cell>
+         <cell>Ocorreu um erro durante a execução da integração com a Embratel.</cell>
+         <cell>Ocorreu um erro durante a execução da integração com a Embratel.</cell>
+         <cell>ERROR</cell>
+         <cell/>
+         <cell>customer</cell>
+         <cell>customer</cell>
+    </row>
+    <row>
+         <cell>OSB-CUSTOMER-00059</cell>
+         <cell>BUSINESS_FAULT</cell>
+         <cell>Ocorreu um erro durante a criação do Case.</cell>
+         <cell>Ocorreu um erro durante a criação do Case.</cell>
+         <cell>ERROR</cell>
+         <cell/>
+         <cell>customer</cell>
+         <cell>customer</cell>
+    </row>
+    <row>
+         <cell>OSB-CUSTOMER-00060</cell>
+         <cell>BUSINESS_FAULT</cell>
+         <cell>Ocorreu um erro durante a criação da análise de crédito na base do SUC.</cell>
+         <cell>Ocorreu um erro durante a criação da análise de crédito na base do SUC.</cell>
+         <cell>ERROR</cell>
+         <cell/>
+         <cell>customer</cell>
+         <cell>customer</cell>
+    </row>
+	<row>
+        <cell>OSB-CUSTOMER-00061</cell>
+        <cell>BUSINESS_FAULT</cell>
+        <cell>Ocorreu um erro durante a consulta do Contato.</cell>
+        <cell>Ocorreu um erro durante a consulta do Contato.</cell>
+        <cell>ERROR</cell>
+        <cell/>
+        <cell>customer</cell>
+        <cell>customer</cell>
+    </row>
+	<row>
+		<cell>OSB-CUSTOMER-00062</cell>
+		<cell>BUSINESS_FAULT</cell>
+		<cell>O(s) campo(s) {0} ou {1} ou {2} ou {3} ou {4} ou {5} deve(m) ser informado(s).</cell>
+		<cell>O(s) campo(s) {0} ou {1} ou {2} ou {3} ou {4} ou {5} deve(m) ser informado(s).</cell>
+		<cell>ERROR</cell>
+		<cell/>
+		<cell>customer</cell>
+		<cell>customer</cell>
+	</row>
+	<row>
+		<cell>OSB-CUSTOMER-00063</cell>
+		<cell>BUSINESS_FAULT</cell>
+		<cell>O(s) campo(s) {0} ou {1} ou {2} ou {3} ou {4} deve(m) ser informado(s).</cell>
+		<cell>O(s) campo(s) {0} ou {1} ou {2} ou {3} ou {4} deve(m) ser informado(s).</cell>
+		<cell>ERROR</cell>
+		<cell/>
+		<cell>customer</cell>
+		<cell>customer</cell>
+	</row>
+	<row>
+		<cell>OSB-CUSTOMER-00064</cell>
+		<cell>BUSINESS_FAULT</cell>
+		<cell>Erro durante a integração com sistema {0}.</cell>
+		<cell>Erro durante a integração com sistema {0}.</cell>
+		<cell>ERROR</cell>
+		<cell />
+		<cell>customer</cell>
+		<cell>customer</cell>
+	</row>
+	<row>
+		<cell>OSB-CUSTOMER-00065</cell>
+		<cell>BUSINESS_FAULT</cell>
+		<cell>O(s) campo(s) {0} ou {1} ou {2} deve(m) ser informado(s).</cell>
+		<cell>O(s) campo(s) {0} ou {1} ou {2} deve(m) ser informado(s).</cell>
+		<cell>ERROR</cell>
+		<cell />
+		<cell>customer</cell>
+		<cell>customer</cell>
+	</row>
+	<row>
+		<cell>OSB-CUSTOMER-00066</cell>
+		<cell>BUSINESS_FAULT</cell>
+		<cell>Falha na Comunicação Pagamento não concretizado – Caso Automático direcionado para tratamento.</cell>
+		<cell>Falha na Comunicação Pagamento não concretizado – Caso Automático direcionado para tratamento.</cell>
+		<cell>ERROR</cell>
+		<cell />
+		<cell>customer</cell>
+		<cell>customer</cell>
+	</row>
+	<row>
+		<cell>OSB-CUSTOMER-00069</cell>
+		<cell>BUSINESS_FAULT</cell>
+		<cell>{0} não cadastrado(s) no SPR</cell>
+		<cell>{0} não cadastrado(s) no SPR</cell>
+		<cell>ERROR</cell>
+		<cell />
+		<cell>customer</cell>
+		<cell>customer</cell>
+	</row>
+	<row>
+		<cell>OSB-CUSTOMER-00070</cell>
+		<cell>BUSINESS_FAULT</cell>
+		<cell>Cartão Cancelado</cell>
+		<cell>Cartão Cancelado</cell>
+		<cell>ERROR</cell>
+		<cell />
+		<cell>customer</cell>
+		<cell>customer</cell>
+	</row>
+	<row>
+		<cell>OSB-CUSTOMER-00071</cell>
+		<cell>BUSINESS_FAULT</cell>
+		<cell>Problemas com o cartão de crédito</cell>
+		<cell>Problemas com o cartão de crédito</cell>
+		<cell>ERROR</cell>
+		<cell />
+		<cell>customer</cell>
+		<cell>customer</cell>
+	</row>
+	<row>
+		<cell>OSB-CUSTOMER-00072</cell>
+		<cell>BUSINESS_FAULT</cell>
+		<cell>Cartão bloqueado</cell>
+		<cell>Cartão bloqueado</cell>
+		<cell>ERROR</cell>
+		<cell />
+		<cell>customer</cell>
+		<cell>customer</cell>
+	</row>
+	<row>
+		<cell>OSB-CUSTOMER-00073</cell>
+		<cell>BUSINESS_FAULT</cell>
+		<cell>Cartão expirado</cell>
+		<cell>Cartão expirado</cell>
+		<cell>ERROR</cell>
+		<cell />
+		<cell>customer</cell>
+		<cell>customer</cell>
+	</row>
+	<row>
+		<cell>OSB-CUSTOMER-00074</cell>
+		<cell>BUSINESS_FAULT</cell>
+		<cell>Cartão de Crédito não encontrado</cell>
+		<cell>Cartão de Crédito não encontrado</cell>
+		<cell>ERROR</cell>
+		<cell />
+		<cell>customer</cell>
+		<cell>customer</cell>
+	</row>
+	<row>
+		<cell>OSB-CUSTOMER-00075</cell>
+		<cell>BUSINESS_FAULT</cell>
+		<cell>Assinante não foi encontrado.</cell>
+		<cell>Assinante não foi encontrado.</cell>
+		<cell>ERROR</cell>
+		<cell />
+		<cell>customer</cell>
+		<cell>customer</cell>
+	</row>
+	<row>
+		<cell>OSB-CUSTOMER-00076</cell>
+		<cell>BUSINESS_FAULT</cell>
+		<cell>Situação atual do assinante não permite esta ação.</cell>
+		<cell>Situação atual do assinante não permite esta ação.</cell>
+		<cell>ERROR</cell>
+		<cell />
+		<cell>customer</cell>
+		<cell>customer</cell>
+	</row>
+	<row>
+		<cell>OSB-CUSTOMER-00077</cell>
+		<cell>BUSINESS_FAULT</cell>
+		<cell>Ordem não encontrada.</cell>
+		<cell>Ordem não encontrada.</cell>
+		<cell>ERROR</cell>
+		<cell />
+		<cell>customer</cell>
+		<cell>customer</cell>
+	</row>
+  </rows>
+</dvm>

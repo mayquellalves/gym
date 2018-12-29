@@ -1,0 +1,22 @@
+<schema elementFormDefault="qualified" 
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/offering/PriceEvent" 
+	xmlns="http://www.w3.org/2001/XMLSchema" 
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/offering/PriceEvent" >
+	
+	
+
+	<complexType name="PriceEventType">
+		
+	</complexType>
+
+	<element name="PriceEvent" type="tns:PriceEventType"/>
+
+	<element name="PriceEvents" type="tns:PriceEventsType"/>
+
+	<complexType name="PriceEventsType">
+		<sequence>
+			<element ref="tns:PriceEvent" minOccurs="1" maxOccurs="unbounded"/>
+		</sequence>
+	</complexType>
+
+</schema>

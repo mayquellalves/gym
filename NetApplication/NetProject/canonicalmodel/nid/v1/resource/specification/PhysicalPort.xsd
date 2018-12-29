@@ -1,0 +1,30 @@
+<schema elementFormDefault="qualified" targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/resource/specification/PhysicalPort" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/resource/specification/PhysicalPort" xmlns:tps="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types">
+
+	<import schemaLocation="../../netarchitecture/common/Types.xsd" namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types"/>
+	
+	<complexType name="PhysicalPortType">
+		<sequence>
+			<element name="DuplexMode" type="int" minOccurs="0" maxOccurs="1"/>
+			<element name="IfType" type="int" minOccurs="0" maxOccurs="1"/>
+			<element name="IsMainPort" type="boolean" minOccurs="0" maxOccurs="1"/>
+			<element name="LogicalPortId" type="tps:string020" minOccurs="0" maxOccurs="1"/>
+			<element name="NumberOfPorts" type="int" minOccurs="0" maxOccurs="1"/>
+			<element name="PortName" type="tps:string030" minOccurs="0" maxOccurs="1"/>
+			<element name="PortNumber" type="tps:string030" minOccurs="0" maxOccurs="1"/>
+			<element name="TypeOfPort" type="tps:string050" minOccurs="0" maxOccurs="1"/>
+			<element name="PortStatus" type="tps:string100" minOccurs="0" maxOccurs="1"/>
+			<element name="ServiceCategory" type="tps:string050" minOccurs="0" maxOccurs="1"/>
+		</sequence>
+	</complexType>
+
+	<element name="PhysicalPort" type="tns:PhysicalPortType"/>
+
+	<element name="PhysicalPorts" type="tns:PhysicalPortTypes"/>
+	
+	<complexType name="PhysicalPortTypes">
+			<sequence>
+				<element ref="tns:PhysicalPort" minOccurs="1" maxOccurs="unbounded"/>
+			</sequence>
+		</complexType>
+
+</schema>

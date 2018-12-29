@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sb="http://www.bea.com/wli/sb/transports/sb" xmlns:con="http://www.bea.com/wli/sb/stages/config">
+  <ser:coreEntry isProxy="true" isEnabled="true" isTracingEnabled="false" isAutoPublish="false">
+    <ser:description>Proxy que provê acesso ao serviço FaultHandler12V1LCL através do protocolo SB Transport.</ser:description>
+    <ser:binding type="SOAP" isSoap12="true" xsi:type="con:SoapBindingType" xmlns:con="http://www.bea.com/wli/sb/services/bindings/config">
+      <con:wsdl ref="netarchitecture/fault/faulthandler/wsdl/proxy/FaultHandler12V1"/>
+      <con:binding>
+        <con:name>FaultHandlerBinding12</con:name>
+        <con:namespace>http://www.netservicos.com.br/FaultHandlerV1</con:namespace>
+      </con:binding>
+      <con:selector type="SOAP body"/>
+    </ser:binding>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Pipeline</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+    <ser:ws-policy>
+      <ser:binding-mode>wsdl-policy-attachments</ser:binding-mode>
+    </ser:ws-policy>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>sb</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:URI>
+      <env:value>netarchitecture.fault.FaultHandler12V1SB</env:value>
+    </tran:URI>
+    <tran:inbound-properties/>
+    <tran:all-headers>false</tran:all-headers>
+    <tran:provider-specific xsi:type="sb:SBEndPointConfiguration">
+      <sb:inbound-properties>
+        <sb:use-ssl>false</sb:use-ssl>
+      </sb:inbound-properties>
+    </tran:provider-specific>
+  </ser:endpointConfig>
+  <ser:router errorHandler="_onErrorHandler-3206038696549685612--30591339.138c420af51.-763b">
+    <con:pipeline type="error" name="_onErrorHandler-3206038696549685612--30591339.138c420af51.-763b" xmlns:con="http://www.bea.com/wli/sb/pipeline/config">
+      <con:stage name="ErrorHandlerRouteToFaultHandler12V1LCL">
+        <con:context xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config">
+          <con1:userNsDecl namespace="http://www.netservicos.com.br/NETESBExceptionHandler12V1" prefix="excephdlr" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+          <con1:userNsDecl namespace="http://www.netservicos.com.br/modelocanonico/v2/logging" prefix="logging" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+          <con1:userNsDecl namespace="http://www.netservicos.com.br/modelocanonico/v2/errorinfo" prefix="errorInfo" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+          <con1:userNsDecl namespace="http://www.netservicos.com.br/FaultHandlerV1" prefix="faul" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+          <con1:userNsDecl namespace="http://www.netservicos.com.br/nid/v1/netarchitecture/common/Message" prefix="coreschema" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+          <con1:userNsDecl namespace="http://www.netservicos.com.br/nid/v1/netarchitecture/monitoring/Logging" prefix="log" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+          <con1:varNsDecl namespace="http://www.netservicos.com.br/nid/v1/netarchitecture/common/Metadata" prefix="met" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+          <con3:varNsDecl prefix="exem" namespace="http://www.netservicos.com.br/ExemploTratExcecaoV1" xmlns:con3="http://www.bea.com/wli/sb/stages/config"/>
+        </con:context>
+        <con:actions xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config">
+          <con2:ifThenElse>
+            <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-407124111737876819--49cc16d4.141280adbc1.-7c51</con3:id>
+            <con2:case>
+              <con2:condition>
+                <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">exists($body//ctx:fault)</con3:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:assign varName="customFault">
+                  <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-407124111737876819--49cc16d4.141280adbc1.-7c50</con3:id>
+                  <con2:expr>
+                    <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body//ctx:fault</con3:xqueryText>
+                  </con2:expr>
+                </con2:assign>
+              </con2:actions>
+            </con2:case>
+            <con2:default>
+              <con2:delete varName="header" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con4="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config">
+                <con1:id>_ActionId-407124111737876819--49cc16d4.141280adbc1.-7c4f</con1:id>
+              </con2:delete>
+              <con2:assign varName="customFault">
+                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-407124111737876819--49cc16d4.141280adbc1.-7c4e</con3:id>
+                <con2:expr>
+                  <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$fault</con3:xqueryText>
+                </con2:expr>
+              </con2:assign>
+            </con2:default>
+          </con2:ifThenElse>
+          <con1:replace varName="body" contents-only="true" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+            <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-407124111737876819--49cc16d4.141280adbc1.-7c4d</con3:id>
+            <con1:location>
+              <con2:xpathText xmlns:con2="http://www.bea.com/wli/sb/stages/config">.</con2:xpathText>
+            </con1:location>
+            <con1:expr>
+              <con:xqueryTransform xmlns:con="http://www.bea.com/wli/sb/stages/config">
+                <con:resource ref="netarchitecture/fault/faulthandler/transformation/xquery/TransformOSBFaultToSOAPFault12XQuery"/>
+                <con:param name="fault">
+                  <con:path>$customFault</con:path>
+                </con:param>
+              </con:xqueryTransform>
+            </con1:expr>
+          </con1:replace>
+          <con3:reply isError="true" xmlns:con3="http://www.bea.com/wli/sb/stages/config" xmlns:con2="http://www.bea.com/wli/sb/stages/logging/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+            <con3:id>_ActionId-407124111737876819--49cc16d4.141280adbc1.-7c4c</con3:id>
+          </con3:reply>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:flow xmlns:con="http://www.bea.com/wli/sb/pipeline/config">
+      <con:route-node name="RouteToFaultHandler12V1LCL">
+        <con:context/>
+        <con:actions>
+          <con1:route xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config">
+            <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-3206038696549685612--30591339.138c420af51.-76a8</con2:id>
+            <con1:service ref="netarchitecture/fault/faulthandler/proxyservice/FaultHandler12V1LCL" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+            <con1:operation passThrough="true"/>
+            <con1:outboundTransform/>
+            <con1:responseTransform/>
+          </con1:route>
+        </con:actions>
+      </con:route-node>
+    </con:flow>
+  </ser:router>
+</xml-fragment>

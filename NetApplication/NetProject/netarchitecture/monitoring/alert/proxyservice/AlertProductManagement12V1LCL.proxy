@@ -1,0 +1,1550 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con3="http://www.bea.com/wli/sb/stages/alert/config">
+  <ser:coreEntry isProxy="true" isEnabled="true" isAutoPublish="false" isTracingEnabled="false">
+    <ser:binding type="SOAP" isSoap12="true" xsi:type="con:SoapBindingType" xmlns:con="http://www.bea.com/wli/sb/services/bindings/config">
+      <con:wsdl ref="netarchitecture/monitoring/alert/wsdl/proxy/Alert12V1"/>
+      <con:binding>
+        <con:name>AlertBinding12</con:name>
+        <con:namespace>http://www.netservicos.com.br/AlertV1</con:namespace>
+      </con:binding>
+      <con:selector type="SOAP body"/>
+    </ser:binding>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Pipeline</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+    <ser:ws-policy>
+      <ser:binding-mode>owsm-policy-bindings</ser:binding-mode>
+    </ser:ws-policy>
+    <ser:throttling enabled="false">
+      <ser:capacity>0</ser:capacity>
+      <ser:maxQueueLength>0</ser:maxQueueLength>
+      <ser:timeToLive>0</ser:timeToLive>
+    </ser:throttling>
+    <ser:messageTracing enabled="false">
+      <ser:detailsLevel>Terse</ser:detailsLevel>
+      <ser:maxSize>8192</ser:maxSize>
+    </ser:messageTracing>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>local</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:inbound-properties/>
+    <tran:all-headers>true</tran:all-headers>
+  </ser:endpointConfig>
+  <ser:router>
+    <con:pipeline type="request" name="PipelinePairNode_request">
+      <con:stage name="GetClassificationSeverity">
+        <con:context>
+          <con1:varNsDecl namespace="http://www.netservicos.com.br/AlertV1" prefix="aler"/>
+          <con1:varNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/monitoring/Alert" prefix="aler1"/>
+          <con1:varNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/NidDomain" prefix="nid"/>
+          <con1:varNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/NidAbeLevel" prefix="nid1"/>
+        </con:context>
+        <con:actions>
+          <con2:ifThenElse>
+            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-6627</con1:id>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>not(fn:exists($body/aler:alertRequest/aler1:ExceptionClassification))
+or not($body/aler:alertRequest/aler1:ExceptionClassification/node())
+or ($body/aler:alertRequest/aler1:ExceptionClassification eq "")</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:assign varName="severidadeAlerta">
+                  <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-6600</con1:id>
+                  <con2:expr>
+                    <con1:xqueryText>"NORMAL"</con1:xqueryText>
+                  </con2:expr>
+                </con2:assign>
+              </con2:actions>
+            </con2:case>
+            <con2:default>
+              <con1:javaCallout varName="severidadeAlerta" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-1445721328115578041--38b75155.14619ddf914.-6624</con4:id>
+                <con1:archive ref="netarchitecture/transformation/jar/NETServiceBusUtilClient"/>
+                <con1:className>br.com.netservicos.sb.config.alert.NETAlertConfig</con1:className>
+                <con1:method>public static java.lang.String getClassificationSeverty(java.lang.String)</con1:method>
+                <con1:expr>
+                  <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">fn:data($body/aler:alertRequest/aler1:ExceptionClassification)</con2:xqueryText>
+                </con1:expr>
+              </con1:javaCallout>
+            </con2:default>
+          </con2:ifThenElse>
+        </con:actions>
+      </con:stage>
+      <con:stage name="CreateAlertAccordingToNidAbeLevelAndSeverity">
+        <con:context>
+          <con1:varNsDecl namespace="http://www.netservicos.com.br/AlertV1" prefix="aler"/>
+          <con1:varNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/monitoring/Alert" prefix="aler1"/>
+          <con1:varNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/NidDomain" prefix="nid"/>
+          <con1:varNsDecl namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/NidAbeLevel" prefix="nid1"/>
+        </con:context>
+        <con:actions>
+          <con2:ifThenElse>
+            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-65e1</con1:id>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>fn:upper-case("Catalog") eq fn:upper-case($body/aler:alertRequest/nid1:NidAbeLevel)</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:ifThenElse>
+                  <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-65c7</con1:id>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>"LEVEL1" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-6524</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"FATAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-61f0</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/catalog/alert/ProductManagementCatalogLevel1"/>
+                              <con3:description>Alert LEVEL1 FATAL em ProductManagement.Catalog</con3:description>
+                              <con3:severity>fatal</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"CRITICAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-61d8</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/catalog/alert/ProductManagementCatalogLevel1"/>
+                              <con3:description>Alert LEVEL1 CRITICAL em ProductManagement.Catalog</con3:description>
+                              <con3:severity>critical</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"WARNING" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-61ba</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/catalog/alert/ProductManagementCatalogLevel1"/>
+                              <con3:description>Alert LEVEL1 WARNING em ProductManagement.Catalog</con3:description>
+                              <con3:severity>warning</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                          <con3:alert>
+                            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-619c</con1:id>
+                            <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/catalog/alert/ProductManagementCatalogLevel1"/>
+                            <con3:description>Alert LEVEL1 NORMAL em ProductManagement.Catalog</con3:description>
+                            <con3:severity>normal</con3:severity>
+                            <con3:payload>
+                              <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                            </con3:payload>
+                          </con3:alert>
+                        </con2:default>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>"LEVEL2" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-6506</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"FATAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-6194</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/catalog/alert/ProductManagementCatalogLevel2"/>
+                              <con3:description>Alert LEVEL2 FATAL em ProductManagement.Catalog</con3:description>
+                              <con3:severity>fatal</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"CRITICAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-617a</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/catalog/alert/ProductManagementCatalogLevel2"/>
+                              <con3:description>Alert LEVEL2 CRITICAL em ProductManagement.Catalog</con3:description>
+                              <con3:severity>critical</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"WARNING" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-615f</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/catalog/alert/ProductManagementCatalogLevel2"/>
+                              <con3:description>Alert LEVEL2 WARNING em ProductManagement.Catalog</con3:description>
+                              <con3:severity>warning</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                          <con3:alert>
+                            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-6150</con1:id>
+                            <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/catalog/alert/ProductManagementCatalogLevel2"/>
+                            <con3:description>Alert LEVEL2 NORMAL em ProductManagement.Catalog</con3:description>
+                            <con3:severity>normal</con3:severity>
+                            <con3:payload>
+                              <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                            </con3:payload>
+                          </con3:alert>
+                        </con2:default>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>"LEVEL3" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-64db</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"FATAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-6134</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/catalog/alert/ProductManagementCatalogLevel3"/>
+                              <con3:description>Alert LEVEL3 FATAL em ProductManagement.Catalog</con3:description>
+                              <con3:severity>fatal</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"CRITICAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-6103</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/catalog/alert/ProductManagementCatalogLevel3"/>
+                              <con3:description>Alert LEVEL3 CRITICAL em ProductManagement.Catalog</con3:description>
+                              <con3:severity>critical</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"WARNING" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-60d1</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/catalog/alert/ProductManagementCatalogLevel3"/>
+                              <con3:description>Alert LEVEL3 WARNING em ProductManagement.Catalog</con3:description>
+                              <con3:severity>warning</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                          <con3:alert>
+                            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-60bd</con1:id>
+                            <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/catalog/alert/ProductManagementCatalogLevel3"/>
+                            <con3:description>Alert LEVEL3 NORMAL em ProductManagement.Catalog</con3:description>
+                            <con3:severity>normal</con3:severity>
+                            <con3:payload>
+                              <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                            </con3:payload>
+                          </con3:alert>
+                        </con2:default>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>"LEVEL4" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-64c9</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"FATAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-60a5</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/catalog/alert/ProductManagementCatalogLevel4"/>
+                              <con3:description>Alert LEVEL4 FATAL em ProductManagement.Catalog</con3:description>
+                              <con3:severity>fatal</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"CRITICAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-6077</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/catalog/alert/ProductManagementCatalogLevel4"/>
+                              <con3:description>Alert LEVEL4 CRITICAL em ProductManagement.Catalog</con3:description>
+                              <con3:severity>critical</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"WARNING" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-6050</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/catalog/alert/ProductManagementCatalogLevel4"/>
+                              <con3:description>Alert LEVEL4 WARNING em ProductManagement.Catalog</con3:description>
+                              <con3:severity>warning</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                          <con3:alert>
+                            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-6039</con1:id>
+                            <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/catalog/alert/ProductManagementCatalogLevel4"/>
+                            <con3:description>Alert LEVEL4 NORMAL em ProductManagement.Catalog</con3:description>
+                            <con3:severity>normal</con3:severity>
+                            <con3:payload>
+                              <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                            </con3:payload>
+                          </con3:alert>
+                        </con2:default>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>"LEVEL5" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-64b4</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"FATAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-601b</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/catalog/alert/ProductManagementCatalogLevel5"/>
+                              <con3:description>Alert LEVEL5 FATAL em ProductManagement.Catalog</con3:description>
+                              <con3:severity>fatal</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"CRITICAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-5ffb</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/catalog/alert/ProductManagementCatalogLevel5"/>
+                              <con3:description>Alert LEVEL5 CRITICAL em ProductManagement.Catalog</con3:description>
+                              <con3:severity>critical</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"WARNING" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-5fe2</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/catalog/alert/ProductManagementCatalogLevel5"/>
+                              <con3:description>Alert LEVEL5 WARNING em ProductManagement.Catalog</con3:description>
+                              <con3:severity>warning</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                          <con3:alert>
+                            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-5fcd</con1:id>
+                            <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/catalog/alert/ProductManagementCatalogLevel5"/>
+                            <con3:description>Alert LEVEL5 NORMAL em ProductManagement.Catalog</con3:description>
+                            <con3:severity>normal</con3:severity>
+                            <con3:payload>
+                              <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                            </con3:payload>
+                          </con3:alert>
+                        </con2:default>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:default/>
+                </con2:ifThenElse>
+              </con2:actions>
+            </con2:case>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>fn:upper-case("LifeCycle") eq fn:upper-case($body/aler:alertRequest/nid1:NidAbeLevel)</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:ifThenElse>
+                  <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-657c</con1:id>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>"LEVEL1" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-6494</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"FATAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-5fbb</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/lifecycle/alert/ProductManagementLifeCycleLevel1"/>
+                              <con3:description>Alert LEVEL1 FATAL em ProductManagement.LifeCycle</con3:description>
+                              <con3:severity>fatal</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"CRITICAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-5fa6</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/lifecycle/alert/ProductManagementLifeCycleLevel1"/>
+                              <con3:description>Alert LEVEL1 CRITICAL em ProductManagement.LifeCycle</con3:description>
+                              <con3:severity>critical</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"WARNING" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-5f93</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/lifecycle/alert/ProductManagementLifeCycleLevel1"/>
+                              <con3:description>Alert LEVEL1 WARNING em ProductManagement.LifeCycle</con3:description>
+                              <con3:severity>warning</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                          <con3:alert>
+                            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-5f82</con1:id>
+                            <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/lifecycle/alert/ProductManagementLifeCycleLevel1"/>
+                            <con3:description>Alert LEVEL1 NORMAL em ProductManagement.LifeCycle</con3:description>
+                            <con3:severity>normal</con3:severity>
+                            <con3:payload>
+                              <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                            </con3:payload>
+                          </con3:alert>
+                        </con2:default>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>"LEVEL2" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-646d</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"FATAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-5f73</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/lifecycle/alert/ProductManagementLifeCycleLevel2"/>
+                              <con3:description>Alert LEVEL2 FATAL em ProductManagement.LifeCycle</con3:description>
+                              <con3:severity>fatal</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"CRITICAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-5f53</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/lifecycle/alert/ProductManagementLifeCycleLevel2"/>
+                              <con3:description>Alert LEVEL2 CRITICAL em ProductManagement.LifeCycle</con3:description>
+                              <con3:severity>critical</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"WARNING" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-5f23</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/lifecycle/alert/ProductManagementLifeCycleLevel2"/>
+                              <con3:description>Alert LEVEL2 WARNING em ProductManagement.LifeCycle</con3:description>
+                              <con3:severity>warning</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                          <con3:alert>
+                            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-5f11</con1:id>
+                            <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/lifecycle/alert/ProductManagementLifeCycleLevel2"/>
+                            <con3:description>Alert LEVEL2 NORMAL em ProductManagement.LifeCycle</con3:description>
+                            <con3:severity>normal</con3:severity>
+                            <con3:payload>
+                              <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                            </con3:payload>
+                          </con3:alert>
+                        </con2:default>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>"LEVEL3" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-6456</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"FATAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-5ee7</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/lifecycle/alert/ProductManagementLifeCycleLevel3"/>
+                              <con3:description>Alert LEVEL3 FATAL em ProductManagement.LifeCycle</con3:description>
+                              <con3:severity>fatal</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"CRITICAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-5ed5</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/lifecycle/alert/ProductManagementLifeCycleLevel3"/>
+                              <con3:description>Alert LEVEL3 CRITICAL em ProductManagement.LifeCycle</con3:description>
+                              <con3:severity>critical</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"WARNING" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-5ec2</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/lifecycle/alert/ProductManagementLifeCycleLevel3"/>
+                              <con3:description>Alert LEVEL3 WARNING em ProductManagement.LifeCycle</con3:description>
+                              <con3:severity>warning</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                          <con3:alert>
+                            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-5eb2</con1:id>
+                            <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/lifecycle/alert/ProductManagementLifeCycleLevel3"/>
+                            <con3:description>Alert LEVEL3 NORMAL em ProductManagement.LifeCycle</con3:description>
+                            <con3:severity>normal</con3:severity>
+                            <con3:payload>
+                              <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                            </con3:payload>
+                          </con3:alert>
+                        </con2:default>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>"LEVEL4" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-6435</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"FATAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-5e85</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/lifecycle/alert/ProductManagementLifeCycleLevel4"/>
+                              <con3:description>Alert LEVEL4 FATAL em ProductManagement.LifeCycle</con3:description>
+                              <con3:severity>fatal</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"CRITICAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-5e58</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/lifecycle/alert/ProductManagementLifeCycleLevel4"/>
+                              <con3:description>Alert LEVEL4 CRITICAL em ProductManagement.LifeCycle</con3:description>
+                              <con3:severity>critical</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"WARNING" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-5e39</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/lifecycle/alert/ProductManagementLifeCycleLevel4"/>
+                              <con3:description>Alert LEVEL4 WARNING em ProductManagement.LifeCycle</con3:description>
+                              <con3:severity>warning</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                          <con3:alert>
+                            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-5e23</con1:id>
+                            <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/lifecycle/alert/ProductManagementLifeCycleLevel4"/>
+                            <con3:description>Alert LEVEL4 NORMAL em ProductManagement.LifeCycle</con3:description>
+                            <con3:severity>normal</con3:severity>
+                            <con3:payload>
+                              <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                            </con3:payload>
+                          </con3:alert>
+                        </con2:default>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>"LEVEL5" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-6401</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"FATAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-5dff</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/lifecycle/alert/ProductManagementLifeCycleLevel5"/>
+                              <con3:description>Alert LEVEL5 FATAL em ProductManagement.LifeCycle</con3:description>
+                              <con3:severity>fatal</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"CRITICAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-5dd6</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/lifecycle/alert/ProductManagementLifeCycleLevel5"/>
+                              <con3:description>Alert LEVEL5 CRITICAL em ProductManagement.LifeCycle</con3:description>
+                              <con3:severity>critical</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"WARNING" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-5db6</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/lifecycle/alert/ProductManagementLifeCycleLevel5"/>
+                              <con3:description>Alert LEVEL5 WARNING em ProductManagement.LifeCycle</con3:description>
+                              <con3:severity>warning</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                          <con3:alert>
+                            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-5da1</con1:id>
+                            <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/lifecycle/alert/ProductManagementLifeCycleLevel5"/>
+                            <con3:description>Alert LEVEL5 NORMAL em ProductManagement.LifeCycle</con3:description>
+                            <con3:severity>normal</con3:severity>
+                            <con3:payload>
+                              <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                            </con3:payload>
+                          </con3:alert>
+                        </con2:default>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:default/>
+                </con2:ifThenElse>
+              </con2:actions>
+            </con2:case>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>fn:upper-case("Performance") eq fn:upper-case($body/aler:alertRequest/nid1:NidAbeLevel)</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:ifThenElse>
+                  <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-6563</con1:id>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>"LEVEL1" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-63e7</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"FATAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-5d88</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/performance/alert/ProductManagementPerformanceLevel1"/>
+                              <con3:description>Alert LEVEL1 FATAL em ProductManagement.Performance</con3:description>
+                              <con3:severity>fatal</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"CRITICAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-5d5d</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/performance/alert/ProductManagementPerformanceLevel1"/>
+                              <con3:description>Alert LEVEL1 CRITICAL em ProductManagement.Performance</con3:description>
+                              <con3:severity>critical</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"WARNING" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-5d38</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/performance/alert/ProductManagementPerformanceLevel1"/>
+                              <con3:description>Alert LEVEL1 WARNING em ProductManagement.Performance</con3:description>
+                              <con3:severity>warning</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                          <con3:alert>
+                            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-5d18</con1:id>
+                            <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/performance/alert/ProductManagementPerformanceLevel1"/>
+                            <con3:description>Alert LEVEL1 NORMAL em ProductManagement.Performance</con3:description>
+                            <con3:severity>normal</con3:severity>
+                            <con3:payload>
+                              <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                            </con3:payload>
+                          </con3:alert>
+                        </con2:default>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>"LEVEL2" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-63cd</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"FATAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-5d04</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/performance/alert/ProductManagementPerformanceLevel2"/>
+                              <con3:description>Alert LEVEL2 NORMAL em ProductManagement.Performance</con3:description>
+                              <con3:severity>fatal</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"CRITICAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-5cdd</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/performance/alert/ProductManagementPerformanceLevel2"/>
+                              <con3:description>Alert LEVEL2 CRITICAL em ProductManagement.Performance</con3:description>
+                              <con3:severity>critical</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"WARNING" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-5cc0</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/performance/alert/ProductManagementPerformanceLevel2"/>
+                              <con3:description>Alert LEVEL2 WARNING em ProductManagement.Performance</con3:description>
+                              <con3:severity>warning</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                          <con3:alert>
+                            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-5cad</con1:id>
+                            <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/performance/alert/ProductManagementPerformanceLevel2"/>
+                            <con3:description>Alert LEVEL2 NORMAL em ProductManagement.Performance</con3:description>
+                            <con3:severity>normal</con3:severity>
+                            <con3:payload>
+                              <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                            </con3:payload>
+                          </con3:alert>
+                        </con2:default>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>"LEVEL3" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-62d9</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"FATAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-5c8e</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/performance/alert/ProductManagementPerformanceLevel3"/>
+                              <con3:description>Alert LEVEL3 FATAL em ProductManagement.Performance</con3:description>
+                              <con3:severity>fatal</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"CRITICAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-5c6a</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/performance/alert/ProductManagementPerformanceLevel3"/>
+                              <con3:description>Alert LEVEL3 CRITICAL em ProductManagement.Performance</con3:description>
+                              <con3:severity>critical</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"WARNING" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-5c48</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/performance/alert/ProductManagementPerformanceLevel3"/>
+                              <con3:description>Alert LEVEL3 WARNING em ProductManagement.Performance</con3:description>
+                              <con3:severity>warning</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                          <con3:alert>
+                            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-5c36</con1:id>
+                            <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/performance/alert/ProductManagementPerformanceLevel3"/>
+                            <con3:description>Alert LEVEL3 NORMAL em ProductManagement.Performance</con3:description>
+                            <con3:severity>normal</con3:severity>
+                            <con3:payload>
+                              <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                            </con3:payload>
+                          </con3:alert>
+                        </con2:default>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>"LEVEL4" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-62b6</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"FATAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-5c24</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/performance/alert/ProductManagementPerformanceLevel4"/>
+                              <con3:description>Alert LEVEL4 FATAL em ProductManagement.Performance</con3:description>
+                              <con3:severity>fatal</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"CRITICAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-5c00</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/performance/alert/ProductManagementPerformanceLevel4"/>
+                              <con3:description>Alert LEVEL4 CRITICAL em ProductManagement.Performance</con3:description>
+                              <con3:severity>critical</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"WARNING" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-5be0</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/performance/alert/ProductManagementPerformanceLevel4"/>
+                              <con3:description>Alert LEVEL4 WARNING em ProductManagement.Performance</con3:description>
+                              <con3:severity>warning</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                          <con3:alert>
+                            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-5bcb</con1:id>
+                            <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/performance/alert/ProductManagementPerformanceLevel4"/>
+                            <con3:description>Alert LEVEL4 NORMAL em ProductManagement.Performance</con3:description>
+                            <con3:severity>normal</con3:severity>
+                            <con3:payload>
+                              <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                            </con3:payload>
+                          </con3:alert>
+                        </con2:default>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>"LEVEL5" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-628e</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"FATAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-5ba3</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/performance/alert/ProductManagementPerformanceLevel5"/>
+                              <con3:description>Alert LEVEL5 FATAL em ProductManagement.Performance</con3:description>
+                              <con3:severity>fatal</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"CRITICAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-5b6f</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/performance/alert/ProductManagementPerformanceLevel5"/>
+                              <con3:description>Alert LEVEL5 CRITICAL em ProductManagement.Performance</con3:description>
+                              <con3:severity>critical</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"WARNING" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-5b42</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/performance/alert/ProductManagementPerformanceLevel5"/>
+                              <con3:description>Alert LEVEL5 WARNING em ProductManagement.Performance</con3:description>
+                              <con3:severity>warning</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                          <con3:alert>
+                            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-5b33</con1:id>
+                            <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/performance/alert/ProductManagementPerformanceLevel5"/>
+                            <con3:description>Alert LEVEL5 NORMAL em ProductManagement.Performance</con3:description>
+                            <con3:severity>normal</con3:severity>
+                            <con3:payload>
+                              <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                            </con3:payload>
+                          </con3:alert>
+                        </con2:default>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:default/>
+                </con2:ifThenElse>
+              </con2:actions>
+            </con2:case>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>fn:upper-case("Strategy") eq fn:upper-case($body/aler:alertRequest/nid1:NidAbeLevel)</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:ifThenElse>
+                  <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-6540</con1:id>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>"LEVEL1" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-6282</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"FATAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-5b06</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/strategy/alert/ProductManagementStrategyLevel1"/>
+                              <con3:description>Alert LEVEL1 FATAL em ProductManagement.Strategy</con3:description>
+                              <con3:severity>fatal</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"CRITICAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-5ae1</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/strategy/alert/ProductManagementStrategyLevel1"/>
+                              <con3:description>Alert LEVEL1 CRITICAL em ProductManagement.Strategy</con3:description>
+                              <con3:severity>critical</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"WARNING" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-5abf</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/strategy/alert/ProductManagementStrategyLevel1"/>
+                              <con3:description>Alert LEVEL1 WARNING em ProductManagement.Strategy</con3:description>
+                              <con3:severity>warning</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                          <con3:alert>
+                            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-5a9f</con1:id>
+                            <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/strategy/alert/ProductManagementStrategyLevel1"/>
+                            <con3:description>Alert LEVEL1 NORMAL em ProductManagement.Strategy</con3:description>
+                            <con3:severity>normal</con3:severity>
+                            <con3:payload>
+                              <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                            </con3:payload>
+                          </con3:alert>
+                        </con2:default>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>"LEVEL2" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-6268</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"FATAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-5a88</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/strategy/alert/ProductManagementStrategyLevel2"/>
+                              <con3:description>Alert LEVEL2 FATAL em ProductManagement.Strategy</con3:description>
+                              <con3:severity>fatal</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"CRITICAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-5a75</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/strategy/alert/ProductManagementStrategyLevel2"/>
+                              <con3:description>Alert LEVEL2 CRITICAL em ProductManagement.Strategy</con3:description>
+                              <con3:severity>critical</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"WARNING" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-5a60</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/strategy/alert/ProductManagementStrategyLevel2"/>
+                              <con3:description>Alert LEVEL2 WARNING em ProductManagement.Strategy</con3:description>
+                              <con3:severity>warning</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                          <con3:alert>
+                            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-5a53</con1:id>
+                            <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/strategy/alert/ProductManagementStrategyLevel2"/>
+                            <con3:description>Alert LEVEL2 NORMAL em ProductManagement.Strategy</con3:description>
+                            <con3:severity>normal</con3:severity>
+                            <con3:payload>
+                              <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                            </con3:payload>
+                          </con3:alert>
+                        </con2:default>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>"LEVEL3" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-6257</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"FATAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-5a45</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/strategy/alert/ProductManagementStrategyLevel3"/>
+                              <con3:description>Alert LEVEL3 FATAL em ProductManagement.Strategy</con3:description>
+                              <con3:severity>fatal</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"CRITICAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-5a31</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/strategy/alert/ProductManagementStrategyLevel3"/>
+                              <con3:description>Alert LEVEL3 CRITICAL em ProductManagement.Strategy</con3:description>
+                              <con3:severity>critical</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"WARNING" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-5a16</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/strategy/alert/ProductManagementStrategyLevel3"/>
+                              <con3:description>Alert LEVEL3 WARNING em ProductManagement.Strategy</con3:description>
+                              <con3:severity>warning</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                          <con3:alert>
+                            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-59ec</con1:id>
+                            <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/strategy/alert/ProductManagementStrategyLevel3"/>
+                            <con3:description>Alert LEVEL3 NORMAL em ProductManagement.Strategy</con3:description>
+                            <con3:severity>normal</con3:severity>
+                            <con3:payload>
+                              <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                            </con3:payload>
+                          </con3:alert>
+                        </con2:default>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>"LEVEL4" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-6246</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"FATAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-59d4</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/strategy/alert/ProductManagementStrategyLevel4"/>
+                              <con3:description>Alert LEVEL4 FATAL em ProductManagement.Strategy</con3:description>
+                              <con3:severity>fatal</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"CRITICAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-59b2</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/strategy/alert/ProductManagementStrategyLevel4"/>
+                              <con3:description>Alert LEVEL4 CRITICAL em ProductManagement.Strategy</con3:description>
+                              <con3:severity>critical</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"WARNING" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-599e</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/strategy/alert/ProductManagementStrategyLevel4"/>
+                              <con3:description>Alert LEVEL4 WARNING em ProductManagement.Strategy</con3:description>
+                              <con3:severity>warning</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                          <con3:alert>
+                            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-598e</con1:id>
+                            <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/strategy/alert/ProductManagementStrategyLevel4"/>
+                            <con3:description>Alert LEVEL4 NORMAL em ProductManagement.Strategy</con3:description>
+                            <con3:severity>normal</con3:severity>
+                            <con3:payload>
+                              <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                            </con3:payload>
+                          </con3:alert>
+                        </con2:default>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:case>
+                    <con2:condition>
+                      <con1:xqueryText>"LEVEL5" eq fn:upper-case($body/aler:alertRequest/aler1:ServiceSeverityLevel)</con1:xqueryText>
+                    </con2:condition>
+                    <con2:actions>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-620a</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"FATAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-596a</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/strategy/alert/ProductManagementStrategyLevel5"/>
+                              <con3:description>Alert LEVEL5 FATAL em ProductManagement.Strategy</con3:description>
+                              <con3:severity>fatal</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"CRITICAL" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-5959</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/strategy/alert/ProductManagementStrategyLevel5"/>
+                              <con3:description>Alert LEVEL5 CRITICAL em ProductManagement.Strategy</con3:description>
+                              <con3:severity>critical</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>"WARNING" eq $severidadeAlerta</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con3:alert>
+                              <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-5941</con1:id>
+                              <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/strategy/alert/ProductManagementStrategyLevel5"/>
+                              <con3:description>Alert LEVEL5 WARNING em ProductManagement.Strategy</con3:description>
+                              <con3:severity>warning</con3:severity>
+                              <con3:payload>
+                                <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                              </con3:payload>
+                            </con3:alert>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                          <con3:alert>
+                            <con1:id>_ActionId-1445721328115578041--38b75155.14619ddf914.-5927</con1:id>
+                            <con3:destination ref="netarchitecture/monitoring/alert/alerts/productmanagement/strategy/alert/ProductManagementStrategyLevel5"/>
+                            <con3:description>Alert LEVEL5 NORMAL em ProductManagement.Strategy</con3:description>
+                            <con3:severity>normal</con3:severity>
+                            <con3:payload>
+                              <con1:xqueryText>$body/aler:alertRequest</con1:xqueryText>
+                            </con3:payload>
+                          </con3:alert>
+                        </con2:default>
+                      </con2:ifThenElse>
+                    </con2:actions>
+                  </con2:case>
+                  <con2:default/>
+                </con2:ifThenElse>
+              </con2:actions>
+            </con2:case>
+            <con2:default/>
+          </con2:ifThenElse>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="response" name="PipelinePairNode_response">
+      <con:stage name="PrepareResponse">
+        <con:context xmlns:con1="http://www.bea.com/wli/sb/stages/alert/config">
+          <con1:varNsDecl namespace="http://www.netservicos.com.br/AlertV1" prefix="aler" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+        </con:context>
+        <con:actions xmlns:con1="http://www.bea.com/wli/sb/stages/alert/config">
+          <con1:replace varName="body" contents-only="true" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+            <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-1445721328115578041--38b75155.14619ddf914.-664e</con4:id>
+            <con1:location>
+              <con2:xpathText xmlns:con2="http://www.bea.com/wli/sb/stages/config">.</con2:xpathText>
+            </con1:location>
+            <con1:expr>
+              <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">&lt;aler:alertResponse/></con2:xqueryText>
+            </con1:expr>
+          </con1:replace>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:flow>
+      <con:pipeline-node name="PipelinePairNode">
+        <con:request>PipelinePairNode_request</con:request>
+        <con:response>PipelinePairNode_response</con:response>
+      </con:pipeline-node>
+    </con:flow>
+  </ser:router>
+</xml-fragment>

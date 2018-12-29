@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified"
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/product/PartyRoleProductInvolvement"
+	xmlns="http://www.w3.org/2001/XMLSchema" 
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/product/PartyRoleProductInvolvement">
+
+	
+
+	<complexType name="PartyRoleProductInvolvementType">
+		
+			
+		
+	</complexType>
+
+	<element name="PartyRoleProductInvolvement" type="tns:PartyRoleProductInvolvementType" />
+
+	<element name="PartyRoleProductInvolvements">
+		<complexType>
+			<sequence>
+				<element ref="tns:PartyRoleProductInvolvement" minOccurs="1" maxOccurs="unbounded" />
+			</sequence>
+		</complexType>
+	</element>
+
+</schema>

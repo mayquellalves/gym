@@ -1,0 +1,53 @@
+<wsdl:definitions name="Alert" targetNamespace="http://www.netservicos.com.br/AlertV1" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:alert="http://www.netservicos.com.br/AlertV1" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:canalert="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/monitoring/Alert" xmlns:mtd="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Metadata" xmlns:res="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/fault/RuntimeFault">
+	
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://www.netservicos.com.br/AlertV1" elementFormDefault="qualified">
+		
+			<xsd:import schemaLocation="../../../../../canonicalmodel/nid/v1/netarchitecture/monitoring/Alert.xsd" namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/monitoring/Alert"/>
+			<xsd:import schemaLocation="../../../../../canonicalmodel/nid/v1/netarchitecture/common/Metadata.xsd" namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Metadata"/>
+			<xsd:import schemaLocation="../../../../../canonicalmodel/nid/v1/netarchitecture/fault/RuntimeFault.xsd" namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/fault/RuntimeFault"/>
+				
+			<xsd:element name="alertRequest" type="canalert:Alert"/>
+			<xsd:element name="alertResponse" type="xsd:string"/>
+		</xsd:schema>
+	</wsdl:types>
+
+	<wsdl:message name="alertRequest">
+		<wsdl:part name="parameters" element="alert:alertRequest"/>
+		<wsdl:part name="header" element="mtd:Metadata"/>
+	</wsdl:message>
+	
+	<wsdl:message name="alertResponse">
+		<wsdl:part name="parameters" element="alert:alertResponse"/>
+	</wsdl:message>
+	
+	<wsdl:message name="runtimeFault">
+		<wsdl:part name="fault" element="res:RuntimeFault"/>
+	</wsdl:message>
+
+	<wsdl:portType name="AlertPortType">
+		<wsdl:operation name="alert">
+			<wsdl:input message="alert:alertRequest"/>
+			<wsdl:output message="alert:alertResponse"/>
+			<wsdl:fault name="runtimeFault" message="alert:runtimeFault"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	
+	<wsdl:binding name="AlertBinding12" type="alert:AlertPortType">
+		<soap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="alert">
+			<soap12:operation soapAction=""/>
+			<wsdl:input>
+				<soap12:body parts="parameters" use="literal"/>
+				<soap12:header message="alert:alertRequest" wsdl:required="true" part="header" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body parts="parameters" use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="runtimeFault">
+				<soap12:fault name="runtimeFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+	</wsdl:binding>
+	
+</wsdl:definitions>

@@ -1,0 +1,24 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+   <entry key="DEPARTAMENT.NUMERO:db_column_scale">0</entry>
+   <entry key="DEPARTAMENT.ID:db_column_not_null">true</entry>
+   <entry key="DEPARTAMENT.NOME:db_column_type">VARCHAR2</entry>
+   <entry key="DEPARTAMENT.ID:db_column_type">NUMBER</entry>
+   <entry key="DEPARTAMENT.ID:db_column_precision">10</entry>
+   <entry key="DEPARTAMENT.D_LOCAL:db_column_type">VARCHAR2</entry>
+   <entry key="DEPARTAMENT:db_table_type">TABLE</entry>
+   <entry key="DEPARTAMENT.NUMERO:db_column_precision">15</entry>
+   <entry key="DEPARTAMENT.NOME:db_column_not_null">false</entry>
+   <entry key="DEPARTAMENT:db_column_3">D_LOCAL</entry>
+   <entry key="DEPARTAMENT:db_column_2">NOME</entry>
+   <entry key="DEPARTAMENT:db_column_1">NUMERO</entry>
+   <entry key="DEPARTAMENT.NUMERO:db_column_not_null">false</entry>
+   <entry key="DEPARTAMENT:db_column_0">ID</entry>
+   <entry key="DEPARTAMENT.ID:db_column_scale">0</entry>
+   <entry key="DEPARTAMENT.D_LOCAL:db_column_not_null">false</entry>
+   <entry key="DEPARTAMENT.NUMERO:db_column_type">NUMBER</entry>
+   <entry key="DEPARTAMENT.NOME:db_column_size">100</entry>
+   <entry key="root_descriptor_alias">DEPARTAMENT</entry>
+   <entry key="DEPARTAMENT.D_LOCAL:db_column_size">100</entry>
+</properties>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified"
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/specification/ProdSpecCharValueUse"
+	xmlns="http://www.w3.org/2001/XMLSchema" 
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/specification/ProdSpecCharValueUse"
+	xmlns:tmp="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/basetypes/TimePeriod">
+
+
+	<import schemaLocation="../../common/basetypes/TimePeriod.xsd"
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/basetypes/TimePeriod" />
+
+	<complexType name="ProdSpecCharValueUseType">
+		<sequence>
+			<element name="IsDefault" type="boolean" minOccurs="0" maxOccurs="1" />
+			<element name="ValidFor" type="tmp:TimePeriodType" minOccurs="0" maxOccurs="1" />
+		
+		</sequence>
+	</complexType>
+
+	<element name="ProdSpecCharValueUse" type="tns:ProdSpecCharValueUseType" />
+
+	<complexType name="ProdSpecCharValueUsesType">
+		<sequence>
+			<element ref="tns:ProdSpecCharValueUse" minOccurs="1" maxOccurs="unbounded" />
+		</sequence>
+	</complexType>
+
+	<element name="ProdSpecCharValueUses" type="tns:ProdSpecCharValueUsesType"/>
+
+</schema>

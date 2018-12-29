@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+		<xs:schema attributeFormDefault="unqualified" 
+				   elementFormDefault="qualified" 
+				   targetNamespace="br.com.uansblog.BlogJmsPublishQueuePublisher" 
+                                   xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+                                   xmlns:inter="br.com.uansblog.services">
+	
+	<xs:element name="dadosDepartamentoRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="numeroDepartamento" 	type="xs:integer" minOccurs="1" />
+				<xs:element name="nomeDepartamento"	    type="xs:string"  minOccurs="1" />
+				<xs:element name="localDepartamento"	type="xs:string"  minOccurs="1" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+</xs:schema>

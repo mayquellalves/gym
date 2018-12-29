@@ -1,0 +1,27 @@
+<schema elementFormDefault="qualified" targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/product/Product" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/product/Product" xmlns:tps="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types">
+
+	<import schemaLocation="../../netarchitecture/common/Types.xsd" namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types"/>
+		
+	
+	
+	<complexType name="ProductType">
+		<sequence>
+			<element name="Description" type="tps:string100" minOccurs="0" maxOccurs="1"/>
+			<element name="Name" type="tps:string150" minOccurs="0" maxOccurs="1"/>
+			<element name="IsMainProduct" type="boolean" minOccurs="0" maxOccurs="1"/>
+			<element name="ProductNumber" type="tps:string080" minOccurs="0" maxOccurs="1"/>
+			<element name="EffectiveSinceDate" type="dateTime" minOccurs="0" maxOccurs="1"/>
+		</sequence>
+	</complexType>
+
+	<element name="Product" type="tns:ProductType"/>
+
+	<complexType name="ProductsType">
+		<sequence>
+			<element ref="tns:Product" minOccurs="1" maxOccurs="unbounded"/>
+		</sequence>
+	</complexType>
+	
+	<element name="Products" type="tns:ProductsType"/>
+
+</schema>

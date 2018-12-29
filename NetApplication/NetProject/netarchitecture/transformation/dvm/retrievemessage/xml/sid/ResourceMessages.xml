@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dvm name="netarchitecture.messages.resource.dvm" xmlns="http://xmlns.oracle.com/dvm">
+  <description>
+  	Only messages belonging to enterprise domain can be defined here.
+  </description>
+  <columns>
+    <column name="ID_MSG"/>
+    <column name="ERROR_NAME"/>
+    <column name="USER_MESSAGE"/>
+    <column name="DETAIL_MESSAGE"/>
+    <column name="CATEGORY_MESSAGE"/>
+    <column name="SYSTEM_CODE"/>
+    <column name="NID_DOMAIN"/>
+    <column name="ABE_LEVEL"/>
+  </columns>
+  <rows>
+	<row>
+         <cell>OSB-RESOURCE-00000</cell>
+         <cell/>
+         <cell/>
+         <cell/>
+         <cell/>
+         <cell/>
+         <cell>resource</cell>
+         <cell>configuration</cell>
+      </row>
+      <row>
+		<cell>OSB-RESOURCE-00001</cell>	
+		<cell>RUNTIME_FAULT</cell>
+		<cell>Request Inválido para operação: {0}.</cell>
+		<cell>Request Inválido para operação: {0}.</cell>
+		<cell>ERROR</cell>
+		<cell/>
+	    <cell>resource</cell>
+	    <cell>configuration</cell>
+	</row>	
+	<row>
+		<cell>OSB-RESOURCE-00002</cell>	
+		<cell>RUNTIME_FAULT</cell>
+		<cell>Erro durante a execução do recurso: {0}.</cell>
+		<cell>Erro durante a execução do recurso: {0}.</cell>
+		<cell>ERROR</cell>
+		<cell/>
+	    <cell>resource</cell>
+	    <cell>configuration</cell>
+	</row>	
+	<row>
+		<cell>OSB-RESOURCE-00003</cell>	
+		<cell>RUNTIME_FAULT</cell>
+		<cell>O(s) campo(s) {0} deve(m) ser informado(s).</cell>
+		<cell>O(s) campo(s) {0} deve(m) ser informado(s).</cell>
+		<cell>ERROR</cell>
+		<cell/>
+	    <cell>resource</cell>
+	    <cell>configuration</cell>
+	</row>	
+	<row>
+		<cell>OSB-RESOURCE-00004</cell>	
+		<cell>EQUIPAMENT_NOT_EXISTS_IN_INVENTORY_FAULT</cell>
+		<cell>Não existem equipamentos cadastrados no Inventário de Equipamentos.</cell>
+		<cell>Não existem equipamentos cadastrados no Inventário de Equipamentos.</cell>
+		<cell>ERROR</cell>
+		<cell/>
+	    <cell>resource</cell>
+	    <cell>configuration</cell>
+	</row>	
+	<row>
+		<cell>OSB-RESOURCE-00005</cell>	
+		<cell>RUNTIME_FAULT</cell>
+		<cell>Apenas um dos campos deve ser informado.</cell>
+		<cell>Apenas um dos campos deve ser informado.</cell>
+		<cell>ERROR</cell>
+		<cell/>
+	    <cell>resource</cell>
+	    <cell>configuration</cell>
+	</row>	
+	<row>
+		<cell>OSB-RESOURCE-00006</cell>	
+		<cell>RUNTIME_FAULT</cell>
+		<cell>A operação solicitada para o serviço não é válida.</cell>
+		<cell>A operação solicitada para o serviço não é válida.</cell>
+		<cell>ERROR</cell>
+		<cell/>
+	    <cell>resource</cell>
+	    <cell>configuration</cell>
+	</row>	
+	<row>
+		<cell>OSB-RESOURCE-00007</cell>	
+		<cell>BUSINESS_FAULT</cell>
+		<cell>Telefone está inativo na operadora.</cell>
+		<cell>Telefone está inativo na operadora.</cell>
+		<cell>ERROR</cell>
+		<cell/>
+	    <cell>resource</cell>
+	    <cell>configuration</cell>
+	</row>	
+	<row>
+		<cell>OSB-RESOURCE-00008</cell>	
+		<cell>BUSINESS_FAULT</cell>
+		<cell>Titularidade in</cell>
+		<cell>Titularidade in</cell>
+		<cell>ERROR</cell>
+		<cell/>
+	    <cell>resource</cell>
+	    <cell>configuration</cell>
+	</row>	
+	<row>
+		<cell>OSB-RESOURCE-00009</cell>	
+		<cell>BUSINESS_FAULT</cell>
+		<cell>Portabilidade Interna não é suportada.</cell>
+		<cell>Portabilidade Interna não é suportada.</cell>
+		<cell>ERROR</cell>
+		<cell/>
+	    <cell>resource</cell>
+	    <cell>configuration</cell>
+	</row>
+	<row>
+		<cell>OSB-RESOURCE-00010</cell>	
+		<cell>RUNTIME_FAULT</cell>
+		<cell>O(s) campo(s) {0} ou {1} deve(m) ser informado(s).</cell>
+		<cell>O(s) campo(s) {0} ou {1} deve(m) ser informado(s).</cell>
+		<cell>ERROR</cell>
+		<cell/>
+	    <cell>resource</cell>
+	    <cell>configuration</cell>
+	</row>
+	<row>
+         <cell>OSB-RESOURCE-00011</cell>
+         <cell>OSB_DECODER_DESLIGADO</cell>
+         <cell>Seu decodificador está desligado. Ligue-o e tente novamente.</cell>
+         <cell>Seu decodificador está desligado. Ligue-o e tente novamente.</cell>
+         <cell>ERROR</cell>
+         <cell/>
+         <cell>resource</cell>
+         <cell>resource</cell>
+      </row>
+      <row>
+         <cell>OSB-RESOURCE-00012</cell>
+         <cell>OSB_SERVICO_INDISPONIVEL</cell>
+         <cell>Serviço indisponível. Tente novamente mais tarde.</cell>
+         <cell>Serviço indisponível. Tente novamente mais tarde.</cell>
+         <cell>ERROR</cell>
+         <cell/>
+         <cell>resource</cell>
+         <cell>resource</cell>
+      </row>
+      <row>
+         <cell>OSB-RESOURCE-00013</cell>
+         <cell>OSB_GRAVACAO_VOD_INDISPONIVEL</cell>
+         <cell>Este conteúdo não pode ser gravado.</cell>
+         <cell>Este conteúdo não pode ser gravado.</cell>
+         <cell>ERROR</cell>
+         <cell/>
+         <cell>resource</cell>
+         <cell>resource</cell>
+      </row>
+      <row>
+         <cell>OSB-RESOURCE-00014</cell>
+         <cell>OSB_GRAVACAO_INDISPONIVEL</cell>
+         <cell>Você não pode excluir programas, pelo site ou aplicativo, que
+			estão sendo exibidos na sua TV.</cell>
+         <cell>Você não pode excluir programas, pelo site ou aplicativo, que
+			estão sendo exibidos na sua TV.</cell>
+         <cell>ERROR</cell>
+         <cell/>
+         <cell>resource</cell>
+         <cell>resource</cell>
+      </row>
+      <row>
+         <cell>OSB-RESOURCE-00015</cell>
+         <cell>OSB_PROCESSO_GRAVACAO_REPRODUCAO</cell>
+         <cell>Você está gravando 2 eventos simultaneamente. Para assistir um
+			terceiro evento, você precisa cancelar uma das gravações.</cell>
+         <cell>Você está gravando 2 eventos simultaneamente. Para assistir um
+			terceiro evento, você precisa cancelar uma das gravações.</cell>
+         <cell>ERROR</cell>
+         <cell/>
+         <cell>resource</cell>
+         <cell>resource</cell>
+      </row>
+      <row>
+         <cell>OSB-RESOURCE-00016</cell>
+         <cell>OSB_CONFLITO_GRAVACAO</cell>
+         <cell>Não é possível agendar mais de uma gravação para mesma data e
+			horário.</cell>
+         <cell>Não é possível agendar mais de uma gravação para mesma data e
+			horário.</cell>
+         <cell>ERROR</cell>
+         <cell/>
+         <cell>resource</cell>
+         <cell>resource</cell>
+      </row>
+      <row>
+         <cell>OSB-RESOURCE-00017</cell>
+         <cell>OSB_ESPACO_INSUFICIENTE_DECODER</cell>
+         <cell>Espaço insuficiente! Esta gravação apagará seu programa mais
+			antigo.</cell>
+         <cell>Espaço insuficiente! Esta gravação apagará seu programa mais
+			antigo.</cell>
+         <cell>ERROR</cell>
+         <cell/>
+         <cell>resource</cell>
+         <cell>resource</cell>
+      </row>
+	  <row>
+         <cell>OSB-RESOURCE-00018</cell>
+         <cell>OSB_EQUIPAMENTOS_INESISTENTES_ORDERING</cell>
+         <cell>Não existem equipamentos cadastrados no Ordering.</cell>
+         <cell>Não existem equipamentos cadastrados no Ordering.</cell>
+         <cell>ERROR</cell>
+         <cell/>
+         <cell>resource</cell>
+         <cell>resource</cell>
+      </row>   
+      <row> 
+         <cell>OSB-RESOURCE-00019</cell>
+		 <cell>OSB_TRANSACAO_INEXISTENTE</cell>
+	 	 <cell>Identificador da transação não encontrado.
+		 </cell>
+		 <cell>Identificador da transação não encontrado.
+		 </cell>
+		 <cell>ERROR</cell>
+		 <cell />
+		 <cell>resource</cell>
+		 <cell>resource</cell>
+	  </row>
+      <row> 
+         <cell>OSB-RESOURCE-00020</cell>
+		 <cell>OSB_ERRO_INTEGRACAO</cell>
+	 	 <cell>Erro durante a integração com parceiro {0} - {1}.</cell>
+		 <cell>Erro durante a integração com parceiro {0} - {1}.</cell>
+		 <cell>ERROR</cell>
+		 <cell />
+		 <cell>resource</cell>
+		 <cell>resource</cell>
+	  </row>
+      <row>
+         <cell>OSB-RESOURCE-00021</cell>
+         <cell>OSB_INFORMACOES_INCORRETAS</cell>
+         <cell>Suas informações estão incorretas. Tente novamente.</cell>
+         <cell>Suas informações estão incorretas. Tente novamente.</cell>
+         <cell>ERROR</cell>
+         <cell/>
+         <cell>resource</cell>
+         <cell>resource</cell>
+      </row>
+      <row>
+         <cell>OSB-RESOURCE-00022</cell>
+         <cell>MESSAGE_NAO_PREENCHIDO</cell>
+         <cell>O parâmetro {0} da mensagem não foi informado e é
+			obrigatório.</cell>
+         <cell>O parâmetro {0} da mensagem não foi informado e é
+			obrigatório.</cell>
+         <cell>ERROR</cell>
+         <cell/>
+         <cell>resource</cell>
+         <cell>fault</cell>
+      </row>
+      <row>
+         <cell>OSB-RESOURCE-00023</cell>
+         <cell>MESSAGE_NAO_PREENCHIDO</cell>
+         <cell>Pelo menos um dos parametro da mensagem deve ser preemchido:{0}
+			ou {1} ou {2}.</cell>
+         <cell>Pelo menos um dos parametro da mensagem deve ser preemchido:{0}
+			ou {1} ou {2} ou {3}.</cell>
+         <cell>ERROR</cell>
+         <cell/>
+         <cell>resource</cell>
+         <cell>fault</cell>
+       </row>
+	<row>
+		<cell>OSB-RESOURCE-00051</cell>	
+		<cell>RUNTIME_FAULT</cell>
+		<cell>O(s) campo(s) {0} ou {1} ou {2} ou {3} deve(m) ser informado(s).</cell>
+		<cell>O(s) campo(s) {0} ou {1} ou {2} ou {3} deve(m) ser informado(s).</cell>
+		<cell>ERROR</cell>
+		<cell/>
+	    <cell>resource</cell>
+	    <cell>configuration</cell>
+	</row>
+	<row>
+         <cell>OSB-RESOURCE-00057</cell>
+         <cell>OSB_INFORMACOES_INCORRETAS</cell>
+         <cell>Número de dispositivos cadastrados excedeu a quantidade {0} permitida.</cell>
+         <cell>Número de dispositivos cadastrados excedeu a quantidade {0} permitida.</cell>
+         <cell>ERROR</cell>
+         <cell/>
+         <cell>resource</cell>
+         <cell>resource</cell>
+      </row>
+      <row>
+         <cell>OSB-RESOURCE-00058</cell>
+         <cell>DATA_NOT_FOUND_FAULT</cell>
+         <cell>{0} não cadastrado(s) no SPR.</cell>
+         <cell>{0} não cadastrado(s) no SPR.</cell>
+         <cell>ERROR</cell>
+         <cell/>
+         <cell>resource</cell>
+         <cell>resource</cell>
+      </row>
+      <row>
+         <cell>OSB-RESOURCE-00060</cell>
+         <cell>BUSINESS_FAULT</cell>
+         <cell>O(s) campo(s) {0} ou {1} ou {2} deve(m) ser informado(s).</cell>
+		 <cell>O(s) campo(s) {0} ou {1} ou {2} deve(m) ser informado(s).</cell>
+		 <cell>ERROR</cell>
+         <cell/>
+         <cell>resource</cell>
+         <cell>resource</cell>
+      </row>
+      <row>
+         <cell>OSB-RESOURCE-00070</cell>
+         <cell>Localidade / município ou UF não encontrado no SNR.</cell>
+         <cell>Localidade / município ou UF não encontrado no SNR.</cell>
+         <cell/>
+         <cell/>
+         <cell/>
+         <cell>resourcemanagement</cell>
+         <cell>location</cell>
+      </row>
+      <row>
+         <cell>OSB-RESOURCE-00071</cell>
+         <cell>Localidade ou EOT não encontrado no TCO.</cell>
+         <cell>Localidade ou EOT não encontrado no TCO.</cell>
+         <cell/>
+         <cell/>
+         <cell/>
+         <cell>resourcemanagement</cell>
+         <cell>location</cell>
+      </row>
+      <row>
+         <cell>OSB-RESOURCE-00072</cell>
+         <cell>Código da área informado diferente do código DDD.</cell>
+         <cell>Código da área informado diferente do código DDD.</cell>
+         <cell/>
+         <cell/>
+         <cell/>
+         <cell>resourcemanagement</cell>
+         <cell>location</cell>
+      </row>
+	<row>
+		<cell>OSB-RESOURCE-00073</cell>	
+	  	<cell>CANNOT_FIND_MATCHING_SERVICE_NUMBER_FAULT</cell>
+	  	<cell>Número de telefone solicitado não encontrado na pesquisa. Favor efetuar nova busca.</cell>
+	  	<cell>Número de telefone solicitado não encontrado na pesquisa. Favor efetuar nova busca.</cell>
+	  	<cell>ERROR</cell>
+	  	<cell/>
+	  	<cell>resource</cell>
+      	<cell>resource</cell>
+	</row>
+	<row>
+		<cell>OSB-RESOURCE-00074</cell>	
+	    <cell>INVALID_PORTABILITY_NUMBER_OR_AREA_CODE_FAULT</cell>
+	    <cell>O número de telefone inserido não pertence ao código de área do endereço de instalação.</cell>
+	    <cell>O número de telefone inserido não pertence ao código de área do endereço de instalação.</cell>
+		<cell>ERROR</cell>
+		<cell/>
+	    <cell>resource</cell>
+	    <cell>resource</cell>
+	</row>
+	<row>
+		<cell>OSB-RESOURCE-00075</cell>	
+	    <cell>INVALID_TN_RANGE_FAULT</cell>
+	    <cell>Intervalo de números inválidos.</cell>
+	    <cell>Intervalo de números inválidos.</cell>
+		<cell>ERROR</cell>
+		<cell/>
+	    <cell>resource</cell>
+	    <cell>resource</cell>
+	</row>
+	<row>
+		<cell>OSB-RESOURCE-00076</cell>	
+	    <cell>SERVICE_NUMBER_ALREADY_EXIST_IN_OTHER_THAN_PORTED_IN_CATEGORY_FAULT</cell>
+	    <cell>Número de telefone com processo em andamento de portabilidade.</cell>
+	    <cell>Número de telefone com processo em andamento de portabilidade.</cell>
+		<cell>ERROR</cell>
+		<cell/>
+	    <cell>resource</cell>
+	    <cell>resource</cell>
+	</row>
+  	<row>
+  		<cell>OSB-RESOURCE-00079</cell>
+  		<cell>BUSINESS_FAULT</cell>
+  		<cell>Não foi possível realizar a movimentação do equipamento.</cell>
+  		<cell>Não foi possível realizar a movimentação do equipamento.</cell>
+  		<cell>ERROR</cell>
+  		<cell/>
+  		<cell>resourcemanagement</cell>
+  		<cell>networknumber</cell>
+  	</row>	
+  	<row>
+  		<cell>OSB-RESOURCE-00080</cell>
+  		<cell>BUSINESS_FAULT</cell>
+  		<cell>Não foi possível realizar a mudança de titularidade do equipamento.</cell>
+  		<cell>Não foi possível realizar a mudança de titularidade do equipamento.</cell>
+  		<cell>ERROR</cell>
+  		<cell/>
+  		<cell>resourcemanagement</cell>
+  		<cell>networknumber</cell>
+  	</row>
+      <row>
+         <cell>OSB-RESOURCE-00081</cell>
+         <cell>OSB_INFORMACOES_INCORRETAS</cell>
+         <cell>Portabilidade não permitida para números de telefone celular.</cell>
+         <cell>Portabilidade não permitida para números de telefone celular.</cell>
+         <cell>ERROR</cell>
+         <cell/>
+         <cell>resource</cell>
+         <cell>resource</cell>
+      </row>
+  </rows>
+</dvm>

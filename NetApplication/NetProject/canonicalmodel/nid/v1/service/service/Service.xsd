@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified"
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/service/service/Service"
+	xmlns="http://www.w3.org/2001/XMLSchema" 
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/service/service/Service">
+
+	<complexType name="ServiceType">
+		<sequence>
+			<element name="HasStarted" type="boolean" minOccurs="0" maxOccurs="1" />
+			<element name="IsMandatory" type="boolean" minOccurs="0" maxOccurs="1" />
+			<element name="IsServiceEnabled" type="boolean" minOccurs="0" maxOccurs="1" />
+			<element name="IsStateful" type="boolean" minOccurs="0" maxOccurs="1" />
+			<element name="StartMode" type="int" minOccurs="0" maxOccurs="1" />
+			
+		</sequence>
+	</complexType>
+
+	<element name="Service" type="tns:ServiceType" />
+
+	<element name="Services">
+		<complexType>
+			<sequence>
+				<element ref="tns:Service" minOccurs="1" maxOccurs="unbounded" />
+			</sequence>
+		</complexType>
+	</element>
+
+</schema>

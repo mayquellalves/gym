@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dvm name="netarchitecture.messages.servicemanagement.dvm" xmlns="http://xmlns.oracle.com/dvm">
+  <description>
+  	Only messages belonging to service management domain can be defined here.
+  </description>
+  <columns>
+    <column name="ID_MSG"/>
+    <column name="ERROR_NAME"/>
+    <column name="USER_MESSAGE"/>
+    <column name="DETAIL_MESSAGE"/>
+    <column name="CATEGORY_MESSAGE"/>
+    <column name="SYSTEM_CODE"/>
+    <column name="NID_DOMAIN"/>
+    <column name="ABE_LEVEL"/>
+  </columns>
+  <rows>
+	<row>
+		<cell>OSB-SERVICEMANAGEMENT-00001</cell>
+		<cell>OSB_RUNTIME_FAULT</cell>
+		<cell>Erro durante a execução do recurso: {0}.</cell>
+		<cell>Erro durante a execução do recurso: {0}.</cell>
+		<cell>ERROR</cell>
+		<cell />
+		<cell>servicemanagement</cell>
+		<cell>order</cell>
+	</row>
+	<row>
+		<cell>OSB-SERVICEMANAGEMENT-00002</cell>
+		<cell>OSB_INVALID_REQUEST_FAULT</cell>
+		<cell>Request Inválido para operação: {0}.</cell>
+		<cell>Request Inválido para operação: {0}.</cell>
+		<cell>ERROR</cell>
+		<cell />
+		<cell>servicemanagement</cell>
+		<cell>order</cell>
+	</row>
+    <row>
+		<cell>OSB-SERVICEMANAGEMENT-00003</cell>
+		<cell>OSB_AVAILABILITY_WITHOUT_BACKBONE_FAULT</cell>
+		<cell>Sem Backbone-Edificação sem infraestrutura construída.</cell>
+		<cell>Sem Backbone-Edificação sem infraestrutura construída.</cell>
+		<cell>ERROR</cell>
+		<cell />
+		<cell>servicemanagement</cell>
+		<cell>order</cell>
+	</row>
+	<row>
+		<cell>OSB-SERVICEMANAGEMENT-00004</cell>
+		<cell>OSB_AVAILABILITY_WITHOUT_ACTIVE_RETURN_FAULT</cell>
+		<cell>Sem retorno Ativo-Existem tecnologias não disponíveis.</cell>
+		<cell>Sem retorno Ativo-Existem tecnologias não disponíveis.</cell>
+		<cell>ERROR</cell>
+		<cell />
+		<cell>servicemanagement</cell>
+		<cell>order</cell>
+	</row>
+	    <row>
+		<cell>OSB-SERVICEMANAGEMENT-00005</cell>
+		<cell>OSB_AVAILABILITY_DUCT_OBSTRUCTED_FAULT</cell>
+		<cell>Duto Obstruído-Necessária a adequação por parte do cliente.</cell>
+		<cell>Duto Obstruído-Necessária a adequação por parte do cliente.</cell>
+		<cell>ERROR</cell>
+		<cell />
+		<cell>servicemanagement</cell>
+		<cell>order</cell>
+	</row>
+	<row>
+		<cell>OSB-SERVICEMANAGEMENT-00006</cell>
+		<cell>OSB_AVAILABILITY_WITHOUT_POST_FAULT</cell>
+		<cell>Sem Postinho-Necessária a adequação por parte do cliente.</cell>
+		<cell>Sem Postinho-Necessária a adequação por parte do cliente.</cell>
+		<cell>ERROR</cell>
+		<cell />
+		<cell>servicemanagement</cell>
+		<cell>order</cell>
+    </row>
+    <row>
+		<cell>OSB-SERVICEMANAGEMENT-00007</cell>
+		<cell>OSB_AVAILABILITY_CIVIL_WORK_FAULT</cell>
+		<cell>Obra Civil-Necessária a adequação por parte do cliente.</cell>
+		<cell>Obra Civil-Necessária a adequação por parte do cliente.</cell>
+		<cell>ERROR</cell>
+		<cell />
+		<cell>servicemanagement</cell>
+		<cell>order</cell>
+	</row>
+	<row>
+		<cell>OSB-SERVICEMANAGEMENT-00008</cell>
+		<cell>OSB_AVAILABILITY_AREA_RISK_FAULT</cell>
+		<cell>Área de Risco.</cell>
+		<cell>Área de Risco.</cell>
+		<cell>ERROR</cell>
+		<cell />
+		<cell>servicemanagement</cell>
+		<cell>order</cell>
+	</row>    
+	<row>
+		<cell>OSB-SERVICEMANAGEMENT-00009</cell>
+		<cell>OSB_AVAILABILITY_OUT_AREA_WIRED_FAULT</cell>
+		<cell>Fora de área não cabeada.</cell>
+		<cell>Fora de área não cabeada.</cell>
+		<cell>ERROR</cell>
+		<cell />
+		<cell>servicemanagement</cell>
+		<cell>order</cell>
+	</row>
+	<row>
+		<cell>OSB-SERVICEMANAGEMENT-00010</cell>
+		<cell>OSB_AVAILABILITY_AREA_SHADOW_FAULT</cell>
+		<cell>Área de Sombra-localização específica onde o serviço não poderá ser disponibilizado.</cell>
+		<cell>Área de Sombra-localização específica onde o serviço não poderá ser disponibilizado.</cell>
+		<cell>ERROR</cell>
+		<cell />
+		<cell>servicemanagement</cell>
+		<cell>order</cell>
+    </row>
+    <row>
+		<cell>OSB-SERVICEMANAGEMENT-00011</cell>
+		<cell>OSB_AVAILABILITY_NO_NETWORK_FAULT</cell>
+		<cell>Áusência de Rede-Sem cabeamento numa localização específica. Node cabeado e residência não cabeada.</cell>
+		<cell>Áusência de Rede-Sem cabeamento numa localização específica. Node cabeado e residência não cabeada.</cell>
+		<cell>ERROR</cell>
+		<cell />
+		<cell>servicemanagement</cell>
+		<cell>order</cell>
+	</row>
+	<row>
+		<cell>OSB-SERVICEMANAGEMENT-00012</cell>
+		<cell>OSB_AVAILABILITY_LOCK_FRAUD_FAULT</cell>
+		<cell>Segurança Técnica Operacional-Providenciar abertura de Caso.</cell>
+		<cell>Segurança Técnica Operacional-Providenciar abertura de Caso.</cell>
+		<cell>ERROR</cell>
+		<cell />
+		<cell>servicemanagement</cell>
+		<cell>order</cell>
+	</row>    
+	<row>
+		<cell>OSB-SERVICEMANAGEMENT-00013</cell>
+		<cell>OSB_MANDATORY_FIELDS_VALIDATION_FAULT</cell>
+		<cell>O(s) campo(s) {0} deve(m) ser informado(s).</cell>
+		<cell>O(s) campo(s) {0} deve(m) ser informado(s).</cell>
+		<cell>ERROR</cell>
+		<cell />
+		<cell>servicemanagement</cell>
+		<cell>order</cell>
+	</row>
+	<row>
+      <cell>OSB-SERVICEMANAGEMENT-00014</cell>
+      <cell>OSB_OPERACAO_NAO_PERMITIDA</cell>
+      <cell>Existe uma portabilidade em andamento para o número de telefone informado.</cell>
+      <cell>Existe uma portabilidade em andamento para o número de telefone informado.</cell>
+      <cell>ERROR</cell>
+      <cell />
+      <cell>servicemanagement</cell>
+      <cell>order</cell>
+    </row>
+    <row>
+      <cell>OSB-SERVICEMANAGEMENT-00015</cell>
+      <cell>OSB_OPERACAO_NAO_PERMITIDA</cell>
+      <cell>Operação não permitida, pois o status da solicitação de portabilidade não permite o cancelamento da portabilidade, esta solicitação será encaminhada a uma equipe responsável.</cell>
+      <cell>Operação não permitida, pois o status da solicitação de portabilidade não permite o cancelamento da portabilidade, esta solicitação será encaminhada a uma equipe responsável.</cell>
+      <cell>ERROR</cell>
+      <cell />
+      <cell>servicemanagement</cell>
+      <cell>order</cell>
+    </row>
+    <row>
+      <cell>OSB-SERVICEMANAGEMENT-00016</cell>
+      <cell>OSB_OPERACAO_NAO_PERMITIDA</cell>
+      <cell>Não foi possível recuperar todas as informações necessárias para o reenvio da mensagem de solicitação de portabilidade.</cell>
+      <cell>Não foi possível recuperar todas as informações necessárias para o reenvio da mensagem de solicitação de portabilidade.</cell>
+      <cell>ERROR</cell>
+      <cell />
+      <cell>servicemanagement</cell>
+      <cell>order</cell>
+    </row>
+    <row>
+      <cell>OSB-SERVICEMANAGEMENT-00017</cell>
+      <cell>OSB_OPERACAO_NAO_PERMITIDA</cell>
+      <cell>Operação não permitida, pois somente bilhetes com status igual a Requerido podem ser reenviados.</cell>
+      <cell>Operação não permitida, pois somente bilhetes com status igual a Requerido podem ser reenviados.</cell>
+      <cell>ERROR</cell>
+      <cell />
+      <cell>servicemanagement</cell>
+      <cell>order</cell>
+    </row>
+    <row>
+      <cell>OSB-SERVICEMANAGEMENT-00018</cell>
+      <cell>OSB_OPERACAO_NAO_PERMITIDA</cell>
+      <cell>Operação não permitida, pois o status atual da portabilidade não permite o cancelamento.</cell>
+      <cell>Operação não permitida, pois o status atual da portabilidade não permite o cancelamento.</cell>
+      <cell>ERROR</cell>
+      <cell />
+      <cell>servicemanagement</cell>
+      <cell>order</cell>
+    </row>
+    <row>
+      <cell>OSB-SERVICEMANAGEMENT-00019</cell>
+      <cell>OSB_OPERACAO_NAO_PERMITIDA</cell>
+      <cell>Operação não permitida, pois o status atual da portabilidade não permite o reagendamento.</cell>
+      <cell>Operação não permitida, pois o status atual da portabilidade não permite o reagendamento.</cell>
+      <cell>ERROR</cell>
+      <cell />
+      <cell>servicemanagement</cell>
+      <cell>order</cell>
+    </row>
+
+    <row>
+      <cell>OSB-SERVICEMANAGEMENT-00020</cell>
+      <cell>OSB_OPERACAO_NAO_PERMITIDA</cell>
+      <cell>Operação não permitida, pois o status atual da portabilidade não permite a remção de conflito.</cell>
+      <cell>Operação não permitida, pois o status atual da portabilidade não permite a remção de conflito.</cell>
+      <cell>ERROR</cell>
+      <cell />
+      <cell>servicemanagement</cell>
+      <cell>order</cell>
+    </row>
+    <row>
+		<cell>OSB-SERVICEMANAGEMENT-00021</cell>
+		<cell>OSB_NONEXISTENT_ADDRESS_FAULT</cell>
+		<cell>Endereço inexistente.</cell>
+		<cell>Endereço inexistente.</cell>
+		<cell>ERROR</cell>
+		<cell />
+		<cell>servicemanagement</cell>
+		<cell>order</cell>
+	</row> 
+	<row>
+      <cell>OSB-SERVICEMANAGEMENT-00023</cell>
+      <cell>OSB_TELEFONE_NAO_ENCONTRADO</cell>
+      <cell>Não foi possível encontrar na base de dados o telefone informado: {0}</cell>
+      <cell>Não foi possível encontrar na base de dados o telefone informado: {0}</cell>
+      <cell>ERROR</cell>
+      <cell />
+      <cell>servicemanagement</cell>
+      <cell>order</cell>
+    </row>
+    <row>
+      <cell>OSB-SERVICEMANAGEMENT-00024</cell>
+      <cell>OSB_PORTABILIDADE_NAO_ENCONTRADA</cell>
+      <cell>Não foi possível encontrar nenhuma portabilidade para o cliente informado: {0}</cell>
+      <cell>Não foi possível encontrar nenhuma portabilidade para o cliente informado: {0}</cell>
+      <cell>ERROR</cell>
+      <cell />
+      <cell>servicemanagement</cell>
+      <cell>order</cell>
+    </row>
+    <row>
+      <cell>OSB-SERVICEMANAGEMENT-00025</cell>
+      <cell>OSB_OPERACAO_INVALIDA</cell>
+      <cell>A operação solicitada para o serviço não é válida.</cell>
+      <cell>A operação solicitada para o serviço não é válida.</cell>
+      <cell>ERROR</cell>
+      <cell />
+      <cell>servicemanagement</cell>
+      <cell>order</cell>
+    </row>
+    <row>
+      <cell>OSB-SERVICEMANAGEMENT-00028</cell>
+      <cell>OSB_MANDATORY_FIELDS_VALIDATION_FAULT</cell>
+      <cell>O(s) campo(s) {0} ou {1} deve(m) ser informado(s).</cell>
+      <cell>O(s) campo(s) {0} ou {1} deve(m) ser informado(s).</cell>
+      <cell>ERROR</cell>
+      <cell />
+      <cell>servicemanagement</cell>
+      <cell>problem</cell>
+    </row>   
+    <row>
+      <cell>OSB-SERVICEMANAGEMENT-00029</cell>
+      <cell>OSB_RUNTIME_FAULT</cell>
+      <cell>Serviço não localizado para o Número de Telefone ({0})-{1}.</cell>
+      <cell>Serviço não localizado para o Número de Telefone ({0})-{1}.</cell>
+      <cell>ERROR</cell>
+      <cell />
+      <cell>servicemanagement</cell>
+      <cell>inventory</cell>
+    </row>   
+    <row>
+        <cell>OSB-SERVICEMANAGEMENT-00030</cell>
+        <cell>OSB_NONEXISTENT_ACTIVE_SERVICE_FAULT</cell>
+        <cell>Não é possível prosseguir com a ordem pois a rede deste endereço está bloqueada ou sem serviços disponíveis. Por favor, entrar em contato com a equipe do Gestão de Endereços.</cell>
+        <cell>Não é possível prosseguir com a ordem pois a rede deste endereço está bloqueada ou sem serviços disponíveis. Por favor, entrar em contato com a equipe do Gestão de Endereços.</cell>
+        <cell>ERROR</cell>
+        <cell />
+        <cell>servicemanagement</cell>
+        <cell>order</cell>
+    </row>
+  </rows>
+</dvm>

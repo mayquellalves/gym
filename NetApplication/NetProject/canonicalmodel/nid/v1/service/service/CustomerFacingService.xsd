@@ -1,0 +1,28 @@
+<schema elementFormDefault="qualified" targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/service/service/CustomerFacingService" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/service/service/CustomerFacingService" xmlns:tps="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types">
+
+	<import schemaLocation="../../netarchitecture/common/Types.xsd" namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types"/>
+
+
+	<complexType name="CustomerFacingServiceType">
+
+		<sequence>
+			<element name="ServiceId" type="tps:string050" minOccurs="0" maxOccurs="1"/>
+			<element name="CfsStatus" type="tps:string050" minOccurs="0" maxOccurs="1"/>
+			<element name="LogicalId" type="tps:string050" minOccurs="0" maxOccurs="1"/>
+			<element name="ActivationDate" type="dateTime" minOccurs="0" maxOccurs="1"/>
+			<element name="SuspensionDate" type="dateTime" minOccurs="0" maxOccurs="1"/>
+		</sequence>
+
+	</complexType>
+
+	<element name="CustomerFacingService" type="tns:CustomerFacingServiceType"/>
+
+	<element name="CustomerFacingServices">
+		<complexType>
+			<sequence>
+				<element ref="tns:CustomerFacingService" minOccurs="1" maxOccurs="unbounded"/>
+			</sequence>
+		</complexType>
+	</element>
+
+</schema>

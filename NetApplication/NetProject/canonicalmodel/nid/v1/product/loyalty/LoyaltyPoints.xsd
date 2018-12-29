@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/loyalty/LoyaltyPoints"
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/loyalty/LoyaltyPoints"
+	xmlns:tps="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types">
+
+	<import schemaLocation="../../netarchitecture/common/Types.xsd"
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types" />
+
+	
+
+	<complexType name="LoyaltyPointsType">
+		<sequence>
+			<element name="Points" type="int" minOccurs="0" maxOccurs="1" />
+			<element name="PurchaseDate" type="date" minOccurs="0" maxOccurs="1" />
+			<element name="ExpirationDate" type="date" minOccurs="0" maxOccurs="1" />
+		</sequence>
+	</complexType>
+
+	<element name="LoyaltyPoints" type="tns:LoyaltyPointsType" />
+
+	<element name="LoyaltyPointsGroup">
+		<complexType>
+			<sequence>
+				<element ref="tns:LoyaltyPoints" minOccurs="1" maxOccurs="unbounded" />
+			</sequence>
+		</complexType>
+	</element>
+
+</schema>

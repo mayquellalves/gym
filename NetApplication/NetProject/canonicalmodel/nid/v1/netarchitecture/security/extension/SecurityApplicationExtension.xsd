@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified" 
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/security/extension/SecurityApplicationExtension" 
+	xmlns="http://www.w3.org/2001/XMLSchema" 
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/security/extension/SecurityApplicationExtension" 
+	xmlns:sam="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/security/extension/SecurityAmdocsASM"
+	xmlns:saa="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/security/extension/SecuritySigmaAA"
+	xmlns:sao="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/security/extension/SecurityAmdocsOSSASM"
+	xmlns:sau="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/security/extension/SecurityAmdocsUSMASM"
+	xmlns:dpc="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/security/extension/SecurityDigitalPostCCM"
+	xmlns:bee="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/security/extension/SecurityBeesionGevenue"
+	xmlns:ttb="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/security/extension/SecurityTitansBroker"
+	xmlns:sia="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/security/extension/SecurityISystemAuthentication"
+	xmlns:acn="http://www.netservicos.com.br/ApplicationsCredentialsNetV1">
+
+    <import schemaLocation="SecurityAmdocsASM.xsd" 
+    	namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/security/extension/SecurityAmdocsASM"/>
+    	
+    <import schemaLocation="SecuritySigmaAA.xsd" 
+    	namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/security/extension/SecuritySigmaAA"/>
+    	
+    <import schemaLocation="SecurityAmdocsOSSASM.xsd" 
+    	namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/security/extension/SecurityAmdocsOSSASM"/>
+    	
+    <import schemaLocation="SecurityAmdocsUSMASM.xsd" 
+    	namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/security/extension/SecurityAmdocsUSMASM"/>	
+    	
+    <import schemaLocation="SecurityDigitalPostCCM.xsd" 
+    	namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/security/extension/SecurityDigitalPostCCM"/>
+    	
+    <import schemaLocation="SecurityBeesionGevenue.xsd" 
+    	namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/security/extension/SecurityBeesionGevenue"/>
+    	
+    <import schemaLocation="SecurityTitansBroker.xsd" 
+    	namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/security/extension/SecurityTitansBroker"/>
+    	
+    <import schemaLocation="SecurityISystemAuthentication.xsd" 
+    	namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/security/extension/SecurityISystemAuthentication"/>	
+    	
+    <import schemaLocation="ApplicationsCredentialsNetV1.xsd" 
+    	namespace="http://www.netservicos.com.br/ApplicationsCredentialsNetV1"/>
+
+	<complexType name="SecurityApplicationExtensionType">
+		<sequence>
+			<element ref="acn:ApplicationsCredentialsNetV1" minOccurs="0" maxOccurs="1"/>
+			<element ref="sam:SecurityAmdocsASM" minOccurs="0" maxOccurs="1"/>
+			<element ref="saa:SecuritySigmaAA" minOccurs="0" maxOccurs="1"/>
+			<element ref="sao:SecurityAmdocsOSSASM" minOccurs="0" maxOccurs="1"/>
+			<element ref="sau:SecurityAmdocsUSMASM" minOccurs="0" maxOccurs="1"/>
+			<element ref="dpc:SecurityDigitalPostCCM" minOccurs="0" maxOccurs="1"/>
+			<element ref="bee:SecurityBeesionGevenue" minOccurs="0" maxOccurs="1"/>
+			<element ref="ttb:SecurityTitansBroker" minOccurs="0" maxOccurs="1"/>
+			<element ref="sia:SecurityISystemAuthentication" minOccurs="0" maxOccurs="1"/>
+		</sequence>
+	</complexType>
+
+	<element name="SecurityApplicationExtension" type="tns:SecurityApplicationExtensionType"/>
+
+</schema>

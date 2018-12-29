@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified"
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/specification/ProductSpecification"
+	xmlns="http://www.w3.org/2001/XMLSchema" 
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/specification/ProductSpecification"
+	xmlns:tps="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types">
+
+	<import schemaLocation="../../netarchitecture/common/Types.xsd"
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types" />
+		
+	
+
+	<complexType name="ProductSpecificationType">
+		<sequence>
+			<element name="Name" type="tps:string255" minOccurs="0" maxOccurs="1" />
+			<element name="ProductNumber" type="tps:string080" minOccurs="0" maxOccurs="1" />
+			<element name="Brand" type="tps:string030" minOccurs="0" maxOccurs="1" />
+			<element name="Description" type="tps:string100" minOccurs="0" maxOccurs="1" />
+			<element name="LifecycleStatus" type="tps:string020" minOccurs="0" maxOccurs="1" />
+		
+		</sequence>
+	</complexType>
+
+	<element name="ProductSpecification" type="tns:ProductSpecificationType" />
+
+	<complexType name="ProductSpecificationsType">
+		<sequence>
+			<element ref="tns:ProductSpecification" minOccurs="1" maxOccurs="unbounded" />
+		</sequence>
+	</complexType>
+
+	<element name="ProductSpecifications" type="tns:ProductSpecificationsType"/>
+
+</schema>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/partner/order/ReasonCancelling"
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/partner/order/ReasonCancelling">
+
+	<complexType name="ReasonCancellingType">
+		<sequence>
+		</sequence>
+	</complexType>
+
+	<element name="ReasonCancelling" type="tns:ReasonCancellingType" />
+
+	<element name="ReasonCancellings">
+		<complexType>
+			<sequence>
+				<element ref="tns:ReasonCancelling" minOccurs="1" maxOccurs="unbounded" />
+			</sequence>
+		</complexType>
+	</element>
+
+</schema>

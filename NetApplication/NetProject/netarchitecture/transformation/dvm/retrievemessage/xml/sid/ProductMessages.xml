@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dvm name="netarchitecture.messages.product.dvm" xmlns="http://xmlns.oracle.com/dvm">
+  <description>
+  	Only messages belonging to product domain can be defined here.
+  </description>
+  <columns>
+    <column name="ID_MSG"/>
+    <column name="ERROR_NAME"/>
+    <column name="USER_MESSAGE"/>
+    <column name="DETAIL_MESSAGE"/>
+    <column name="CATEGORY_MESSAGE"/>
+    <column name="SYSTEM_CODE"/>
+    <column name="NID_DOMAIN"/>
+    <column name="ABE_LEVEL"/>
+  </columns>
+  <rows>
+	<row>
+		<cell>OSB-PRODUCT-00001</cell>	
+		<cell>RUNTIME_FAULT</cell>
+		<cell>Request Inválido para operação: {0}.</cell>
+		<cell>Request Inválido para operação: {0}.</cell>
+		<cell>ERROR</cell>
+		<cell/>
+	    <cell>product</cell>
+	    <cell>offering</cell>
+	</row>	
+	<row>
+		<cell>OSB-PRODUCT-00002</cell>	
+		<cell>RUNTIME_FAULT</cell>
+		<cell>Erro durante a execução do recurso: {0}.</cell>
+		<cell>Erro durante a execução do recurso: {0}.</cell>
+		<cell>ERROR</cell>
+		<cell/>
+	    <cell>product</cell>
+	    <cell>offering</cell>
+	</row>	
+	<row>
+		<cell>OSB-PRODUCT-00003</cell>	
+		<cell>BUSINESS_FAULT</cell>
+		<cell>Não existem serviços contratados pelo cliente.</cell>
+		<cell>Não existem serviços contratados pelo cliente.</cell>
+		<cell>ERROR</cell>
+		<cell/>
+	    <cell>product</cell>
+	    <cell>offering</cell>
+	</row>
+	<row>
+		<cell>OSB-PRODUCT-00004</cell>	
+		<cell>OSB_EVENTS_NOT_EXISTS</cell>
+		<cell>Não existem eventos selecionados como favoritos para o cliente informado.</cell>
+		<cell>Não existem eventos selecionados como favoritos para o cliente informado.</cell>
+		<cell>ERROR</cell>
+		<cell/>
+	    <cell>product</cell>
+	    <cell>offering</cell>
+	</row>
+	<row>
+		<cell>OSB-PRODUCT-00006</cell>	
+		<cell>OSB_CONTENTS_NOT_FOUND</cell>
+		<cell>Não foram encontrados registros para pesquisa de conteúdo (eventos) da assinatura.</cell>
+		<cell>Não foram encontrados registros para pesquisa de conteúdo (eventos) da assinatura.</cell>
+		<cell>ERROR</cell>
+		<cell/>
+	    <cell>product</cell>
+	    <cell>offering</cell>
+	</row>
+	<row>
+		<cell>OSB-PRODUCT-00007</cell>	
+		<cell>OSB_CATEGORIES_NOT_FOUND</cell>
+		<cell>Não foram encontrados registros para pesquisa de categoria.</cell>
+		<cell>Não foram encontrados registros para pesquisa de categoria.</cell>
+		<cell>ERROR</cell>
+		<cell/>
+	    <cell>product</cell>
+	    <cell>offering</cell>
+	</row>
+	<row>
+		<cell>OSB-PRODUCT-00008</cell>	
+		<cell>OSB_PRICE_CHANGED_PURCHASE</cell>
+		<cell>O preço aceito pelo usuário final para a compra do produto foi alterado durante a compra.</cell>
+		<cell>O preço aceito pelo usuário final para a compra do produto foi alterado durante a compra.</cell>
+		<cell>ERROR</cell>
+		<cell/>
+	    <cell>product</cell>
+	    <cell>offering</cell>
+	</row>
+	<row>
+		<cell>OSB-PRODUCT-00009</cell>	
+		<cell>OSB_PURCHASE_LIMIT_EXCEEDED</cell>
+		<cell>O limite de gastos foi ultrapassado na compra deste produto.</cell>
+		<cell>O limite de gastos foi ultrapassado na compra deste produto.</cell>
+		<cell>ERROR</cell>
+		<cell/>
+	    <cell>product</cell>
+	    <cell>offering</cell>
+	</row>
+	<row>
+		<cell>OSB-PRODUCT-00010</cell>	
+		<cell>OSB_INVALID_REGISTRATION</cell>
+		<cell>Registro informado inválido.</cell>
+		<cell>Registro informado inválido.</cell>
+		<cell>ERROR</cell>
+		<cell/>
+	    <cell>product</cell>
+	    <cell>offering</cell>
+	</row>
+	<row>
+		<cell>OSB-PRODUCT-00011</cell>	
+		<cell>OSB_CUSTOM_DATA_EXCEEDS_ALLOWED</cell>
+		<cell>Os dados personalizado excede o tamanho permitido configurado.</cell>
+		<cell>Os dados personalizado excede o tamanho permitido configurado.</cell>
+		<cell>ERROR</cell>
+		<cell/>
+	    <cell>product</cell>
+	    <cell>offering</cell>
+	</row>
+	<row>
+		<cell>OSB-PRODUCT-00012</cell>	
+		<cell>OSB_EMPTY_MANDATORY_FIELDS</cell>
+		<cell>O(s) campo(s) {0} deve(m) ser informado(s).</cell>
+		<cell>O(s) campo(s) {0} deve(m) ser informado(s).</cell>
+		<cell>ERROR</cell>
+		<cell/>
+	    <cell>product</cell>
+	    <cell>offering</cell>
+	</row>
+  </rows>
+</dvm>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/specification/EventGenre"
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/specification/EventGenre"
+	xmlns:tps="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types">
+
+	
+	
+	<import schemaLocation="../../netarchitecture/common/Types.xsd"
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types" />
+		
+	<complexType name="EventGenreType">
+		
+				<sequence>
+					<element name="GenreId" type="int" minOccurs="0" maxOccurs="1" />
+					<element name="Name" type="tps:string020" minOccurs="0" maxOccurs="1" />
+					
+				</sequence>
+			
+	</complexType>
+
+	<element name="EventGenre" type="tns:EventGenreType" />
+	
+	<element name="EventsGenre">
+		<complexType >
+			<sequence>
+				<element ref="tns:EventGenre" minOccurs="1" maxOccurs="unbounded" />
+			</sequence>
+		</complexType>
+	</element>
+
+</schema>

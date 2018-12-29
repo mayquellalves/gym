@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified"
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/resource/topology/ResourceElementEvent"
+	xmlns="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/resource/topology/ResourceElementEvent"
+	xmlns:evt="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/event/Event"
+	xmlns:tps="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types"
+	xmlns:cit="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/location/City"
+	xmlns:ree="http://www.netservicos.com.br/canonicalmodel/nid/v1/resource/topology/ResourceElement"
+	xmlns:upa="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/location/UrbanPropertyAddress"
+	xmlns:upsa="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/location/UrbanPropertySubAddress">
+
+	<import
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/event/Event"
+		schemaLocation="../../netarchitecture/event/Event.xsd" />
+	<import 
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types"
+		schemaLocation="../../netarchitecture/common/Types.xsd" />
+	<import
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/location/City"
+		schemaLocation="../../common/location/City.xsd" />
+	<import
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/location/UrbanPropertyAddress"
+		schemaLocation="../../common/location/UrbanPropertyAddress.xsd" />
+	<import
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/resource/topology/ResourceElement"
+		schemaLocation="ResourceElement.xsd" />
+	
+	<complexType name="resourceElementForNotifyNodeCreationType">
+		<sequence>
+			<element ref="ree:ResourceElement" minOccurs="1" maxOccurs="1">
+				<annotation>
+					<documentation>
+						From Canonical Entity "ResourceElement".
+					</documentation>
+				</annotation>
+			</element>
+			<element ref="tns:resourceElementHas" minOccurs="0" maxOccurs="unbounded"/>
+			<element ref="tns:urbanPropertyAddressForNotifyNodeCreationType" minOccurs="0" maxOccurs="1"/>					
+		</sequence>
+	</complexType>
+	
+	<complexType name="resourceElementHasType">
+		<sequence>
+			<element ref="tns:resourceElementParent" minOccurs="0" maxOccurs="1"/>					
+		</sequence>
+	</complexType>	
+			
+	<complexType name="resourceElementParentType">
+		<sequence>
+			<element ref="ree:ResourceElement" minOccurs="1" maxOccurs="1">
+				<annotation>
+					<documentation>
+						From Canonical Entity "ResourceElement".
+					</documentation>
+				</annotation>
+			</element>
+			<element ref="tns:resourceElementHas" minOccurs="0" maxOccurs="unbounded"/>				
+		</sequence>
+	</complexType>
+			
+			
+	<complexType name="cityForNotifyNodeCreationType">
+		<sequence>
+			<element ref="cit:City" minOccurs="1" maxOccurs="1">
+				<annotation>
+					<documentation>
+						From Canonical Entity "City".
+					</documentation>
+				</annotation>
+			</element>
+		</sequence>
+	</complexType>
+	
+	<complexType name="urbanPropertyAddressForNotifyNodeCreationType">
+		<sequence>
+			<element ref="upa:UrbanPropertyAddress" minOccurs="0" maxOccurs="1">
+				<annotation>
+				<documentation>
+						From Canonical Entity "UrbanPropertyAddress".
+					</documentation>
+	 			</annotation>
+			</element>
+			<element ref="tns:cityForNotifyNodeCreationType" minOccurs="1" maxOccurs="1"/>
+		</sequence>
+	</complexType>	
+			
+	<element name="cityForNotifyNodeCreationType" type="tns:cityForNotifyNodeCreationType"/>
+	<element name="urbanPropertyAddressForNotifyNodeCreationType" type="tns:urbanPropertyAddressForNotifyNodeCreationType"/>
+	<element name="resourceElementForNotifyNodeCreation" type="tns:resourceElementForNotifyNodeCreationType"/>
+	<element name="resourceElementHas" type="tns:resourceElementHasType"/>
+	<element name="resourceElementParent" type="tns:resourceElementParentType"/>
+			
+
+
+	<complexType name="ResourceElementCreatedEventType">
+		<complexContent>
+			<extension base="evt:EventType">
+				<sequence>
+					<element ref="tns:resourceElementForNotifyNodeCreation" />
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<element name="ResourceElementCreatedEvent" type="tns:ResourceElementCreatedEventType">
+		<annotation>
+			<documentation>
+				Changes
+			</documentation>
+		</annotation>
+	</element>
+
+</schema>

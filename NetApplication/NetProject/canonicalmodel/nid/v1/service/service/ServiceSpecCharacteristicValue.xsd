@@ -1,0 +1,34 @@
+<schema elementFormDefault="qualified" targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/service/service/ServiceSpecCharacteristicValue" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/service/service/ServiceSpecCharacteristicValue" xmlns:tmp="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/basetypes/TimePeriod" xmlns:tps="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types">
+	
+	
+
+	<import schemaLocation="../../netarchitecture/common/Types.xsd" namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types"/>
+	
+	<import schemaLocation="../../common/basetypes/TimePeriod.xsd" namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/common/basetypes/TimePeriod"/>
+
+	
+	<complexType name="ServiceSpecCharacteristicValueType">
+		<sequence>
+			<element name="_default" type="tps:string050" minOccurs="0" maxOccurs="1"/>
+			<element name="RangeInterval" type="tps:string050" minOccurs="0" maxOccurs="1"/>
+			<element name="UnitOfMeasure" type="tps:string050" minOccurs="0" maxOccurs="1"/>
+			<element name="ValidFor" type="tmp:TimePeriodType" minOccurs="0" maxOccurs="1"/>
+			<element name="Value" type="tps:string1000" minOccurs="0" maxOccurs="1"/>
+			<element name="ValueFrom" type="tps:string050" minOccurs="0" maxOccurs="1"/>
+			<element name="ValueTo" type="tps:string050" minOccurs="0" maxOccurs="1"/>
+			<element name="ValueType" type="tps:string050" minOccurs="0" maxOccurs="1"/>
+		
+		</sequence>
+	</complexType>
+
+	<element name="ServiceSpecCharacteristicValue" type="tns:ServiceSpecCharacteristicValueType"/>
+
+	<element name="ServiceSpecCharacteristicValuesType" type="tns:ServiceSpecCharacteristicValuesType"/>
+
+	<complexType name="ServiceSpecCharacteristicValuesType">
+		<sequence>
+			<element ref="tns:ServiceSpecCharacteristicValue" minOccurs="1" maxOccurs="unbounded"/>
+		</sequence>
+	</complexType>
+
+</schema>

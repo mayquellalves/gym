@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema 
+	elementFormDefault="qualified"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+	xmlns:abe="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/NidAbeLevel"
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/NidAbeLevel">	
+	
+	<xsd:simpleType name="NidAbeLevelType">
+        <xsd:annotation>
+        	<xsd:documentation>
+        		Validation of (NidDomain, AbeLevel) is done through NidDomainAndAbeLevel.xq.
+        	</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"></xsd:minLength>
+			<xsd:maxLength value="50"></xsd:maxLength>
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+    <xsd:element name="NidAbeLevel" type="abe:NidAbeLevelType"/>
+	
+</xsd:schema>

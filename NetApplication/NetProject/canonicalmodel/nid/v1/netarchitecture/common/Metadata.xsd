@@ -1,0 +1,183 @@
+<schema elementFormDefault="qualified" targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Metadata" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Metadata" xmlns:tps="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types" xmlns:soap12-env="http://www.w3.org/2003/05/soap-envelope">
+
+	<annotation>
+		<documentation>
+			Versao 1.0 do NetHeader para o novo modelo canonico, baseado no SID.
+			(SID = Shared Information/Data model)
+			(NID = Net Information/Data model)
+		</documentation>
+	</annotation>
+
+    <import namespace="http://www.w3.org/2003/05/soap-envelope" schemaLocation="EnvelopeSoap12.xsd"/>
+
+	<import namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types" schemaLocation="Types.xsd"/>
+
+
+	<element name="Metadata" type="tns:MetadataType">
+		<annotation>
+			<documentation>
+				Header padrao da NET. Sera utilizado como um
+				header explicito em todos os WSDL's e suas
+				operacoes.
+			</documentation>
+		</annotation>
+	</element>
+
+
+	<complexType name="MetadataType">
+		<annotation>
+			<documentation>
+				Elemento raiz do header da NET.
+			</documentation>
+		</annotation>
+
+		<sequence>
+
+
+			<element name="Consumer" minOccurs="1" maxOccurs="1">
+				<annotation>
+					<documentation>
+						Aplicacao ou Parceiro que esta
+						consumindo o servico.
+					</documentation>
+				</annotation>
+
+				<complexType>
+					<sequence>
+
+						<element name="Enterprise" minOccurs="1" maxOccurs="1" type="tps:string050">
+							<annotation>
+								<documentation>
+									Corporacaoo que esta consumindo o servico.
+								</documentation>
+							</annotation>
+						</element>
+
+						<element name="Application" minOccurs="1" maxOccurs="1" type="tps:string050">
+							<annotation>
+								<documentation>
+									Aplicacao que esta consumindo o servico.
+								</documentation>
+							</annotation>
+						</element>
+
+						<element name="Vendor" minOccurs="0" maxOccurs="1" type="tps:string050">
+							<annotation>
+								<documentation>
+									Fornecedor que esta consumindo o servico.
+								</documentation>
+							</annotation>
+						</element>
+
+						<element name="Feature" minOccurs="0" maxOccurs="1" type="tps:string100">
+							<annotation>
+								<documentation>
+									Funcionalidade que esta sendo consumida.
+								</documentation>
+							</annotation>
+						</element>
+
+					</sequence>
+				</complexType>
+
+			</element>
+
+
+			<element name="Tracking" minOccurs="1" maxOccurs="1">
+				<annotation>
+					<documentation>
+						Informacoes de autenticacao, auditoria e
+						rastreabilidade.
+					</documentation>
+				</annotation>
+
+				<complexType>
+					<sequence>
+
+						<element name="Username" minOccurs="1" maxOccurs="1" type="tps:string050">
+							<annotation>
+								<documentation>
+									Conta autenticada do usuario.
+								</documentation>
+							</annotation>
+						</element>
+
+						<element name="TransactionId" minOccurs="0" maxOccurs="1" type="tps:string100">
+							<annotation>
+								<documentation>
+									TransactionId de rastreabilidade, deve preferencialmente ser
+									gerado pelo consumidor. Um log de debug deve ser feito
+									do lado do consumidor com este token, para que seja
+									possivel rastrear a chamada do inicio ata o fim de
+									sua execucao.
+								</documentation>
+							</annotation>
+						</element>
+
+						<element name="Timestamp" minOccurs="0" maxOccurs="1" type="dateTime">
+							<annotation>
+								<documentation>
+									Guarda o timestamp da requisicao.
+								</documentation>
+							</annotation>
+						</element>
+
+						<element name="CorrelationId" minOccurs="0" maxOccurs="1" type="tps:string100">
+							<annotation>
+								<documentation>
+									Identificador de correlacao para processos de integracao
+									assincronos
+								</documentation>
+							</annotation>
+						</element>
+
+						<element name="Hostname" minOccurs="0" maxOccurs="1" type="tps:string050">
+							<annotation>
+								<documentation>
+									Contem Hostname ou IP da maquina que originou a
+									transacao, para fins de rastreabilidade
+								</documentation>
+							</annotation>
+						</element>
+
+					</sequence>
+				</complexType>
+
+			</element>
+
+
+			<element name="Governance" minOccurs="0" maxOccurs="1">
+				<annotation>
+					<documentation>
+						Destinado a governanca dos servicos.
+					</documentation>
+				</annotation>
+
+				<complexType>
+					<sequence>
+
+						<element name="ServiceVersion" minOccurs="0" maxOccurs="1" type="tps:string050">
+							<annotation>
+								<documentation>
+									Utilizado pelo consumidor para consumir
+									especificamente uma
+									versao do servico. Se passado em branco,
+									assume-se versao 1.0.
+								</documentation>
+							</annotation>
+						</element>
+
+					</sequence>
+				</complexType>
+
+			</element>
+		</sequence>
+		
+		 <!--  SOAP ENV 1.2 Optional Attributes - Axis2 e W3C Compliance -->
+	    <attribute ref="soap12-env:encodingStyle" use="optional"/>
+	    <attribute ref="soap12-env:role" use="optional"/>
+	    <attribute ref="soap12-env:mustUnderstand" use="optional"/>
+	    <attribute ref="soap12-env:relay" use="optional"/>
+		
+	</complexType>
+</schema>

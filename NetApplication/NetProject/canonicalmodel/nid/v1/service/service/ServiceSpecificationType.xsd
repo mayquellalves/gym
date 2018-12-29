@@ -1,0 +1,25 @@
+<schema elementFormDefault="qualified" targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/service/service/ServiceSpecificationType" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/service/service/ServiceSpecificationType" xmlns:tps="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types">
+
+	<import schemaLocation="../../netarchitecture/common/Types.xsd" namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types"/>
+
+	
+	<complexType name="ServiceSpecificationTypeType">
+		<sequence>
+			<element name="Code" type="tps:string255" minOccurs="0" maxOccurs="1"/>
+			<element name="Description" type="tps:string255" minOccurs="0" maxOccurs="1"/>
+			<element name="Name" type="tps:string050" minOccurs="0" maxOccurs="1"/>
+		
+		</sequence>
+	</complexType>
+
+	<element name="ServiceSpecificationType" type="tns:ServiceSpecificationTypeType"/>
+
+	<element name="ServiceSpecificationTypesType" type="tns:ServiceSpecificationTypesType"/>
+
+	<complexType name="ServiceSpecificationTypesType">
+		<sequence>
+			<element ref="tns:ServiceSpecificationType" minOccurs="1" maxOccurs="unbounded"/>
+		</sequence>
+	</complexType>
+
+</schema>

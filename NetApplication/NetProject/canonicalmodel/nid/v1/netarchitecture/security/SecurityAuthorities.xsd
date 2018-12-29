@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/security/SecurityAuthorities"
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/security/SecurityAuthorities"
+	xmlns:soap12-env="http://www.w3.org/2003/05/soap-envelope">
+
+   <import namespace="http://www.w3.org/2003/05/soap-envelope" 
+   		schemaLocation="../common/EnvelopeSoap12.xsd"/>
+
+	<complexType name="SecurityAuthoritiesType">
+		<sequence>
+			<element name="Authority" minOccurs="1" maxOccurs="unbounded">
+				<annotation>
+					<documentation>
+						Authority which will be held authentication.
+					</documentation>
+				</annotation>
+				<simpleType>
+					<restriction base="string">
+						<enumeration value="AmdocsASM">
+							<annotation>
+								<documentation>
+									Authority of the vendor Amdocs for BSS applications.
+								</documentation>
+							</annotation>
+						</enumeration>
+						<enumeration value="SigmaAA">
+							<annotation>
+								<documentation>
+									Authority of the vendor Sigma for applications CGM, DAM, OMP, SMP and TNM.
+								</documentation>
+							</annotation>
+						</enumeration>
+						<enumeration value="AmdocsOSSASM">
+							<annotation>
+								<documentation>
+									Authority of the vendor Amdocs for OSS applications.
+								</documentation>
+							</annotation>
+						</enumeration>
+						<enumeration value="AmdocsUSMASM">
+							<annotation>
+								<documentation>
+									Authority of the vendor Amdocs for USM applications.
+								</documentation>
+							</annotation>
+						</enumeration>
+						<enumeration value="DigitalPostCCM">
+							<annotation>
+								<documentation>
+									Authority of the vendor Digital Post for application CCM.
+								</documentation>
+							</annotation>
+						</enumeration>
+						<enumeration value="BeesionGevenue">
+							<annotation>
+								<documentation>
+									Authority of the vendor Beesion for application Gevenue.
+								</documentation>
+							</annotation>
+						</enumeration>
+						<enumeration value="ATPSIAP">
+							<annotation>
+								<documentation>
+									Authority of the vendor ATP for application SIAP.
+								</documentation>
+							</annotation>
+						</enumeration>
+						<enumeration value="BMCRemedy">
+							<annotation>
+								<documentation>
+									Authority of the vendor BMC for application Remedy.
+								</documentation>
+							</annotation>
+						</enumeration>
+						<enumeration value="TitansBroker">
+							<annotation>
+								<documentation>
+									Authority of the vendor Titans for application Broker.
+								</documentation>
+							</annotation>
+						</enumeration>
+						<enumeration value="ISystemAuthentication">
+							<annotation>
+								<documentation>
+									Authority of the vendor ISystemAuthentication for applications ACTUS, RCM, LINEUP.
+								</documentation>
+							</annotation>
+						</enumeration>
+					</restriction>
+				</simpleType>
+			</element>
+		</sequence>
+		
+	    <!--  SOAP ENV 1.2 Optional Attributes - Axis2 e W3C Compliance -->
+	    <attribute ref="soap12-env:encodingStyle" use="optional"/>
+	    <attribute ref="soap12-env:role" use="optional"/>
+	    <attribute ref="soap12-env:mustUnderstand" use="optional"/>
+	    <attribute ref="soap12-env:relay" use="optional"/>
+	    
+	</complexType>
+
+	<element name="SecurityAuthorities" type="tns:SecurityAuthoritiesType" />
+
+</schema>

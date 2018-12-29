@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dvm name="netarchitecture.messages.netarchitecture.dvm" xmlns="http://xmlns.oracle.com/dvm">
+  <description>
+  	Only messages belonging to netarchitecture domain can be defined here.
+  </description>
+  <columns>
+    <column name="ID_MSG"/>
+    <column name="ERROR_NAME"/>
+    <column name="USER_MESSAGE"/>
+    <column name="DETAIL_MESSAGE"/>
+    <column name="CATEGORY_MESSAGE"/>
+    <column name="SYSTEM_CODE"/>
+    <column name="NID_DOMAIN"/>
+    <column name="ABE_LEVEL"/>
+  </columns>
+  <rows>
+  	<row>
+		<cell>OSB-NETARCHITECTURE-00001</cell>
+		<cell>BUSINESS_FAULT</cell>
+		<cell>O(s) campo(s) {0} contém formato de Data inválido.</cell>
+		<cell>O(s) campo(s) {0} contém formato de Data inválido.</cell>
+		<cell>ERROR</cell>
+		<cell/>
+	    <cell>netarchitecture</cell>
+	    <cell>fault</cell>
+	</row>
+	<row>
+		<cell>OSB-NETARCHITECTURE-00002</cell>
+		<cell>BUSINESS_FAULT</cell>
+		<cell>O(s) campo(s) {0} contém a Data Fim menor que Data Início.</cell>
+		<cell>O(s) campo(s) {0} contém a Data Fim menor que Data Início.</cell>
+		<cell>ERROR</cell>
+		<cell/>
+	    <cell>netarchitecture</cell>
+	    <cell>fault</cell>
+	</row>
+	<row>
+		<cell>OSB-NETARCHITECTURE-00003</cell>
+		<cell>BUSINESS_FAULT</cell>
+		<cell>O(s) campo(s) {0} contém formato de Data e Hora inválidos.</cell>
+		<cell>O(s) campo(s) {0} contém formato de Data e Hora inválidos.</cell>
+		<cell>ERROR</cell>
+		<cell/>
+	    <cell>netarchitecture</cell>
+	    <cell>fault</cell>
+	</row>
+	<row>
+		<cell>OSB-NETARCHITECTURE-00004</cell>
+		<cell>BUSINESS_FAULT</cell>
+		<cell>Favor confirmar o CPF/CNPJ informado, pois está inválido para verificação.</cell>
+		<cell>Favor confirmar o CPF/CNPJ informado, pois está inválido para verificação.</cell>
+		<cell>ERROR</cell>
+		<cell/>
+	    <cell>netarchitecture</cell>
+	    <cell>fault</cell>
+	</row>
+	<row>
+		<cell>OSB-NETARCHITECTURE-00005</cell>
+		<cell>BUSINESS_FAULT</cell>
+		<cell>O(s) campo(s) {0} contém formato do Telefone inválido.</cell>
+		<cell>O(s) campo(s) {0} contém formato do Telefone inválido.</cell>
+		<cell>ERROR</cell>
+		<cell/>
+	    <cell>netarchitecture</cell>
+	    <cell>fault</cell>
+	</row>  
+    <row>
+	  <cell>OSB-NETARCHITECTURE-00006</cell>
+	  <cell>FALHA_AO_TRATAR_ERRO</cell>
+	  <cell>Ocorreu uma falha ao tratar a mensagem de erro.</cell>
+	  <cell>Ocorreu uma falha ao tratar a mensagem de erro.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+      <cell>netarchitecture</cell>
+      <cell>fault</cell>
+	</row>
+	<row>
+	  <cell>OSB-NETARCHITECTURE-00007</cell>
+	  <cell>MESSAGE_CODE_NAO_PREENCHIDO</cell>
+	  <cell>O parâmetro código da mensagem não foi informado e é obrigatório.</cell>
+	  <cell>O parâmetro código da mensagem não foi informado e é obrigatório.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+      <cell>netarchitecture</cell>
+      <cell>fault</cell>
+	</row>
+	<row>
+	  <cell>OSB-NETARCHITECTURE-00008</cell>
+	  <cell>NID_ABE_LEVEL_NOK</cell>
+	  <cell>A combinação do domínio NID com o nível Abe informada não é válida.</cell>
+	  <cell>A combinação do domínio NID com o nível Abe informada não é válida.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+      <cell>netarchitecture</cell>
+      <cell>fault</cell>
+	</row>
+	<row>
+	  <cell>OSB-NETARCHITECTURE-00009</cell>
+	  <cell>SEVERITY_LEVEL_NOK</cell>
+	  <cell>Nível de Severidade do Alert não foi informado, ou não é válido. Os tipos válidos são: LEVEL1, LEVEL2, LEVEL3, LEVEL4, LEVEL5.</cell>
+	  <cell>Nível de Severidade do Alert não foi informado, ou não é válido. Os tipos válidos são: LEVEL1, LEVEL2, LEVEL3, LEVEL4, LEVEL5.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+      <cell>netarchitecture</cell>
+      <cell>monitoring</cell>
+	</row>
+	<row>
+	  <cell>OSB-NETARCHITECTURE-00010</cell>
+	  <cell>EXC_CLASSIFICATION_NOK</cell>
+	  <cell>A classificação da exceção é inválida. Os valores válidos são: CLASSIFICATION_RESOURCE, CLASSIFICATION_UNEXPECTED, CLASSIFICATION_BUSINESS, CLASSIFICATION_VALIDATION, CLASSIFICATION_SECURITY. Deixado em branco indica um alerta com severidade 'NORMAL'.</cell>
+	  <cell>A classificação da exceção é inválida. Os valores válidos são: CLASSIFICATION_RESOURCE, CLASSIFICATION_UNEXPECTED, CLASSIFICATION_BUSINESS, CLASSIFICATION_VALIDATION, CLASSIFICATION_SECURITY. Deixado em branco indica um alerta com severidade 'NORMAL'.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+      <cell>netarchitecture</cell>
+      <cell>monitoring</cell>
+	</row>
+	<row>
+	  <cell>OSB-NETARCHITECTURE-00011</cell>
+	  <cell>MESSAGE_NAO_PREENCHIDO</cell>
+	  <cell>O parâmetro mensagem não foi informado e é obrigatório.</cell>
+	  <cell>O parâmetro mensagem não foi informado e é obrigatório.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+      <cell>netarchitecture</cell>
+      <cell>monitoring</cell>
+	</row>
+	<row>
+	  <cell>OSB-NETARCHITECTURE-00012</cell>
+	  <cell>MESSAGE_NAO_PREENCHIDO</cell>
+	  <cell>O tipo de log informado não é válido. Os valores válidos são: INFO, WARN ou ERROR.</cell>
+	  <cell>O tipo de log informado não é válido. Os valores válidos são: INFO, WARN ou ERROR.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+      <cell>netarchitecture</cell>
+      <cell>monitoring</cell>
+	</row>
+	<row>
+	  <cell>OSB-NETARCHITECTURE-00013</cell>
+	  <cell>MESSAGE_NAO_PREENCHIDO</cell>
+	  <cell>O parâmetro usuário não foi informado e é obrigatório.</cell>
+	  <cell>O parâmetro usuário não foi informado e é obrigatório.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+      <cell>netarchitecture</cell>
+      <cell>monitoring</cell>
+	</row>
+	<row>
+	  <cell>OSB-NETARCHITECTURE-00014</cell>
+	  <cell>MESSAGE_NAO_PREENCHIDO</cell>
+	  <cell>O parâmetro timestamp não foi informado e é obrigatório.</cell>
+	  <cell>O parâmetro timestamp não foi informado e é obrigatório.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+      <cell>netarchitecture</cell>
+      <cell>monitoring</cell>
+	</row>
+	<row>
+	  <cell>OSB-NETARCHITECTURE-00015</cell>
+	  <cell>MESSAGE_NAO_PREENCHIDO</cell>
+	  <cell>O parâmetro ErroInfo não foi informado e é obrigatório.</cell>
+	  <cell>O parâmetro ErroInfo não foi informado e é obrigatório.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+      <cell>netarchitecture</cell>
+      <cell>monitoring</cell>
+	</row>
+	<row>
+	  <cell>OSB-NETARCHITECTURE-00016</cell>
+	  <cell>MESSAGE_NAO_PREENCHIDO</cell>
+	  <cell>O parâmetro ErroInfo informado não é válido.</cell>
+	  <cell>O parâmetro ErroInfo informado não é válido.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+      <cell>netarchitecture</cell>
+      <cell>monitoring</cell>
+	</row>
+	<row>
+	  <cell>OSB-NETARCHITECTURE-00017</cell>
+	  <cell>OPERACAO_NOK</cell>
+	  <cell>A operação requisitada para o serviço {0} não é válida.</cell>
+	  <cell>A operação requisitada para o serviço {0} não é válida.</cell>
+	  <cell>ERROR</cell>
+	  <cell/>
+      <cell>netarchitecture</cell>
+      <cell>security</cell>
+	</row>
+	<row>
+      <cell>OSB-NETARCHITECTURE-00018</cell>
+      <cell>FALHA_OPERACAO_SERVICO</cell>
+      <cell>Ocorreu uma falha ao executar a operação {0} do serviço {1}.</cell>
+      <cell>Ocorreu uma falha ao executar a operação {0} do serviço {1}.</cell>
+      <cell>ERROR</cell>
+      <cell/>
+      <cell>netarchitecture</cell>
+      <cell>security</cell>
+    </row>
+    <row>
+      <cell>OSB-NETARCHITECTURE-00019</cell>
+      <cell>FALHA_RECURSO_EJB</cell>
+      <cell>Não foi possível executar a funcionalidade {0} no recurso {1}.</cell>
+      <cell>Não foi possível executar a funcionalidade {0} no recurso {1}.</cell>
+      <cell>ERROR</cell>
+      <cell/>
+      <cell>netarchitecture</cell>
+      <cell>security</cell>
+    </row>
+    <row>
+      <cell>OSB-NETARCHITECTURE-00020</cell>
+      <cell>AUTORIDADE_NOK_EXTENSAO</cell>
+      <cell>O conteúdo da extensão informado na requisição, referente a autoridade {0}, não é válido para a operação {1}.</cell>
+      <cell>O conteúdo da extensão informado na requisição, referente a autoridade {0}, não é válido para a operação {1}.</cell>
+      <cell>ERROR</cell>
+      <cell/>
+      <cell>netarchitecture</cell>
+      <cell>security</cell>
+    </row>
+    <row>
+      <cell>OSB-NETARCHITECTURE-00021</cell>
+      <cell>PAGINATION_ACTION_NOK</cell>
+      <cell>A ação {0} não é válida para a página {1}, porque está é a {2} página da lista.</cell>
+      <cell>A ação {0} não é válida para a página {1}, porque está é a {2} página da lista.</cell>
+      <cell>ERROR</cell>
+      <cell/>
+      <cell>netarchitecture</cell>
+      <cell>pagination</cell>
+    </row>
+    <row>
+      <cell>OSB-NETARCHITECTURE-00022</cell>
+      <cell>PAGINATION_NUMBER_PAGE_NOK</cell>
+      <cell>A página {1} solicitada é maior que a quantidade total de páginas.</cell>
+      <cell>A página {1} solicitada é maior que a quantidade total de páginas.</cell>
+      <cell>ERROR</cell>
+      <cell/>
+      <cell>netarchitecture</cell>
+      <cell>pagination</cell>
+    </row>
+  </rows>
+</dvm>

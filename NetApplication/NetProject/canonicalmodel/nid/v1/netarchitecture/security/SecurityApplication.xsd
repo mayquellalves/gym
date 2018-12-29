@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/security/SecurityApplication"
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/security/SecurityApplication"
+	xmlns:ext="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/security/extension/SecurityApplicationExtension">
+
+	<import schemaLocation="extension/SecurityApplicationExtension.xsd"
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/security/extension/SecurityApplicationExtension" />
+
+	<complexType name="SecurityApplicationType">
+		<sequence>
+			<element ref="ext:SecurityApplicationExtension" minOccurs="1" maxOccurs="1"/>
+		</sequence>
+	</complexType>
+
+	<element name="SecurityApplication" type="tns:SecurityApplicationType"/>
+		
+</schema>

@@ -1,0 +1,95 @@
+<schema targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/monitoring/Alert" elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/monitoring/Alert" xmlns:nid="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/NidDomain" xmlns:abe="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/NidAbeLevel" xmlns:exc="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/fault/ExceptionClassification">
+
+	<import namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/NidDomain" schemaLocation="../common/NidDomain.xsd"/>
+	<import namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/NidAbeLevel" schemaLocation="../common/NidAbeLevel.xsd"/>
+    <import namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/fault/ExceptionClassification" schemaLocation="../fault/ExceptionClassification.xsd"/>
+    
+	<complexType name="Alert">
+        <annotation>
+        	<documentation>
+        		Alert types.
+        	</documentation>
+        </annotation>
+        <sequence>
+			<element name="Timestamp" type="dateTime">
+				<annotation>
+					<documentation>
+						Alert timestamp. 
+					</documentation>
+				</annotation></element>
+            <element name="Message" type="string">
+				<annotation>
+					<documentation>
+						Message sent by alert.
+					</documentation>
+				</annotation></element>
+			<element name="ServiceSeverityLevel" type="tns:ServiceSeverityLevel">
+				<annotation>
+					<documentation>
+						Nível de escalonamento do Alerta. Quanto mais
+						alto o nível de escalonamento, destinatários com
+						maior alçada são envolvidos.
+					</documentation>
+				</annotation></element>
+			<element ref="nid:NidDomain">
+				<annotation>
+					<documentation>
+						Macro Processo de negócio para o qual o Alert é
+						destinado.
+					</documentation>
+				</annotation></element>
+			<element ref="abe:NidAbeLevel">
+				<annotation>
+					<documentation>
+						Informação do segundo nível abaixo do macro
+						processo para envio das notificações. Ex:
+						MacroProcesso: Ativar, macroProcessoNivel:
+						aprovisionamento
+					</documentation>
+				</annotation></element>
+			<element name="ExceptionClassification" type="exc:ExceptionClassification">
+				<annotation>
+					<documentation>
+						Classificação da exceção. Valor vindo do
+						atributo exceptionClassification das exceções
+						lançadas ou informado diretamente quando o
+						alerta é gerado no serviço. O valor deste campo
+						indica o nível de Severidade que será gerado no
+						Alerta. Da seguinte forma: VAZIO ou NULL ->
+						1-Normal CLASSIFICATION_BUSINESS -> 2-Warning
+						CLASSIFICATION_VALIDATION -> 2-Warning
+						CLASSIFICATION_SECURITY -> 2-Warning
+						CLASSIFICATION_UNEXPECTED -> 5-Critical
+						CLASSIFICATION_RESOURCE -> 6-Fatal
+					</documentation>
+				</annotation></element>
+		</sequence>
+	</complexType>
+
+	<simpleType name="ServiceSeverityLevel">
+        <annotation>
+        	<documentation>
+        		Tipo para representar o nível de escalonamento do
+        		Alerta. Quanto mais alto o nível de escalonamento,
+        		destinatários com maior alçada são envolvidos.
+        		Os valores são: NIVEL1, NIVEL2, NIVEL3, NIVEL4 e NIVEL5
+        	</documentation>
+        </annotation>
+        <restriction base="string">
+			<enumeration value="LEVEL1"/>
+			<enumeration value="LEVEL2"/>
+			<enumeration value="LEVEL3"/>
+			<enumeration value="LEVEL4"/>
+			<enumeration value="LEVEL5"/>
+		</restriction>
+	</simpleType>
+
+	<element name="Alert" type="tns:Alert"/>
+	
+	<element name="ServiceSeverityLevel" type="tns:ServiceSeverityLevel">
+		<annotation>
+			<documentation/>
+		</annotation>
+	</element>
+
+</schema>

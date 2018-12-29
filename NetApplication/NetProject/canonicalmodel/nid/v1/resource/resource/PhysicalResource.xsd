@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified" 
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/resource/resource/PhysicalResource" 
+	xmlns="http://www.w3.org/2001/XMLSchema" 
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/resource/resource/PhysicalResource">
+	
+	
+	<complexType name="PhysicalResourceType">
+		
+			
+			
+	</complexType>
+
+	<element name="PhysicalResource" type="tns:PhysicalResourceType"/>
+
+	<complexType name="PhysicalResourcesType">
+		<sequence>
+			<element ref="tns:PhysicalResource" minOccurs="1" maxOccurs="unbounded"/>
+		</sequence>
+	</complexType>
+
+	<element name="PhysicalResources" type="tns:PhysicalResourcesType" />
+	
+
+</schema>

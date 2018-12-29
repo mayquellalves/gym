@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified"
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/service/service/ProtocolServiceDetails"
+	xmlns="http://www.w3.org/2001/XMLSchema" 
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/service/service/ProtocolServiceDetails">
+
+	
+	
+	<complexType name="ProtocolServiceDetailsType">
+		
+	</complexType>
+
+	<element name="ProtocolServiceDetails" type="tns:ProtocolServiceDetailsType" />
+
+	<element name="ProtocolServiceDetailss">
+		<complexType>
+			<sequence>
+				<element ref="tns:ProtocolServiceDetails" minOccurs="1" maxOccurs="unbounded" />
+			</sequence>
+		</complexType>
+	</element>
+
+</schema>

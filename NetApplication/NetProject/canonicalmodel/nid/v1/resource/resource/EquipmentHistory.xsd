@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified" 
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/resource/resource/EquipmentHistory" 
+	xmlns="http://www.w3.org/2001/XMLSchema" 
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/resource/resource/EquipmentHistory" 
+	xmlns:tps="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types">
+	
+	<import schemaLocation="../../netarchitecture/common/Types.xsd" 
+		namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Types"/>
+		
+	
+		
+	
+		
+	<complexType name="EquipmentHistoryType">
+		<sequence>
+			<element name="DateHistory" type="dateTime" minOccurs="0" maxOccurs="1"/>
+			<element name="Notes" type="tps:string250" minOccurs="0" maxOccurs="1"/>
+			<element name="Status" type="tps:string020" minOccurs="0" maxOccurs="1"/>
+		</sequence>
+	</complexType>
+
+	<element name="EquipmentHistory" type="tns:EquipmentHistoryType"/>
+
+	<element name="EquipmentHistories">
+		<complexType>
+			<sequence>
+				<element ref="tns:EquipmentHistory" minOccurs="1" maxOccurs="unbounded"/>
+			</sequence>
+		</complexType>
+	</element>
+
+</schema>

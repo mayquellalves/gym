@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema
+    xmlns="http://www.w3.org/2001/XMLSchema"
+    elementFormDefault="qualified"
+    targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/messaging/Payload"
+    xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/messaging/Payload"
+    xmlns:mtd="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Metadata">
+
+	<import schemaLocation="../common/Metadata.xsd" namespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/common/Metadata"/>
+	
+	<complexType name="PayloadType" abstract="true">
+		<sequence>
+			<element ref="mtd:Metadata" minOccurs="1" maxOccurs="1"/>
+		</sequence>
+	</complexType>
+	
+</schema>

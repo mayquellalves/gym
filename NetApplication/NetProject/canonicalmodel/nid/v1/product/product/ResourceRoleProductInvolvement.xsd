@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified"
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/product/ResourceRoleProductInvolvement"
+	xmlns="http://www.w3.org/2001/XMLSchema" 
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/product/product/ResourceRoleProductInvolvement">
+
+	
+
+	<complexType name="ResourceRoleProductInvolvementType">
+		
+				
+	</complexType>
+
+	<element name="ResourceRoleProductInvolvement" type="tns:ResourceRoleProductInvolvementType" />
+
+	<element name="ResourceRoleProductInvolvements">
+		<complexType>
+			<sequence>
+				<element ref="tns:ResourceRoleProductInvolvement" minOccurs="1" maxOccurs="unbounded" />
+			</sequence>
+		</complexType>
+	</element>
+
+</schema>

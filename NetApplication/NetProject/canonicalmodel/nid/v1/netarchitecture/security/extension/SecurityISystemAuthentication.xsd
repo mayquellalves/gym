@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/security/extension/SecurityISystemAuthentication"
+	xmlns:tns="http://www.netservicos.com.br/canonicalmodel/nid/v1/netarchitecture/security/extension/SecurityISystemAuthentication">
+
+	<complexType name="SecurityISystemAuthenticationType">
+		<sequence>
+			<element name="token" type="string" minOccurs="0" maxOccurs="1"/>
+		</sequence>
+	</complexType>
+
+	<element name="SecurityISystemAuthentication" type="tns:SecurityISystemAuthenticationType">
+		<annotation>
+			<documentation>
+				The element to be used in SecurityApplicationExtension.xsd. Must be set to Security + Authority.
+				Ex: Authority = ISystemAuthentication
+					Extension = SecurityISystemAuthentication
+			</documentation>
+		</annotation>
+	</element>
+
+</schema>
