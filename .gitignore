@@ -1,12 +1,13 @@
-*.class
+# default application storage directory used by the IDE Performance Cache feature
+.data/
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
+# used for ADF styles caching
+temp/
 
-# Package Files #
-*.jar
-*.war
-*.ear
+# default output directories
+classes/
+deploy/
+javadoc/
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
+# lock file, a part of Oracle Credential Store Framework
+cwallet.sso.lck
